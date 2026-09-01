@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YOLOv8 模型訓練指標解析：IoU、mAP、Precision、Recall 與優化策略｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="深入整理 YOLOv8 訓練流程、遷移學習、IoU、mAP50、mAP50-95、Precision、Recall 與 TensorBoard 監控重點。" />
+<meta name="keywords" content="機器學習, YOLOv8, 物件偵測, mAP, IoU, TensorBoard" />
+<link rel="canonical" href="https://claire-chang.com/post/yolov8-training-metrics-optimization/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="YOLOv8 模型訓練指標解析：IoU、mAP、Precision、Recall 與優化策略｜Claire Chang" />
+<meta property="og:description" content="深入整理 YOLOv8 訓練流程、遷移學習、IoU、mAP50、mAP50-95、Precision、Recall 與 TensorBoard 監控重點。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/yolov8-training-metrics-optimization/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_yolov8-training-metrics-optimization-aa77bfff.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_yolov8-training-metrics-optimization-aa77bfff.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="YOLOv8 模型訓練指標解析：IoU、mAP、Precision、Recall 與優化策略｜Claire Chang" />
+<meta name="twitter:description" content="深入整理 YOLOv8 訓練流程、遷移學習、IoU、mAP50、mAP50-95、Precision、Recall 與 TensorBoard 監控重點。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_yolov8-training-metrics-optimization-aa77bfff.jpg" />
+<meta property="article:published_time" content="2023-08-16" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="YOLOv8" />
+<meta property="article:tag" content="物件偵測" />
+<meta property="article:tag" content="mAP" />
+<meta property="article:tag" content="IoU" />
+<meta property="article:tag" content="TensorBoard" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"YOLOv8 模型訓練指標解析：IoU、mAP、Precision、Recall 與優化策略","item":"https://claire-chang.com/post/yolov8-training-metrics-optimization/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/yolov8-training-metrics-optimization/#article","headline":"YOLOv8 模型訓練指標解析：IoU、mAP、Precision、Recall 與優化策略","description":"深入整理 YOLOv8 訓練流程、遷移學習、IoU、mAP50、mAP50-95、Precision、Recall 與 TensorBoard 監控重點。","image":"https://claire-chang.com/images/tech/hero_yolov8-training-metrics-optimization.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-08-16","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/yolov8-training-metrics-optimization/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"YOLOv8, 物件偵測, mAP, IoU, TensorBoard","about":[{"@type":"Thing","name":"物件偵測"},{"@type":"Thing","name":"mAP"},{"@type":"Thing","name":"IoU"}],"mentions":[{"@type":"Thing","name":"YOLOv8"},{"@type":"Thing","name":"TensorBoard"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/yolov8-training-metrics-optimization/#faq","mainEntity":[{"@type":"Question","name":"YOLOv8 一定要從預訓練模型開始嗎？","acceptedAnswer":{"@type":"Answer","text":"YOLOv8 不一定要從預訓練模型開始，但自訂資料集通常建議使用預訓練權重微調。從零訓練需要更多資料、時間與算力。"}},{"@type":"Question","name":"mAP50 高就代表模型很好嗎？","acceptedAnswer":{"@type":"Answer","text":"mAP50 高只代表 IoU 0.50 門檻下表現不錯。若任務要求精準定位，還要看 mAP50-95 與實際錯誤案例。"}},{"@type":"Question","name":"Precision 和 Recall 哪個比較重要？","acceptedAnswer":{"@type":"Answer","text":"Precision 和 Recall 的重要性取決於任務成本。誤報成本高時重視 Precision，漏檢成本高時重視 Recall。"}},{"@type":"Question","name":"YOLOv8n 和 YOLOv8x 怎麼選？","acceptedAnswer":{"@type":"Answer","text":"即時部署或硬體有限時先選 YOLOv8n 或 YOLOv8s。資料充足且準確率優先時，再評估 YOLOv8l 或 YOLOv8x。"}},{"@type":"Question","name":"訓練 loss 下降但 mAP 沒提升怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"loss 下降但 mAP 沒提升時，應檢查驗證集標註、類別分布、資料切分與輸入解析度。這種情況常代表模型在學訓練資料，但泛化沒有改善。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_yolov8-training-metrics-optimization.webp" alt="YOLOv8 模型訓練指標解析：IoU、mAP、Precision、Recall 與優化策略 hero image" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-08-16">2023-08-16</time></span><span class="post-meta-pill">YOLOv8 · 物件偵測 · mAP · IoU · TensorBoard</span></div></div><h1 class="insights-hero-title">YOLOv8 模型訓練指標解析：IoU、mAP、Precision、Recall 與優化策略</h1><p class="insights-hero-description">深入整理 YOLOv8 訓練流程、遷移學習、IoU、mAP50、mAP50-95、Precision、Recall 與 TensorBoard 監控重點。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>YOLOv8 模型訓練不能只看 loss 是否下降，還要同時解讀 IoU、mAP50、mAP50-95、Precision 與 Recall。這些指標分別回答定位準不準、整體偵測好不好、誤報多不多，以及漏檢是否嚴重。</p>
+</div><section aria-labelledby="yolov8-如何開始訓練自訂資料集"><h2 id="yolov8-如何開始訓練自訂資料集">YOLOv8 如何開始訓練自訂資料集？</h2>
+<p>YOLOv8 訓練自訂資料集通常從預訓練權重開始。載入 <code>yolov8n.pt</code> 這類權重後，再用自己的 dataset YAML 微調，是最常見的遷移學習流程。</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> ultralytics <span class="hljs-keyword">import</span> YOLO
+
+model = YOLO(<span class="hljs-string">'yolov8n.pt'</span>)
+results = model.train(data=<span class="hljs-string">'custom_dataset.yaml'</span>, epochs=<span class="hljs-number">100</span>, imgsz=<span class="hljs-number">640</span>)
+</code></pre>
+<p>Ultralytics 官方 Python 用法文件提供 <code>YOLO(...)</code>、<code>train()</code>、<code>val()</code>、<code>predict()</code> 等流程（Ultralytics，存取日期：2026-08-27）。若資料量不大，從預訓練模型開始通常比從 YAML 隨機初始化更穩定。</p>
+</section><section aria-labelledby="yolov8-模型大小怎麼選"><h2 id="yolov8-模型大小怎麼選">YOLOv8 模型大小怎麼選？</h2>
+<p>YOLOv8 模型大小通常在速度、記憶體與準確率之間取捨。YOLOv8n 最小最快，YOLOv8x 最大最慢但容量較高。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>模型</th><th>適合情境</th></tr></thead><tbody><tr><td>YOLOv8n</td><td>邊緣裝置、快速原型、即時性優先</td></tr><tr><td>YOLOv8s</td><td>一般輕量部署</td></tr><tr><td>YOLOv8m</td><td>準確率與速度平衡</td></tr><tr><td>YOLOv8l</td><td>準確率優先</td></tr><tr><td>YOLOv8x</td><td>資源充足、追求較高容量</td></tr></tbody></table></div>
+<p>實務資訊增益：模型選型不要只看驗證集 mAP。若部署環境是 CPU 或邊緣 GPU，推論延遲與記憶體峰值常比 mAP 小數點差異更重要。</p>
+</section><section aria-labelledby="iou-precision-和-recall-怎麼解讀"><h2 id="iou-precision-和-recall-怎麼解讀">IoU、Precision 和 Recall 怎麼解讀？</h2>
+<p>IoU 衡量預測框與真實框的重疊程度，Precision 衡量預測框有多少是正確的，Recall 衡量真實目標有多少被找出來。三個指標要一起看。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>指標</th><th>回答的問題</th></tr></thead><tbody><tr><td>IoU</td><td>框的位置準不準</td></tr><tr><td>Precision</td><td>誤報多不多</td></tr><tr><td>Recall</td><td>漏檢多不多</td></tr></tbody></table></div>
+<p>若 Precision 高但 Recall 低，模型可能很保守，只偵測最有把握的目標。若 Recall 高但 Precision 低，模型可能框出很多錯誤物件。</p>
+</section><section aria-labelledby="map50-和-map50-95-差在哪"><h2 id="map50-和-map50-95-差在哪">mAP50 和 mAP50-95 差在哪？</h2>
+<p>mAP50 是在 IoU 0.50 門檻下計算平均精度，mAP50-95 則跨 0.50 到 0.95 多個 IoU 門檻取平均。mAP50-95 對定位品質要求更高。</p>
+<p>Ultralytics 指標文件把 precision、recall、mAP50 與 mAP50-95 列為 YOLO 評估重點（Ultralytics，存取日期：2026-08-27）。若 mAP50 不錯但 mAP50-95 明顯偏低，代表模型大致找得到物件，但框的位置不夠精準。</p>
+</section><section aria-labelledby="如何用-tensorboard-監控訓練"><h2 id="如何用-tensorboard-監控訓練">如何用 TensorBoard 監控訓練？</h2>
+<p>TensorBoard 適合觀察 YOLOv8 訓練過程中的 loss 與驗證指標。監控曲線可以幫助判斷模型是否過擬合、欠擬合或需要調整資料。</p>
+<pre><code class="hljs language-python">results = model.train(
+    data=<span class="hljs-string">'custom_dataset.yaml'</span>,
+    epochs=<span class="hljs-number">100</span>,
+    imgsz=<span class="hljs-number">640</span>,
+    project=<span class="hljs-string">'YOLOv8_training'</span>,
+    name=<span class="hljs-string">'experiment1'</span>,
+)
+</code></pre>
+<p>優化策略：</p>
+<ul>
+<li>validation 指標停滯時，先檢查標註品質。</li>
+<li>recall 偏低時，補充漏檢場景資料。</li>
+<li>precision 偏低時，檢查類別定義與背景誤標。</li>
+<li>mAP50-95 偏低時，提升標註框一致性與輸入解析度。</li>
+</ul>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>YOLOv8 一定要從預訓練模型開始嗎？</span></h3>
+<p>YOLOv8 不一定要從預訓練模型開始，但自訂資料集通常建議使用預訓練權重微調。從零訓練需要更多資料、時間與算力。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>mAP50 高就代表模型很好嗎？</span></h3>
+<p>mAP50 高只代表 IoU 0.50 門檻下表現不錯。若任務要求精準定位，還要看 mAP50-95 與實際錯誤案例。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Precision 和 Recall 哪個比較重要？</span></h3>
+<p>Precision 和 Recall 的重要性取決於任務成本。誤報成本高時重視 Precision，漏檢成本高時重視 Recall。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>YOLOv8n 和 YOLOv8x 怎麼選？</span></h3>
+<p>即時部署或硬體有限時先選 YOLOv8n 或 YOLOv8s。資料充足且準確率優先時，再評估 YOLOv8l 或 YOLOv8x。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>訓練 loss 下降但 mAP 沒提升怎麼辦？</span></h3>
+<p>loss 下降但 mAP 沒提升時，應檢查驗證集標註、類別分布、資料切分與輸入解析度。這種情況常代表模型在學訓練資料，但泛化沒有改善。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Ultralytics，〈<a href="https://docs.ultralytics.com/usage/python/" target="_blank" rel="noopener noreferrer">YOLO Python Usage</a>〉，存取日期：2026-08-27。</li>
+<li>Ultralytics，〈<a href="https://docs.ultralytics.com/guides/yolo-performance-metrics/" target="_blank" rel="noopener noreferrer">YOLO Performance Metrics</a>〉，存取日期：2026-08-27。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/yolov8-object-detection-model">YOLOv8 物件偵測模型介紹：安裝、預測、訓練與輸出流程</a>：同樣聚焦 YOLOv8、物體偵測，可接著比較不同情境的做法。</li>
+<li><a href="/post/object-detection-technology-introduction">物體偵測技術介紹：Bounding Box、類別分類與常見模型架構</a>：同樣聚焦 物體偵測，可接著比較不同情境的做法。</li>
+<li><a href="/post/yolov8-usage-example">YOLOv8 使用範例：Roboflow 資料集訓練與 best.pt 即時偵測</a>：同樣聚焦 YOLOv8，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-08-16</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

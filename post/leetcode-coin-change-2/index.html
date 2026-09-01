@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeetCode Coin Change 2：動態規劃求硬幣組合數完整解析｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Coin Change 2 動態規劃題解：用 JavaScript 實作一維 DP 陣列，逐步推導 coins=[2,5,8]、amount=16 的組合數，講解避免重複計數的迴圈順序與狀態轉移思路。" />
+<meta name="keywords" content="後端開發, LeetCode, 動態規劃, 演算法, JavaScript" />
+<link rel="canonical" href="https://claire-chang.com/post/leetcode-coin-change-2/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="LeetCode Coin Change 2：動態規劃求硬幣組合數完整解析｜Claire Chang" />
+<meta property="og:description" content="Coin Change 2 動態規劃題解：用 JavaScript 實作一維 DP 陣列，逐步推導 coins=[2,5,8]、amount=16 的組合數，講解避免重複計數的迴圈順序與狀態轉移思路。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/leetcode-coin-change-2/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_leetcode-coin-change-2-00c27588.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_leetcode-coin-change-2-00c27588.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="LeetCode Coin Change 2：動態規劃求硬幣組合數完整解析｜Claire Chang" />
+<meta name="twitter:description" content="Coin Change 2 動態規劃題解：用 JavaScript 實作一維 DP 陣列，逐步推導 coins=[2,5,8]、amount=16 的組合數，講解避免重複計數的迴圈順序與狀態轉移思路。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_leetcode-coin-change-2-00c27588.jpg" />
+<meta property="article:published_time" content="2022-10-05" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="LeetCode" />
+<meta property="article:tag" content="動態規劃" />
+<meta property="article:tag" content="演算法" />
+<meta property="article:tag" content="JavaScript" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"LeetCode Coin Change 2：動態規劃求硬幣組合數完整解析","item":"https://claire-chang.com/post/leetcode-coin-change-2/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/leetcode-coin-change-2/#article","headline":"LeetCode Coin Change 2：動態規劃求硬幣組合數完整解析","description":"Coin Change 2 動態規劃題解：用 JavaScript 實作一維 DP 陣列，逐步推導 coins=[2,5,8]、amount=16 的組合數，講解避免重複計數的迴圈順序與狀態轉移思路。","image":"https://claire-chang.com/images/tech/hero_leetcode-coin-change-2.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2022-10-05","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/leetcode-coin-change-2/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"LeetCode, 動態規劃, 演算法, JavaScript","about":[{"@type":"Thing","name":"動態規劃"},{"@type":"Thing","name":"演算法"}],"mentions":[{"@type":"Thing","name":"LeetCode"},{"@type":"Thing","name":"JavaScript"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/leetcode-coin-change-2/#faq","mainEntity":[{"@type":"Question","name":"Coin Change 2 和 Coin Change 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"Coin Change 求的是湊出金額所需的「最少硬幣數」，每個 DP 狀態都有直接意義；Coin Change 2 求的是「組合數」，DP 陣列存的是中間累加的半狀態，直覺上更難理解。"}},{"@type":"Question","name":"為什麼外層迴圈要遍歷硬幣、內層才遍歷金額？","acceptedAnswer":{"@type":"Answer","text":"外層按硬幣迭代時，每種組合的面額順序被固定，5,5,2,2,2 只會被計數一次；若對調迴圈順序，同一組合的不同排列會被重複計數，得到的會是排列數而非組合數。"}},{"@type":"Question","name":"dp[0] 為什麼要設為 1？","acceptedAnswer":{"@type":"Answer","text":"dp[0]=1 代表「湊出 0 元」恰有一種方式——什麼都不選的空組合。它是所有狀態轉移的基底，例如 dp[5] 能靠 dp[5-5]=dp[0] 累加到第一種組法。"}},{"@type":"Question","name":"這題的時間與空間複雜度是多少？","acceptedAnswer":{"@type":"Answer","text":"時間複雜度 O(amount × coins 數量)，空間複雜度 O(amount)，因為只使用一個長度為 amount+1 的一維陣列。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_leetcode-coin-change-2.webp" alt="硬幣堆疊與動態規劃演算法概念圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2022-10-05">2022-10-05</time></span><span class="post-meta-pill">LeetCode · 動態規劃 · 演算法 · JavaScript</span></div></div><h1 class="insights-hero-title">LeetCode Coin Change 2：動態規劃求硬幣組合數完整解析</h1><p class="insights-hero-description">Coin Change 2 動態規劃題解：用 JavaScript 實作一維 DP 陣列，逐步推導 coins=[2,5,8]、amount=16 的組合數，講解避免重複計數的迴圈順序與狀態轉移思路。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Coin Change 2 是一道動態規劃（DP）題目：給定金額 <code>amount</code> 與硬幣面額陣列 <code>coins</code>，求「湊出該金額的組合數」。它和前一題 Coin Change（求最少硬幣數）最大的差別在於：上一題每一個暫存狀態都有直接意義（「某金額最少要幾枚硬幣」），而這一題的 DP 陣列存的真的只是「中間狀態」，一開始很難直覺理解。這篇文章記錄我當初看著別人的答案回推理論的完整思考過程，幫助遇到類似問題時知道該用什麼角度拆解。</p>
+</div><section aria-labelledby="coin-change-2-題目與最終解法"><h2 id="coin-change-2-題目與最終解法">Coin Change 2 題目與最終解法</h2>
+<p>題目連結：<a href="https://leetcode.com/problems/coin-change-2" target="_blank" rel="noopener noreferrer">Coin Change 2</a>。</p>
+<p>以下是最終通過的 JavaScript 實作：</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">var</span> change = <span class="hljs-keyword">function</span>(<span class="hljs-params">amount, coins</span>) {
+    <span class="hljs-keyword">let</span> dp = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Array</span>(amount+<span class="hljs-number">1</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-number">0</span>);
+    dp[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> coin <span class="hljs-keyword">of</span> coins){
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=coin;i&#x3C;=amount;i++){
+            dp[i]+=dp[i-coin];
+        }
+    }
+    <span class="hljs-keyword">return</span> dp[amount]
+};
+</code></pre>
+<p>短短幾行，但每一行的設計都有理由。下面逐步拆解。</p>
+</section><section aria-labelledby="為什麼-dp-陣列長度是-amount-1-dp-0-要設為-1"><h2 id="為什麼-dp-陣列長度是-amount-1-dp-0-要設為-1">為什麼 DP 陣列長度是 amount+1、dp[0] 要設為 1？</h2>
+<p>首先要建立暫存動態編程的序列 <code>dp</code>，裡面的值儲存的是一個暫時狀態，讓我們計算下一個值時可以拿前一個運算到一半的值繼續運算。長度為 <code>amount+1</code>，這樣才存得到 <code>dp[amount]</code>。</p>
+<p>接著把 <code>dp[0] = 1</code>：這是所有計算的起點，代表在分解狀態下，若自己可以被自己整除，就有一種解法。</p>
+</section><section aria-labelledby="用-coins-2-5-8-amount-16-逐步推導"><h2 id="用-coins-2-5-8-amount-16-逐步推導">用 coins=[2,5,8]、amount=16 逐步推導</h2>
+<p>以 <code>coins=[2,5,8]</code>、<code>amount=16</code> 為例。</p>
+<h3>第一步：只放入硬幣 2</h3>
+<p>先觀察 <code>coins:[2], amount:16</code> 這個半狀態：</p>
+<pre><code>dp = [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]
+</code></pre>
+<p>意思是：若硬幣只有 2，可以用 2 組成 0, 2, 4, 6, 8, 10, 12, 14, 16，皆只有一種組法。</p>
+<h3>第二步：加入硬幣 5，避免重複計數</h3>
+<p>把 5 加進去時，關鍵是拆解任務並避免重複狀態：要組成 16，<code>5,5,2,2,2</code> 和 <code>2,2,5,5,2</code> 其實是相同的答案。所以我們可以思考——以 2,2,2,5,5 來說，就是單純用 2 coin×3 個＝6，加上單純用 5 coin×2 個＝10。那麼問題變成：在 5 和 2 共同組成的狀況下，5 的分佈是什麼？</p>
+<p>amount 為 16 時，5 的數量有三種可能：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>5 的數量</th><th>剩餘需用 2 組成</th><th>用 2 能否組成（查 coins=[2] 的表）</th></tr></thead><tbody><tr><td>1 個 5</td><td>11</td><td>0 種</td></tr><tr><td>2 個 5</td><td>6</td><td>0 種</td></tr><tr><td>3 個 5</td><td>1</td><td>0 種</td></tr></tbody></table></div>
+<p>等等——這裡筆記當初推導時算出「用 2 組成 6 有 0 種」是筆誤，實際上 6=2×3 有 1 種，所以 2 個 5＋6 的組合是成立的。動態編程當然沒這麼容易思考（真哭），手動枚舉容易漏，這正是需要 DP 對照表的原因：這邊的 dp 存的是暫時半狀態的對照表，需要算出從 5 到 16 所有可能用 [2,5] 組成的完整結果。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼內層迴圈要從 coin 開始、由小到大？</span></h3>
+<p>首先，為什麼從 5 開始迭代：一定要大於等於 5 才有可能用 5 組成結果，而且如同 <code>dp[0]</code> 一樣，<code>dp[5]</code> 因為硬幣列表有 5，一定會多一種組法。</p>
+<p>從上面的推論可以觀察到一個核心規則：<strong>要知道能否用 5 組成總數，主要觀察「要組成的總數」減掉現有 coin 面額的數字，能不能用之前的硬幣組成</strong>。</p>
+<p>所以若要知道 6 能不能用 [5,2] 組成，就查 coins:[2] 暫存表的 <code>dp[6（要組的數字）−5（現有硬幣）] = dp[1]</code>（能不能用 2 組成 1）＝0，可得知是 0 種可能，以此類推。</p>
+<p>這邊非常重要的是迭代<strong>一定要從小到大</strong>，狀態才能累加：</p>
+<ul>
+<li>先得知 5 可以組成 5，把 <code>dp[5]</code> 更新為 1（原本只有 coins:[2] 時是 0）；</li>
+<li>算 10 時，才能得到 <code>dp[10-5]=dp[5]=1</code>（得知可以用 5 組成 10），再加上單純用 2 組成 10 的可能性（coins=[2] 時 <code>dp[10]</code> 為 1），可知 10 可單純用 5 組成、也可用 [2,5] 組成，共 2 種，把 <code>dp[10]</code> 更新為 2；</li>
+<li>接著算 <code>dp[15]</code> 時才能利用 <code>dp[15-5]=dp[10]=2</code>，再加上 coins=[2] 時的 <code>dp[15]=0</code>，得知 <code>dp[15]</code> 為 2。</li>
+</ul>
+<p>於是 coins=[2,5] 時的 dp 對照表為：</p>
+<pre><code>dp = [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2]
+</code></pre>
+<h3>第三步：加入硬幣 8，得到答案</h3>
+<p>用同樣的步驟與概念把 8 加進硬幣列表，得到：</p>
+<pre><code>dp = [1, 0, 1, 0, 1, 1, 1, 1, 2, 1, 3, 1, 3, 2, 3, 3, 4]
+</code></pre>
+<p>最後推得：用 [2,5,8] 組成 16 共有 <strong>4 種可能性</strong>，也就是 <code>dp[16]</code> 的值。</p>
+</section><section aria-labelledby="這題的核心觀念整理"><h2 id="這題的核心觀念整理">這題的核心觀念整理</h2>
+<ul>
+<li><strong>一維 DP + 外層硬幣、內層金額由小到大</strong>：外層按硬幣迭代，保證每種組合只以「面額固定的順序」被計數一次，從而避免 5,5,2,2,2 與 2,2,5,5,2 這類排列重複；若把迴圈順序對調（外層金額、內層硬幣），算出來會變成排列數而非組合數。</li>
+<li><strong>狀態轉移式 <code>dp[i] += dp[i-coin]</code></strong>：把「組成 i」拆成「最後一枚用 coin，剩下的 i−coin 用前面處理過的硬幣組成」。</li>
+<li><strong>dp[0]=1 是基底</strong>：空組合恰有一種，所有累加都從這裡開始。</li>
+</ul>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Coin Change 2 和 Coin Change 有什麼不同？</span></h3>
+<p>Coin Change 求的是湊出金額所需的「最少硬幣數」，每個 DP 狀態都有直接意義；Coin Change 2 求的是「組合數」，DP 陣列存的是中間累加的半狀態，直覺上更難理解。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼外層迴圈要遍歷硬幣、內層才遍歷金額？</span></h3>
+<p>外層按硬幣迭代時，每種組合的面額順序被固定，5,5,2,2,2 只會被計數一次；若對調迴圈順序，同一組合的不同排列會被重複計數，得到的會是排列數而非組合數。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>dp[0] 為什麼要設為 1？</span></h3>
+<p>dp[0]=1 代表「湊出 0 元」恰有一種方式——什麼都不選的空組合。它是所有狀態轉移的基底，例如 dp[5] 能靠 dp[5-5]=dp[0] 累加到第一種組法。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>這題的時間與空間複雜度是多少？</span></h3>
+<p>時間複雜度 O(amount × coins 數量)，空間複雜度 O(amount)，因為只使用一個長度為 amount+1 的一維陣列。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://leetcode.com/problems/coin-change-2" target="_blank" rel="noopener noreferrer">LeetCode 518. Coin Change II</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/leetcode-coin-change">LeetCode Coin Change：用動態規劃找出最少硬幣組合</a>：同樣聚焦 LeetCode、動態規劃，可接著比較不同情境的做法。</li>
+<li><a href="/post/leetcode-maximum-value-k-coins-from-piles">LeetCode 2218 Maximum Value of K Coins From Piles 解題筆記</a>：同樣聚焦 LeetCode、JavaScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/link-game-algorithm-introduction">連連看演算法介紹：時間複雜度、圖形資料結構與 BFS/DFS 搜尋</a>：同樣聚焦 演算法，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2022-10-05，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2022-10-05</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

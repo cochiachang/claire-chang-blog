@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixiJS 按鈕製作基礎：Sprite 互動、ButtonBase 與靜音切換｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 PixiJS 按鈕如何開啟互動事件、抽出 ButtonBase 父類別，並實作聲音開關按鈕與 Howler 靜音功能。" />
+<meta name="keywords" content="前端開發, PixiJS, TypeScript, 遊戲開發, 前端互動" />
+<link rel="canonical" href="https://claire-chang.com/post/pixijs-button-basics/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="PixiJS 按鈕製作基礎：Sprite 互動、ButtonBase 與靜音切換｜Claire Chang" />
+<meta property="og:description" content="說明 PixiJS 按鈕如何開啟互動事件、抽出 ButtonBase 父類別，並實作聲音開關按鈕與 Howler 靜音功能。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/pixijs-button-basics/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/pixijs-button-basics-result-2fcc0236.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/pixijs-button-basics-result-2fcc0236.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PixiJS 按鈕製作基礎：Sprite 互動、ButtonBase 與靜音切換｜Claire Chang" />
+<meta name="twitter:description" content="說明 PixiJS 按鈕如何開啟互動事件、抽出 ButtonBase 父類別，並實作聲音開關按鈕與 Howler 靜音功能。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/pixijs-button-basics-result-2fcc0236.jpg" />
+<meta property="article:published_time" content="2018-11-02" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="PixiJS" />
+<meta property="article:tag" content="TypeScript" />
+<meta property="article:tag" content="遊戲開發" />
+<meta property="article:tag" content="前端互動" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"PixiJS 按鈕製作基礎：Sprite 互動、ButtonBase 與靜音切換","item":"https://claire-chang.com/post/pixijs-button-basics/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/pixijs-button-basics/#article","headline":"PixiJS 按鈕製作基礎：Sprite 互動、ButtonBase 與靜音切換","description":"說明 PixiJS 按鈕如何開啟互動事件、抽出 ButtonBase 父類別，並實作聲音開關按鈕與 Howler 靜音功能。","image":"https://claire-chang.com/images/tech/pixijs-button-basics-result.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-11-02","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/pixijs-button-basics/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"PixiJS, TypeScript, 遊戲開發, 前端互動","about":[{"@type":"Thing","name":"遊戲開發"},{"@type":"Thing","name":"前端互動"}],"mentions":[{"@type":"Thing","name":"PixiJS"},{"@type":"Thing","name":"TypeScript"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/pixijs-button-basics/#faq","mainEntity":[{"@type":"Question","name":"PixiJS Sprite 為什麼預設不能點擊？","acceptedAnswer":{"@type":"Answer","text":"PixiJS Sprite 預設主要負責渲染圖片，不會主動做互動 hit test。開啟互動偵測會增加事件判斷成本，所以 PixiJS 讓開發者針對需要點擊的物件明確設定互動模式。"}},{"@type":"Question","name":"PixiJS 舊版的 interactive 和新版的 eventMode 差在哪裡？","acceptedAnswer":{"@type":"Answer","text":"`interactive = true` 是舊版 PixiJS 常見寫法；現代 PixiJS 使用 `eventMode` 控制互動模式。固定按鈕通常可設為 `eventMode = 'static'`，移動或動畫中的互動目標才需要考慮 `dynamic`。"}},{"@type":"Question","name":"PixiJS 按鈕要用 mouse event、touch event 還是 pointer event？","acceptedAnswer":{"@type":"Answer","text":"新專案建議優先使用 pointer events，因為 pointer events 可統一滑鼠、觸控與觸控筆。維護舊專案時可以先保留 `mousedown`、`mouseup`、`touchstart`、`touchend`，再規劃版本升級。"}},{"@type":"Question","name":"ButtonBase 裡的 trigger() 為什麼是空的？","acceptedAnswer":{"@type":"Answer","text":"`ButtonBase.trigger()` 是留給子類別覆寫的按鈕行為入口。父類別只處理共同互動流程，子類別例如 `SoundBtn` 再決定按下後要靜音、換圖或執行其他功能。"}},{"@type":"Question","name":"PixiJS 按鈕為什麼要設定 anchor.set(0.5)？","acceptedAnswer":{"@type":"Answer","text":"`anchor.set(0.5)` 會把 Sprite 的原點設在圖片中心。按鈕縮放、旋轉或定位時，以中心作為原點通常比左上角更符合 UI 互動效果。"}},{"@type":"Question","name":"Howler.mute(true) 會停止播放聲音嗎？","acceptedAnswer":{"@type":"Answer","text":"`Howler.mute(true)` 會把 Howler 管理的聲音全域靜音，但靜音不等於停止播放。若要停止並重設播放位置，通常要另外使用 stop 類方法。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/pixijs-button-basics-result.webp" alt="PixiJS 連連看遊戲畫面中的聲音按鈕" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-11-02">2018-11-02</time></span><span class="post-meta-pill">PixiJS · TypeScript · 遊戲開發 · 前端互動</span></div></div><h1 class="insights-hero-title">PixiJS 按鈕製作基礎：Sprite 互動、ButtonBase 與靜音切換</h1><p class="insights-hero-description">說明 PixiJS 按鈕如何開啟互動事件、抽出 ButtonBase 父類別，並實作聲音開關按鈕與 Howler 靜音功能。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>PixiJS 按鈕製作的核心是讓 <code>Sprite</code> 進入可互動狀態，再把重複的貼圖、座標、事件與觸發邏輯抽成 <code>ButtonBase</code>。本文保留 2018 年 PixiJS 專案常見的 <code>interactive</code>、<code>buttonMode</code>、<code>mousedown</code>、<code>touchstart</code> 寫法，並補充現代 PixiJS 建議使用 pointer events 與 <code>eventMode</code> 的差異（PixiJS 官方文件，2026 年 8 月存取）。</p>
+</div><section aria-labelledby="pixijs-sprite-如何開啟按鈕互動"><h2 id="pixijs-sprite-如何開啟按鈕互動">PixiJS Sprite 如何開啟按鈕互動？</h2>
+<p>PixiJS Sprite 預設不是按鈕，必須先開啟互動模式並綁定事件。舊版 PixiJS 常用 <code>interactive</code> 與 <code>buttonMode</code>，現代 PixiJS 則建議用 pointer events 統一滑鼠、觸控與觸控筆。</p>
+<p>PixiJS 是用於建立 2D WebGL 與 Canvas 互動畫面的 JavaScript 渲染函式庫。一般 <code>Sprite</code> 只負責顯示圖片；如果每個顯示物件都預設做 hit test，畫面上物件一多就會增加互動偵測成本，所以按鈕要明確 opt-in。</p>
+<p>我當時的筆記中的基本按鈕設定如下：</p>
+<pre><code class="hljs language-js"><span class="hljs-comment">// Opt-in to interactivity</span>
+sprite.<span class="hljs-property">interactive</span> = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// Shows hand cursor</span>
+sprite.<span class="hljs-property">buttonMode</span> = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// Pointers normalize touch and mouse</span>
+sprite.<span class="hljs-title function_">on</span>(<span class="hljs-string">'pointerdown'</span>, onClick);
+sprite.<span class="hljs-title function_">on</span>(<span class="hljs-string">'click'</span>, onClick); <span class="hljs-comment">// mouse-only</span>
+sprite.<span class="hljs-title function_">on</span>(<span class="hljs-string">'tap'</span>, onClick); <span class="hljs-comment">// touch-only</span>
+</code></pre>
+<p>現代 PixiJS 文件建議以 <code>eventMode = 'static'</code> 讓固定互動物件發出事件，並優先使用 <code>pointerdown</code>、<code>pointerup</code>、<code>pointerupoutside</code> 等 pointer events 處理跨裝置輸入（PixiJS Events Guide，2026 年 8 月存取）。維護舊專案時，先確認專案使用的 PixiJS 版本，再決定保留 <code>interactive</code> 或改成 <code>eventMode</code>。</p>
+</section><section aria-labelledby="為什麼要抽出-buttonbase-父類別"><h2 id="為什麼要抽出-buttonbase-父類別">為什麼要抽出 ButtonBase 父類別？</h2>
+<p>ButtonBase 的價值是把每個按鈕都需要的貼圖、座標、互動狀態與事件綁定集中管理。連連看專案有多個按鈕時，具體按鈕只要覆寫 <code>trigger()</code>，不用重複寫相同事件。</p>
+<p>在連連看專案裡，聲音按鈕、重新開始按鈕、提示按鈕的功能不同，但都需要設定貼圖、可點擊狀態、手形游標、座標、錨點，以及按下與放開事件。把這些共用邏輯放進 <code>ButtonBase</code>，後續要加入縮放效果、音效或 disabled 狀態時，也只需要改一個地方。</p>
+<p>我當時的筆記的 <code>ButtonBase.ts</code> 如下：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Sprite</span> = <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">Sprite</span>;
+<span class="hljs-keyword">import</span> {<span class="hljs-title class_">Loader</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">"../core/Loader"</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ButtonBase</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Sprite</span>{
+
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-attr">_id</span>:<span class="hljs-built_in">string</span>, <span class="hljs-attr">textureID</span>:<span class="hljs-built_in">string</span>, <span class="hljs-attr">_x</span>:<span class="hljs-built_in">number</span>, <span class="hljs-attr">_y</span>:<span class="hljs-built_in">number</span></span>) {
+        <span class="hljs-variable language_">super</span>();
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">texture</span> = <span class="hljs-title class_">Loader</span>.<span class="hljs-property">resources</span>[_id].<span class="hljs-property">textures</span>[textureID];
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">interactive</span> = <span class="hljs-literal">true</span>;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">buttonMode</span> = <span class="hljs-literal">true</span>;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">x</span> = _x;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">y</span> = _y;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">anchor</span>.<span class="hljs-title function_">set</span>(<span class="hljs-number">0.5</span>);
+
+        <span class="hljs-comment">//按下效果</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"mousedown"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseDownEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"mouseup"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseUpEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"mouseout"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseOutEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"touchstart"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseDownEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"touchend"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseUpEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"mouseup"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">trigger</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"touchend"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">trigger</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">trigger</span>(<span class="hljs-params"></span>){
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">mouseDownEffect</span>():<span class="hljs-built_in">void</span>{
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">mouseUpEffect</span>():<span class="hljs-built_in">void</span>{
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">mouseOutEffect</span>():<span class="hljs-built_in">void</span>{
+    }
+}
+</code></pre>
+<p><code>anchor.set(0.5)</code> 會把 Sprite 的錨點設在圖片中心，讓位置與縮放比較符合按鈕互動直覺；PixiJS Sprite 文件也說明，anchor 的 <code>(0.5, 0.5)</code> 代表以紋理中心作為原點（PixiJS Sprite API，2026 年 8 月存取）。</p>
+</section><section aria-labelledby="soundbtn-如何實作聲音開關按鈕"><h2 id="soundbtn-如何實作聲音開關按鈕">SoundBtn 如何實作聲音開關按鈕？</h2>
+<p>SoundBtn 繼承 ButtonBase 後，只需要管理靜音狀態、呼叫聲音管理器，並依狀態切換貼圖。按鈕的互動事件留在父類別，聲音開關行為留在子類別。</p>
+<p><code>SoundBtn</code> 的資訊增益在於「按鈕狀態」與「遊戲音訊狀態」分開處理。<code>SoundBtn</code> 保存 <code>isMute</code>，<code>SoundMgr</code> 負責真正呼叫音訊函式庫；這樣未來若要把按鈕圖片改成文字、或把 Howler 換成別的音訊方案，影響範圍會比較小。</p>
+<p>我當時的筆記的 <code>SoundBtn.ts</code> 如下：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> {<span class="hljs-title class_">ButtonBase</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">"./ButtonBase"</span>;
+<span class="hljs-keyword">import</span> {<span class="hljs-title class_">Loader</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">"../core/Loader"</span>;
+<span class="hljs-keyword">import</span> {<span class="hljs-title class_">SoundMgr</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">"../core/SoundMgr"</span>;
+
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SoundBtn</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">ButtonBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-attr">isMute</span>: <span class="hljs-built_in">boolean</span> = <span class="hljs-literal">false</span>;
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-variable language_">super</span>(<span class="hljs-string">'Button'</span>,<span class="hljs-string">'Sound_On'</span>,<span class="hljs-number">50</span>,<span class="hljs-number">170</span>);
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">updateImage</span>();
+
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">trigger</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">isMute</span> = !<span class="hljs-variable language_">this</span>.<span class="hljs-property">isMute</span>;
+        <span class="hljs-title class_">SoundMgr</span>.<span class="hljs-title function_">mute</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">isMute</span>);
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">updateImage</span>();
+    }
+    updateImage = <span class="hljs-function">()=></span>{
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">isMute</span>){
+            <span class="hljs-variable language_">this</span>.<span class="hljs-property">texture</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">texture</span> = <span class="hljs-title class_">Loader</span>.<span class="hljs-property">resources</span>[<span class="hljs-string">'Button'</span>].<span class="hljs-property">textures</span>[<span class="hljs-string">'Sound_Off'</span>];
+        } <span class="hljs-keyword">else</span>{
+            <span class="hljs-variable language_">this</span>.<span class="hljs-property">texture</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">texture</span> = <span class="hljs-title class_">Loader</span>.<span class="hljs-property">resources</span>[<span class="hljs-string">'Button'</span>].<span class="hljs-property">textures</span>[<span class="hljs-string">'Sound_On'</span>];
+        }
+    }
+
+}
+</code></pre>
+<p>這段程式保留了我當時的稿件寫法。實務整理時可以順手把 <code>this.texture = this.texture = ...</code> 改成單次指定，但文章先保留當時的範例，讓讀者能對照 2018 年專案內容。</p>
+</section><section aria-labelledby="gamescene-要在哪裡加入按鈕"><h2 id="gamescene-要在哪裡加入按鈕">GameScene 要在哪裡加入按鈕？</h2>
+<p>GameScene 適合集中把背景、按鈕與其他遊戲物件加進 stage。按鈕類別負責自身行為，場景類別只負責建立物件與加入顯示清單。</p>
+<p>因為除了聲音按鈕之外，遊戲場景通常還會有背景、角色、牌面、分數與倒數計時器。把場景組裝放進 <code>GameScene.draw()</code>，可以避免 <code>Main</code> 或入口檔同時承擔載入、畫面建立與互動邏輯。</p>
+<p>我當時的筆記的 <code>GameScene.ts</code> 如下：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> {<span class="hljs-title class_">Loader</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">"../core/Loader"</span>;
+<span class="hljs-keyword">import</span> {application} <span class="hljs-keyword">from</span> <span class="hljs-string">"../Main"</span>;
+<span class="hljs-keyword">import</span> {<span class="hljs-title class_">SoundBtn</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">"./SoundBtn"</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GameScene</span> {
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params"></span>){
+        <span class="hljs-comment">//加入背景</span>
+        application.<span class="hljs-property">stage</span>.<span class="hljs-title function_">addChild</span>(<span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">Sprite</span>.<span class="hljs-title function_">from</span>(<span class="hljs-title class_">Loader</span>.<span class="hljs-property">resources</span>[<span class="hljs-string">"background"</span>].<span class="hljs-property">texture</span>));
+        <span class="hljs-comment">//加入按鈕</span>
+        application.<span class="hljs-property">stage</span>.<span class="hljs-title function_">addChild</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">SoundBtn</span>());
+    }
+}
+</code></pre>
+<p>這個分層方式雖然簡單，但對小型遊戲很實用：<code>ButtonBase</code> 管互動事件，<code>SoundBtn</code> 管聲音按鈕行為，<code>GameScene</code> 管畫面放哪些物件。</p>
+</section><section aria-labelledby="soundmgr-如何用-howler-做靜音功能"><h2 id="soundmgr-如何用-howler-做靜音功能">SoundMgr 如何用 Howler 做靜音功能？</h2>
+<p>SoundMgr 可以提供全域靜音入口，讓按鈕不直接依賴 Howler 的細節。Howler 的 <code>Howler.mute(true)</code> 會全域靜音，<code>Howler.mute(false)</code> 會解除靜音。</p>
+<p>Howler.js 是瀏覽器音訊函式庫，常用於遊戲音效與背景音樂。Howler 官方 README 說明，<code>Howler.mute(muted)</code> 是全域方法，參數為 <code>true</code> 時靜音所有聲音，參數為 <code>false</code> 時解除全域靜音（Howler.js README，2026 年 8 月存取）。</p>
+<p>我當時的筆記在 <code>SoundMgr.ts</code> 加上的靜音功能如下：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">static</span> <span class="hljs-attr">isMute</span>: <span class="hljs-built_in">boolean</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title function_">mute</span>(<span class="hljs-attr">value</span>:<span class="hljs-built_in">boolean</span>):<span class="hljs-built_in">void</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">isMute</span> = value;
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">isMute</span>) {
+        <span class="hljs-comment">//禁聲</span>
+        <span class="hljs-title class_">Howler</span>.<span class="hljs-title function_">mute</span>(<span class="hljs-literal">true</span>);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">//出聲</span>
+        <span class="hljs-title class_">Howler</span>.<span class="hljs-title function_">mute</span>(<span class="hljs-literal">false</span>);
+    }
+}
+</code></pre>
+<p>如果專案後續有更多聲音設定，可以讓 <code>SoundMgr</code> 繼續統一管理音量、暫停、恢復與音效分類，避免 UI 按鈕散落直接呼叫 <code>Howler</code>。</p>
+</section><section aria-labelledby="pixijs-按鈕基礎實作流程是什麼"><h2 id="pixijs-按鈕基礎實作流程是什麼">PixiJS 按鈕基礎實作流程是什麼？</h2>
+<p>PixiJS 按鈕基礎流程可以拆成五步：開啟 Sprite 互動、建立 ButtonBase、建立具體按鈕、加入場景、串接功能管理器。這個流程適合先做出可點擊 UI，再逐步加入動畫與狀態控制。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>步驟</th><th>檔案</th><th>責任</th></tr></thead><tbody><tr><td>1</td><td><code>ButtonBase.ts</code></td><td>設定 texture、座標、anchor、互動事件</td></tr><tr><td>2</td><td><code>SoundBtn.ts</code></td><td>切換 <code>isMute</code>，更新按鈕貼圖</td></tr><tr><td>3</td><td><code>GameScene.ts</code></td><td>把背景與按鈕加入 <code>application.stage</code></td></tr><tr><td>4</td><td><code>SoundMgr.ts</code></td><td>呼叫 <code>Howler.mute()</code> 控制全域聲音</td></tr><tr><td>5</td><td>後續擴充</td><td>加入按下動畫、disabled、防連點與 pointer events</td></tr></tbody></table></div>
+<p>今日成果如下，畫面左側可以看到聲音按鈕已加入連連看遊戲場景：</p>
+<figure class="article-figure"><img src="/images/tech/pixijs-button-basics-result.webp" alt="PixiJS 連連看遊戲畫面中的聲音按鈕" loading="lazy" class="markdown-img"></figure>
+<p>這篇筆記另附線上 demo 與檔案下載，但來源連結不是 HTTPS，本文為了維持外部連結安全性與 GEO 寫作規範，未把非 HTTPS 連結放進正式參考資料。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS Sprite 為什麼預設不能點擊？</span></h3>
+<p>PixiJS Sprite 預設主要負責渲染圖片，不會主動做互動 hit test。開啟互動偵測會增加事件判斷成本，所以 PixiJS 讓開發者針對需要點擊的物件明確設定互動模式。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS 舊版的 interactive 和新版的 eventMode 差在哪裡？</span></h3>
+<p><code>interactive = true</code> 是舊版 PixiJS 常見寫法；現代 PixiJS 使用 <code>eventMode</code> 控制互動模式。固定按鈕通常可設為 <code>eventMode = 'static'</code>，移動或動畫中的互動目標才需要考慮 <code>dynamic</code>。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS 按鈕要用 mouse event、touch event 還是 pointer event？</span></h3>
+<p>新專案建議優先使用 pointer events，因為 pointer events 可統一滑鼠、觸控與觸控筆。維護舊專案時可以先保留 <code>mousedown</code>、<code>mouseup</code>、<code>touchstart</code>、<code>touchend</code>，再規劃版本升級。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ButtonBase 裡的 trigger() 為什麼是空的？</span></h3>
+<p><code>ButtonBase.trigger()</code> 是留給子類別覆寫的按鈕行為入口。父類別只處理共同互動流程，子類別例如 <code>SoundBtn</code> 再決定按下後要靜音、換圖或執行其他功能。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS 按鈕為什麼要設定 anchor.set(0.5)？</span></h3>
+<p><code>anchor.set(0.5)</code> 會把 Sprite 的原點設在圖片中心。按鈕縮放、旋轉或定位時，以中心作為原點通常比左上角更符合 UI 互動效果。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Howler.mute(true) 會停止播放聲音嗎？</span></h3>
+<p><code>Howler.mute(true)</code> 會把 Howler 管理的聲音全域靜音，但靜音不等於停止播放。若要停止並重設播放位置，通常要另外使用 stop 類方法。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>PixiJS 官方文件，Events / Interaction：<a href="https://pixijs.com/8.x/guides/components/events" target="_blank" rel="noopener noreferrer">https://pixijs.com/8.x/guides/components/events</a>（存取日期：2026-08-28）</li>
+<li>PixiJS API 文件，Sprite anchor：<a href="https://api.pixijs.io/%40pixi/sprite/PIXI/Sprite.html" target="_blank" rel="noopener noreferrer">https://api.pixijs.io/%40pixi/sprite/PIXI/Sprite.html</a>（存取日期：2026-08-28）</li>
+<li>Howler.js GitHub README，Global Methods：<a href="https://github.com/goldfire/howler.js/blob/master/README.md" target="_blank" rel="noopener noreferrer">https://github.com/goldfire/howler.js/blob/master/README.md</a>（存取日期：2026-08-28）</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/pixijs-hint-refresh-buttons-link-game">PixiJS 提示與重整按鈕教學：連連看遊戲功能實作</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-link-game-undo-button">PixiJS 復原按鈕教學：用 Stack 實作連連看 Undo 功能</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-scene-setup">PixiJS 場景設定教學：Application、Canvas 與自動縮放</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-11-02</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

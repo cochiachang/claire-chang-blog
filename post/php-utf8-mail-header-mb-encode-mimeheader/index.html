@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PHP 寄送 UTF-8 信件標題變亂碼怎麼辦？用 mb_encode_mimeheader 解決 header 編碼｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="寄送 UTF-8 信件時標題或寄件者常變成亂碼，原因是電子郵件表頭不允許雙位元文字。本文整理使用 PHP mb_encode_mimeheader() 與 base64 編碼解決 mail header 亂碼的完整做法。" />
+<meta name="keywords" content="後端開發, PHP, mail, UTF-8, mb_encode_mimeheader, 編碼" />
+<link rel="canonical" href="https://claire-chang.com/post/php-utf8-mail-header-mb-encode-mimeheader/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="PHP 寄送 UTF-8 信件標題變亂碼怎麼辦？用 mb_encode_mimeheader 解決 header 編碼｜Claire Chang" />
+<meta property="og:description" content="寄送 UTF-8 信件時標題或寄件者常變成亂碼，原因是電子郵件表頭不允許雙位元文字。本文整理使用 PHP mb_encode_mimeheader() 與 base64 編碼解決 mail header 亂碼的完整做法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/php-utf8-mail-header-mb-encode-mimeheader/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_php-utf8-mail-header-mb-encode-mimeheader-8c136fb3.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_php-utf8-mail-header-mb-encode-mimeheader-8c136fb3.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PHP 寄送 UTF-8 信件標題變亂碼怎麼辦？用 mb_encode_mimeheader 解決 header 編碼｜Claire Chang" />
+<meta name="twitter:description" content="寄送 UTF-8 信件時標題或寄件者常變成亂碼，原因是電子郵件表頭不允許雙位元文字。本文整理使用 PHP mb_encode_mimeheader() 與 base64 編碼解決 mail header 亂碼的完整做法。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_php-utf8-mail-header-mb-encode-mimeheader-8c136fb3.jpg" />
+<meta property="article:published_time" content="2011-02-14" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="PHP" />
+<meta property="article:tag" content="mail" />
+<meta property="article:tag" content="UTF-8" />
+<meta property="article:tag" content="mb_encode_mimeheader" />
+<meta property="article:tag" content="編碼" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"PHP 寄送 UTF-8 信件標題變亂碼怎麼辦？用 mb_encode_mimeheader 解決 header 編碼","item":"https://claire-chang.com/post/php-utf8-mail-header-mb-encode-mimeheader/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/php-utf8-mail-header-mb-encode-mimeheader/#article","headline":"PHP 寄送 UTF-8 信件標題變亂碼怎麼辦？用 mb_encode_mimeheader 解決 header 編碼","description":"寄送 UTF-8 信件時標題或寄件者常變成亂碼，原因是電子郵件表頭不允許雙位元文字。本文整理使用 PHP mb_encode_mimeheader() 與 base64 編碼解決 mail header 亂碼的完整做法。","image":"https://claire-chang.com/images/tech/hero_php-utf8-mail-header-mb-encode-mimeheader.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2011-02-14","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/php-utf8-mail-header-mb-encode-mimeheader/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"PHP, mail, UTF-8, mb_encode_mimeheader, 編碼","about":[{"@type":"Thing","name":"編碼"}],"mentions":[{"@type":"Thing","name":"PHP"},{"@type":"Thing","name":"mail"},{"@type":"Thing","name":"UTF-8"},{"@type":"Thing","name":"mb_encode_mimeheader"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/php-utf8-mail-header-mb-encode-mimeheader/#faq","mainEntity":[{"@type":"Question","name":"為什麼信件內文正常，只有標題和寄件者是亂碼？","acceptedAnswer":{"@type":"Answer","text":"因為信件內文可以靠 `Content-type: charset=utf-8` 宣告編碼，但電子郵件標準格式的表頭不允許雙位元文字，中文主旨與寄件者名稱必須用 `mb_encode_mimeheader()` 或 `=?UTF-8?B?...?=` 的 MIME encoded-word 格式另外編碼。"}},{"@type":"Question","name":"mb_encode_mimeheader() 函式不存在怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"代表主機沒有安裝 PHP 的 mbstring 函式庫。可以改用 `base64_encode()` 手動組出 `=?UTF-8?B?...?=` 格式的字串，放在主旨或 From 欄位中，效果與 `mb_encode_mimeheader()` 相同。"}},{"@type":"Question","name":"Content-type header 要設成什麼才能讓內文顯示 UTF-8？","acceptedAnswer":{"@type":"Answer","text":"在 headers 中加上 `MIME-Version: 1.0` 與 `Content-type: text/html; charset=utf-8`，並確保程式內部編碼（`mb_internal_encoding`）與實際送出的內容都是 UTF-8，內文就不會出現亂碼。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_php-utf8-mail-header-mb-encode-mimeheader.webp" alt="桌上型筆電螢幕上顯示著密密麻麻的程式碼，呈現後端開發除錯的情境" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2011-02-14">2011-02-14</time></span><span class="post-meta-pill">PHP · mail · UTF-8 · mb_encode_mimeheader · 編碼</span></div></div><h1 class="insights-hero-title">PHP 寄送 UTF-8 信件標題變亂碼怎麼辦？用 mb_encode_mimeheader 解決 header 編碼</h1><p class="insights-hero-description">寄送 UTF-8 信件時標題或寄件者常變成亂碼，原因是電子郵件表頭不允許雙位元文字。本文整理使用 PHP mb_encode_mimeheader() 與 base64 編碼解決 mail header 亂碼的完整做法。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>現在大多數的信件系統都已使用 UTF-8，但我之前寄出 UTF-8 的信件時，常會發生信件標題和 headers 資訊變成亂碼的狀況。查了老半天網路才發現，主要原因在於電子郵件標準格式中，表頭的部分不允許使用雙位元文字，所以中文主旨、中文寄件者名稱都會出事。解法是使用 <code>mb_encode_mimeheader()</code> 函式，將雙位元文字編碼為單位元字串。</p>
+</div><section aria-labelledby="為什麼信件標題會變成亂碼"><h2 id="為什麼信件標題會變成亂碼">為什麼信件標題會變成亂碼？</h2>
+<p>電子郵件的標準格式（RFC 822 / MIME）中，表頭（header）的部分只允許 ASCII 單位元文字，而 UTF-8 的中文字是雙位元以上的字元，直接放進 header 就會被郵件系統誤讀成亂碼。內文可以透過 <code>Content-type: text/html; charset=utf-8</code> 宣告編碼，但表頭必須另外用 MIME 編碼處理，這就是 <code>mb_encode_mimeheader()</code> 存在的目的——把雙位元文字編碼成單位元字串再放進 header。</p>
+</section><section aria-labelledby="php-怎麼用-mb-encode-mimeheader-寄出正確的-utf-8-信件"><h2 id="php-怎麼用-mb-encode-mimeheader-寄出正確的-utf-8-信件">PHP 怎麼用 mb_encode_mimeheader 寄出正確的 UTF-8 信件？</h2>
+<p>以下為 headers 的範例，重點有三：先設定內部編碼、header 宣告 charset 為 utf-8、主旨與寄件者名稱都經過 <code>mb_encode_mimeheader()</code> 編碼：</p>
+<pre><code class="hljs language-php"><span class="hljs-title function_ invoke__">mb_internal_encoding</span>(<span class="hljs-string">'UTF-8'</span>);
+<span class="hljs-variable">$headers</span>  = <span class="hljs-string">'MIME-Version: 1.0'</span> . <span class="hljs-string">"\r\n"</span>;
+<span class="hljs-variable">$headers</span> .= <span class="hljs-string">'Content-type: text/html; charset=utf-8'</span> . <span class="hljs-string">"\r\n"</span>;
+<span class="hljs-variable">$headers</span> .= <span class="hljs-string">'From: '</span>.<span class="hljs-title function_ invoke__">mb_encode_mimeheader</span>(<span class="hljs-string">'標題'</span>) .<span class="hljs-string">'&#x3C;test@test.test> '</span> . <span class="hljs-string">"\r\n"</span>;
+<span class="hljs-title function_ invoke__">mail</span>(<span class="hljs-variable">$to</span>, <span class="hljs-title function_ invoke__">mb_encode_mimeheader</span>(<span class="hljs-variable">$title</span>, <span class="hljs-string">'UTF-8'</span>), <span class="hljs-variable">$content</span>, <span class="hljs-variable">$headers</span>);
+</code></pre>
+<p>這樣便可成功解決「郵件標題」或「寄件者」是亂碼的問題。</p>
+</section><section aria-labelledby="沒有安裝-mbstring-函式庫時該怎麼寄信"><h2 id="沒有安裝-mbstring-函式庫時該怎麼寄信">沒有安裝 mbstring 函式庫時該怎麼寄信？</h2>
+<p>若是電腦沒有安裝 <code>mb_encode_mimeheader()</code> 的函式庫（mbstring），則可以使用下面的程式碼，改用 <code>base64_encode()</code> 手動組出 MIME 編碼的字串來寄信：</p>
+<pre><code class="hljs language-php"><span class="hljs-variable">$to</span> = <span class="hljs-string">" yourmail@your.com "</span>; <span class="hljs-comment">//收件者</span>
+<span class="hljs-variable">$subject</span>=<span class="hljs-string">"=?UTF-8?B?"</span>.<span class="hljs-title function_ invoke__">base64_encode</span>(<span class="hljs-string">'主旨'</span>).<span class="hljs-string">"?="</span>; <span class="hljs-comment">//信件標題，解決亂碼問題</span>
+<span class="hljs-variable">$msg</span> = <span class="hljs-string">"smtp發信測試"</span>; <span class="hljs-comment">//信件內容</span>
+<span class="hljs-variable">$from_name</span>=<span class="hljs-string">"香腸"</span>; <span class="hljs-comment">//寄件者名稱</span>
+<span class="hljs-comment">/* 把$from_name進行編碼，解決寄件者名稱亂碼問題 */</span>
+<span class="hljs-variable">$from_name</span>=<span class="hljs-string">"=?UTF-8?B?"</span>.<span class="hljs-title function_ invoke__">base64_encode</span>(<span class="hljs-variable">$from_name</span>).<span class="hljs-string">"?="</span>;
+<span class="hljs-variable">$headers</span> = <span class="hljs-string">"From:"</span>.<span class="hljs-variable">$from_name</span>.<span class="hljs-string">" &#x3C;admin@your.com>"</span>; <span class="hljs-comment">//寄件者名稱和信箱</span>
+<span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">mail</span>(<span class="hljs-string">"<span class="hljs-subst">$to</span>"</span>, <span class="hljs-string">"<span class="hljs-subst">$subject</span>"</span>, <span class="hljs-string">"<span class="hljs-subst">$msg</span>"</span>, <span class="hljs-string">"<span class="hljs-subst">$headers</span>"</span>))
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"信件已經發送成功。"</span>; <span class="hljs-comment">//寄信成功就會顯示的提示訊息</span>
+<span class="hljs-keyword">else</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"信件發送失敗！"</span>; <span class="hljs-comment">//寄信失敗顯示的錯誤訊息</span>
+</code></pre>
+<p>這裡的 <code>=?UTF-8?B?...?=</code> 就是 MIME encoded-word 的格式：宣告字元集為 UTF-8、使用 Base64（B）編碼，讓郵件系統知道要先把字串解碼再顯示。寄件者名稱同樣要編碼，否則收件人看到的 From 欄位一樣會是亂碼。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼信件內文正常，只有標題和寄件者是亂碼？</span></h3>
+<p>因為信件內文可以靠 <code>Content-type: charset=utf-8</code> 宣告編碼，但電子郵件標準格式的表頭不允許雙位元文字，中文主旨與寄件者名稱必須用 <code>mb_encode_mimeheader()</code> 或 <code>=?UTF-8?B?...?=</code> 的 MIME encoded-word 格式另外編碼。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>mb_encode_mimeheader() 函式不存在怎麼辦？</span></h3>
+<p>代表主機沒有安裝 PHP 的 mbstring 函式庫。可以改用 <code>base64_encode()</code> 手動組出 <code>=?UTF-8?B?...?=</code> 格式的字串，放在主旨或 From 欄位中，效果與 <code>mb_encode_mimeheader()</code> 相同。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Content-type header 要設成什麼才能讓內文顯示 UTF-8？</span></h3>
+<p>在 headers 中加上 <code>MIME-Version: 1.0</code> 與 <code>Content-type: text/html; charset=utf-8</code>，並確保程式內部編碼（<code>mb_internal_encoding</code>）與實際送出的內容都是 UTF-8，內文就不會出現亂碼。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>PHP 官方文件：<a href="https://www.php.net/manual/en/function.mb-encode-mimeheader.php" target="_blank" rel="noopener noreferrer">mb_encode_mimeheader</a></li>
+<li>PHP 官方文件：<a href="https://www.php.net/manual/en/function.mail.php" target="_blank" rel="noopener noreferrer">mail 函式</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/php-utf8-mail-header-encoding">PHP 寄送 UTF-8 信件標題亂碼：header 與內文編碼設定完整指南</a>：同樣聚焦 PHP、UTF-8，可接著比較不同情境的做法。</li>
+<li><a href="/post/php-generate-excel-xml-xls">PHP 產生 Excel 文件：用 XML xls 解決 CSV 編碼問題</a>：同樣聚焦 PHP，可接著比較不同情境的做法。</li>
+<li><a href="/post/php-header-file-download">PHP Header 檔案下載控制：Content-Disposition 與安全下載範例</a>：同樣聚焦 PHP，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2011-02-14，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2011-02-14</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

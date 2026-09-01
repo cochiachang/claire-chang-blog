@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Graph RAG：圖形式的檢索增強生成，讓 LLM 回答全局性問題｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Graph RAG 圖形式的檢索增強生成教學，整理微軟論文的完整流程：從文本建立實體知識圖、Leiden 社群檢測、階層式社群摘要，到查詢時生成全局答案，並比較 Graph RAG 與原生 RAG 在全面性與多樣性上的差異。" />
+<meta name="keywords" content="機器學習, Graph RAG, RAG, 知識圖譜, LLM" />
+<link rel="canonical" href="https://claire-chang.com/post/graph-rag/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Graph RAG：圖形式的檢索增強生成，讓 LLM 回答全局性問題｜Claire Chang" />
+<meta property="og:description" content="Graph RAG 圖形式的檢索增強生成教學，整理微軟論文的完整流程：從文本建立實體知識圖、Leiden 社群檢測、階層式社群摘要，到查詢時生成全局答案，並比較 Graph RAG 與原生 RAG 在全面性與多樣性上的差異。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/graph-rag/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_graph-rag-086800ed.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_graph-rag-086800ed.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Graph RAG：圖形式的檢索增強生成，讓 LLM 回答全局性問題｜Claire Chang" />
+<meta name="twitter:description" content="Graph RAG 圖形式的檢索增強生成教學，整理微軟論文的完整流程：從文本建立實體知識圖、Leiden 社群檢測、階層式社群摘要，到查詢時生成全局答案，並比較 Graph RAG 與原生 RAG 在全面性與多樣性上的差異。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_graph-rag-086800ed.jpg" />
+<meta property="article:published_time" content="2024-11-11" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Graph RAG" />
+<meta property="article:tag" content="RAG" />
+<meta property="article:tag" content="知識圖譜" />
+<meta property="article:tag" content="LLM" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Graph RAG：圖形式的檢索增強生成，讓 LLM 回答全局性問題","item":"https://claire-chang.com/post/graph-rag/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/graph-rag/#article","headline":"Graph RAG：圖形式的檢索增強生成，讓 LLM 回答全局性問題","description":"Graph RAG 圖形式的檢索增強生成教學，整理微軟論文的完整流程：從文本建立實體知識圖、Leiden 社群檢測、階層式社群摘要，到查詢時生成全局答案，並比較 Graph RAG 與原生 RAG 在全面性與多樣性上的差異。","image":"https://claire-chang.com/images/tech/hero_graph-rag.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-11-11","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/graph-rag/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"Graph RAG, RAG, 知識圖譜, LLM","about":[{"@type":"Thing","name":"RAG"},{"@type":"Thing","name":"知識圖譜"},{"@type":"Thing","name":"LLM"}],"mentions":[{"@type":"Thing","name":"Graph RAG"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/graph-rag/#faq","mainEntity":[{"@type":"Question","name":"Graph RAG 和一般 RAG 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"一般 RAG 以向量相似度檢索片段文字，擅長回答具體的事實性問題。Graph RAG 則先從文本建立實體知識圖並生成階層式社群摘要，查詢時以這些預摘要組合出全局答案，更適合「整體趨勢、總結觀點」這類需要理解全資料集的問題。"}},{"@type":"Question","name":"Graph RAG 的索引成本會不會很高？","acceptedAnswer":{"@type":"Answer","text":"索引階段需要用 LLM 做實體提取與多輪摘要，是一次性的前置成本。但論文的設計讓查詢時不必把整個資料集塞進上下文，而是重用預先產生的社群摘要，因此在需要長期反覆查詢的資料集上，整體 token 成本反而更低。"}},{"@type":"Question","name":"什麼情境適合用 Graph RAG？","acceptedAnswer":{"@type":"Answer","text":"適合處理大規模文本語料庫、且使用者的問題偏全局性的場景，例如從大量 Podcast 文字稿中歸納產業趨勢、或從海量新聞文章中總結反覆出現的人物與主題。若只是查詢具體事實，傳統 RAG 通常就夠了。"}},{"@type":"Question","name":"Graph RAG 用什麼算法劃分社群？","acceptedAnswer":{"@type":"Answer","text":"論文使用 Leiden 算法進行社群檢測，將實體知識圖劃分為層次化的社群結構。社群內節點的關聯性比社群之間更強，每個社群代表一組彼此關聯緊密的實體，方便後續「分而治之」地生成摘要。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_graph-rag.webp" alt="Graph RAG 管道流程圖：從來源文件建立圖形索引到生成全局答案" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-11-11">2024-11-11</time></span><span class="post-meta-pill">Graph RAG · RAG · 知識圖譜 · LLM</span></div></div><h1 class="insights-hero-title">Graph RAG：圖形式的檢索增強生成，讓 LLM 回答全局性問題</h1><p class="insights-hero-description">Graph RAG 圖形式的檢索增強生成教學，整理微軟論文的完整流程：從文本建立實體知識圖、Leiden 社群檢測、階層式社群摘要，到查詢時生成全局答案，並比較 Graph RAG 與原生 RAG 在全面性與多樣性上的差異。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>我在這篇筆記整理 Graph RAG 的核心概念與完整流程。論文網址：<a href="https://arxiv.org/abs/2404.16130" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/2404.16130</a>。這種方法透過建立基於圖形的文本索引，提升 LLM 對「全球性問題」（需要理解整個資料集才能回答的問題）的回答品質，能夠有效地處理大規模文本語料庫，並且能夠擴展到用戶問題的普遍性和要索引的源文本數量。</p>
+</div><section aria-labelledby="什麼是-graph-rag-它解決了什麼問題"><h2 id="什麼是-graph-rag-它解決了什麼問題">什麼是 Graph RAG？它解決了什麼問題？</h2>
+<p>Graph RAG 管道利用 LLM 衍生的文本圖索引進行資料處理。首先，該管道從來源文件中構建出實體知識圖，將文件中的實體與其關聯關係組織成網狀結構。接著，Graph RAG 使用 LLM 在索引建立階段進行群體預摘要，針對每個具有相似性的實體群體生成摘要，以便更快速地調用相關資訊。當查詢進來時，Graph RAG 可以在查詢時間使用這些預摘要來快速生成「全局答案」。這種方法不僅提升了答案的全面性和多樣性，還能有效降低生成回答時的 token 成本。</p>
+<figure class="article-figure"><img src="/images/articles/graph-rag-1.webp" alt="Graph RAG 管道的流程範例圖" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="graph-rag-系統的工作流程是怎麼運作的"><h2 id="graph-rag-系統的工作流程是怎麼運作的">Graph RAG 系統的工作流程是怎麼運作的？</h2>
+<p><strong>RAG 的作用</strong>：RAG 的目的是提升 LLM 在回答問題時的準確度和廣度。它先從外部數據來源檢索資料，再將這些資料與問題一起添加到 LLM 的上下文中，讓模型能更有針對性地回答問題。</p>
+<p><strong>Graph RAG 的優勢</strong>：和一般 RAG 不同，Graph RAG 使用了「圖形索引」來組織和檢索資料，這種方法能更好地處理大型資料集，並且在回答問題時能提供更豐富、全面的答案。</p>
+<p>其工作流程如下：</p>
+<ul>
+<li>Graph RAG 系統先生成知識圖譜，將文本中的實體和關係組織成「社區」的層次結構（例如，將相關人物和概念歸為同一群）。這樣可以讓每個「社區」包含特定主題的內容，便於更精準地檢索和總結資料。</li>
+<li>當用戶提出問題時，系統從不同層次的社區中選擇最合適的摘要來生成答案，這些答案以多階段的方式被組合，確保包含了關鍵的更全面的回應。</li>
+</ul>
+<p>透過圖形索引，Graph RAG 能達到更高效的資料組織和檢索效果，並在處理多樣性的問題上表現更佳。這對於需要長期反覆查詢的資料集特別有價值，因為它的索引成本相對較低，但效果很好。</p>
+</section><section aria-labelledby="第一步驟-如何預處理參考資料"><h2 id="第一步驟-如何預處理參考資料">第一步驟：如何預處理參考資料？</h2>
+<h3>Text Chunks → Element Instances</h3>
+<p>從文本中識別 Chunks 和提取實體（例如人、地點、組織）及其之間的關係（Instances），以便構建一個結構化的圖形表示。</p>
+<ol>
+<li><strong>實體識別與關係提取</strong>：
+<ul>
+<li>每段源文本被分割為更小的片段。在每個片段中，系統要識別出「節點」和「邊」兩種元素，分別代表「實體」和「實體之間的關係」。</li>
+<li>系統利用 LLM 的多部分提示來達到這個目的，首先識別出所有實體，包括它們的名稱、類型（如人名、地點、組織等）和描述。接著，系統識別出實體之間的明確關係，並提供詳細的關係描述。</li>
+</ul>
+</li>
+<li><strong>自訂與特定領域優化</strong>：
+<ul>
+<li>對於特定領域（如醫學或法律），可以加入一些專門的少量示例（few-shot examples），使 LLM 更好地理解並識別該領域的專業實體。例如，醫學領域可能包含藥品、疾病、治療方法等特定實體。透過提供少量專門的示例，LLM 能更精確地從特定領域的文本中提取相關資訊。</li>
+<li>此外，若希望從節點中提取更多資訊（例如日期、描述或其他相關變數），則可以使用次要的提示來實現。這些額外的資訊（或「協變量」）能為實體提供更多上下文，例如，該實體是什麼主題、對象、來源範圍、開始和結束日期等。</li>
+</ul>
+</li>
+<li><strong>多輪收集過程</strong>：
+<ul>
+<li>為了達到更高的準確性和完整性，系統會使用多輪「收集」方法。首先，LLM 會對提取結果進行初步檢查，並判斷是否已經完全提取。為此，會設置一種「是/否」的強制決策過程來檢查是否所有實體都被提取。若系統確認存在遺漏，則再進行一輪收集。</li>
+<li>系統將引導 LLM 進一步搜尋缺失的實體，甚至會明確提示「在上次提取中錯過了許多實體」，以確保模型在後續的階段中彌補這些缺失。</li>
+<li>這種多輪收集方法的優點是，系統可以使用較大文本片段（塊）來提高處理效率，但同時不會影響提取質量或引入額外噪音。</li>
+</ul>
+</li>
+</ol>
+<h3>Element Instances → Element Summaries</h3>
+<p>如何將文本中提取的實體、關係和主張的資訊進一步轉換為更精簡且有意義的摘要，以構建一個支持查詢的圖形索引。以下是逐步解釋：</p>
+<ol>
+<li><strong>從實例（Instances）到摘要（Summaries）的轉換</strong>：
+<ul>
+<li>使用 LLM 來「提取」來源文本中的實體、關係和主張，其實就是一種抽象總結。這過程中，LLM 不僅要理解文本中明確表述的資訊，還要將隱含資訊（例如隱含的實體關係）轉換為獨立且有意義的摘要。</li>
+<li>為了讓每個圖形元素（如實體節點、關係邊和主張的附加資訊）更具體明確，需要進行額外一輪的 LLM 總結，將這些實例級別的資訊整合為單一的描述性文本塊，方便查詢時直接使用。</li>
+</ul>
+</li>
+<li><strong>實體引用一致性的挑戰</strong>：
+<ul>
+<li>一個潛在問題是，LLM 可能會以不同的格式或名稱來引用相同的實體，這會導致相同實體被多次提取，形成重複的節點。</li>
+<li>為了克服這個問題，<strong>方法設計上會在後續的步驟中偵測並彙整所有相關「社群」實體</strong>。因為 LLM 能辨識出多個名稱變體背後的同一實體，只要這些變體有足夠的連結性，即便名稱不同，系統仍能將它們歸為同一實體群體，這樣就能降低重複節點的影響。</li>
+</ul>
+</li>
+<li><strong>與典型知識圖的區別</strong>：
+<ul>
+<li>傳統的知識圖依賴於簡潔的三元組（主體、謂語、賓語）來進行推理。但這種方法可能過於簡化，無法包含較為複雜或隱含的資訊。</li>
+<li>相較之下，這種基於 LLM 的方法能在圖形節點中保留豐富的描述性文字，這更符合全球查詢導向的摘要需求，同時也更能利用 LLM 處理多變而含糊資訊的能力，使索引更具韌性，能夠適應可能包含噪音的圖結構。</li>
+</ul>
+</li>
+</ol>
+<h3>Element Summaries → Graph Communities</h3>
+<p>將之前建立的圖形索引進一步分割成「社群」或「群組」，以便更有效地進行資訊總結。以下是重點解釋：</p>
+<ol>
+<li><strong>圖形模型的建立</strong>：
+<ul>
+<li>在前一步中已建立了一個索引，這個索引可以表示為「同質無向加權圖」。在這個圖中，實體節點透過關係邊相互連接，並且每條邊的權重反映了該關係實例的標準化計數（即該關係被檢測到的頻率）。</li>
+<li>這意味著，圖中兩個節點之間的關聯越強，邊的權重就越高，能反映出這些實體之間的連結強度。</li>
+</ul>
+</li>
+<li><strong>社群檢測的意義</strong>：
+<ul>
+<li>接下來，透過「社群檢測」算法，可以將圖劃分為不同的社群。這些社群中的節點之間的關聯性比它們與其他社群中的節點來得更強。因此，每個社群代表了彼此關聯較緊密的一組實體。</li>
+<li>這種社群檢測的目的在於便於之後的資訊總結。社群的劃分讓我們可以根據不同的主題、概念或上下文，將實體分成幾個更具內部一致性的子圖。（在這個論文裡面使用了 Leiden 算法來調整社群間的層次性結構）</li>
+</ul>
+</li>
+</ol>
+<h3>Graph Communities → Community Summaries</h3>
+<p>透過這樣的社群劃分，我們可以採用「分而治之」的方法來進行全球性的資訊總結。將整體圖分為多個社群後，可以針對每個社群進行摘要，然後再匯總出一個完整的回答。</p>
+<p><strong>社群摘要的目標與用途</strong>：這些報告式摘要讓用戶能夠在無特定查詢的情況下，直接從整體視角快速了解資料集的結構與語義。例如，使用者可以先在高層級瀏覽不同社群的摘要以尋找感興趣的主題，再逐層深入至提供更多細節的低層級報告。這些摘要還可以作為支持回答全局查詢的資料索引。</p>
+<p><strong>社群摘要的生成方法</strong>：</p>
+<ul>
+<li><strong>葉級社群（最小社群）</strong>：
+<ul>
+<li>首先處理「樹葉級社群」，這些是最基礎、最小的社群單位。對於這些社群中的元素（包括節點、邊、協變量），系統會依據其「顯著性」進行排序，並將這些元素摘要按順序加入 LLM 的上下文窗口，直到達到 token 上限。</li>
+<li>排序方式是根據邊的來源和目標節點的度數（度數總和越高，代表該連結越重要）。因此，邊越顯著，它的相關描述（來源節點、目標節點、連結的協變量和邊本身的描述）就會優先被加入摘要。</li>
+</ul>
+</li>
+<li><strong>高層級社群</strong>：
+<ul>
+<li>對於包含多個葉級社群的高層級社群，若這些社群內的元素摘要總數沒有超過上下文窗口的 token 限制，則可以按照葉級社群的方式生成摘要。</li>
+<li>但如果元素摘要超過上下文窗口的 token 限制，則會優先處理並排名較短的子社群摘要，將較長的元素摘要替換成子社群的簡短摘要，直到所有內容能符合上下文窗口的限制。</li>
+<li>這樣的替換策略確保在儘可能多地保留資訊的同時，符合系統的 token 限制，達到最佳化的摘要效果。</li>
+</ul>
+</li>
+</ul>
+<p><strong>報告式摘要的價值</strong>：這種層次化、逐步濃縮的社群摘要方式，使得用戶可以以「分層瀏覽」的方式逐層深入，從全局到細節快速瞭解資料結構。此外，這些摘要能幫助用戶在資料量極大的情況下，維持資訊的完整性與重點，並能夠進行快速查詢與定位。</p>
+</section><section aria-labelledby="第二步驟-如何根據使用者提問生成最終答案"><h2 id="第二步驟-如何根據使用者提問生成最終答案">第二步驟：如何根據使用者提問生成最終答案？</h2>
+<h3>Community Summaries → Community Answers → Global Answer</h3>
+<p>當收到用戶的查詢後，系統會利用之前生成的社群摘要來產生最終答案，過程分為三步：</p>
+<ol>
+<li><strong>準備社群摘要</strong>：系統將所有的社群摘要隨機打亂，再分成大小合適的小塊，確保資訊平均分佈，不會因為集中於單一區塊而造成資訊缺失。</li>
+<li><strong>生成中間答案</strong>：系統從每一小塊中生成「中間答案」，並為每個答案打分（0–100），分數越高表示這個答案對回答用戶問題越有幫助。分數為 0 的答案會被過濾掉，不再使用。</li>
+<li><strong>匯總成最終答案</strong>：系統將這些中間答案按照分數從高到低排列，然後逐一添加到最終答案的文本中，直到達到內容限制。這樣就組合出一個完整且最具幫助的「全球答案」，用來回答用戶的查詢。</li>
+</ol>
+<p>這樣的流程可以確保系統在回答問題時，不僅能夠全面涵蓋內容，還能提供最相關的資訊。</p>
+</section><section aria-labelledby="如何測試-llm-的全局理解能力"><h2 id="如何測試-llm-的全局理解能力">如何測試 LLM 的全局理解能力？</h2>
+<p>為了評估 RAG 系統能否有效「理解」大型數據集，我需要設計一些特殊的問題，來測試它是否具備全局性的理解能力，而不僅僅是找出某些具體的事實。</p>
+<ol>
+<li><strong>為什麼要特別的問題</strong>：一般的問答數據集（例如 HotPotQA）都是直接查找具體答案，像是「誰是某事件的參與者」這樣的問題。這種方法不足以測試 RAG 系統是否能夠「理解」數據集的整體內容或背景意涵。</li>
+<li><strong>如何生成這些問題</strong>：為了讓 RAG 系統能展示出整體理解能力，我們使用了一種方法來自動生成這些全局性的問題：
+<ul>
+<li>首先，給 LLM 簡單描述一下數據集的內容，然後讓它想像數據集的「潛在用戶」會有哪些，這些用戶會有什麼樣的需求或任務。</li>
+<li>接著，讓 LLM 為每個「用戶＋任務」組合生成一組問題，這些問題需要理解整個數據集才能回答，而不是只針對其中一部分內容。</li>
+</ul>
+</li>
+<li><strong>最後的測試問題</strong>：設置 N=5，即生成 125 個問題，用來測試 RAG 系統的整體理解和處理能力。這些問題旨在評估系統是否能把握數據集的整體結構和意義。</li>
+</ol>
+<h3>實例：科技記者分析 Podcast 文字稿</h3>
+<p>例如有一位「科技記者」需要從 Podcast 的文字稿中提取整體趨勢和洞察。</p>
+<p><strong>用戶設定</strong>：這位用戶是一位「科技記者」，他關注的是科技產業的趨勢，特別是科技領袖如何看待「政策和法規」的影響。</p>
+<p><strong>任務描述</strong>：記者的任務是從眾多播客中找出科技領袖們對於政策、法規的觀點。這樣的任務需要的是整體理解，而不只是回答單一的事實性問題。</p>
+<p><strong>問題設計</strong>：基於這個任務，設計了 5 個高層次問題，這些問題都需要有整體視角的資訊來回答：</p>
+<ul>
+<li><strong>問題 1</strong>：「哪些集數主要涉及科技政策和政府監管？」——這問題需要系統能夠掃描所有播客集數，找出和政策、監管相關的內容，並給出一個範圍性的回應。</li>
+<li><strong>問題 2</strong>：「客人如何看待隱私法對科技發展的影響？」——這問題要求系統從各個集數中提取與隱私法影響有關的觀點和分析。</li>
+<li><strong>問題 3</strong>：「有任何嘉賓討論創新與倫理考量之間的平衡嗎？」——這需要系統理解並辨識出和創新、倫理相關的討論，並做出整體的回應。</li>
+<li><strong>問題 4</strong>：「客人提到的對現行政策的建議變更是什麼？」——這需要系統整理出嘉賓們對於政策的改進建議，提供具體又概括的回應。</li>
+<li><strong>問題 5</strong>：「是否討論科技公司與政府之間的合作，以及如何進行？」——這要求系統找出嘉賓們提到的合作模式，以及這些合作是如何被描述的。</li>
+</ul>
+<h3>測試與比較結果</h3>
+<p>以「哪些公共人物在各種娛樂文章中被反覆提及？」這個問題為例：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>方法</th><th>回答摘要</th></tr></thead><tbody><tr><td><strong>Graph RAG</strong></td><td>娛樂產業廣泛而多樣，涵蓋電影、電視、音樂、體育和數位媒體。某些公眾人物因其在這些領域的重大貢獻和影響而脫穎而出。以下摘要突顯了在各種娛樂文章中反覆提及的關鍵人物，反映了他們在產業中的影響力和存在感。<strong>演員和導演</strong> […] <strong>爭議中的公眾人物</strong> […] <strong>音樂家和高管</strong> […] <strong>運動員和教練</strong> […] <strong>網紅和企業家</strong> […] 在娛樂文章中反覆提及這些人物，標誌著他們持續的相關性和公眾對他們工作的興趣。他們的影響力遍及娛樂的各個方面，從塑造電影和電視中的文化敘事到推動音樂和數位媒體的趨勢。</td></tr><tr><td><strong>Native RAG</strong></td><td>在各種娛樂文章中反覆提到的公眾人物包括泰勒·斯威夫特、特拉維斯·凱爾西、布蘭妮·斯皮爾斯和賈斯汀·汀布萊克。這些人因其專業成就和個人生活等各種原因而受到關注。<strong>泰勒·斯威夫特</strong> […] <strong>特拉維斯·凱爾西</strong> […] <strong>布蘭妮·斯皮爾斯</strong> […] <strong>賈斯汀·汀布萊克</strong> […] 這些人物因其高知名度和公眾對其職業及個人生活的興趣而經常受到關注。</td></tr></tbody></table></div>
+<p>在回答的<strong>全面性</strong>、<strong>多樣性</strong>、準確性上 Graph RAG 都勝出，而簡潔性和具體性則為原本的 RAG 勝出。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Graph RAG 和一般 RAG 有什麼不同？</span></h3>
+<p>一般 RAG 以向量相似度檢索片段文字，擅長回答具體的事實性問題。Graph RAG 則先從文本建立實體知識圖並生成階層式社群摘要，查詢時以這些預摘要組合出全局答案，更適合「整體趨勢、總結觀點」這類需要理解全資料集的問題。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Graph RAG 的索引成本會不會很高？</span></h3>
+<p>索引階段需要用 LLM 做實體提取與多輪摘要，是一次性的前置成本。但論文的設計讓查詢時不必把整個資料集塞進上下文，而是重用預先產生的社群摘要，因此在需要長期反覆查詢的資料集上，整體 token 成本反而更低。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼情境適合用 Graph RAG？</span></h3>
+<p>適合處理大規模文本語料庫、且使用者的問題偏全局性的場景，例如從大量 Podcast 文字稿中歸納產業趨勢、或從海量新聞文章中總結反覆出現的人物與主題。若只是查詢具體事實，傳統 RAG 通常就夠了。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Graph RAG 用什麼算法劃分社群？</span></h3>
+<p>論文使用 Leiden 算法進行社群檢測，將實體知識圖劃分為層次化的社群結構。社群內節點的關聯性比社群之間更強，每個社群代表一組彼此關聯緊密的實體，方便後續「分而治之」地生成摘要。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2404.16130" target="_blank" rel="noopener noreferrer">From Local to Global: A Graph RAG Approach to Query-Focused Summarization（arXiv:2404.16130）</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/graph-rag">Graph RAG：圖形式的檢索增強生成完整解析</a>：同樣聚焦 Graph RAG、RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/raptor-tree-structured-rag-method">RAPTOR 是什麼？基於樹狀結構的 RAG 方法</a>：同樣聚焦 RAG、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/retrieval-augmented-llm">檢索增強生成（RAG）與 RETA-LLM 框架完整解析</a>：同樣聚焦 RAG、LLM，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2024-11-11，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-11-11</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

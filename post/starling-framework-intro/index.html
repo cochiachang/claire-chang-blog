@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starling Framework簡介｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Starling是基於Stage3D的2D渲染框架，用GPU三角形繪圖模擬2D畫面，本文說明其運作原理與基本範例" />
+<meta name="keywords" content="前端開發, ActionScript, Starling, Stage3D, AIR, 遊戲開發" />
+<link rel="canonical" href="https://claire-chang.com/post/starling-framework-intro/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Starling Framework簡介｜Claire Chang" />
+<meta property="og:description" content="Starling是基於Stage3D的2D渲染框架，用GPU三角形繪圖模擬2D畫面，本文說明其運作原理與基本範例" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/starling-framework-intro/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_starling-framework-intro-e6115819.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_starling-framework-intro-e6115819.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Starling Framework簡介｜Claire Chang" />
+<meta name="twitter:description" content="Starling是基於Stage3D的2D渲染框架，用GPU三角形繪圖模擬2D畫面，本文說明其運作原理與基本範例" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_starling-framework-intro-e6115819.jpg" />
+<meta property="article:published_time" content="2014-02-01" />
+<meta property="article:modified_time" content="2026-08-31" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="ActionScript" />
+<meta property="article:tag" content="Starling" />
+<meta property="article:tag" content="Stage3D" />
+<meta property="article:tag" content="AIR" />
+<meta property="article:tag" content="遊戲開發" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Starling Framework簡介","item":"https://claire-chang.com/post/starling-framework-intro/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/starling-framework-intro/#article","headline":"Starling Framework簡介","description":"Starling是基於Stage3D的2D渲染框架，用GPU三角形繪圖模擬2D畫面，本文說明其運作原理與基本範例","image":"https://claire-chang.com/images/tech/hero_starling-framework-intro.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2014-02-01","dateModified":"2026-08-31","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/starling-framework-intro/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"ActionScript, Starling, Stage3D, AIR, 遊戲開發","about":[{"@type":"Thing","name":"遊戲開發"}],"mentions":[{"@type":"Thing","name":"ActionScript"},{"@type":"Thing","name":"Starling"},{"@type":"Thing","name":"Stage3D"},{"@type":"Thing","name":"AIR"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/starling-framework-intro/#faq","mainEntity":[{"@type":"Question","name":"Starling支援哪些平台？","acceptedAnswer":{"@type":"Answer","text":"Starling基於Stage3D，因此凡是Stage3D能跑的平台（桌面Flash Player、AIR桌面應用、iOS/Android上的AIR）理論上都能用，實際效能則取決於裝置GPU是否支援硬體加速。"}},{"@type":"Question","name":"沒有GPU或驅動不支援時Starling還能用嗎？","acceptedAnswer":{"@type":"Answer","text":"可以，Stage3D會退回軟體渲染模式繼續運作,但速度會明顯變慢,不適合正式上線環境依賴這個模式。"}},{"@type":"Question","name":"該去哪裡查Starling的API細節？","acceptedAnswer":{"@type":"Answer","text":"官方的Starling Framework Reference是最直接的參考來源，很多類別名稱雖然跟原生Flash相似，用法細節仍需要對照文件確認。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_starling-framework-intro.webp" alt="GPU顯示卡特寫，象徵Starling底層依賴的GPU繪圖運算" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2014-02-01">2014-02-01</time></span><span class="post-meta-pill">ActionScript · Starling · Stage3D · AIR · 遊戲開發</span></div></div><h1 class="insights-hero-title">Starling Framework簡介</h1><p class="insights-hero-description">Starling是基於Stage3D的2D渲染框架，用GPU三角形繪圖模擬2D畫面，本文說明其運作原理與基本範例</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+</div><section aria-labelledby="starling是什麼-跟stage3d是什麼關係"><h2 id="starling是什麼-跟stage3d是什麼關係">Starling是什麼，跟Stage3D是什麼關係？</h2>
+<p>Starling是一套建立在Stage3D之上的2D渲染框架，讓Flash/AIR開發者可以用接近原生Flash的寫法，享受GPU加速帶來的效能。要弄懂Starling，得先搞懂它下面那一層——Stage3D。Stage3D是Adobe提供的底層3D繪圖API，直接對接裝置的GPU，運作方式和OpenGL、DirectX這類傳統3D API類似，關於它的細節可以看<a href="http://claire-chang.com/1814-stage3d%E9%81%8B%E4%BD%9C%E5%8E%9F%E7%90%86" target="_blank" rel="noopener noreferrer">Stage3D運作原理</a>這篇。</p>
+<p>Stage3D在不同平台上會接到不同的底層引擎：Mac上是OpenGL，Windows則依硬體去挑合適的技術。就算遇到完全不支援的顯示卡，Stage3D也能退回軟體模式硬撐下去，只是速度會慢得很明顯。想知道差多少，可以參考這篇<a href="http://www.hiwebgl.com/?p=535" target="_blank" rel="noopener noreferrer">Stage3D vs WebGL性能較量</a>的測試。</p>
+<p>技術堆疊由上到下大致長這樣：</p>
+<figure class="article-figure"><img src="/images/tech/starling-stage3d-layers.webp" alt="Starling layer on top of Stage3D" loading="lazy" class="markdown-img"></figure>
+<p>GPU在最底層，往上是OpenGL/DirectX，再往上是Stage3D（也叫Molehill），Starling則蓋在最頂端，把這些底層細節包裝成開發者熟悉的顯示物件API。</p>
+</section><section aria-labelledby="starling怎麼用3d引擎畫出2d畫面"><h2 id="starling怎麼用3d引擎畫出2d畫面">Starling怎麼用3D引擎畫出2D畫面？</h2>
+<p>早期很多人一看到Stage3D這個名字，就以為它只能拿來做3D，其實不然。3D渲染的基本單位是三角形，畫面由大量三角形堆出來；2D向量圖形則是由頂點組成的多邊形。差異看起來很大，但Starling找到了橋接兩者的做法。</p>
+<p>作法很直接：把圖片存成png或jpg，再把每張圖當成兩個三角形拼出的矩形，貼上材質貼圖畫上去。GPU本來就最擅長畫三角形和貼材質，Starling等於是借GPU的長處來做2D渲染，換來比純CPU運算快得多的效能。</p>
+<figure class="article-figure"><img src="/images/tech/starling-drawtriangles-quad.webp" alt="drawTriangles加上材質貼圖等於2D畫面" loading="lazy" class="markdown-img"></figure>
+<p>一次<code>drawTriangles()</code>呼叫配上一張材質貼圖，就能畫出一整排角色，這也是Starling能同時渲染大量物件還能維持流暢畫面的原因。</p>
+</section><section aria-labelledby="一個最簡單的starling範例長什麼樣子"><h2 id="一個最簡單的starling範例長什麼樣子">一個最簡單的Starling範例長什麼樣子？</h2>
+<p>下面是最基本的Starling程式骨架，取自官方範例 StarlingTest（原下載連結已失效）。入口類別只需要建立一個<code>Starling</code>實例並啟動：</p>
+<pre><code class="hljs language-java"><span class="hljs-keyword">package</span>
+{
+	<span class="hljs-keyword">import</span> flash.display.Sprite;
+
+	<span class="hljs-keyword">import</span> starling.core.Starling;
+
+	[SWF(frameRate=<span class="hljs-string">"60"</span>,Width=<span class="hljs-string">"800"</span>,Height=<span class="hljs-string">"600"</span>)]
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">StarlingTest</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Sprite</span>
+	{
+		<span class="hljs-keyword">public</span> function <span class="hljs-title function_">StarlingTest</span><span class="hljs-params">()</span>
+		{
+			<span class="hljs-keyword">var</span> star:Starling = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Starling</span>(Main, stage);
+			star.start();
+		}
+	}
+}
+</code></pre>
+<p>實際的畫面邏輯則寫在傳進去的<code>Main</code>類別裡，這裡示範讀取材質圖集（texture atlas）並播放一段動畫序列：</p>
+<pre><code class="hljs language-java"><span class="hljs-keyword">package</span>
+{
+	<span class="hljs-keyword">import</span> starling.core.Starling;
+	<span class="hljs-keyword">import</span> starling.display.MovieClip;
+	<span class="hljs-keyword">import</span> starling.display.Sprite;
+	<span class="hljs-keyword">import</span> starling.textures.Texture;
+	<span class="hljs-keyword">import</span> starling.textures.TextureAtlas;
+
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Sprite</span>
+	{
+		[Embed(source = <span class="hljs-string">'test.xml'</span>, mimeType = <span class="hljs-string">'application/octet-stream'</span>)]
+		<span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> AtlasXML:Class;
+
+		[Embed(source = <span class="hljs-string">'test.png'</span>)]
+		<span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> AtlasTexture:Class;
+
+		<span class="hljs-keyword">public</span> function <span class="hljs-title function_">Main</span><span class="hljs-params">()</span>
+		{
+			<span class="hljs-keyword">var</span> texture:Texture = Texture.fromBitmap(<span class="hljs-keyword">new</span> <span class="hljs-title class_">AtlasTexture</span>());
+			<span class="hljs-keyword">var</span> xml:XML = XML(<span class="hljs-keyword">new</span> <span class="hljs-title class_">AtlasXML</span>());
+			<span class="hljs-keyword">var</span> atlas:TextureAtlas = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TextureAtlas</span>(texture, xml);
+
+			<span class="hljs-keyword">var</span> mc:MovieClip = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MovieClip</span>(atlas.getTextures(<span class="hljs-string">"run"</span>),<span class="hljs-number">30</span>);
+			addChild(mc);
+
+			Starling.juggler.add(mc);
+		}
+	}
+}
+</code></pre>
+<p><code>atlas.getTextures("run")</code>把圖集裡所有以"run"開頭的貼圖抓出來，組成一個<code>MovieClip</code>的影格序列，再丟進<code>Starling.juggler</code>讓它自己跑動畫——juggler就是Starling管理所有動畫、計時器的排程器。</p>
+</section><section aria-labelledby="starling-display-movieclip跟flash-display-movieclip是同一回事嗎"><h2 id="starling-display-movieclip跟flash-display-movieclip是同一回事嗎">starling.display.MovieClip跟flash.display.MovieClip是同一回事嗎？</h2>
+<p>不是,而且差異相當根本。雖然Starling故意讓API長得很像原生Flash，方便開發者無痛上手，但骨子裡完全是兩套不同的東西：影格運作方式、圖形渲染方式、碰撞偵測、事件傳遞，全部都不一樣。原因很簡單——Starling是用3D去模擬2D，原生Flash則是純粹用CPU算圖。</p>
+<p>所以<code>starling.display.MovieClip</code>跟<code>flash.display.MovieClip</code>只是撞名，用法和底層行為完全不同,不能拿原生Flash的經驗直接套用。建議把Starling當一套全新的framework重新學,而不是「看起來很像原生Flash」就照本能去寫。</p>
+<p>兩者在畫面圖層上也各自獨立，分層大致如下：</p>
+<figure class="article-figure"><img src="/images/tech/starling-displaylist-layering.webp" alt="Display List、Stage3D、StageVideo三層圖層關係" loading="lazy" class="markdown-img"></figure>
+<p>用<code>flash.display.*</code>產生的畫面永遠疊在最上層的Display List；Stage3D物件（也就是Starling內容）在它下面；StageVideo這種能用GPU播放影片的內容則墊在最底層。</p>
+</section><section aria-labelledby="starling能跟原生flash的displayobject混用嗎"><h2 id="starling能跟原生flash的displayobject混用嗎">Starling能跟原生Flash的DisplayObject混用嗎？</h2>
+<p>不太行，這是實務上最容易踩的坑之一。由於原生flash畫面永遠蓋在Starling內容之上,兩者沒辦法自然地混合疊加使用。另外用Starling嵌入swf到網頁時,一定要把<code>wmode</code>設成<code>direct</code>——Starling不支援透明嵌入,設錯的話畫面會直接跳錯誤訊息：</p>
+<figure class="article-figure"><img src="/images/tech/starling-wmode-error.webp" alt="wmode設定錯誤時出現的錯誤畫面" loading="lazy" class="markdown-img"></figure>
+<p>如果真的需要在Starling場景裡放原生Flash物件（例如一個可以打字的文字輸入框，Starling自己的TextField並不支援輸入），可以透過<code>nativeOverlay</code>把原生物件疊上去：</p>
+<pre><code class="hljs language-java"><span class="hljs-keyword">var</span> textInput:flash.text.TextField = <span class="hljs-keyword">new</span> <span class="hljs-title class_">flash</span>.text.TextField();
+textInput.type = TextFieldType.INPUT;
+Starling.current.nativeOverlay.addChild(textInput);
+</code></pre>
+<p>官方文件對<code>nativeOverlay</code>的說明是這樣：它會回傳一個直接蓋在Starling內容上方的Flash Sprite，可以把一般的Flash物件加進這個overlay。但要注意，3D內容上方疊原生Flash內容在部分（尤其行動）裝置上可能拖累效能，所以用完記得把子物件都移除——Starling會在overlay清空時自動把它從顯示清單移掉。</p>
+<p>透過<code>nativeOverlay</code>加進場景的物件，同樣永遠會顯示在最上層，這點跟原生Flash疊加的限制是一致的。想要更完整的文字輸入實作方式，可以參考<a href="http://in4ray.blogspot.tw/2012/05/text-input-with-starling-framework.html" target="_blank" rel="noopener noreferrer">Text Input with Starling framework</a>這篇教學。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Starling支援哪些平台？</span></h3>
+<p>Starling基於Stage3D，因此凡是Stage3D能跑的平台（桌面Flash Player、AIR桌面應用、iOS/Android上的AIR）理論上都能用，實際效能則取決於裝置GPU是否支援硬體加速。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>沒有GPU或驅動不支援時Starling還能用嗎？</span></h3>
+<p>可以，Stage3D會退回軟體渲染模式繼續運作,但速度會明顯變慢,不適合正式上線環境依賴這個模式。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>該去哪裡查Starling的API細節？</span></h3>
+<p>官方的<a href="http://doc.starling-framework.org/core/" target="_blank" rel="noopener noreferrer">Starling Framework Reference</a>是最直接的參考來源，很多類別名稱雖然跟原生Flash相似，用法細節仍需要對照文件確認。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="http://grayliao.blogspot.tw/2011/11/starling-framework0.html" target="_blank" rel="noopener noreferrer">一起來玩鳥 Starling Framework</a></li>
+<li><a href="http://gotoandlearn.com/play.php?id=147" target="_blank" rel="noopener noreferrer">Introducing the Starling Framework</a></li>
+<li><a href="http://www.hungryherogame.com/" target="_blank" rel="noopener noreferrer">Hungry Hero Game</a></li>
+<li><a href="http://claire-chang.com/1881-starling%E7%9A%84display-objects%E4%BB%8B%E7%B4%B9%EF%BC%88%E4%B8%80%EF%BC%89" target="_blank" rel="noopener noreferrer">Starling的Display Objects介紹（一）</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/starling-stage3d-presentation">Starling簡報分享：基於Stage3D的GPU加速2D渲染框架入門</a>：同樣聚焦 Starling、Stage3D，可接著比較不同情境的做法。</li>
+<li><a href="/post/starling-display-objects-introduction">Starling Display Objects 介紹：Starling 啟動、物件樹與 Stage</a>：同樣聚焦 Starling、ActionScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/starling-display-objects-button-sprite">Starling Display Objects：Button 與 Sprite 實作重點</a>：同樣聚焦 Starling、ActionScript，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2014-02-01</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

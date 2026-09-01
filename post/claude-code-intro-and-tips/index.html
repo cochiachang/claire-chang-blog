@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claude Code介紹和使用建議｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Claude Code 是 Anthropic 推出的終端機 AI 程式助理。這篇完整介紹 Claude Code 能做什麼、安裝設定步驟、CLAUDE.md 上下文管理與 MCP 團隊協作建議，幫你把 AI 助理變成開發最佳拍檔。" />
+<meta name="keywords" content="生成式AI, Claude Code, 生成式AI, AI程式助理, CLAUDE.md, MCP" />
+<link rel="canonical" href="https://claire-chang.com/post/claude-code-intro-and-tips/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Claude Code介紹和使用建議｜Claire Chang" />
+<meta property="og:description" content="Claude Code 是 Anthropic 推出的終端機 AI 程式助理。這篇完整介紹 Claude Code 能做什麼、安裝設定步驟、CLAUDE.md 上下文管理與 MCP 團隊協作建議，幫你把 AI 助理變成開發最佳拍檔。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/claude-code-intro-and-tips/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_claude-code-intro-and-tips-6a5109a1.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_claude-code-intro-and-tips-6a5109a1.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Claude Code介紹和使用建議｜Claire Chang" />
+<meta name="twitter:description" content="Claude Code 是 Anthropic 推出的終端機 AI 程式助理。這篇完整介紹 Claude Code 能做什麼、安裝設定步驟、CLAUDE.md 上下文管理與 MCP 團隊協作建議，幫你把 AI 助理變成開發最佳拍檔。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_claude-code-intro-and-tips-6a5109a1.jpg" />
+<meta property="article:published_time" content="2025-07-23" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Claude Code" />
+<meta property="article:tag" content="生成式AI" />
+<meta property="article:tag" content="AI程式助理" />
+<meta property="article:tag" content="CLAUDE.md" />
+<meta property="article:tag" content="MCP" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Claude Code介紹和使用建議","item":"https://claire-chang.com/post/claude-code-intro-and-tips/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/claude-code-intro-and-tips/#article","headline":"Claude Code介紹和使用建議","description":"Claude Code 是 Anthropic 推出的終端機 AI 程式助理。這篇完整介紹 Claude Code 能做什麼、安裝設定步驟、CLAUDE.md 上下文管理與 MCP 團隊協作建議，幫你把 AI 助理變成開發最佳拍檔。","image":"https://claire-chang.com/images/tech/hero_claude-code-intro-and-tips.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2025-07-23","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/claude-code-intro-and-tips/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"Claude Code, 生成式AI, AI程式助理, CLAUDE.md, MCP","about":[{"@type":"Thing","name":"生成式AI"},{"@type":"Thing","name":"AI程式助理"}],"mentions":[{"@type":"Thing","name":"Claude Code"},{"@type":"Thing","name":"CLAUDE.md"},{"@type":"Thing","name":"MCP"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/claude-code-intro-and-tips/#faq","mainEntity":[{"@type":"Question","name":"Claude Code 是什麼？","acceptedAnswer":{"@type":"Answer","text":"Claude Code 是 Anthropic 推出的終端機 AI 程式助理，能直接在命令列中讀取專案、寫程式、查文件、修 bug，還能自動整理 Git 記錄與整合團隊工具。它用自然語言溝通，開發者只需下目標，它會自己判斷該用哪些工具。"}},{"@type":"Question","name":"安裝 Claude Code 需要什麼環境？","acceptedAnswer":{"@type":"Answer","text":"需要 macOS 10.15+、Ubuntu 20.04+/Debian 10+ 或 Windows 10+（搭配 WSL），Node.js 18 以上，建議至少 4GB RAM 與網路連線。安裝只要一行 `npm install -g @anthropic-ai/claude-code`。"}},{"@type":"Question","name":"CLAUDE.md 該放哪些內容？","acceptedAnswer":{"@type":"Answer","text":"寫入常用指令、關鍵檔案與系統架構說明，保持簡潔明確即可。避免冗長或複製整份 Readme，否則會稀釋 Claude 的關注焦點；各子模組可各自放一份 CLAUDE.md，Claude 會自動讀取所在目錄的說明。"}},{"@type":"Question","name":"新手該怎麼開始使用 Claude Code？","acceptedAnswer":{"@type":"Answer","text":"建議先從 Codebase Q&A 開始，像問「這個變數在哪裡定義？」來熟悉程式邏輯，再逐步讓它編輯程式碼。寫功能前先請它規劃設計、確認後再實作，效果最好。"}},{"@type":"Question","name":"什麼是 MCP？團隊該怎麼導入？","acceptedAnswer":{"@type":"Answer","text":"MCP（Model Context Protocol）讓 Claude 串接外部工具與資源，例如 puppeteer 截圖、PostgreSQL 查詢機器人。團隊可把 MCP 伺服器集中部署在一個共用專案中，設定一次全體即可使用。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_claude-code-intro-and-tips.webp" alt="終端機視窗中顯示程式碼的開發環境，象徵 Claude Code AI 程式助理" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2025-07-23">2025-07-23</time></span><span class="post-meta-pill">Claude Code · 生成式AI · AI程式助理 · CLAUDE.md · MCP</span></div></div><h1 class="insights-hero-title">Claude Code介紹和使用建議</h1><p class="insights-hero-description">Claude Code 是 Anthropic 推出的終端機 AI 程式助理。這篇完整介紹 Claude Code 能做什麼、安裝設定步驟、CLAUDE.md 上下文管理與 MCP 團隊協作建議，幫你把 AI 助理變成開發最佳拍檔。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Claude Code 是 Anthropic 推出的終端機 AI 程式助理，不僅能幫你寫程式、查文件、修 bug，甚至還能幫你整理 Git 記錄、整合團隊工具。這篇文章整理了 Claude Code 的核心能力、有效使用流程、安裝設定步驟，以及用 CLAUDE.md 和 MCP 管理上下文的實務建議。</p>
+</div><section aria-labelledby="claude-code-可以做什麼"><h2 id="claude-code-可以做什麼">Claude Code 可以做什麼？</h2>
+<p><strong>分析 Git 歷史</strong></p>
+<ul>
+<li>自動分析 commit 記錄，幫你查出參數是誰加的、為什麼改、相關背景脈絡。</li>
+<li>無需額外提示，它會自己「幫你總結」。</li>
+</ul>
+<p><strong>整合 GitHub Issue</strong></p>
+<ul>
+<li>Claude 可以自動拉取 GitHub Issue 資訊，並讀出脈絡，協助你釐清問題或任務內容。</li>
+</ul>
+<p><strong>參與 Weekly Standup</strong></p>
+<ul>
+<li>你可以問它：「我這週交付了什麼？」</li>
+<li>Claude 會自動從你的 Git 日誌中整理出成果摘要。</li>
+</ul>
+</section><section aria-labelledby="有效使用流程-從-q-a-到整合工具"><h2 id="有效使用流程-從-q-a-到整合工具">有效使用流程：從 Q&#x26;A 到整合工具</h2>
+<ul>
+<li><strong>新手建議先從 Codebase Q&#x26;A 開始</strong>：比起直接改程式碼，先問問題（像「這個變數在哪裡定義？」）更容易上手，快速熟悉程式邏輯與架構。</li>
+<li><strong>逐步導入工具</strong>：等你熟悉後，就可以進一步請 Claude 幫你「編輯程式碼」，並使用其內建工具，例如 bash、測試指令等。</li>
+<li><strong>不必一個個指定工具</strong>：只要下目標，Claude 會自己判斷該用哪些工具，幫你串成完整流程。</li>
+<li><strong>寫功能前先規劃設計</strong>：Claude 最強的能力在於「思考」，你可以先請它幫你規劃實作策略，再確認後由它代碼實作。</li>
+<li><strong>告訴 Claude 你的 CLI 工具</strong>：你只要講「我們團隊有一個叫 build-image 的自定義指令」，它之後就能幫你正確下命令。</li>
+<li><strong>一次設定全部工具（建議）</strong>：在進入一個新專案時，建議一次告訴 Claude 這個專案會用到哪些工具，這樣它在處理任務時會更有效率。</li>
+</ul>
+</section><section aria-labelledby="如何安裝-claude-code"><h2 id="如何安裝-claude-code">如何安裝 Claude Code？</h2>
+<p>請先確認你的系統符合以下條件：</p>
+<ul>
+<li><strong>作業系統</strong>：macOS 10.15+、Ubuntu 20.04+/Debian 10+ 或 Windows 10+（需搭配 WSL 或 Git for Windows）</li>
+<li><strong>Node.js</strong>：版本 18 以上（檢查 <code>node -v</code>）</li>
+<li><strong>硬體需求</strong>：建議至少 4GB RAM，有網路連線</li>
+<li><strong>Shell 環境</strong>：建議使用 Bash、Zsh 或 Fish</li>
+</ul>
+<h3>步驟 1：安裝 Claude Code CLI</h3>
+<p>開啟 Terminal（Mac/Linux）或 WSL 的 Ubuntu 終端機，執行：</p>
+<pre><code class="hljs language-bash">npm install -g @anthropic-ai/claude-code
+</code></pre>
+<p>安裝完成後，輸入以下指令確認版本：</p>
+<pre><code class="hljs language-bash">claude --version
+</code></pre>
+<h3>步驟 2：設定 API 金鑰驗證</h3>
+<p>安裝好後，必須連結你的 Anthropic 帳號：</p>
+<pre><code class="hljs language-bash">claude auth login
+</code></pre>
+<p>或是將 API 金鑰寫入環境變數（適合自動化流程）：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">export</span> ANTHROPIC_API_KEY=<span class="hljs-string">"你的-api-金鑰"</span>
+</code></pre>
+<p>第一次執行 <code>claude auth login</code> 時，系統會開啟瀏覽器讓你登入並授權。</p>
+<h3>步驟 3：開始第一個專案</h3>
+<ol>
+<li>
+<p>建立新的專案資料夾並切換進去：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> my-claude-project
+<span class="hljs-built_in">cd</span> my-claude-project
+</code></pre>
+</li>
+<li>
+<p>啟動 Claude：</p>
+<pre><code class="hljs language-bash">claude
+</code></pre>
+</li>
+</ol>
+<figure class="article-figure"><img src="/images/articles/claude-code-intro-and-tips-1.webp" alt="Claude Code 啟動畫面" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="如何善用-claude-md-建立上下文"><h2 id="如何善用-claude-md-建立上下文">如何善用 CLAUDE.md 建立上下文？</h2>
+<p>在 Claude Code 的運作中，CLAUDE.md 是建立上下文（context）最核心的元素之一。良好的 CLAUDE.md 結構設計，能顯著提升 Claude 的理解力與團隊間的協同效率。</p>
+<p>建議開發者各自維護 <code>.claude.local.md</code>，記錄自己常用的 workflow、debug 技巧或指令，不簽入 Git，但可被 Claude 使用。</p>
+<p>撰寫原則如下：</p>
+<ul>
+<li><strong>保持簡潔明確</strong>：寫入常用指令、關鍵檔案與系統架構說明。避免冗長、過度複製 Readme 或歷史資訊，否則會稀釋 Claude 的關注焦點。</li>
+<li><strong>依目錄嵌套設計</strong>：每個子模組（如 <code>/api</code>、<code>/frontend</code>、<code>/infra</code>）都可以放一份 CLAUDE.md，Claude 會在該區域操作時自動讀取該目錄的說明。</li>
+<li><strong>保留個人版</strong>：建議開發者各自維護 <code>.claude.local.md</code>，記錄自己常用的 workflow、debug 技巧或指令，不簽入 Git，但可被 Claude 使用。</li>
+</ul>
+</section><section aria-labelledby="有哪些高階上下文管理技巧"><h2 id="有哪些高階上下文管理技巧">有哪些高階上下文管理技巧？</h2>
+<h3>組織層級的共享 CLAUDE.md</h3>
+<ul>
+<li>公司可建立統一的 <code>enterprise.CLAUDE.md</code>（如專案政策、資安規範、CI/CD 標準），並在每個 repo 中引用。</li>
+<li>有助於新進工程師快速了解開發規範。</li>
+</ul>
+<h3>結合 Slash 指令與情境切換</h3>
+<ul>
+<li>Claude 支援 <code>/commands</code> 格式，例如 <code>/deploy</code>、<code>/check-access</code>，這些可事先存於專案或個人記憶中，讓 prompt 更精準。</li>
+</ul>
+<h3>階層式配置架構建議</h3>
+<pre><code class="hljs language-text">├── CLAUDE.md（全域策略）
+├── .claude.local.md（個人筆記）
+├── frontend/
+│   └── CLAUDE.md（UI 工具說明）
+├── backend/
+│   └── CLAUDE.md（API 路由與框架設定）
+└── infra/
+    └── CLAUDE.md（Terraform、MCP 配置）
+</code></pre>
+</section><section aria-labelledby="如何用-mcp-做團隊資源共享"><h2 id="如何用-mcp-做團隊資源共享">如何用 MCP 做團隊資源共享？</h2>
+<p><strong>集中配置一次，團隊共享</strong>：MCP 伺服器（如 puppeteer、PostgreSQL 查詢機器人等）可部署在某一個共用專案中，設定好後所有開發者即可使用。</p>
+<p><strong>可用資源範例</strong></p>
+<ul>
+<li><code>puppeteer-mcp</code>：自動產生截圖／PDF 報告。</li>
+<li><code>llm-lint-mcp</code>：代碼風格與品質審查。</li>
+<li><code>qa-mcp</code>：單元測試結果解析與修復建議。</li>
+</ul>
+<p><strong>建議導入流程</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>階段</th><th>重點行動</th></tr></thead><tbody><tr><td>團隊導入初期</td><td>建立統一的 CLAUDE.md 與 MCP server，並教育每位成員撰寫 <code>.claude.local.md</code></td></tr><tr><td>日常工作中</td><td>透過 Claude 自動解析 commit、Issue、CI/CD log，提升團隊溝通效率</td></tr><tr><td>每週協作</td><td>在 weekly stand-up 前，使用 Claude 整理每人當週交付與貢獻，快速對齊進度</td></tr><tr><td>長期優化</td><td>定期檢視 CLAUDE.md 內容，清理無效資訊、合併重複區段、補充新工具配置</td></tr></tbody></table></div>
+<p>善用 CLAUDE.md 與其延伸機制，就像是幫你的 AI 工程夥伴安裝了「專案經驗記憶體」。不僅可以快速上手大型專案、減少重複溝通，還能真正讓 Claude 成為團隊知識管理與效率最佳化的幫手。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Claude Code 是什麼？</span></h3>
+<p>Claude Code 是 Anthropic 推出的終端機 AI 程式助理，能直接在命令列中讀取專案、寫程式、查文件、修 bug，還能自動整理 Git 記錄與整合團隊工具。它用自然語言溝通，開發者只需下目標，它會自己判斷該用哪些工具。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>安裝 Claude Code 需要什麼環境？</span></h3>
+<p>需要 macOS 10.15+、Ubuntu 20.04+/Debian 10+ 或 Windows 10+（搭配 WSL），Node.js 18 以上，建議至少 4GB RAM 與網路連線。安裝只要一行 <code>npm install -g @anthropic-ai/claude-code</code>。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>CLAUDE.md 該放哪些內容？</span></h3>
+<p>寫入常用指令、關鍵檔案與系統架構說明，保持簡潔明確即可。避免冗長或複製整份 Readme，否則會稀釋 Claude 的關注焦點；各子模組可各自放一份 CLAUDE.md，Claude 會自動讀取所在目錄的說明。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>新手該怎麼開始使用 Claude Code？</span></h3>
+<p>建議先從 Codebase Q&#x26;A 開始，像問「這個變數在哪裡定義？」來熟悉程式邏輯，再逐步讓它編輯程式碼。寫功能前先請它規劃設計、確認後再實作，效果最好。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼是 MCP？團隊該怎麼導入？</span></h3>
+<p>MCP（Model Context Protocol）讓 Claude 串接外部工具與資源，例如 puppeteer 截圖、PostgreSQL 查詢機器人。團隊可把 MCP 伺服器集中部署在一個共用專案中，設定一次全體即可使用。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://docs.anthropic.com/en/docs/claude-code/setup" target="_blank" rel="noopener noreferrer">Claude Code 官方安裝文件（Anthropic Docs）</a></li>
+<li><a href="https://docs.anthropic.com/en/docs/claude-code/quickstart" target="_blank" rel="noopener noreferrer">Claude Code Quickstart（Anthropic Docs）</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/claude-code-mcp-setup">Claude Code 使用 MCP 功能設定教學</a>：同樣聚焦 Claude Code、MCP，可接著比較不同情境的做法。</li>
+<li><a href="/post/claude-code-memory">Claude Code 的記憶機制：CLAUDE.md 怎麼寫才有用？</a>：同樣聚焦 Claude Code、CLAUDE.md，可接著比較不同情境的做法。</li>
+<li><a href="/post/claude-code-mcp-scopes">Claude Code MCP scope 如何選擇 Local、Project 與 User</a>：同樣聚焦 Claude Code、MCP，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2025-07-23，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2025-07-23</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

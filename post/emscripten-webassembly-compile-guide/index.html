@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emscripten 編譯 WebAssembly 實作筆記：從 MSYS2 到 emmake｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 WebAssembly 是什麼、Emscripten 如何編譯 C/C++ 專案，以及在 MSYS2 環境處理 libde265.js 與 AV1/AOM 編譯流程。" />
+<meta name="keywords" content="前端開發, Emscripten, WebAssembly, Wasm, C++, AV1, 前端開發" />
+<link rel="canonical" href="https://claire-chang.com/post/emscripten-webassembly-compile-guide/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Emscripten 編譯 WebAssembly 實作筆記：從 MSYS2 到 emmake｜Claire Chang" />
+<meta property="og:description" content="整理 WebAssembly 是什麼、Emscripten 如何編譯 C/C++ 專案，以及在 MSYS2 環境處理 libde265.js 與 AV1/AOM 編譯流程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/emscripten-webassembly-compile-guide/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_rwd-media-queries-css-435e3eb9.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_rwd-media-queries-css-435e3eb9.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Emscripten 編譯 WebAssembly 實作筆記：從 MSYS2 到 emmake｜Claire Chang" />
+<meta name="twitter:description" content="整理 WebAssembly 是什麼、Emscripten 如何編譯 C/C++ 專案，以及在 MSYS2 環境處理 libde265.js 與 AV1/AOM 編譯流程。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_rwd-media-queries-css-435e3eb9.jpg" />
+<meta property="article:published_time" content="2024-09-12" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Emscripten" />
+<meta property="article:tag" content="WebAssembly" />
+<meta property="article:tag" content="Wasm" />
+<meta property="article:tag" content="C++" />
+<meta property="article:tag" content="AV1" />
+<meta property="article:tag" content="前端開發" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Emscripten 編譯 WebAssembly 實作筆記：從 MSYS2 到 emmake","item":"https://claire-chang.com/post/emscripten-webassembly-compile-guide/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/emscripten-webassembly-compile-guide/#article","headline":"Emscripten 編譯 WebAssembly 實作筆記：從 MSYS2 到 emmake","description":"整理 WebAssembly 是什麼、Emscripten 如何編譯 C/C++ 專案，以及在 MSYS2 環境處理 libde265.js 與 AV1/AOM 編譯流程。","image":"https://claire-chang.com/images/tech/hero_rwd-media-queries-css.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-09-12","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/emscripten-webassembly-compile-guide/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Emscripten, WebAssembly, Wasm, C++, AV1, 前端開發","about":[{"@type":"Thing","name":"前端開發"}],"mentions":[{"@type":"Thing","name":"Emscripten"},{"@type":"Thing","name":"WebAssembly"},{"@type":"Thing","name":"Wasm"},{"@type":"Thing","name":"C++"},{"@type":"Thing","name":"AV1"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/emscripten-webassembly-compile-guide/#faq","mainEntity":[{"@type":"Question","name":"WebAssembly 和 JavaScript 是替代關係嗎？","acceptedAnswer":{"@type":"Answer","text":"WebAssembly 和 JavaScript 不是單純替代關係。WebAssembly 適合搬運高效能運算核心，JavaScript 適合處理 DOM、事件、資料流與前端整合；實務上兩者通常一起使用。"}},{"@type":"Question","name":"Emscripten 一定會輸出 WebAssembly 嗎？","acceptedAnswer":{"@type":"Answer","text":"新版 Emscripten 預設會建置 WebAssembly，除非在 linking 階段明確關掉 Wasm 輸出。Emscripten 文件也說明，是否輸出 WebAssembly 主要取決於 linking 階段設定，而不是每個 object file 的副檔名。"}},{"@type":"Question","name":"為什麼直接執行 make 會失敗？","acceptedAnswer":{"@type":"Answer","text":"直接執行 `make` 可能讓專案繼續使用原生 `gcc` 或 `g++`。Emscripten 專案通常要用 `emconfigure`、`emcmake` 與 `emmake` 包住既有 build 流程，讓 compiler、linker 與 library path 全部切到 WebAssembly 目標。"}},{"@type":"Question","name":"什麼時候要把 gcc 改成 emcc？","acceptedAnswer":{"@type":"Answer","text":"當 Makefile 或 build script 寫死 `gcc` 時，就要把 C compiler 改成 `emcc`。如果是 C++ 程式，則要把 `g++` 改成 `em++`，並同步檢查子目錄是否也有寫死 compiler。"}},{"@type":"Question","name":"CFLAGS 的 -g、-O2、-Wall 可以保留嗎？","acceptedAnswer":{"@type":"Answer","text":"`-g`、`-O2`、`-Wall` 通常可以保留。`-g` 方便除錯，`-O2` 提供常用最佳化，`-Wall` 能讓警告提早浮出；真正需要小心的是平台專用參數，例如 SSE 或只適用原生 CPU 的旗標。"}},{"@type":"Question","name":"AV1/AOM 編譯 WebAssembly 為什麼要用 emcmake？","acceptedAnswer":{"@type":"Answer","text":"AV1/AOM 這類 CMake 專案需要在設定階段就指定 Emscripten toolchain。`emcmake cmake ./third_party/aom -DAOM_TARGET_CPU=generic` 會讓 CMake 產生適合 WebAssembly 的建置設定，後續再用 `emmake make` 執行編譯。"}},{"@type":"Question","name":"Emscripten 適合所有前端功能嗎？","acceptedAnswer":{"@type":"Answer","text":"Emscripten 不適合拿來取代一般前端功能。表單、路由、互動 UI、資料顯示仍然適合 JavaScript 或 TypeScript；WebAssembly 比較適合重運算、既有 C/C++ 函式庫移植、影像影音處理等工作。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_rwd-media-queries-css.webp" alt="桌上並排的多支手機，各自顯示不同畫面比例的網頁內容，象徵前端 Web 技術在不同瀏覽環境中的執行需求" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-09-12">2024-09-12</time></span><span class="post-meta-pill">Emscripten · WebAssembly · Wasm · C++ · AV1 · 前端開發</span></div></div><h1 class="insights-hero-title">Emscripten 編譯 WebAssembly 實作筆記：從 MSYS2 到 emmake</h1><p class="insights-hero-description">整理 WebAssembly 是什麼、Emscripten 如何編譯 C/C++ 專案，以及在 MSYS2 環境處理 libde265.js 與 AV1/AOM 編譯流程。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Emscripten 編譯 WebAssembly 的核心，是把原本依賴 <code>gcc</code>、<code>g++</code>、<code>make</code> 或 CMake 的 C/C++ 專案，改成使用 <code>emcc</code>、<code>em++</code>、<code>emmake</code> 與 <code>emcmake</code> 產出可在瀏覽器載入的 Wasm 檔案。我的實作重點不是只安裝工具，而是確認整條編譯鏈都真的走 Emscripten，不要中途又回到原生編譯器。</p>
+</div><section aria-labelledby="webassembly-是什麼"><h2 id="webassembly-是什麼">WebAssembly 是什麼？</h2>
+<p>WebAssembly 是一種安全、可攜、低階的二進位程式碼格式，目標是在 Web 上執行接近原生效能的應用。WebAssembly 常作為 C、C++、Rust 等語言的編譯目標，並透過 JavaScript API 與前端程式協作。</p>
+<p>WebAssembly（Wasm）由 W3C WebAssembly Community Group 推動，W3C Core Specification 將 WebAssembly 描述為安全、可攜、低階、適合高效執行與緊湊表示的程式碼格式（W3C，2026-05）。MDN 也把 WebAssembly 定位成一種低階、類組合語言的技術，可作為 C/C++、C#、Rust 等語言的編譯目標，並在瀏覽器中與 JavaScript 一起運作（MDN Web Docs，2026-07）。</p>
+<p>我會把 WebAssembly 當成前端效能工具箱裡的一層：畫面、事件與產品邏輯仍然可以交給 JavaScript 或 TypeScript；影像解碼、編碼、壓縮、數學計算這類重運算，才適合移到 WebAssembly。</p>
+</section><section aria-labelledby="什麼情境適合用-emscripten-編譯-webassembly"><h2 id="什麼情境適合用-emscripten-編譯-webassembly">什麼情境適合用 Emscripten 編譯 WebAssembly？</h2>
+<p>Emscripten 適合把既有 C/C++ 函式庫搬到瀏覽器，尤其是影音處理、圖像處理、遊戲引擎與演算法模組。若需求只是一般 UI 互動，JavaScript 通常比 WebAssembly 更好維護。</p>
+<p>WebAssembly 的常見應用場景包含：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>情境</th><th>為什麼適合 WebAssembly</th></tr></thead><tbody><tr><td>遊戲開發</td><td>可把 C/C++ 遊戲引擎或核心邏輯移植到瀏覽器</td></tr><tr><td>影片與圖像處理</td><td>解碼、濾鏡、編碼等重運算可減少 JavaScript 主執行緒壓力</td></tr><tr><td>科學計算</td><td>大量數值運算可利用接近原生的執行效率</td></tr><tr><td>既有 C/C++ 函式庫移植</td><td>可以重用成熟程式碼，而不是在前端重寫整套邏輯</td></tr></tbody></table></div>
+<p>Emscripten 官方文件說明，<code>emcc</code> 可以作為類似 <code>gcc</code> 或 <code>clang</code> 的編譯器前端，負責呼叫工具鏈並產出 JavaScript 與 WebAssembly（Emscripten Documentation，存取日期：2026-08-28）。這也是我在移植影音相關專案時會先選 Emscripten 的原因：前端最後需要的是可載入的 <code>.js</code> glue code 和 <code>.wasm</code>，不是只產生一包原生平台的 object file。</p>
+</section><section aria-labelledby="如何在-windows-msys2-安裝-emscripten"><h2 id="如何在-windows-msys2-安裝-emscripten">如何在 Windows/MSYS2 安裝 Emscripten？</h2>
+<p>Windows/MSYS2 安裝 Emscripten 時，先準備 MSYS2 UCRT64、編譯工具、Node.js，再安裝 <code>emsdk</code>。重點是讓 shell 的 <code>PATH</code> 找得到 <code>emcc</code>、<code>em++</code>、<code>emmake</code> 與 <code>emcmake</code>。</p>
+<p>我當時使用 MSYS2 的 UCRT64 環境處理 C/C++ 專案。先下載 MSYS2 installer：</p>
+<pre><code class="hljs language-text">https://github.com/msys2/msys2-installer/releases/download/2024-01-13/msys2-x86_64-20240113.exe
+</code></pre>
+<p>開啟 <code>ucrt64.exe</code> 後，切到專案目錄：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">cd</span> /D/Git/lbde265/
+</code></pre>
+<p>安裝所需套件：</p>
+<pre><code class="hljs language-bash">pacman -Syu
+pacman -S python3 clang cmake git make autoconf automake gcc
+pacman -S mingw-w64-ucrt-x86_64-nodejs
+pacman -S mingw-w64-ucrt-x86_64-gcc
+pacman -S mingw-w64-ucrt-x86_64-emscripten
+pacman -S base-devel mingw-w64-x86_64-toolchain
+</code></pre>
+<p>再安裝 <code>emsdk</code>：</p>
+<pre><code class="hljs language-bash">nano ~/.bashrc
+<span class="hljs-built_in">export</span> EMSDK=<span class="hljs-string">"/D/Git/lbde265/emsdk"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/D/Git/lbde265/emsdk"</span>
+<span class="hljs-built_in">source</span> ~/.bashrc
+
+git <span class="hljs-built_in">clone</span> https://github.com/emscripten-core/emsdk.git
+<span class="hljs-built_in">cd</span> emsdk
+./emsdk install latest
+./emsdk activate latest --permanent
+<span class="hljs-built_in">source</span> ./emsdk_env.sh
+</code></pre>
+<p>如果 shell 開新視窗後找不到 Emscripten，就把相關路徑補進 <code>~/.bashrc</code>：</p>
+<pre><code class="hljs language-bash">nano ~/.bashrc
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/d/Git/lbde265/emsdk/upstream/emscripten"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/d/Git/lbde265/emsdk"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/msys64/ucrt64/bin"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/msys64/usr/local/bin"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/msys64/usr/bin"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/Windows/System32"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/Windows"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/Windows/System32/Wbem"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/Windows/System32/WindowsPowerShell/v1.0/"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/msys64/usr/bin/site_perl"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/msys64/usr/bin/vendor_perl"</span>
+<span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"<span class="hljs-variable">$PATH</span>:/c/msys64/usr/bin/core_perl"</span>
+<span class="hljs-built_in">source</span> ~/.bashrc
+</code></pre>
+<p>最後確認 <code>emcc</code> 能正常執行：</p>
+<pre><code class="hljs language-bash">emcc -v
+</code></pre>
+</section><section aria-labelledby="如何用-emscripten-編譯既有-c-c-專案"><h2 id="如何用-emscripten-編譯既有-c-c-專案">如何用 Emscripten 編譯既有 C/C++ 專案？</h2>
+<p>Emscripten 編譯既有 C/C++ 專案時，關鍵是用 <code>emconfigure</code>、<code>emcmake</code>、<code>emmake</code> 包住原本的 configure、CMake 與 make 流程。直接執行 <code>make</code> 常會回到原生編譯器，導致產物不能被瀏覽器載入。</p>
+<p>Emscripten 官方建議，在 configure 型專案中用 <code>emconfigure ./configure</code> 與 <code>emmake make</code>；在 CMake 型專案中，用 <code>emcmake cmake</code> 讓 CMake 取得正確的 compiler 與 toolchain 設定（Emscripten Documentation，存取日期：2026-08-28）。</p>
+<p>我的檢查表會抓三件事：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查點</th><th>我會看什麼</th></tr></thead><tbody><tr><td>編譯器是否正確</td><td>verbose log 裡應該看到 <code>emcc</code> 或 <code>em++</code>，不是 <code>gcc</code> 或 <code>g++</code></td></tr><tr><td>build wrapper 是否使用</td><td>configure/CMake 用 <code>emconfigure</code> 或 <code>emcmake</code>，make 用 <code>emmake</code></td></tr><tr><td>輸出格式是否合理</td><td>最後應產出可部署的 <code>.js</code>、<code>.wasm</code>，或可再由 <code>emcc</code> link 的 Wasm object</td></tr></tbody></table></div>
+<p>如果 Makefile 裡有寫死 <code>gcc</code> 或 <code>g++</code>，就要替換成 <code>emcc</code> 或 <code>em++</code>。子目錄裡的 Makefile 也要一起檢查，否則主層改完仍可能在某個 library build 階段失敗。</p>
+</section><section aria-labelledby="如何編譯-libde265-js"><h2 id="如何編譯-libde265-js">如何編譯 libde265.js？</h2>
+<p>libde265.js 編譯流程要先取得專案與 libde265 source，再用 Emscripten 的 make 流程建立 Wasm 相關產物。遇到 Makefile 寫死原生 compiler 時，需要把 <code>gcc</code>/<code>g++</code> 改成 <code>emcc</code>/<code>em++</code>。</p>
+<p>我保留當時使用的指令，因為這段最能說明實務上會卡在哪裡：</p>
+<pre><code class="hljs language-bash">git <span class="hljs-built_in">clone</span> https://github.com/strukturag/libde265.js.git
+<span class="hljs-built_in">chmod</span> +x ./configure
+sh build.sh
+
+wget https://github.com/strukturag/libde265/releases/download/v1.0.15/libde265-1.0.15.tar.gz
+tar xzf libde265-1.0.15.tar.gz
+<span class="hljs-built_in">cd</span> libde265-1.0.15
+./configure --disable-sse --disable-dec265 --disable-sherlock265 --enable-log-error --enable-log-info --enable-log-trace
+emmake make
+</code></pre>
+<p>這裡要注意兩件事。第一，凡是引用 <code>gcc</code> 或 <code>g++</code> 的地方，針對 WebAssembly 編譯時都要改成 <code>emcc</code> 或 <code>em++</code>。第二，如果專案裡有多層子目錄，不能只改最外層 Makefile。</p>
+<p>我當時也把 <code>CFLAGS</code> 調整成：</p>
+<pre><code class="hljs language-makefile">CFLAGS = -g -O2 -Wall
+</code></pre>
+<p>三個選項的意思如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>參數</th><th>作用</th></tr></thead><tbody><tr><td><code>-g</code></td><td>產生除錯資訊，方便排查編譯或執行問題</td></tr><tr><td><code>-O2</code></td><td>啟用第二級最佳化，在速度與編譯成本之間取得平衡</td></tr><tr><td><code>-Wall</code></td><td>開啟常見警告，提早找出潛在問題</td></tr></tbody></table></div>
+</section><section aria-labelledby="如何編譯-av1-aom-的-webassembly"><h2 id="如何編譯-av1-aom-的-webassembly">如何編譯 AV1/AOM 的 WebAssembly？</h2>
+<p>AV1/AOM 這類 C/C++ 專案不能只照一般原生流程執行 <code>make</code>。使用 Emscripten 時，CMake 設定階段要先用 <code>emcmake</code>，建置階段再用 <code>emmake</code>。</p>
+<p>GoogleChromeLabs 的 <code>wasm-av1</code> 專案把 AOM 帶進 WebAssembly 情境，適合用來理解 AV1 decoder 或 encoder 在瀏覽器環境的編譯方式（GoogleChromeLabs，存取日期：2026-08-28）。我遇到的重點是：只跑一般 <code>make</code> 會失敗，因為 build system 沒有被切到 Emscripten toolchain。</p>
+<p>不要只執行：</p>
+<pre><code class="hljs language-bash">make
+</code></pre>
+<p>改用這組流程：</p>
+<pre><code class="hljs language-bash">emcmake cmake ./third_party/aom -DAOM_TARGET_CPU=generic
+emmake make
+</code></pre>
+<p><code>-DAOM_TARGET_CPU=generic</code> 讓目標 CPU 設定保守一點，避免產生瀏覽器 WebAssembly 環境不適合的原生 CPU 假設。若後續要做更細的最佳化，再依目標瀏覽器、Wasm feature 與 codec 需求逐步收窄。</p>
+</section><section aria-labelledby="編譯失敗時要先檢查什麼"><h2 id="編譯失敗時要先檢查什麼">編譯失敗時要先檢查什麼？</h2>
+<p>Emscripten 編譯失敗時，我會先檢查工具鏈是否被原生 compiler 偷偷接回去。多數問題不是 WebAssembly 本身壞掉，而是 configure、CMake、Makefile 或環境變數仍指向 <code>gcc</code>、<code>g++</code>、原生 library。</p>
+<p>我通常照這個順序排查：</p>
+<ol>
+<li>執行 <code>emcc -v</code>，確認目前 shell 真的吃到 Emscripten。</li>
+<li>用 verbose build log 檢查實際 compiler，確定不是 <code>gcc</code> 或 <code>g++</code>。</li>
+<li>檢查 Makefile、CMake cache、子目錄 build script 是否寫死原生 compiler。</li>
+<li>確認需要停用的原生指令集，例如 SSE、平台專用 decoder 或 GUI tool。</li>
+<li>把 configure/CMake 階段重跑一次，不要沿用原生 build 留下來的 cache。</li>
+</ol>
+<p>Emscripten 官方文件也提醒，<code>make</code> 產物可能是 <code>.o</code>、<code>.a</code>、<code>.so</code> 或其他副檔名；副檔名本身不能保證內容可用，必要時要用 build log 或檔案檢查確認產物是否來自 Wasm object 或 LLVM bitcode（Emscripten Documentation，存取日期：2026-08-28）。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>WebAssembly 和 JavaScript 是替代關係嗎？</span></h3>
+<p>WebAssembly 和 JavaScript 不是單純替代關係。WebAssembly 適合搬運高效能運算核心，JavaScript 適合處理 DOM、事件、資料流與前端整合；實務上兩者通常一起使用。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Emscripten 一定會輸出 WebAssembly 嗎？</span></h3>
+<p>新版 Emscripten 預設會建置 WebAssembly，除非在 linking 階段明確關掉 Wasm 輸出。Emscripten 文件也說明，是否輸出 WebAssembly 主要取決於 linking 階段設定，而不是每個 object file 的副檔名。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼直接執行 make 會失敗？</span></h3>
+<p>直接執行 <code>make</code> 可能讓專案繼續使用原生 <code>gcc</code> 或 <code>g++</code>。Emscripten 專案通常要用 <code>emconfigure</code>、<code>emcmake</code> 與 <code>emmake</code> 包住既有 build 流程，讓 compiler、linker 與 library path 全部切到 WebAssembly 目標。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼時候要把 gcc 改成 emcc？</span></h3>
+<p>當 Makefile 或 build script 寫死 <code>gcc</code> 時，就要把 C compiler 改成 <code>emcc</code>。如果是 C++ 程式，則要把 <code>g++</code> 改成 <code>em++</code>，並同步檢查子目錄是否也有寫死 compiler。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>CFLAGS 的 -g、-O2、-Wall 可以保留嗎？</span></h3>
+<p><code>-g</code>、<code>-O2</code>、<code>-Wall</code> 通常可以保留。<code>-g</code> 方便除錯，<code>-O2</code> 提供常用最佳化，<code>-Wall</code> 能讓警告提早浮出；真正需要小心的是平台專用參數，例如 SSE 或只適用原生 CPU 的旗標。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AV1/AOM 編譯 WebAssembly 為什麼要用 emcmake？</span></h3>
+<p>AV1/AOM 這類 CMake 專案需要在設定階段就指定 Emscripten toolchain。<code>emcmake cmake ./third_party/aom -DAOM_TARGET_CPU=generic</code> 會讓 CMake 產生適合 WebAssembly 的建置設定，後續再用 <code>emmake make</code> 執行編譯。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Emscripten 適合所有前端功能嗎？</span></h3>
+<p>Emscripten 不適合拿來取代一般前端功能。表單、路由、互動 UI、資料顯示仍然適合 JavaScript 或 TypeScript；WebAssembly 比較適合重運算、既有 C/C++ 函式庫移植、影像影音處理等工作。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://www.w3.org/TR/wasm-core/" target="_blank" rel="noopener noreferrer">W3C WebAssembly Core Specification</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/WebAssembly" target="_blank" rel="noopener noreferrer">MDN Web Docs: WebAssembly</a></li>
+<li><a href="https://emscripten.org/docs/compiling/index.html" target="_blank" rel="noopener noreferrer">Emscripten Documentation: Compiling and Running Projects</a></li>
+<li><a href="https://emscripten.org/docs/compiling/Building-Projects.html" target="_blank" rel="noopener noreferrer">Emscripten Documentation: Building Projects</a></li>
+<li><a href="https://emscripten.org/docs/compiling/WebAssembly.html" target="_blank" rel="noopener noreferrer">Emscripten Documentation: Building to WebAssembly</a></li>
+<li><a href="https://emscripten.org/docs/getting_started/Tutorial.html" target="_blank" rel="noopener noreferrer">Emscripten Documentation: Tutorial</a></li>
+<li><a href="https://web.dev/articles/emscripting-a-c-library" target="_blank" rel="noopener noreferrer">web.dev: Emscripting a C library to Wasm</a></li>
+<li><a href="https://github.com/GoogleChromeLabs/wasm-av1" target="_blank" rel="noopener noreferrer">GoogleChromeLabs wasm-av1</a></li>
+<li><a href="https://github.com/strukturag/libde265.js" target="_blank" rel="noopener noreferrer">strukturag libde265.js</a></li>
+<li><a href="https://github.com/strukturag/libde265/releases" target="_blank" rel="noopener noreferrer">strukturag libde265 releases</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/webcodecs-webgpu-personalized-streaming">WebCodecs + WebGPU：開啟個人化串流新視界</a>：同樣聚焦 WebAssembly、前端開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/vscode-nx-package-setup">在 VSCode 建構 Nx Meta 套件：NX SDK、CMake 與 MSYS2 設定</a>：同樣聚焦 C++，可接著比較不同情境的做法。</li>
+<li><a href="/post/typescript-tsconfig-settings">TypeScript 設定全攻略：看懂 tsconfig.json 的核心編譯選項</a>：同樣聚焦 前端開發，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-09-12</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

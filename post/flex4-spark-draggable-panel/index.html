@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex 4 Spark Panel 怎麼做成可拖動？自訂 DraggablePanel 完整範例｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Flex 4 的 Spark Panel 元件沒有內建拖動功能。這篇文章說明如何繼承 Panel、宣告 topGroup skin part 並監聽滑鼠事件，實作一個可自由拖曳的 DraggablePanel，附完整 ActionScript 程式碼。" />
+<meta name="keywords" content="前端開發, Flex4, Spark, ActionScript3, Panel, Drag" />
+<link rel="canonical" href="https://claire-chang.com/post/flex4-spark-draggable-panel/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Flex 4 Spark Panel 怎麼做成可拖動？自訂 DraggablePanel 完整範例｜Claire Chang" />
+<meta property="og:description" content="Flex 4 的 Spark Panel 元件沒有內建拖動功能。這篇文章說明如何繼承 Panel、宣告 topGroup skin part 並監聽滑鼠事件，實作一個可自由拖曳的 DraggablePanel，附完整 ActionScript 程式碼。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/flex4-spark-draggable-panel/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_flex4-spark-draggable-panel-1677af26.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_flex4-spark-draggable-panel-1677af26.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Flex 4 Spark Panel 怎麼做成可拖動？自訂 DraggablePanel 完整範例｜Claire Chang" />
+<meta name="twitter:description" content="Flex 4 的 Spark Panel 元件沒有內建拖動功能。這篇文章說明如何繼承 Panel、宣告 topGroup skin part 並監聽滑鼠事件，實作一個可自由拖曳的 DraggablePanel，附完整 ActionScript 程式碼。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_flex4-spark-draggable-panel-1677af26.jpg" />
+<meta property="article:published_time" content="2011-12-20" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Flex4" />
+<meta property="article:tag" content="Spark" />
+<meta property="article:tag" content="ActionScript3" />
+<meta property="article:tag" content="Panel" />
+<meta property="article:tag" content="Drag" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Flex 4 Spark Panel 怎麼做成可拖動？自訂 DraggablePanel 完整範例","item":"https://claire-chang.com/post/flex4-spark-draggable-panel/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/flex4-spark-draggable-panel/#article","headline":"Flex 4 Spark Panel 怎麼做成可拖動？自訂 DraggablePanel 完整範例","description":"Flex 4 的 Spark Panel 元件沒有內建拖動功能。這篇文章說明如何繼承 Panel、宣告 topGroup skin part 並監聽滑鼠事件，實作一個可自由拖曳的 DraggablePanel，附完整 ActionScript 程式碼。","image":"https://claire-chang.com/images/tech/hero_flex4-spark-draggable-panel.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2011-12-20","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/flex4-spark-draggable-panel/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Flex4, Spark, ActionScript3, Panel, Drag","mentions":[{"@type":"Thing","name":"Flex4"},{"@type":"Thing","name":"Spark"},{"@type":"Thing","name":"ActionScript3"},{"@type":"Thing","name":"Panel"},{"@type":"Thing","name":"Drag"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/flex4-spark-draggable-panel/#faq","mainEntity":[{"@type":"Question","name":"為什麼 Flex 4 的 Spark Panel 不能直接拖動？","acceptedAnswer":{"@type":"Answer","text":"Spark 架構下 Panel 的外觀與行為分離，拖動區域（topGroup）存在於 PanelSkin 中，但 Panel 類別沒有將它宣告為 skinPart，也沒有綁任何滑鼠事件，所以必須自己繼承 Panel 來實作。"}},{"@type":"Question","name":"為什麼要監聽 topGroup 而不是整個 Panel？","acceptedAnswer":{"@type":"Answer","text":"如果把整個 Panel 都設成可拖動，使用者點擊內容、按鈕或捲動軸時也會觸發拖動。只監聽 topGroup（標題列區域）才符合一般視窗的操作習慣。"}},{"@type":"Question","name":"為什麼 mouseDown 處理函式要檢查 DragManager.isDragging？","acceptedAnswer":{"@type":"Answer","text":"如果 Panel 同時參與 Flex 的 Drag & Drop 拖放流程，`DragManager.isDragging` 會是 true。先檢查這個旗標可以避免內建的 `startDrag()` 和 DragManager 的拖放操作互相衝突。"}},{"@type":"Question","name":"這個做法需要自訂 skin 嗎？","acceptedAnswer":{"@type":"Answer","text":"不需要。預設的 PanelSkin 已經含有 `topGroup`，只要在子類別裡把它宣告為 `[SkinPart(required=\"true\")]`，執行時就會自動對應到 skin 裡的實例，換用自訂 skin 時記得保留同名節點即可。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_flex4-spark-draggable-panel.webp" alt="桌面上的視窗被滑鼠拖曳移動，象徵可拖動的 Panel 元件" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2011-12-20">2011-12-20</time></span><span class="post-meta-pill">Flex4 · Spark · ActionScript3 · Panel · Drag</span></div></div><h1 class="insights-hero-title">Flex 4 Spark Panel 怎麼做成可拖動？自訂 DraggablePanel 完整範例</h1><p class="insights-hero-description">Flex 4 的 Spark Panel 元件沒有內建拖動功能。這篇文章說明如何繼承 Panel、宣告 topGroup skin part 並監聽滑鼠事件，實作一個可自由拖曳的 DraggablePanel，附完整 ActionScript 程式碼。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Flex 4 裡的 Spark Panel 元件預設沒有內建拖動功能。如果希望 Panel 可以像視窗一樣被使用者用滑鼠拖著走，我們必須自己攔截使用者拖動標題列（topGroup）區塊時的滑鼠事件，並在事件處理函式中呼叫 <code>startDrag()</code> / <code>stopDrag()</code>。本文的做法是繼承 Spark Panel，寫一個 <code>DraggablePanel</code> 元件，程式碼可直接複製使用。</p>
+</div><section aria-labelledby="為什麼-spark-panel-沒有內建拖動功能"><h2 id="為什麼-spark-panel-沒有內建拖動功能">為什麼 Spark Panel 沒有內建拖動功能？</h2>
+<p>Spark 架構把 Panel 的外觀全部交給 skin（預設是 <code>PanelSkin</code>）來處理。在預設的 PanelSkin 裡其實有一個代表標題列區域的 <code>topGroup</code>，只是 Panel 類別本身並沒有把它宣告成 skinPart，自然也不會幫你綁任何拖動行為。</p>
+<p>所以我們要做的只有兩件事：</p>
+<ol>
+<li>在自訂的 Panel 子類別中，把 <code>topGroup</code> 宣告為必需的 skinPart。</li>
+<li>在 skin part 加入時（<code>partAdded</code>）監聽它的 <code>MouseEvent.MOUSE_DOWN</code> 與 <code>MouseEvent.MOUSE_UP</code>，分別啟動與結束拖動。</li>
+</ol>
+</section><section aria-labelledby="draggablepanel-完整程式碼"><h2 id="draggablepanel-完整程式碼">DraggablePanel 完整程式碼</h2>
+<pre><code class="hljs language-actionscript">package components
+{
+	import flash.events.MouseEvent;
+
+	import mx.managers.DragManager;
+
+	import spark.components.Group;
+	import spark.components.Panel;
+
+	/**
+	 * A simple extension of the Spark Panel component
+	 * that enables dragging.
+	 */
+	public class DraggablePanel extends Panel
+	{
+		//--------------------------------------
+		// Constructor
+		//--------------------------------------
+
+		public function DraggablePanel()
+		{
+			super();
+		}
+
+		//--------------------------------------
+		// Skin Parts
+		//--------------------------------------
+
+		/**
+		 * The skin part that represents the title bar of the underlying Panel.
+		 * NOTE: The default PanelSkin already has this, it's just not defined as a skinPart in the Panel class.
+		 * We want it so that we can capture dragging.
+		 */
+		[SkinPart(required="true")]
+		public var topGroup:Group;
+
+		//--------------------------------------
+		// Overridden Methods
+		//--------------------------------------
+
+		protected override function partAdded( partName:String, instance:Object ) : void
+		{
+			super.partAdded( partName, instance );
+
+			if (instance == topGroup)
+			{
+				Group( instance ).addEventListener( MouseEvent.MOUSE_DOWN, topGroup_mouseDownHandler );
+				Group( instance ).addEventListener( MouseEvent.MOUSE_UP, topGroup_mouseUpHandler );
+			}
+		}
+
+		protected override function partRemoved( partName:String, instance:Object ) : void
+		{
+			super.partRemoved( partName, instance );
+
+			if (instance == topGroup)
+			{
+				Group( instance ).removeEventListener( MouseEvent.MOUSE_DOWN, topGroup_mouseDownHandler );
+				Group( instance ).removeEventListener( MouseEvent.MOUSE_UP, topGroup_mouseUpHandler );
+			}
+		}
+
+		//--------------------------------------
+		// Event Handlers
+		//--------------------------------------
+
+		protected function topGroup_mouseDownHandler( event:MouseEvent ):void
+		{
+			if ( !DragManager.isDragging )
+				startDrag();
+		}
+
+		protected function topGroup_mouseUpHandler( event:MouseEvent ):void
+		{
+			stopDrag();
+		}
+	}
+}
+</code></pre>
+</section><section aria-labelledby="這段程式碼的重點解析"><h2 id="這段程式碼的重點解析">這段程式碼的重點解析</h2>
+<ul>
+<li><strong><code>[SkinPart(required="true")] public var topGroup:Group;</code></strong>：預設的 PanelSkin 本來就有 <code>topGroup</code>，只是 Panel 類別沒把它定義成 skinPart。我們補上這個宣告，才能在程式裡拿到它並綁事件。</li>
+<li><strong><code>partAdded()</code> / <code>partRemoved()</code></strong>：這是 skin part 生命週期的掛鉤。在 <code>partAdded</code> 加入監聽、<code>partRemoved</code> 移除監聽，確保 skin 換掉或卸載時不會留下孤兒事件。</li>
+<li><strong><code>startDrag()</code> / <code>stopDrag()</code></strong>：滑鼠按下標題列就開始拖動、放開就結束。這裡用的是 DisplayObject 內建的拖動 API，而不是 Flex 的 DragManager 拖放流程。</li>
+<li><strong><code>if (!DragManager.isDragging)</code></strong>：如果這個 Panel 同時被用在 Flex 的拖放（Drag &#x26; Drop）操作中，要避免兩種拖動互相干擾——正在 DragManager 拖放時就不要再呼叫 <code>startDrag()</code>。</li>
+</ul>
+<p>使用時只要把原本的 <code>&#x3C;s:Panel></code> 換成自訂的 <code>&#x3C;components:DraggablePanel></code>，使用者就能按住標題列拖動整個 Panel 了。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼 Flex 4 的 Spark Panel 不能直接拖動？</span></h3>
+<p>Spark 架構下 Panel 的外觀與行為分離，拖動區域（topGroup）存在於 PanelSkin 中，但 Panel 類別沒有將它宣告為 skinPart，也沒有綁任何滑鼠事件，所以必須自己繼承 Panel 來實作。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼要監聽 topGroup 而不是整個 Panel？</span></h3>
+<p>如果把整個 Panel 都設成可拖動，使用者點擊內容、按鈕或捲動軸時也會觸發拖動。只監聽 topGroup（標題列區域）才符合一般視窗的操作習慣。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼 mouseDown 處理函式要檢查 DragManager.isDragging？</span></h3>
+<p>如果 Panel 同時參與 Flex 的 Drag &#x26; Drop 拖放流程，<code>DragManager.isDragging</code> 會是 true。先檢查這個旗標可以避免內建的 <code>startDrag()</code> 和 DragManager 的拖放操作互相衝突。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>這個做法需要自訂 skin 嗎？</span></h3>
+<p>不需要。預設的 PanelSkin 已經含有 <code>topGroup</code>，只要在子類別裡把它宣告為 <code>[SkinPart(required="true")]</code>，執行時就會自動對應到 skin 裡的實例，換用自訂 skin 時記得保留同名節點即可。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Adobe 官方文件：Spark Panel 與 Skinning 機制（Spark skinning lifecycle、SkinPart metadata）</li>
+<li>Adobe ActionScript 3.0 參考：<code>DisplayObject.startDrag()</code> / <code>stopDrag()</code>、<code>mx.managers.DragManager</code></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/flex4-custom-resize-event">如何在 Flex 4 自製 resize 事件：clipAndEnableScrolling 設定教學</a>：同樣聚焦 Flex4、ActionScript3，可接著比較不同情境的做法。</li>
+<li><a href="/post/flex-image-non-uniform-scaling">Flex 圖片不等比縮放設定：Flex3 與 Flex4 的正確寫法</a>：同樣聚焦 Flex4，可接著比較不同情境的做法。</li>
+<li><a href="/post/flex-aspect-ratio-image-scaling">Flex如何讓圖片不等比縮放？</a>：同樣聚焦 Flex4，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2011-12-20，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2011-12-20</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

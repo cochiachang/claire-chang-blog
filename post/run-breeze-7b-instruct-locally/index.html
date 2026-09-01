@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>本機執行 Breeze-7B-Instruct-v1_0 教學｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 Breeze-7B-Instruct-v1_0 的模型來源、Ollama 匯入限制、繁體中文回覆差異與 Transformers 推理方式。" />
+<meta name="keywords" content="生成式AI, Breeze, Ollama, Hugging Face, Transformers" />
+<link rel="canonical" href="https://claire-chang.com/post/run-breeze-7b-instruct-locally/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="本機執行 Breeze-7B-Instruct-v1_0 教學｜Claire Chang" />
+<meta property="og:description" content="說明 Breeze-7B-Instruct-v1_0 的模型來源、Ollama 匯入限制、繁體中文回覆差異與 Transformers 推理方式。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/run-breeze-7b-instruct-locally/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_run-breeze-7b-instruct-locally-81dc47d1.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_run-breeze-7b-instruct-locally-81dc47d1.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="本機執行 Breeze-7B-Instruct-v1_0 教學｜Claire Chang" />
+<meta name="twitter:description" content="說明 Breeze-7B-Instruct-v1_0 的模型來源、Ollama 匯入限制、繁體中文回覆差異與 Transformers 推理方式。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_run-breeze-7b-instruct-locally-81dc47d1.jpg" />
+<meta property="article:published_time" content="2024-10-03" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Breeze" />
+<meta property="article:tag" content="Ollama" />
+<meta property="article:tag" content="Hugging Face" />
+<meta property="article:tag" content="Transformers" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"本機執行 Breeze-7B-Instruct-v1_0 教學","item":"https://claire-chang.com/post/run-breeze-7b-instruct-locally/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/run-breeze-7b-instruct-locally/#article","headline":"本機執行 Breeze-7B-Instruct-v1_0 教學","description":"說明 Breeze-7B-Instruct-v1_0 的模型來源、Ollama 匯入限制、繁體中文回覆差異與 Transformers 推理方式。","image":"https://claire-chang.com/images/tech/hero_run-breeze-7b-instruct-locally.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-10-03","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/run-breeze-7b-instruct-locally/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"Breeze, Ollama, Hugging Face, Transformers","mentions":[{"@type":"Thing","name":"Breeze"},{"@type":"Thing","name":"Ollama"},{"@type":"Thing","name":"Hugging Face"},{"@type":"Thing","name":"Transformers"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/run-breeze-7b-instruct-locally/#faq","mainEntity":[{"@type":"Question","name":"Breeze-7B-Instruct-v1_0 可以直接用 Ollama 執行嗎？","acceptedAnswer":{"@type":"Answer","text":"Breeze-7B-Instruct-v1_0 不一定能直接用原始 Hugging Face 權重匯入 Ollama。比較穩定的方式是使用已整理好的 Ollama 模型，或確認 GGUF、adapter 與 base model 完全相容後再轉換。"}},{"@type":"Question","name":"Breeze 模型為什麼有時候不用繁體中文回答？","acceptedAnswer":{"@type":"Answer","text":"Breeze 模型的輸出語言會受 prompt、微調資料與基礎模型語料影響。若要固定繁體中文，建議在 system prompt 明確指定「使用台灣繁體中文，不使用簡體中文」。"}},{"@type":"Question","name":"RTX 3090 能跑 Breeze-7B-Instruct-v1_0 嗎？","acceptedAnswer":{"@type":"Answer","text":"RTX 3090 的 24GB VRAM 通常足以測試 7B 級模型推理，但自行轉換未量化權重仍可能失敗。正式使用前應確認量化格式、載入方式與 batch 設定。"}},{"@type":"Question","name":"Transformers 和 Ollama 要選哪一個？","acceptedAnswer":{"@type":"Answer","text":"需要驗證官方模型原始行為時選 Transformers。需要本地 API、命令列管理與應用整合時，Ollama 比較方便。"}},{"@type":"Question","name":"`panic: runtime error: index out of range` 代表什麼？","acceptedAnswer":{"@type":"Answer","text":"這個錯誤常見於權重檔或 adapter 格式不符合轉換工具預期。排查時應先確認 `FROM` 的基礎模型是否真的是該 adapter 的上一層模型。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_run-breeze-7b-instruct-locally.webp" alt="筆電上執行本機大型語言模型的開發環境" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-10-03">2024-10-03</time></span><span class="post-meta-pill">Breeze · Ollama · Hugging Face · Transformers</span></div></div><h1 class="insights-hero-title">本機執行 Breeze-7B-Instruct-v1_0 教學</h1><p class="insights-hero-description">說明 Breeze-7B-Instruct-v1_0 的模型來源、Ollama 匯入限制、繁體中文回覆差異與 Transformers 推理方式。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Breeze-7B-Instruct-v1_0 可以在本機用 Hugging Face Transformers 載入，也可以嘗試轉進 Ollama，但 Ollama 匯入時必須確認基礎模型、adapter 與量化格式是否相容。若目標是繁體中文應答，測試 prompt 與模型微調資料會直接影響輸出語言。</p>
+</div><section aria-labelledby="breeze-7b-instruct-v1-0-是什麼"><h2 id="breeze-7b-instruct-v1-0-是什麼">Breeze-7B-Instruct-v1_0 是什麼？</h2>
+<p>Breeze-7B-Instruct-v1_0 是 MediaTek Research 發布的 7B 級指令微調模型。Breeze-7B-Instruct-v1_0 來自 Breeze-7B-Base-v1_0，適合測試繁體中文問答、摘要與一般對話任務。</p>
+<p>Breeze 系列的微調順序很重要：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>模型</th><th>來源關係</th><th>用途</th></tr></thead><tbody><tr><td>Mistral-7B-v0.1</td><td>原始基礎模型</td><td>通用 7B 語言模型基底</td></tr><tr><td>Breeze-7B-Base-v1_0</td><td>由 Mistral-7B-v0.1 延伸</td><td>MediaTek Breeze 系列基礎模型</td></tr><tr><td>Breeze-7B-Instruct-v1_0</td><td>由 Breeze-7B-Base-v1_0 延伸</td><td>指令微調後可直接對話</td></tr></tbody></table></div>
+<p>本機測試時不要只看模型名稱相似，也要看模型卡上的 base model 與 adapter 關係。模型來源不匹配時，轉換工具可能在載入權重時失敗。</p>
+</section><section aria-labelledby="為什麼-ollama-上的-breeze-模型可能回簡體中文"><h2 id="為什麼-ollama-上的-breeze-模型可能回簡體中文">為什麼 Ollama 上的 Breeze 模型可能回簡體中文？</h2>
+<p>Ollama 社群模型是否穩定回繁體中文，取決於模型版本、量化方式與 prompt 內容。Breeze 系列雖然對繁體中文友善，但未被微調覆蓋的問題仍可能受基礎模型語料影響。</p>
+<p>原稿測試過 <code>markliou/breeze-7b</code>、<code>ycchen/breeze-7b-instruct-v1_0</code>、<code>jcai/breeze-7b-32k-instruct-v1_0</code>。其中有些模型會回繁體中文，有些模型在一般問題上偏向簡體中文。</p>
+<p>一個實務判斷是：如果問題本身具有台灣語境，例如「台北有哪些地方好玩」，模型較容易回繁體中文；如果問題是一般知識問答，模型可能回到訓練語料中較常見的簡體中文。要穩定控制語言，建議在 system prompt 明確要求「全程使用台灣繁體中文」。</p>
+</section><section aria-labelledby="如何把-hugging-face-的-breeze-匯入-ollama"><h2 id="如何把-hugging-face-的-breeze-匯入-ollama">如何把 Hugging Face 的 Breeze 匯入 Ollama？</h2>
+<p>把 Hugging Face 模型匯入 Ollama 時，<code>Modelfile</code> 的 <code>FROM</code> 必須對應正確基礎模型。若直接把 Breeze-7B-Instruct-v1_0 adapter 接到 <code>mistral:v0.1</code>，很容易遇到權重不相容錯誤。</p>
+<p>原稿曾嘗試使用以下 <code>Modelfile</code>：</p>
+<pre><code class="hljs language-bash">FROM mistral:v0.1
+ADAPTER ./
+</code></pre>
+<p>建立模型：</p>
+<pre><code class="hljs language-bash">ollama create my-breeze
+</code></pre>
+<p>若出現 <code>panic: runtime error: index out of range [1] with length 1</code>，常見原因是 <code>.safetensors</code> 檔案格式、adapter 層級或基礎模型不符合 Ollama 轉換需求。Breeze-7B-Instruct-v1_0 的上一層是 Breeze-7B-Base-v1_0，不是直接接在 Mistral-7B-v0.1 上。</p>
+</section><section aria-labelledby="為什麼-24gb-vram-還可能轉換失敗"><h2 id="為什麼-24gb-vram-還可能轉換失敗">為什麼 24GB VRAM 還可能轉換失敗？</h2>
+<p>7B 模型不代表任何操作都能輕鬆放進 24GB VRAM。未量化權重、轉換暫存、GPU overhead 與 Ollama 建模流程，都可能讓實際記憶體需求高於推理時的直覺估計。</p>
+<p>原稿的測試環境偵測到 NVIDIA GeForce RTX 3090，總 VRAM 24GB、可用約 22.8GB，但轉換過程仍在進度超過 100% 附近失敗。這也是 Ollama library 常見模型通常會先提供量化版本的原因：量化後檔案較小，部署與載入成本都比較低。</p>
+<p>實務上可以先採用已量化的 GGUF 或 Ollama 社群模型做 API 原型，再評估是否需要自行轉換完整權重。</p>
+</section><section aria-labelledby="如何用-transformers-直接呼叫-breeze-7b-instruct-v1-0"><h2 id="如何用-transformers-直接呼叫-breeze-7b-instruct-v1-0">如何用 Transformers 直接呼叫 Breeze-7B-Instruct-v1_0？</h2>
+<p>Transformers 是最直接的 Hugging Face 本機推理方式。Transformers 不需要先把模型轉進 Ollama，但第一次載入會下載權重，推理速度也取決於 GPU、記憶體與量化設定。</p>
+<p>基本載入方式如下：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer, AutoModelForCausalLM
+
+tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">"MediaTek-Research/Breeze-7B-Instruct-v1_0"</span>)
+model = AutoModelForCausalLM.from_pretrained(<span class="hljs-string">"MediaTek-Research/Breeze-7B-Instruct-v1_0"</span>)
+</code></pre>
+<p>使用 chat template 產生輸入：</p>
+<pre><code class="hljs language-python">chat = [
+  {<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: <span class="hljs-string">"你好，請問你可以完成什麼任務？"</span>},
+  {<span class="hljs-string">"role"</span>: <span class="hljs-string">"assistant"</span>, <span class="hljs-string">"content"</span>: <span class="hljs-string">"你好，我可以幫助您解決各種問題、提供資訊和協助您完成許多不同的任務。"</span>},
+  {<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: <span class="hljs-string">"太棒了！"</span>},
+]
+
+prompt = tokenizer.apply_chat_template(chat, tokenize=<span class="hljs-literal">False</span>)
+</code></pre>
+<p>推理範例：</p>
+<pre><code class="hljs language-python">outputs = model.generate(
+    tokenizer.apply_chat_template(chat, return_tensors=<span class="hljs-string">"pt"</span>),
+    max_new_tokens=<span class="hljs-number">128</span>,
+    top_p=<span class="hljs-number">0.01</span>,
+    top_k=<span class="hljs-number">85</span>,
+    repetition_penalty=<span class="hljs-number">1.1</span>,
+    temperature=<span class="hljs-number">0.01</span>,
+)
+
+<span class="hljs-built_in">print</span>(tokenizer.decode(outputs[<span class="hljs-number">0</span>]))
+</code></pre>
+<p>原稿測試得到的回覆是「很高興能為您服務！如果有任何需要，歡迎隨時詢問。」這種方式適合確認模型原始行為，但若沒有量化與 GPU 最佳化，互動速度可能偏慢。</p>
+</section><section aria-labelledby="本機-breeze-測試建議流程"><h2 id="本機-breeze-測試建議流程">本機 Breeze 測試建議流程</h2>
+<p>Breeze-7B-Instruct-v1_0 本機測試可以先分成三層：先測社群量化模型，再測 Transformers 原始模型，最後才處理 Ollama 自行匯入。這樣比較容易判斷錯誤來自模型、轉換流程或硬體限制。</p>
+<p>建議流程：</p>
+<ol>
+<li>先用 Ollama 社群模型測 prompt 與繁體中文表現。</li>
+<li>用 Hugging Face Transformers 驗證官方模型原始輸出。</li>
+<li>確認 base model 與 adapter 關係後，再嘗試 Ollama 自行匯入。</li>
+<li>記錄 GPU 型號、可用 VRAM、模型檔案格式與錯誤訊息。</li>
+<li>若正式部署需要速度，優先找穩定量化版本。</li>
+</ol>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Breeze-7B-Instruct-v1_0 可以直接用 Ollama 執行嗎？</span></h3>
+<p>Breeze-7B-Instruct-v1_0 不一定能直接用原始 Hugging Face 權重匯入 Ollama。比較穩定的方式是使用已整理好的 Ollama 模型，或確認 GGUF、adapter 與 base model 完全相容後再轉換。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Breeze 模型為什麼有時候不用繁體中文回答？</span></h3>
+<p>Breeze 模型的輸出語言會受 prompt、微調資料與基礎模型語料影響。若要固定繁體中文，建議在 system prompt 明確指定「使用台灣繁體中文，不使用簡體中文」。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RTX 3090 能跑 Breeze-7B-Instruct-v1_0 嗎？</span></h3>
+<p>RTX 3090 的 24GB VRAM 通常足以測試 7B 級模型推理，但自行轉換未量化權重仍可能失敗。正式使用前應確認量化格式、載入方式與 batch 設定。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Transformers 和 Ollama 要選哪一個？</span></h3>
+<p>需要驗證官方模型原始行為時選 Transformers。需要本地 API、命令列管理與應用整合時，Ollama 比較方便。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>panic: runtime error: index out of range</code> 代表什麼？</span></h3>
+<p>這個錯誤常見於權重檔或 adapter 格式不符合轉換工具預期。排查時應先確認 <code>FROM</code> 的基礎模型是否真的是該 adapter 的上一層模型。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>MediaTek Research, Breeze-7B-Instruct-v1_0：<a href="https://huggingface.co/MediaTek-Research/Breeze-7B-Instruct-v1_0" target="_blank" rel="noopener noreferrer">https://huggingface.co/MediaTek-Research/Breeze-7B-Instruct-v1_0</a></li>
+<li>MediaTek Research, Breeze-7B-Base-v1_0：<a href="https://huggingface.co/MediaTek-Research/Breeze-7B-Base-v1_0" target="_blank" rel="noopener noreferrer">https://huggingface.co/MediaTek-Research/Breeze-7B-Base-v1_0</a></li>
+<li>Mistral AI, Mistral-7B-v0.1：<a href="https://huggingface.co/mistralai/Mistral-7B-v0.1" target="_blank" rel="noopener noreferrer">https://huggingface.co/mistralai/Mistral-7B-v0.1</a></li>
+<li>Ollama Breeze 搜尋結果：<a href="https://ollama.com/search?q=breeze" target="_blank" rel="noopener noreferrer">https://ollama.com/search?q=breeze</a></li>
+<li>Hugging Face Transformers 文件：<a href="https://huggingface.co/docs/transformers/index" target="_blank" rel="noopener noreferrer">https://huggingface.co/docs/transformers/index</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/llm-traditional-chinese-comparison">LLM 繁體中文能力比較：用台灣社福申請情境測試模型</a>：同樣聚焦 Ollama，可接著比較不同情境的做法。</li>
+<li><a href="/post/ollama-local-llm-service">Ollama 本地端運行 LLM 服務教學</a>：同樣聚焦 Ollama，可接著比較不同情境的做法。</li>
+<li><a href="/post/ollama-load-custom-model">在 Ollama 載入自己建立的模型：Modelfile 與本地模型管理流程</a>：同樣聚焦 Ollama，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-10-03</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

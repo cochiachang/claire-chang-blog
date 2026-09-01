@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>網站 GEO 技術優化怎麼做？從索引、canonical 到 AI 爬蟲完整檢查｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="我依序檢查可爬取性、初始 HTML、canonical、sitemap、robots.txt 與 AI 搜尋爬蟲，說明網站 GEO 技術優化該從哪裡開始、怎麼驗證。" />
+<meta name="keywords" content="GEO 優化, GEO 技術優化, robots.txt, canonical, sitemap, AI 爬蟲" />
+<link rel="canonical" href="https://claire-chang.com/post/geo-technical-optimization/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="網站 GEO 技術優化怎麼做？從索引、canonical 到 AI 爬蟲完整檢查｜Claire Chang" />
+<meta property="og:description" content="我依序檢查可爬取性、初始 HTML、canonical、sitemap、robots.txt 與 AI 搜尋爬蟲，說明網站 GEO 技術優化該從哪裡開始、怎麼驗證。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/geo-technical-optimization/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_geo-technical-optimization-ab49c852.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_geo-technical-optimization-ab49c852.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="網站 GEO 技術優化怎麼做？從索引、canonical 到 AI 爬蟲完整檢查｜Claire Chang" />
+<meta name="twitter:description" content="我依序檢查可爬取性、初始 HTML、canonical、sitemap、robots.txt 與 AI 搜尋爬蟲，說明網站 GEO 技術優化該從哪裡開始、怎麼驗證。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_geo-technical-optimization-ab49c852.jpg" />
+<meta property="article:published_time" content="2026-08-28" />
+<meta property="article:modified_time" content="2026-09-01" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="GEO 技術優化" />
+<meta property="article:tag" content="robots.txt" />
+<meta property="article:tag" content="canonical" />
+<meta property="article:tag" content="sitemap" />
+<meta property="article:tag" content="AI 爬蟲" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"網站 GEO 技術優化怎麼做？從索引、canonical 到 AI 爬蟲完整檢查","item":"https://claire-chang.com/post/geo-technical-optimization/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/geo-technical-optimization/#article","headline":"網站 GEO 技術優化怎麼做？從索引、canonical 到 AI 爬蟲完整檢查","description":"我依序檢查可爬取性、初始 HTML、canonical、sitemap、robots.txt 與 AI 搜尋爬蟲，說明網站 GEO 技術優化該從哪裡開始、怎麼驗證。","image":"https://claire-chang.com/images/articles/hero_geo-technical-optimization.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2026-08-28","dateModified":"2026-09-01","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/geo-technical-optimization/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"GEO 優化","keywords":"GEO 技術優化, robots.txt, canonical, sitemap, AI 爬蟲","about":[{"@type":"Thing","name":"網站技術 SEO"},{"@type":"Thing","name":"robots.txt"},{"@type":"Thing","name":"canonical"},{"@type":"Thing","name":"sitemap"},{"@type":"Thing","name":"AI 搜尋爬蟲"},{"@type":"Thing","name":"GEO 技術優化"},{"@type":"Thing","name":"AI 爬蟲"}],"mentions":[{"@type":"Thing","name":"robots.txt"},{"@type":"Thing","name":"canonical"},{"@type":"Thing","name":"sitemap"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/geo-technical-optimization/#faq","mainEntity":[{"@type":"Question","name":"網站有 sitemap 就一定會被索引嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定。sitemap 是發現訊號，不是索引保證。頁面仍需可存取、有實質內容並符合搜尋規範。"}},{"@type":"Question","name":"301 轉址會讓 GEO 失效嗎？","acceptedAnswer":{"@type":"Answer","text":"合理的永久轉址不會讓 GEO 失效，但多層轉址與 canonical 不一致會增加處理成本。內部連結最好直接指向最終網址。"}},{"@type":"Question","name":"Cloudflare 可以處理尾斜線轉址嗎？","acceptedAnswer":{"@type":"Answer","text":"可以使用 Redirect Rules 統一網址，但規則必須配合實際靜態主機路徑。修改前應先確認最終 200 網址及網站產生器的 canonical 規則。"}},{"@type":"Question","name":"robots.txt 允許 GPTBot 就等於允許 ChatGPT 搜尋嗎？","acceptedAnswer":{"@type":"Answer","text":"不等於。ChatGPT 搜尋應看 `OAI-SearchBot`，`GPTBot` 是不同用途的 User-Agent。"}},{"@type":"Question","name":"llms.txt 應該放所有文章嗎？","acceptedAnswer":{"@type":"Answer","text":"不建議把 `llms.txt` 變成另一份巨大 sitemap。較合理的做法是整理網站說明、重要分類與高價值內容入口。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/articles/hero_geo-technical-optimization.webp" alt="網站技術 GEO 檢查流程，涵蓋索引、canonical、sitemap、robots.txt 與 AI 爬蟲" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tutorials/" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ GEO 優化</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2026-08-28">2026-08-28</time></span><span class="post-meta-pill">GEO 技術優化 · robots.txt · canonical · sitemap · AI 爬蟲</span></div></div><h1 class="insights-hero-title">網站 GEO 技術優化怎麼做？從索引、canonical 到 AI 爬蟲完整檢查</h1><p class="insights-hero-description">我依序檢查可爬取性、初始 HTML、canonical、sitemap、robots.txt 與 AI 搜尋爬蟲，說明網站 GEO 技術優化該從哪裡開始、怎麼驗證。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card"><p>網站 GEO 技術優化的第一目標，是讓搜尋引擎拿到穩定、唯一且完整的內容。我的檢查順序是先確認頁面能否被爬取與渲染，再處理網址正規化、內部連結、結構化資料與效能，而不是一開始就把重點放在 <code>llms.txt</code>。</p>
+</div><section aria-labelledby="網站-geo-技術檢查應從哪裡開始"><h2 id="網站-geo-技術檢查應從哪裡開始">網站 GEO 技術檢查應從哪裡開始？</h2>
+<div class="answer"><p>網站 GEO 技術檢查應從「爬得到、讀得到、網址唯一」開始。若主要內容被阻擋、必須登入或只在瀏覽器執行程式後出現，再完整的 Answer Block 與 Schema 也無法彌補可及性問題。</p></div>
+<p>Google Search 的處理包含爬取、索引與提供結果三個階段，而且符合規範並不代表一定會被爬取或索引。<a href="https://developers.google.com/search/docs/fundamentals/how-search-works" target="_blank" rel="noopener noreferrer">Google Search 運作方式</a></p>
+<p>我會依序確認：HTTP 狀態碼、robots 指令、初始 HTML、canonical、sitemap、內部連結、結構化資料與速度。這個順序能先排除根本性阻塞，再處理理解與呈現問題。</p>
+</section><section aria-labelledby="主要內容為什麼要存在於初始-html"><h2 id="主要內容為什麼要存在於初始-html">主要內容為什麼要存在於初始 HTML？</h2>
+<div class="answer"><p>文章標題、正文與主要連結最好直接存在於伺服器回傳的 HTML。依賴 JavaScript 才產生完整內容會增加渲染與失敗風險，也可能讓不同爬蟲取得不一致的頁面版本。</p></div>
+<p>純靜態網站通常具備這項優勢，但仍要查看「檢視原始碼」而不是只看瀏覽器開發者工具中的最終 DOM。若原始碼只有空容器，文章則由 API 後載入，就需要確認各搜尋引擎是否能正確渲染。</p>
+</section><section aria-labelledby="canonical-與網址轉址要怎麼統一"><h2 id="canonical-與網址轉址要怎麼統一">canonical 與網址轉址要怎麼統一？</h2>
+<div class="answer"><p>canonical、sitemap、內部連結與 Open Graph URL 應統一指向最後回傳 200 的標準網址。HTTP、HTTPS、尾斜線與無尾斜線若同時存在，應選定一種版本並讓其他版本直接轉向最終網址。</p></div>
+<p>我曾遇到文章無尾斜線網址先 301 到尾斜線網址，但 canonical 與 sitemap 仍使用無尾斜線。這不一定立即造成排名問題，卻讓搜尋引擎每次都要多做一次網址合併判斷。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查項目</th><th>正確狀態</th></tr></thead><tbody><tr><td>瀏覽器最終網址</td><td>回傳 200</td></tr><tr><td>canonical</td><td>指向最終 200 網址</td></tr><tr><td>sitemap</td><td>列出同一標準網址</td></tr><tr><td>內部連結</td><td>直接連到最終網址</td></tr><tr><td>轉址</td><td>避免多層 301 鏈</td></tr></tbody></table></div>
+</section><section aria-labelledby="robots-txt-要允許哪些-ai-搜尋爬蟲"><h2 id="robots-txt-要允許哪些-ai-搜尋爬蟲">robots.txt 要允許哪些 AI 搜尋爬蟲？</h2>
+<div class="answer"><p>想讓內容出現在 ChatGPT 搜尋中，應確認 robots.txt 沒有阻擋 OAI-SearchBot；想出現在 Perplexity 搜尋中，應確認沒有阻擋 PerplexityBot。是否允許模型訓練爬蟲則是另一個選擇，不能把所有 AI User-Agent 視為同一用途。</p></div>
+<p>OpenAI 說明，若希望網站內容被納入 ChatGPT 搜尋摘要與片段，就不應阻擋 <code>OAI-SearchBot</code>。<a href="https://help.openai.com/en/articles/12627856-publishers-and-developers-faq" target="_blank" rel="noopener noreferrer">OpenAI 發布者與開發者 FAQ</a> Perplexity 也說明 <code>PerplexityBot</code> 用於在搜尋結果中呈現及連結網站，不用於訓練基礎模型。<a href="https://docs.perplexity.ai/docs/resources/perplexity-crawlers" target="_blank" rel="noopener noreferrer">Perplexity Crawlers</a></p>
+<p>因此我不會複製一份網路上的通用 robots.txt 就直接上線，而會先決定「允許被搜尋」與「是否允許訓練」兩個不同政策。</p>
+</section><section aria-labelledby="sitemap-與內部連結各有什麼作用"><h2 id="sitemap-與內部連結各有什麼作用">sitemap 與內部連結各有什麼作用？</h2>
+<div class="answer"><p>sitemap 提供網站希望搜尋引擎發現的標準網址清單，內部連結則表達頁面之間的導覽與主題關係。兩者可以互補，但 sitemap 不能取代清楚的分類、麵包屑與文章內部連結。</p></div>
+<p>我會讓總覽文章連到各篇細部教學，細部教學也連回總覽及相鄰主題。這不只是讓爬蟲找到頁面，也讓讀者能沿著完整學習路徑前進。Google Search Essentials 同樣建議使用可爬取連結，協助搜尋引擎發現其他頁面。<a href="https://developers.google.com/search/docs/essentials" target="_blank" rel="noopener noreferrer">Google Search Essentials</a></p>
+</section><section aria-labelledby="llms-txt-對網站-geo-有什麼作用"><h2 id="llms-txt-對網站-geo-有什麼作用">llms.txt 對網站 GEO 有什麼作用？</h2>
+<div class="answer"><p>llms.txt 是用 Markdown 整理網站重點內容與連結的提案格式，可作為 AI 使用網站時的補充導覽。llms.txt 目前不是 Google AI 搜尋的必要條件，也不能控制爬蟲、取代 robots.txt 或保證內容被引用。</p></div>
+<p>我會在核心 SEO 與內容完成後才考慮 <code>llms.txt</code>，並只收錄真正重要的作者、服務與文章入口。規格網站將 <code>llms.txt</code> 定義為協助大型語言模型在推論時使用網站內容的提案，而不是存取控制標準。<a href="https://llmstxt.org/" target="_blank" rel="noopener noreferrer">llms.txt specification</a></p>
+</section><section aria-labelledby="網站速度會影響-geo-嗎"><h2 id="網站速度會影響-geo-嗎">網站速度會影響 GEO 嗎？</h2>
+<div class="answer"><p>網站速度會影響使用者體驗，也可能影響爬蟲能否穩定取得內容，但單一效能分數不是 GEO 分數。技術優化應優先處理大型圖片、阻塞資源、錯誤請求與行動裝置可用性。</p></div>
+<p>我使用 PageSpeed Insights 分別查看行動裝置與桌機結果，再依實際診斷處理問題，不會只追求滿分。Google 也提醒網站擁有者應整體評估頁面體驗，而不是只聚焦一兩個訊號。<a href="https://developers.google.com/search/docs/appearance/page-experience" target="_blank" rel="noopener noreferrer">Google Page Experience</a></p>
+</section><section aria-labelledby="網站-geo-技術優化要怎麼逐步執行"><h2 id="網站-geo-技術優化要怎麼逐步執行">網站 GEO 技術優化要怎麼逐步執行？</h2>
+<div class="answer"><p>網站 GEO 技術優化應依序檢查可存取性、初始 HTML、索引指令、標準網址、網站發現路徑、AI 搜尋爬蟲與頁面體驗。先用瀏覽器或指令取得證據，再修改規則，避免只憑 AI 或工具摘要判斷。</p></div>
+<h3>步驟一：確認重要網址能直接存取</h3>
+<p>建立 10～20 個代表網址，包含首頁、作者頁、分類頁、新文章、舊文章與轉址頁。逐一記錄最終網址、HTTP 狀態碼、是否需要登入，以及是否出現 3xx 轉址鏈或 4xx／5xx 錯誤。</p>
+<h3>步驟二：檢查初始 HTML 是否已有主要內容</h3>
+<p>使用「檢視原始碼」或下載伺服器回應，搜尋文章 H1 與一段正文。若只看到空容器，主要內容完全依賴 JavaScript 才出現，就要評估伺服器端渲染、靜態產生或預渲染。Google 說明 JavaScript 頁面會經歷爬取、處理與渲染佇列，因此可直接取得的內容通常更容易診斷。<a href="https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics" target="_blank" rel="noopener noreferrer">Google JavaScript SEO</a></p>
+<h3>步驟三：分清楚爬取與索引控制</h3>
+<p><code>robots.txt</code> 管理爬蟲可存取哪些路徑，不是把頁面移出索引的工具；需要阻止索引時，應使用 <code>noindex</code> 或權限保護。若 robots.txt 已禁止爬取，爬蟲也可能看不到頁面裡的 <code>noindex</code>。<a href="https://developers.google.com/search/docs/crawling-indexing/robots/intro" target="_blank" rel="noopener noreferrer">Google robots.txt 指南</a></p>
+<h3>步驟四：統一標準網址</h3>
+<p>確認 HTTP／HTTPS、www／非 www、尾斜線、參數網址與大小寫的標準版本。canonical、sitemap、內部連結與重新導向應一致；不要用 robots.txt 處理 canonical。<a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls" target="_blank" rel="noopener noreferrer">Google canonical 指南</a></p>
+<h3>步驟五：建立清楚的發現路徑</h3>
+<p>讓首頁、分類頁與相關文章以可爬取的 <code>&#x3C;a></code> 連結相連，並在 sitemap 只放希望被索引的標準網址。sitemap 能協助發現與更新，不代表一定被索引。<a href="https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap" target="_blank" rel="noopener noreferrer">Google sitemap 指南</a></p>
+<h3>步驟六：依用途檢查 AI 搜尋爬蟲</h3>
+<p>若希望內容出現在 ChatGPT 搜尋摘要與片段，確認沒有阻擋 <code>OAI-SearchBot</code>。OpenAI 也提醒：如果 crawler 無法讀取頁面，就無法讀到頁面內的 <code>noindex</code> 指令。<a href="https://help.openai.com/en/articles/12627856-publishers-and-developers-faq" target="_blank" rel="noopener noreferrer">OpenAI 發布者與開發者 FAQ</a></p>
+<h3>步驟七：最後處理效能與行動體驗</h3>
+<p>先修無法載入、版面遮擋、行動版缺內容與嚴重效能瓶頸，再處理分數微調。Core Web Vitals 有價值，但通過分數並不保證排名。<a href="https://developers.google.com/search/docs/appearance/page-experience" target="_blank" rel="noopener noreferrer">Google Page Experience</a></p>
+</section><section aria-labelledby="網站-geo-技術檢核表"><h2 id="網站-geo-技術檢核表">網站 GEO 技術檢核表</h2>
+<div class="answer"><p>技術 GEO 檢核表必須記錄網址、實際回應與可重現證據。若只能從外部頁面推測，應標示「無法驗證」，不能把推測當成已完成的技術檢查。</p></div>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 代表網址回傳預期的 200、301、404 或 410。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 重要頁面沒有登入牆、錯誤防火牆或地區封鎖。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 初始 HTML 包含 H1、主要正文與可爬取連結。</li>
+<li class="task-list-item"><input type="checkbox" disabled> robots.txt 沒有誤擋公開內容或必要資源。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 要索引的頁面沒有 <code>noindex</code> 或衝突的 X-Robots-Tag。</li>
+<li class="task-list-item"><input type="checkbox" disabled> canonical 指向可存取的最終 200 標準網址。</li>
+<li class="task-list-item"><input type="checkbox" disabled> sitemap、canonical 與內部連結的網址版本一致。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 沒有多層轉址、循環轉址或大量軟 404。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 手機版與桌機版有相同的主要內容與結構化資料。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 若希望出現在 ChatGPT 搜尋，未誤擋 OAI-SearchBot。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 主要圖片有合理尺寸、格式與替代文字。</li>
+<li class="task-list-item"><input type="checkbox" disabled> PageSpeed 問題依實際使用者影響排序，不只追分數。</li>
+</ul>
+</section><section aria-labelledby="如何請-ai-協助技術-geo-稽核"><h2 id="如何請-ai-協助技術-geo-稽核">如何請 AI 協助技術 GEO 稽核？</h2>
+<div class="answer"><p>AI 適合整理技術 GEO 證據與產生修正優先級，但只有在取得原始 HTML、HTTP 標頭、robots.txt、sitemap 與檢測結果時才能做可靠判斷。沒有資料的項目必須列為待人工驗證。</p></div>
+<pre><code class="hljs language-text">你是技術 SEO 與 GEO 稽核員。請依我提供的證據檢查網站，不得猜測。
+
+網站網址：[網址]
+HTTP 回應標頭：[貼上]
+頁面原始 HTML：[貼上或提供檔案]
+robots.txt：[貼上]
+sitemap：[貼上]
+PageSpeed／URL Inspection 結果：[貼上]
+
+請輸出表格：
+檢查項目｜狀態（通過／失敗／無法驗證）｜原始證據｜影響｜修正方式｜優先級
+
+至少檢查：HTTP 狀態、初始 HTML、robots、noindex、canonical、轉址、sitemap、內部連結、行動版內容、OAI-SearchBot、結構化資料載入與效能。
+
+規則：
+- 沒有原始證據就標示「無法驗證」。
+- 分清楚「阻止爬取」與「阻止索引」。
+- 不把 sitemap、結構化資料或 PageSpeed 高分描述成索引或引用保證。
+- 最後只列出優先級最高的 5 個修正，並說明驗收方法。
+</code></pre>
+</section><section aria-labelledby="想要我用的-geo-skills-嗎"><h2 id="想要我用的-geo-skills-嗎">想要我用的 GEO SKILLS 嗎？</h2>
+<div class="answer"><p>這篇文章的寫作、結構化資料與上線前檢查，背後是我實際在用的三套 GEO SKILLS。加我的 LINE 官方帳號免費索取，告訴我想要哪一套，之後也會陸續收到更多 AI 應用教學資訊。</p></div>
+<p><strong><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer">加 LINE 免費索取 GEO SKILLS →</a></strong></p>
+</section><section aria-labelledby="網站-geo-技術優化常見問題"><h2 id="網站-geo-技術優化常見問題">網站 GEO 技術優化常見問題</h2>
+<div class="answer"><p>技術 GEO 沒有一個檔案或分數可以代表全部完成。可爬取 HTML、統一網址、正確索引指令、有效連結、合理速度與準確結構化資料，必須分項檢查。</p></div>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>網站有 sitemap 就一定會被索引嗎？</span></h3>
+<p>不一定。sitemap 是發現訊號，不是索引保證。頁面仍需可存取、有實質內容並符合搜尋規範。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>301 轉址會讓 GEO 失效嗎？</span></h3>
+<p>合理的永久轉址不會讓 GEO 失效，但多層轉址與 canonical 不一致會增加處理成本。內部連結最好直接指向最終網址。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Cloudflare 可以處理尾斜線轉址嗎？</span></h3>
+<p>可以使用 Redirect Rules 統一網址，但規則必須配合實際靜態主機路徑。修改前應先確認最終 200 網址及網站產生器的 canonical 規則。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>robots.txt 允許 GPTBot 就等於允許 ChatGPT 搜尋嗎？</span></h3>
+<p>不等於。ChatGPT 搜尋應看 <code>OAI-SearchBot</code>，<code>GPTBot</code> 是不同用途的 User-Agent。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>llms.txt 應該放所有文章嗎？</span></h3>
+<p>不建議把 <code>llms.txt</code> 變成另一份巨大 sitemap。較合理的做法是整理網站說明、重要分類與高價值內容入口。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<div class="answer"><p>本文優先採用 Google、OpenAI、Perplexity 與 llms.txt 規格網站的原始文件，並加入我處理靜態網站網址正規化的實際觀察。</p></div>
+<ul>
+<li><a href="https://developers.google.com/search/docs/fundamentals/how-search-works" target="_blank" rel="noopener noreferrer">Google：How Search Works</a></li>
+<li><a href="https://developers.google.com/search/docs/essentials" target="_blank" rel="noopener noreferrer">Google Search Essentials</a></li>
+<li><a href="https://help.openai.com/en/articles/12627856-publishers-and-developers-faq" target="_blank" rel="noopener noreferrer">OpenAI：Publishers and Developers FAQ</a></li>
+<li><a href="https://docs.perplexity.ai/docs/resources/perplexity-crawlers" target="_blank" rel="noopener noreferrer">Perplexity Crawlers</a></li>
+<li><a href="https://llmstxt.org/" target="_blank" rel="noopener noreferrer">llms.txt specification</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/geo-content-optimization">如何讓文章更容易被 AI 搜尋引擎理解與引用？GEO 內容優化教學</a>：技術可及之後，這篇有完整的內容與 Answer Block 做法。</li>
+<li><a href="/post/geo-structured-data-entities">GEO 結構化資料怎麼做？Article、Person、Organization 實體關係教學</a>：技術檢查之外，這篇有完整的 Schema 與實體關係教學。</li>
+<li><a href="/post/eeat-author-trust">E-E-A-T 怎麼強化？讓 AI 與搜尋引擎看懂作者專業度</a>：技術可及不等於可信任，這篇有完整的作者與來源可信度做法。</li>
+<li><a href="/post/free-geo-audit-tools">免費 GEO 檢測工具推薦：用 AI、Search Console、Bing 與 PageSpeed 檢查網站</a>：本文提到的檢查項目，可以用這篇的免費工具實際驗證。</li>
+<li><a href="/post/why-ai-does-not-cite-technical-blog">AI 搜尋引擎優化怎麼做？技術文章寫得夠專業，為什麼 AI 還是不引用</a>：技術做對了，仍可能遇到的引用落差，這篇有具體原因分析。</li>
+<li><a href="/post/geo-skills-writing-schema-audit">GEO 文章從寫作到上線需要哪些 SKILLS？我實際使用的 3 套流程</a>：本文的技術可及性檢查，是這篇上線稽核 SKILL 的第一層。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2026-08-28</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

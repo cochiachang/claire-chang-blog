@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>遊戲開發技術介紹：Graphics Library、遊戲平台與遊戲引擎怎麼選？｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="遊戲開發技術完整介紹：從 GPU 與 Graphics Library 的作用、OpenGL 與 Direct3D 的差異、各遊戲平台特性，到 Unity、Cocos2d、HTML5 Canvas 等遊戲引擎的選擇，以及連連看遊戲為何選用 PixiJS + TypeScript 開發。" />
+<meta name="keywords" content="前端開發, 遊戲開發, 遊戲引擎, WebGL, OpenGL, PixiJS" />
+<link rel="canonical" href="https://claire-chang.com/post/game-dev-tech-introduction/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="遊戲開發技術介紹：Graphics Library、遊戲平台與遊戲引擎怎麼選？｜Claire Chang" />
+<meta property="og:description" content="遊戲開發技術完整介紹：從 GPU 與 Graphics Library 的作用、OpenGL 與 Direct3D 的差異、各遊戲平台特性，到 Unity、Cocos2d、HTML5 Canvas 等遊戲引擎的選擇，以及連連看遊戲為何選用 PixiJS + TypeScript 開發。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/game-dev-tech-introduction/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_game-dev-tech-introduction-ac56e3f5.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_game-dev-tech-introduction-ac56e3f5.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="遊戲開發技術介紹：Graphics Library、遊戲平台與遊戲引擎怎麼選？｜Claire Chang" />
+<meta name="twitter:description" content="遊戲開發技術完整介紹：從 GPU 與 Graphics Library 的作用、OpenGL 與 Direct3D 的差異、各遊戲平台特性，到 Unity、Cocos2d、HTML5 Canvas 等遊戲引擎的選擇，以及連連看遊戲為何選用 PixiJS + TypeScript 開發。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_game-dev-tech-introduction-ac56e3f5.jpg" />
+<meta property="article:published_time" content="2018-10-24" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="遊戲開發" />
+<meta property="article:tag" content="遊戲引擎" />
+<meta property="article:tag" content="WebGL" />
+<meta property="article:tag" content="OpenGL" />
+<meta property="article:tag" content="PixiJS" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"遊戲開發技術介紹：Graphics Library、遊戲平台與遊戲引擎怎麼選？","item":"https://claire-chang.com/post/game-dev-tech-introduction/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/game-dev-tech-introduction/#article","headline":"遊戲開發技術介紹：Graphics Library、遊戲平台與遊戲引擎怎麼選？","description":"遊戲開發技術完整介紹：從 GPU 與 Graphics Library 的作用、OpenGL 與 Direct3D 的差異、各遊戲平台特性，到 Unity、Cocos2d、HTML5 Canvas 等遊戲引擎的選擇，以及連連看遊戲為何選用 PixiJS + TypeScript 開發。","image":"https://claire-chang.com/images/tech/hero_game-dev-tech-introduction.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-10-24","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/game-dev-tech-introduction/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"遊戲開發, 遊戲引擎, WebGL, OpenGL, PixiJS","about":[{"@type":"Thing","name":"遊戲開發"},{"@type":"Thing","name":"遊戲引擎"}],"mentions":[{"@type":"Thing","name":"WebGL"},{"@type":"Thing","name":"OpenGL"},{"@type":"Thing","name":"PixiJS"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/game-dev-tech-introduction/#faq","mainEntity":[{"@type":"Question","name":"什麼是 Graphics Library？","acceptedAnswer":{"@type":"Answer","text":"Graphics Library 是幫助開發者使用 GPU 做電腦圖像處理的函式庫。它把繪製 2D / 3D 圖形的運算交給擁有數千個核心、可並列計算的 GPU 執行，比在 CPU 上運算快上 10 到 100 倍，最著名的有 OpenGL 和 Direct3D。"}},{"@type":"Question","name":"OpenGL 和 DirectX 該怎麼選？","acceptedAnswer":{"@type":"Answer","text":"看目標平台：OpenGL 跨平台、移植性佳，適合 CAD、內容創作、虛擬實境等專業高端繪圖領域；DirectX（Direct3D）以 Windows 平台為主，適合多媒體、娛樂與即時 3D 動畫，在 Windows 遊戲開發占大部分市場。"}},{"@type":"Question","name":"GPU 為什麼比 CPU 適合處理遊戲畫面？","acceptedAnswer":{"@type":"Answer","text":"GPU 具有數百到數千個核心，專為並列執行大量計算而最佳化，影像輸出處理需要的大量運算交給 GPU 後，不會拖慢整機速度，某些計算甚至比傳統 CPU 快 10 至 100 倍，這也是深度學習常用 GPU 的原因。"}},{"@type":"Question","name":"用 HTML5 Canvas 開發遊戲有什麼優缺點？","acceptedAnswer":{"@type":"Answer","text":"優點是不需安裝、馬上可玩、容易與其他網頁結合，很適合活動行銷小遊戲與廣告案；缺點是即使有 WebGL 加速，JavaScript 效能仍比不上手機原生 native code，較不容易開發全 3D 又複雜的遊戲。"}},{"@type":"Question","name":"骨骼動畫的好處是什麼？","acceptedAnswer":{"@type":"Answer","text":"骨骼動畫工具（如 Spine、DragonBones）可以將一張分解部位圖透過骨架組合成連續動作，不用逐格繪製連續圖檔，能壓縮 2D 遊戲素材大小、降低美術負擔，並讓動畫有更多變化性。"}},{"@type":"Question","name":"連連看這類小遊戲適合用什麼技術開發？","acceptedAnswer":{"@type":"Answer","text":"連連看遊戲邏輯簡單、效能負擔小，用 PixiJS + TypeScript 這類網頁技術開發就很合適，還能方便地嵌入不同平台，或包裝成 APP 發佈。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_game-dev-tech-introduction.webp" alt="紅色像素風格的 GAME OVER 遊戲畫面，代表遊戲開發技術" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-10-24">2018-10-24</time></span><span class="post-meta-pill">遊戲開發 · 遊戲引擎 · WebGL · OpenGL · PixiJS</span></div></div><h1 class="insights-hero-title">遊戲開發技術介紹：Graphics Library、遊戲平台與遊戲引擎怎麼選？</h1><p class="insights-hero-description">遊戲開發技術完整介紹：從 GPU 與 Graphics Library 的作用、OpenGL 與 Direct3D 的差異、各遊戲平台特性，到 Unity、Cocos2d、HTML5 Canvas 等遊戲引擎的選擇，以及連連看遊戲為何選用 PixiJS + TypeScript 開發。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>開發遊戲時，畫面、特效、音效的呈現是吸引玩家很重要的關鍵，也是讓玩家能夠更加放鬆地享受遊戲內容的必備要素，例如現在強調的虛擬實境等，也都是為了這個目的而存在。這篇文章整理我在開發遊戲時會用到的技術：Graphics Library 與 GPU 加速的原理、OpenGL 與 Direct3D 的差異、各遊戲平台的特性，以及 Unity、Cocos2d、HTML5 Canvas 等遊戲引擎的選擇思路，最後說明我為什麼選擇用 PixiJS + TypeScript 開發連連看遊戲。</p>
+</div><section aria-labelledby="為什麼遊戲開發比一般網頁開發更重視畫面與動畫"><h2 id="為什麼遊戲開發比一般網頁開發更重視畫面與動畫">為什麼遊戲開發比一般網頁開發更重視畫面與動畫？</h2>
+<p>在開發遊戲程式時，會較一般網頁或應用程式的開發，花更多的時間與心力在畫面的串接以及動畫邏輯撰寫，讓遊戲畫面能夠與玩家有更多的互動。</p>
+<p>例如：</p>
+<ul>
+<li>畫面元素的物理性、玩家投擲物體時飛落的路徑</li>
+<li>物件間碰撞的偵測與觸發的事件</li>
+<li>遊戲角色特定的動作該配合出現的特效</li>
+<li>攻擊時的特效粒子系統</li>
+<li>特殊效果的畫面濾鏡等等</li>
+</ul>
+</section><section aria-labelledby="遊戲開發有哪些常用的圖像與動畫技術"><h2 id="遊戲開發有哪些常用的圖像與動畫技術">遊戲開發有哪些常用的圖像與動畫技術？</h2>
+<p>上述的每一個項目都有相關的技術可以去學習，幫助我們更快上手：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>技術類型</th><th>代表工具</th><th>作用</th></tr></thead><tbody><tr><td>物理引擎</td><td>Box2D（憤怒鳥使用）</td><td>賦予物體物理特性，具有掉落、碰撞等行為</td></tr><tr><td>骨骼動畫</td><td>Spine、DragonBones</td><td>壓縮 2D 遊戲所需要的素材大小</td></tr><tr><td>粒子系統</td><td><a href="https://github.com/VincentGarreau/particles.js/" target="_blank" rel="noopener noreferrer">particles.js</a></td><td>讓美術用特效產生器產生設定檔，並於遊戲中執行</td></tr><tr><td>著色器</td><td><a href="https://www.shadertoy.com/" target="_blank" rel="noopener noreferrer">Shader</a></td><td>用一連串數學公式對圖片做出水波、風吹、霧霾、煙霧等特殊動畫效果</td></tr></tbody></table></div>
+<p>以骨骼動畫為例，像下面這隻龍走動的動畫，可以用一張分解部位圖搭配骨骼動畫引擎來組合出連續動作：</p>
+<figure class="article-figure"><img src="/images/articles/game-dev-tech-introduction-1.webp" alt="用骨骼動畫引擎組合出的龍走動動畫" loading="lazy" class="markdown-img"></figure>
+<p>組合動畫所使用的龍的分解部位圖：</p>
+<figure class="article-figure"><img src="/images/articles/game-dev-tech-introduction-2.webp" alt="骨骼動畫使用的龍分解部位圖" loading="lazy" class="markdown-img"></figure>
+<p>另外在遊戲開發上，對數學、物理、色彩矩陣等的了解度也十分重要。有了這些技術的幫助，我們不用每一個特效都製作連續圖檔，可以降低美術的負擔，也能讓特效有更多的變化性、更小的遊戲檔案大小。</p>
+<p>在學習這些技術之前，首先要認識最基礎的 Graphics Library。</p>
+</section><section aria-labelledby="graphics-library-是什麼-gpu-如何加速遊戲畫面"><h2 id="graphics-library-是什麼-gpu-如何加速遊戲畫面">Graphics Library 是什麼？GPU 如何加速遊戲畫面？</h2>
+<p>現在的 Graphics Library 主要的作用，是幫助我們能夠使用 GPU 來做電腦圖像處理。GPU（圖形顯示器）又稱顯示核心、視覺處理器、顯示晶片或繪圖晶片，是一種專門在個人電腦、工作站、遊戲機和一些行動裝置（如平板電腦、智慧型手機等）上執行繪圖運算工作的微處理器。</p>
+<figure class="article-figure"><img src="/images/articles/game-dev-tech-introduction-3.webp" alt="NVIDIA GeForce GTX 顯示晶片" loading="lazy" class="markdown-img"></figure>
+<p>在 GPU 尚未出現前，圖形的繪製是和一般的複雜運算一起使用 CPU 去做運算，因為影像輸出的處理需要大量的運算，會讓電腦的運算速度被拖慢。直到 1999 年 8 月輝達公司（NVIDIA）在發表 GeForce 256 繪圖處理晶片時，提出了將影像輸出的顯示晶片視為獨立運算單元的概念。</p>
+<p>GPU 不同於傳統的 CPU——傳統 CPU 內核數量較少、專為通用計算而設計；相反地，<strong>GPU 是一種特殊類型的處理器，具有數百或數千個內核，經過最佳化，可並列執行大量計算</strong>。雖然 GPU 在遊戲中以 3D 彩現而聞名，但它們對執行分析、深度學習和機器學習演算法尤其有用。近年來十分流行的 AI 人工智慧，由於在大數據處理時需做許多的矩陣計算，也用到 GPU 特殊運算的功能。GPU 可讓某些計算比傳統 CPU 上執行相同的計算速度快 10 倍至 100 倍。</p>
+<p>起初，高效能 3D 圖像只可經設有 3D 加速功能（和完全缺乏 2D GUI 加速功能）的獨立繪圖處理卡上運算，如 3dfx 的 Voodoo。然而由於製造技術進步，影像、2D GUI 加速和 3D 功能都整合到一塊晶片上，現在許多 2D 的遊戲引擎也都能夠享受 GPU 所帶來的效益。</p>
+<p>有了 3D 圖形庫，撰寫可以善用 GPU 的遊戲引擎不再困難重重。以前還沒有統一的 API 規範時，開發 3D 遊戲必需要先有配合的 GPU 硬體廠商，並且針對該硬體去撰寫相關的驅動程式來使用 GPU 的運算功能，這讓開發 3D 遊戲困難重重。3D 圖形庫最有名的有 Direct3D 和 OpenGL：雖然 DirectX 在家用市場全面領先，但在專業高端繪圖領域，OpenGL 是不能被取代的主角。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>OpenGL 和 Direct3D 有什麼差別？</span></h3>
+<h4>OpenGL</h4>
+<figure class="article-figure"><img src="/images/articles/game-dev-tech-introduction-4.webp" alt="OpenGL 標誌" loading="lazy" class="markdown-img"></figure>
+<p>OpenGL 是個與<strong>硬體無關的軟體介面，可以在不同的平台如 Windows 95、Windows NT、Unix、Linux、MacOS、OS/2 之間進行移植</strong>。這些 API 規範描述了繪製 2D 和 3D 圖形的抽象 API。這些 API 雖然可以完全透過軟體去撰寫，但它是為大部分或全部使用 GPU 硬體加速而設計的。OpenGL 規範由 1992 年成立的 OpenGL 架構評審委員會（ARB）維護。OpenGL 不僅語言無關，而且平台無關，在各種平台及設備都有支援 OpenGL 的介面，移植性較佳。</p>
+<p>近年來由於 WebGL 的推出，讓網頁的 3D 效果也能夠享受到 GPU 加速效果，使得 3D 的遊戲得以在網頁上被實現。<a href="https://threejs.org/" target="_blank" rel="noopener noreferrer">Three.js</a> 就是一個基於 OpenGL、使用 JavaScript 做開發的 3D 引擎。</p>
+<p>OpenGL 是一個不斷進化的 API，新版 OpenGL 規範會定期由 Khronos Group 發布，透過擴展 API 來支援各種新功能。</p>
+<h4>Direct3D</h4>
+<figure class="article-figure"><img src="/images/articles/game-dev-tech-introduction-5.webp" alt="Direct3D 標誌" loading="lazy" class="markdown-img"></figure>
+<p>Direct3D 是 <strong>DirectX 下的一個子項目</strong>，提供設計人員一個共同的硬體驅動標準，讓遊戲開發者不必為每一品牌的硬體來寫不同的驅動程式，也降低用戶安裝及設置硬體的複雜度。</p>
+<p>舉個例子，以前在 DOS 下玩遊戲時，不像現在安裝就可以玩了，過去往往要先設置聲卡的品牌和型號，然後還要設置 IRQ（中斷）、I/O（輸入與輸出）、DMA（存取模式），如果哪項設置得不對，遊戲聲音就發不出來。這部分的設置不僅讓玩家傷透腦筋，對遊戲開發者來說更頭痛——為了讓遊戲能在眾多電腦中正確運行，開發者必須在開始製作遊戲前，就把市面上所有音效卡的硬體數據都收集過來，然後根據不同的 API 來寫不同的驅動程式，這對遊戲製作公司來說很難完成，所以當時多媒體遊戲很少。</p>
+<p>微軟看到了這個問題，為眾廠家推出了一個共同的應用程式介面——<strong>DirectX</strong>。只要遊戲是依照 DirectX 來開發的，不管是什麼顯卡、聲卡，統統都能玩，而且還能發揮更佳的效果（前提是顯卡、聲卡的驅動程式也必須支援 DirectX）。</p>
+<h4>現況比較</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th></th><th>OpenGL</th><th>Direct3D</th></tr></thead><tbody><tr><td>平台支援</td><td>跨平台（Windows、Unix、Linux、MacOS 等）</td><td>以 Windows 平台為主</td></tr><tr><td>適用領域</td><td>CAD、內容創作、能源、娛樂、遊戲開發、虛擬實境</td><td>多媒體、娛樂、即時 3D 動畫</td></tr><tr><td>市場定位</td><td>專業高端繪圖領域不可被取代的主角</td><td>Windows 平台遊戲開發占大部分市場</td></tr></tbody></table></div>
+<p>OpenGL 因為具有多平台支援的特色，同一套程式可以直接套用在各種不同的平台，因此在專業高端繪圖領域得到廣泛的應用；DirectX 則適合多媒體、娛樂、即時 3D 動畫等廣泛實用的 3D 圖形計算，在基於 Windows 平台的遊戲開發中占了大部分的市場。</p>
+</section><section aria-labelledby="常見的遊戲平台有哪些"><h2 id="常見的遊戲平台有哪些">常見的遊戲平台有哪些？</h2>
+<h3>網頁遊戲</h3>
+<p>網頁遊戲（簡稱頁遊）又稱 Web 遊戲，是一種基於網頁的電子遊戲，一般不用下載用戶端，任何一台能上網的電腦就可以進行遊戲。與其他大型遊戲比較，具有占用空間小、硬體要求低等特點。過去 Flash 是網頁遊戲最火紅的工具，曾有一段時間 Flash 遊戲在 Facebook 上非常受歡迎，如 Candy Crush 等，都同時有手機遊戲與 Facebook 版本。</p>
+<h3>智慧型手機遊戲</h3>
+<p>由於大多數早期手機的效能所限，手機遊戲普遍比較簡單，畫面也比較粗糙，更不用說操作性了（事實上很少有手機的鍵盤適合玩遊戲），因此益智類遊戲（如俄羅斯方塊、貪食蛇、推箱子等）是常見的遊戲類型。目前由於手機以及類手機的 PDA 裝置發展，手機處理資訊的能力增強，漸漸出現了更大畫面、更加複雜的手機遊戲，也有更多公司推出多人線上手機遊戲。</p>
+<h3>電腦應用遊戲</h3>
+<p>大多數的經典遊戲都是電腦應用軟體，如英雄聯盟、魔獸世界、天堂、世紀帝國等。由於電腦取得容易，又具備語音、易於打字等功能，在線上與網友互動更為方便，較大型的多人線上遊戲還是以電腦應用為主。近年來更興起了遊戲直播的風潮，實況主常透過直播平台轉播遊戲過程、生活瑣事與商業活動，並與觀眾即時互動，吸引許多忠實觀眾。</p>
+<h3>家用遊戲機</h3>
+<p>如 Wii U、PlayStation 4、Xbox One。電視遊戲指的是使用電視作為顯示器來遊玩的電子遊戲類型，遊戲通常利用連接至遊戲機的掌上型裝置（「控制器」或「搖桿」）來操控。控制器通常包含數個按鈕和方向控制裝置（例如類比操縱桿），藉由按下或轉動這些裝置來控制螢幕上的影像。而螢幕、喇叭和搖桿也可以整合在一個小型物件中，稱作「掌上型電玩」或簡稱「掌機」（Handheld game console）。</p>
+<h3>遊戲平台</h3>
+<p>Steam 為其中最大的遊戲平台，是美國電子遊戲商維爾福（Valve）於 2003 年 9 月 12 日推出的數位發行平台，提供數位版權管理、多人遊戲、串流媒體和社群網路服務等功能。藉助 Steam，用戶能安裝並自動更新遊戲，也可以使用好友列表、組隊、雲端儲存、遊戲內語音和聊天功能。Steam 免費提供了一個 API 稱為 Steamworks，開發商可以用來整合 Steam 的功能到自己的產品中，例如網路、線上對戰、成就、微交易，並透過 Steam 創意工坊分享用戶創作的內容。</p>
+</section><section aria-labelledby="主流遊戲引擎怎麼選-unity-cocos2d-flash-air-與-html5-canvas"><h2 id="主流遊戲引擎怎麼選-unity-cocos2d-flash-air-與-html5-canvas">主流遊戲引擎怎麼選？Unity、Cocos2d、Flash AIR 與 HTML5 Canvas</h2>
+<h3>Unity</h3>
+<p>Unity 是現行最普遍用來開發遊戲的遊戲引擎，可用於開發 Windows、MacOS 及 Linux 平台的單機遊戲，PlayStation、XBox、Wii、3DS 和任天堂 Switch 等遊戲主機平台的遊戲，或是 iOS、Android 等行動裝置的遊戲，支援的遊戲平台還延伸到了基於 WebGL 技術的 HTML5 網頁。再加上 Unity 有 <a href="https://assetstore.unity.com/" target="_blank" rel="noopener noreferrer">Unity Asset Store</a>，對獨立開發者而言是最好的選擇。Unity 引擎本身就含有碰撞偵測、物理引擎、角色模式、玩家視角、光源設定等功能，並且有很完整的 IDE 介面，可支援如 Spine 等骨骼動畫，讓開發者能更簡易地製作出吸引人的遊戲。爐石戰記、仙劍 6、神魔之塔都是用 Unity 開發的有名遊戲。</p>
+<h3>Cocos2d</h3>
+<p>Cocos2d 是一個開源的 2D 遊戲框架，在各種不同的程式語言都有不同的實作。一開始在 iOS 裡支援度最高的遊戲引擎就是 Cocos2d，因此有許多 iOS 小遊戲都是使用 Cocos2d 開發的。後來也有了 Java 版本可運行於 Android 平台；Cocos2d-X 是基於 Cocos2d for iPhone 並使用 C++ 語言實現的多平台版本，後來也有了 JavaScript 版本。現在的 Cocos2d 可以支援許多不同的平台，但由於其 IDE 介面不像 Unity 般強大，普及性還是不如 Unity。</p>
+<h3>Flash AIR</h3>
+<p>雖然現在在網頁應用上，Flash 已經幾乎完全被淘汰掉了，但在手機遊戲上，仍有許多以 Flash AIR 所開發的遊戲，相關遊戲作品可見 Adobe 的作品牆（原 Flash showcase 已於 Flash 終止支援後下線）。</p>
+<h3>HTML Canvas</h3>
+<p>由於 WebGL 的推出，現在在網頁上開發遊戲也可以有很不錯的畫面及效能，因此有越來越多的小遊戲都是以 H5 來製作。網頁遊戲本身具有許多好處：不需安裝、馬上可以進行遊戲、很容易與其他網頁做結合與搭配。對於網頁活動行銷專案裡的小遊戲、廣告案，或者像『<a href="https://www.glory.com.tw/" target="_blank" rel="noopener noreferrer">奔跑吧！台北</a>』這類政見小遊戲，由於其遊戲目標是吸引更多人在遊戲中去了解商品或理念，更需要能夠完整地與相關網站做連結，這時候 H5 就是最好的選擇。</p>
+<p>使用 H5 Canvas 開發遊戲的缺點是，即使有 WebGL 的幫助，JavaScript 效能還是沒辦法與手機原生 native code 的速度相比，因此較不容易開發全 3D 又很複雜的遊戲。</p>
+</section><section aria-labelledby="為什麼連連看選擇用-pixijs-typescript-開發"><h2 id="為什麼連連看選擇用-pixijs-typescript-開發">為什麼連連看選擇用 PixiJS + TypeScript 開發？</h2>
+<p>連連看屬於很簡單的小遊戲，本身較不會有太大的效能問題；現在網頁遊戲要包成 APP 也有許多方法，並且以網頁的特性做開發，可以更方便地將遊戲嵌入不同的平台上。所以在這個系列中我選擇了使用 PixiJS + TypeScript 來開發連連看遊戲。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼是 Graphics Library？</span></h3>
+<p>Graphics Library 是幫助開發者使用 GPU 做電腦圖像處理的函式庫。它把繪製 2D / 3D 圖形的運算交給擁有數千個核心、可並列計算的 GPU 執行，比在 CPU 上運算快上 10 到 100 倍，最著名的有 OpenGL 和 Direct3D。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>OpenGL 和 DirectX 該怎麼選？</span></h3>
+<p>看目標平台：OpenGL 跨平台、移植性佳，適合 CAD、內容創作、虛擬實境等專業高端繪圖領域；DirectX（Direct3D）以 Windows 平台為主，適合多媒體、娛樂與即時 3D 動畫，在 Windows 遊戲開發占大部分市場。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>GPU 為什麼比 CPU 適合處理遊戲畫面？</span></h3>
+<p>GPU 具有數百到數千個核心，專為並列執行大量計算而最佳化，影像輸出處理需要的大量運算交給 GPU 後，不會拖慢整機速度，某些計算甚至比傳統 CPU 快 10 至 100 倍，這也是深度學習常用 GPU 的原因。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>用 HTML5 Canvas 開發遊戲有什麼優缺點？</span></h3>
+<p>優點是不需安裝、馬上可玩、容易與其他網頁結合，很適合活動行銷小遊戲與廣告案；缺點是即使有 WebGL 加速，JavaScript 效能仍比不上手機原生 native code，較不容易開發全 3D 又複雜的遊戲。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>骨骼動畫的好處是什麼？</span></h3>
+<p>骨骼動畫工具（如 Spine、DragonBones）可以將一張分解部位圖透過骨架組合成連續動作，不用逐格繪製連續圖檔，能壓縮 2D 遊戲素材大小、降低美術負擔，並讓動畫有更多變化性。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>連連看這類小遊戲適合用什麼技術開發？</span></h3>
+<p>連連看遊戲邏輯簡單、效能負擔小，用 PixiJS + TypeScript 這類網頁技術開發就很合適，還能方便地嵌入不同平台，或包裝成 APP 發佈。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%9C%96%E5%BD%A2%E8%99%95%E7%90%86%E5%99%A8" target="_blank" rel="noopener noreferrer">圖形處理器 - 維基百科</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/OpenGL" target="_blank" rel="noopener noreferrer">OpenGL - 維基百科</a></li>
+<li><a href="https://www.cnblogs.com/lixiaofei1987/archive/2013/04/09/3010201.html" target="_blank" rel="noopener noreferrer">比較 DirectX 和 OpenGL 的區別</a></li>
+<li><a href="https://read01.com/86Bm30.html" target="_blank" rel="noopener noreferrer">OpenGL 和 DirectX 是什麼？</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%89%8B%E6%A9%9F%E9%81%8A%E6%88%B2" target="_blank" rel="noopener noreferrer">手機遊戲 - 維基百科</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E7%B6%B2%E9%A0%81%E9%81%8A%E6%88%B2" target="_blank" rel="noopener noreferrer">網頁遊戲 - 維基百科</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/link-game-development-introduction">連連看遊戲開發前言：從規則、益智遊戲定位到 PixiJS 製作規劃</a>：同樣聚焦 PixiJS、遊戲開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-scene-setup">PixiJS 場景設定教學：Application、Canvas 與自動縮放</a>：同樣聚焦 PixiJS、WebGL，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-introduction-2d-webgl-game-engine">PixiJS 介紹：2D WebGL 遊戲引擎適合做什麼？</a>：同樣聚焦 PixiJS、WebGL，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2018-10-24，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-10-24</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

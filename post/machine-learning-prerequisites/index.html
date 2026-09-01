@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>機器學習所需的前置知識：數學、程式、算法與心理學基礎一次盤點｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="學機器學習前要準備什麼？我整理了線性代數、微積分、機率論、Python 程式設計、算法資料結構，以及資訊加工理論與注意力機制等機器學習前置知識，幫你建立完整的學習地圖。" />
+<meta name="keywords" content="機器學習, 機器學習, 線性代數, 微積分, 注意力機制, Python" />
+<link rel="canonical" href="https://claire-chang.com/post/machine-learning-prerequisites/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="機器學習所需的前置知識：數學、程式、算法與心理學基礎一次盤點｜Claire Chang" />
+<meta property="og:description" content="學機器學習前要準備什麼？我整理了線性代數、微積分、機率論、Python 程式設計、算法資料結構，以及資訊加工理論與注意力機制等機器學習前置知識，幫你建立完整的學習地圖。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/machine-learning-prerequisites/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_machine-learning-prerequisites-bd7550b5.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_machine-learning-prerequisites-bd7550b5.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="機器學習所需的前置知識：數學、程式、算法與心理學基礎一次盤點｜Claire Chang" />
+<meta name="twitter:description" content="學機器學習前要準備什麼？我整理了線性代數、微積分、機率論、Python 程式設計、算法資料結構，以及資訊加工理論與注意力機制等機器學習前置知識，幫你建立完整的學習地圖。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_machine-learning-prerequisites-bd7550b5.jpg" />
+<meta property="article:published_time" content="2023-01-03" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="機器學習" />
+<meta property="article:tag" content="線性代數" />
+<meta property="article:tag" content="微積分" />
+<meta property="article:tag" content="注意力機制" />
+<meta property="article:tag" content="Python" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"機器學習所需的前置知識：數學、程式、算法與心理學基礎一次盤點","item":"https://claire-chang.com/post/machine-learning-prerequisites/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/machine-learning-prerequisites/#article","headline":"機器學習所需的前置知識：數學、程式、算法與心理學基礎一次盤點","description":"學機器學習前要準備什麼？我整理了線性代數、微積分、機率論、Python 程式設計、算法資料結構，以及資訊加工理論與注意力機制等機器學習前置知識，幫你建立完整的學習地圖。","image":"https://claire-chang.com/images/tech/hero_machine-learning-prerequisites.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-01-03","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/machine-learning-prerequisites/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"機器學習, 線性代數, 微積分, 注意力機制, Python","about":[{"@type":"Thing","name":"機器學習"},{"@type":"Thing","name":"線性代數"},{"@type":"Thing","name":"微積分"},{"@type":"Thing","name":"注意力機制"}],"mentions":[{"@type":"Thing","name":"Python"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/machine-learning-prerequisites/#faq","mainEntity":[{"@type":"Question","name":"學機器學習一定要會數學嗎？","acceptedAnswer":{"@type":"Answer","text":"數學是理解機器學習原理的基礎，尤其線性代數、微積分與機率論。入門階段可以先從實作著手，但遇到梯度下降、反向傳播等概念時，數學基礎會決定你能理解到多深。"}},{"@type":"Question","name":"學機器學習該選哪種程式語言？","acceptedAnswer":{"@type":"Answer","text":"Python 是目前機器學習生態系最完整的選擇，TensorFlow、PyTorch、scikit-learn 等主流框架都以 Python 為主。具備其中一種語言（Python、C++ 或 Java）的能力即可入門。"}},{"@type":"Question","name":"注意力機制為什麼重要？","acceptedAnswer":{"@type":"Answer","text":"注意力機制讓模型能動態地將重點放在輸入資料中最重要的部分，忽略噪聲與不重要資訊。它是機器翻譯、自然語言處理的關鍵技術，也是 Transformer 與現代大型語言模型的核心基礎。"}},{"@type":"Question","name":"初學者該怎麼開始學機器學習？","acceptedAnswer":{"@type":"Answer","text":"建議先了解訓練集、測試集、模型、過擬合等基本概念，然後透過實作練手問題或參加線上課程與競賽來加深理解。邊做邊補數學與算法基礎，比先啃完整本理論書更有效率。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_machine-learning-prerequisites.webp" alt="黑板上的數學公式與幾何圖形，象徵機器學習所需的數學基礎" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-01-03">2023-01-03</time></span><span class="post-meta-pill">機器學習 · 線性代數 · 微積分 · 注意力機制 · Python</span></div></div><h1 class="insights-hero-title">機器學習所需的前置知識：數學、程式、算法與心理學基礎一次盤點</h1><p class="insights-hero-description">學機器學習前要準備什麼？我整理了線性代數、微積分、機率論、Python 程式設計、算法資料結構，以及資訊加工理論與注意力機制等機器學習前置知識，幫你建立完整的學習地圖。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>想學機器學習，但不知道該先補哪些基礎？這篇文章幫你盤點機器學習的前置知識：從線性代數、微積分等數學基礎，到程式語言、算法資料結構，甚至心理學中的資訊加工理論與注意力機制，讓你在正式踏入機器學習之前有一張完整的學習地圖。</p>
+</div><section aria-labelledby="學機器學習前要具備哪些前置知識"><h2 id="學機器學習前要具備哪些前置知識">學機器學習前要具備哪些前置知識？</h2>
+<p>我整理出五大類前置知識：</p>
+<ul>
+<li><strong>數學基礎</strong>：學習機器學習需要具備良好的數學基礎，尤其是線性代數、微積分和機率論的基礎知識。</li>
+<li><strong>編程基礎</strong>：需要具備編程能力，至少應該熟悉一種編程語言，如 Python、C++ 或 Java。</li>
+<li><strong>算法基礎</strong>：了解常用的算法和數據結構，如排序算法、搜索算法、哈希表和二元樹，將有助於學習機器學習中的算法。</li>
+<li><strong>機器學習基礎</strong>：了解機器學習的基本概念，如訓練集、測試集、模型和過擬合，有助於加深對機器學習的理解。</li>
+<li><strong>心理學基礎</strong>：了解心理學基礎知識，如資訊加工理論和注意力機制，可以幫助我們更好地理解機器學習的應用。</li>
+</ul>
+<p>當然，機器學習是一門涉及多個領域的學科，學習時可能還需要具備其他領域的知識，如統計學、計算機科學和人工智能等。</p>
+<p>此外，學習機器學習時還需要具備一定的學習能力和探究精神，能夠獨立思考問題並尋找解決方案。建議先了解機器學習的基本概念，並透過實踐來加深理解：可以嘗試解決一些練手的機器學習問題，或參加線上的機器學習課程或比賽，來提升自己的機器學習能力。</p>
+</section><section aria-labelledby="為什麼微積分是機器學習的必備數學基礎"><h2 id="為什麼微積分是機器學習的必備數學基礎">為什麼微積分是機器學習的必備數學基礎？</h2>
+<p>微積分是計算數學的一個分支，主要研究連續函數的求積、導數與極限的概念。在機器學習中，微積分的概念有助於我們理解和掌握梯度下降（gradient descent）算法，以及訓練神經網路的過程——因為模型訓練的本質，就是透過求導找到讓損失函數最小的參數更新方向。</p>
+</section><section aria-labelledby="線性代數在機器學習中扮演什麼角色"><h2 id="線性代數在機器學習中扮演什麼角色">線性代數在機器學習中扮演什麼角色？</h2>
+<p>線性代數主要研究向量與矩陣的概念。在機器學習中，線性代數有助於我們理解神經網路的運算過程，以及從數據中學習有用資訊的方法——資料在模型中幾乎都是以矩陣或張量的形式流動與運算的。</p>
+<p>在線性代數中，還有幾個值得先認識的概念：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>概念</th><th>說明</th></tr></thead><tbody><tr><td>線性相關</td><td>多個向量是線性相關的，若且唯若它們可以由其他向量的線性組合表示</td></tr><tr><td>線性無關</td><td>多個向量是線性無關的，若且唯若它們不能由其他向量的線性組合表示</td></tr><tr><td>基</td><td>向量空間的基是一組向量，它們的線性組合可以表示向量空間中的任何向量</td></tr><tr><td>秩</td><td>向量空間的秩是指最多可以由多少個向量的線性無關組合表示出來</td></tr><tr><td>內積</td><td>兩個向量的點積，可以用來度量兩個向量之間的夾角</td></tr><tr><td>特徵向量</td><td>指線性轉換中方向不變的非零向量</td></tr></tbody></table></div>
+</section><section aria-labelledby="資訊加工理論和注意力機制跟機器學習有什麼關係"><h2 id="資訊加工理論和注意力機制跟機器學習有什麼關係">資訊加工理論和注意力機制跟機器學習有什麼關係？</h2>
+<p>資訊加工理論是心理學中用於描述人類心理資訊加工過程的理論，描述了人類大腦如何接收、處理、儲存和使用資訊。根據資訊加工理論，人類大腦有三個基本的資訊加工系統：</p>
+<ol>
+<li><strong>感覺系統</strong>：負責接收外界資訊（如視覺、聽覺、觸覺等），並將這些資訊轉化成電信號傳遞給認知系統。</li>
+<li><strong>認知系統</strong>：負責對接收到的資訊進行分析、比較、推理和決策，並將結果轉化成電信號傳遞給記憶系統。</li>
+<li><strong>記憶系統</strong>：負責儲存資訊，並在需要時將資訊重新取出。</li>
+</ol>
+<p>注意力機制則是指人類大腦如何選擇哪些資訊應該被注意、哪些應該被忽略的過程。注意力可以由內部因素（如情緒、動機和目標）和外部因素（如視覺、聽覺和觸覺資訊）共同影響，幫助我們過濾掉不重要的資訊、專注於重要的資訊。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>注意力機制如何用在機器學習？</span></h3>
+<p>注意力機制在機器學習中有重要作用。解決複雜問題時，我們可能面臨大量的資訊和訓練數據，這時需要注意力機制幫助我們把重點放在最重要的資訊上。此外，注意力機制還可以用於解決模型過擬合問題——讓模型更加關注訓練數據中的重要資訊，而忽略噪聲和不重要的資訊。</p>
+<p>在機器學習中，注意力機制通常透過注意力機制層（attention layer）實現。它是一種神經網路層，可以根據輸入數據的不同特徵，動態地分配注意力，從而更精確地提取重要資訊。注意力機制層已廣泛應用於機器翻譯、自然語言處理和計算機視覺等領域，也是後來 Transformer 架構的核心基礎。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>學機器學習一定要會數學嗎？</span></h3>
+<p>數學是理解機器學習原理的基礎，尤其線性代數、微積分與機率論。入門階段可以先從實作著手，但遇到梯度下降、反向傳播等概念時，數學基礎會決定你能理解到多深。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>學機器學習該選哪種程式語言？</span></h3>
+<p>Python 是目前機器學習生態系最完整的選擇，TensorFlow、PyTorch、scikit-learn 等主流框架都以 Python 為主。具備其中一種語言（Python、C++ 或 Java）的能力即可入門。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>注意力機制為什麼重要？</span></h3>
+<p>注意力機制讓模型能動態地將重點放在輸入資料中最重要的部分，忽略噪聲與不重要資訊。它是機器翻譯、自然語言處理的關鍵技術，也是 Transformer 與現代大型語言模型的核心基礎。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>初學者該怎麼開始學機器學習？</span></h3>
+<p>建議先了解訓練集、測試集、模型、過擬合等基本概念，然後透過實作練手問題或參加線上課程與競賽來加深理解。邊做邊補數學與算法基礎，比先啃完整本理論書更有效率。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://www.deeplearningbook.org/contents/linear_algebra.html" target="_blank" rel="noopener noreferrer">Deep Learning Book — Linear Algebra</a></li>
+<li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Attention Is All You Need（Transformer 原始論文）</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/transformer-nlp-milestone">Transformer：自然語言處理的里程碑</a>：同樣聚焦 注意力機制，可接著比較不同情境的做法。</li>
+<li><a href="/post/flash-attention-introduction">FlashAttention 介紹：更快的注意力機制如何省記憶體又加速 Transformer 訓練</a>：同樣聚焦 注意力機制，可接著比較不同情境的做法。</li>
+<li><a href="/post/flash-attention-introduction">FlashAttention 介紹：IO 感知的精確注意力機制，讓 Transformer 更快更省記憶體</a>：同樣聚焦 注意力機制，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2023-01-03，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-01-03</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

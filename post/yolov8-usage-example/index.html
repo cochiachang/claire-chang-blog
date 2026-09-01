@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YOLOv8 使用範例：Roboflow 資料集訓練與 best.pt 即時偵測｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 YOLOv8 使用範例，從 pip install ultralytics、Roboflow 下載 YOLOv8 資料集、設定 data.yaml 與 datasets_dir，到載入 best.pt 搭配 OpenCV 做即時物件偵測。" />
+<meta name="keywords" content="機器學習, YOLOv8, Roboflow, 物件偵測, OpenCV, Python" />
+<link rel="canonical" href="https://claire-chang.com/post/yolov8-usage-example/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="YOLOv8 使用範例：Roboflow 資料集訓練與 best.pt 即時偵測｜Claire Chang" />
+<meta property="og:description" content="整理 YOLOv8 使用範例，從 pip install ultralytics、Roboflow 下載 YOLOv8 資料集、設定 data.yaml 與 datasets_dir，到載入 best.pt 搭配 OpenCV 做即時物件偵測。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/yolov8-usage-example/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_yolov8-usage-example-d31371cc.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_yolov8-usage-example-d31371cc.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="YOLOv8 使用範例：Roboflow 資料集訓練與 best.pt 即時偵測｜Claire Chang" />
+<meta name="twitter:description" content="整理 YOLOv8 使用範例，從 pip install ultralytics、Roboflow 下載 YOLOv8 資料集、設定 data.yaml 與 datasets_dir，到載入 best.pt 搭配 OpenCV 做即時物件偵測。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_yolov8-usage-example-d31371cc.jpg" />
+<meta property="article:published_time" content="2023-12-15" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="YOLOv8" />
+<meta property="article:tag" content="Roboflow" />
+<meta property="article:tag" content="物件偵測" />
+<meta property="article:tag" content="OpenCV" />
+<meta property="article:tag" content="Python" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"YOLOv8 使用範例：Roboflow 資料集訓練與 best.pt 即時偵測","item":"https://claire-chang.com/post/yolov8-usage-example/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/yolov8-usage-example/#article","headline":"YOLOv8 使用範例：Roboflow 資料集訓練與 best.pt 即時偵測","description":"整理 YOLOv8 使用範例，從 pip install ultralytics、Roboflow 下載 YOLOv8 資料集、設定 data.yaml 與 datasets_dir，到載入 best.pt 搭配 OpenCV 做即時物件偵測。","image":"https://claire-chang.com/images/tech/hero_yolov8-usage-example.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-12-15","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/yolov8-usage-example/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"YOLOv8, Roboflow, 物件偵測, OpenCV, Python","about":[{"@type":"Thing","name":"物件偵測"}],"mentions":[{"@type":"Thing","name":"YOLOv8"},{"@type":"Thing","name":"Roboflow"},{"@type":"Thing","name":"OpenCV"},{"@type":"Thing","name":"Python"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/yolov8-usage-example/#faq","mainEntity":[{"@type":"Question","name":"YOLOv8 使用範例一定要先準備 Roboflow 資料集嗎？","acceptedAnswer":{"@type":"Answer","text":"YOLOv8 使用範例不一定要用 Roboflow，但訓練自己的物件偵測模型時，一定要有符合 YOLO 格式的圖片與標註。Roboflow 的好處是可以直接匯出 YOLOv8 格式，減少手動整理資料夾與 label 的時間。"}},{"@type":"Question","name":"YOLOv8 的 `data.yaml` 是做什麼用的？","acceptedAnswer":{"@type":"Answer","text":"`data.yaml` 是 YOLOv8 訓練資料的入口設定檔。Ultralytics 會透過 `data.yaml` 找到訓練集、驗證集與類別名稱，所以路徑錯誤時模型通常不是壞掉，而是資料集位置沒有對齊。"}},{"@type":"Question","name":"`yolov8.yaml`、`yolov8n.pt` 和 `best.pt` 差在哪？","acceptedAnswer":{"@type":"Answer","text":"`yolov8.yaml` 描述模型結構，`yolov8n.pt` 是預訓練權重，`best.pt` 是用自己的資料訓練後保留下來的最佳權重。訓練時可以從預訓練權重開始，推論時則載入自己的 `best.pt`。"}},{"@type":"Question","name":"YOLOv8 找不到資料集時應該先改哪裡？","acceptedAnswer":{"@type":"Answer","text":"YOLOv8 找不到資料集時，先確認程式執行目錄與 `data='./data.yaml'` 是否一致，再檢查 `data.yaml` 裡的 `train` 和 `val` 路徑。若錯誤訊息指向 Ultralytics 設定檔，再調整 `datasets_dir`。"}},{"@type":"Question","name":"YOLOv8 可以直接吃 OpenCV 的影像陣列嗎？","acceptedAnswer":{"@type":"Answer","text":"YOLOv8 可以直接對 OpenCV 讀到的影像陣列做預測。Ultralytics Python API 支援圖片路徑、影片、URL、PIL 影像與 NumPy 陣列等輸入型態，因此攝影機串流可以先由 OpenCV 讀取，再交給模型推論。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_yolov8-usage-example.webp" alt="YOLOv8 使用範例：Roboflow 資料集訓練與 best.pt 即時偵測封面圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-12-15">2023-12-15</time></span><span class="post-meta-pill">YOLOv8 · Roboflow · 物件偵測 · OpenCV · Python</span></div></div><h1 class="insights-hero-title">YOLOv8 使用範例：Roboflow 資料集訓練與 best.pt 即時偵測</h1><p class="insights-hero-description">整理 YOLOv8 使用範例，從 pip install ultralytics、Roboflow 下載 YOLOv8 資料集、設定 data.yaml 與 datasets_dir，到載入 best.pt 搭配 OpenCV 做即時物件偵測。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>YOLOv8 使用範例可以拆成兩段：先用 Roboflow 匯出的 <code>data.yaml</code> 訓練模型，再用訓練完成的 <code>best.pt</code> 做圖片或攝影機畫面偵測。這篇保留 2023-12-15 的實作筆記，補上安裝、資料集位置、訓練程式、常見路徑錯誤，以及 OpenCV 即時偵測的拆解。</p>
+</div><section aria-labelledby="yolov8-訓練前要先準備什麼"><h2 id="yolov8-訓練前要先準備什麼">YOLOv8 訓練前要先準備什麼？</h2>
+<p>YOLOv8 訓練前需要先安裝 <code>ultralytics</code>，再準備含有 <code>data.yaml</code> 的 YOLOv8 格式資料集。<code>data.yaml</code> 會告訴訓練流程圖片資料夾、驗證資料夾與類別名稱。</p>
+<p>先用下面指令安裝好所需的套件：</p>
+<pre><code class="hljs language-bash">pip install ultralytics
+</code></pre>
+<p>然後在 <a href="https://universe.roboflow.com/" target="_blank" rel="noopener noreferrer">Roboflow Universe</a> 下載要訓練的素材集，格式選擇 YOLOv8。Roboflow 匯出的壓縮檔通常會包含 <code>data.yaml</code>、訓練圖片、驗證圖片與 label 檔案；Ultralytics 的訓練 API 會透過 <code>data.yaml</code> 找到資料集路徑與類別設定（Ultralytics，存取日期：2026-08-28）。</p>
+<figure class="article-figure"><img src="/images/articles/yolov8-usage-example-01.webp" alt="Roboflow 匯出資料集時選擇 YOLOv8 格式" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="roboflow-下載後的資料夾應該怎麼放"><h2 id="roboflow-下載後的資料夾應該怎麼放">Roboflow 下載後的資料夾應該怎麼放？</h2>
+<p>Roboflow 下載後的資料夾要和訓練程式放在容易引用的位置，並確認 <code>data.yaml</code> 路徑正確。最簡單的做法是把資料集解壓縮到專案同層，讓程式直接讀取 <code>./data.yaml</code>。</p>
+<p>把裡面的資料（含 <code>data.yaml</code>）解壓縮在同層資料夾下，如圖：</p>
+<figure class="article-figure"><img src="/images/articles/yolov8-usage-example-02.webp" alt="YOLOv8 資料集與 data.yaml 放在同層資料夾" loading="lazy" class="markdown-img"></figure>
+<p>這個結構的好處是訓練程式可以用 <code>model.train(data='./data.yaml', epochs=300, imgsz=640)</code> 直接讀取設定，不需要在程式裡拼很長的絕對路徑。若資料夾移動過，先打開 <code>data.yaml</code> 檢查 <code>train</code>、<code>val</code> 與 <code>names</code> 是否仍對應正確。</p>
+</section><section aria-labelledby="yolov8-訓練程式怎麼寫"><h2 id="yolov8-訓練程式怎麼寫">YOLOv8 訓練程式怎麼寫？</h2>
+<p>YOLOv8 訓練程式可以用 <code>YOLO('yolov8.yaml').load('yolov8n.pt')</code> 建立模型並載入預訓練權重。接著呼叫 <code>train()</code> 指定 <code>data.yaml</code>、訓練週期與輸入影像尺寸，再用 <code>val()</code> 驗證模型。</p>
+<p>接著直接執行下面的程式，YOLOv8 會自動下載所需要的 <code>yolov8.yaml</code> 及 <code>yolov8n.pt</code>：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">import</span> multiprocessing
+<span class="hljs-keyword">import</span> os
+
+<span class="hljs-keyword">from</span> ultralytics <span class="hljs-keyword">import</span> YOLO
+
+os.environ[<span class="hljs-string">"CUDA_LAUNCH_BLOCKING"</span>] = <span class="hljs-string">"1"</span>
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">my_function</span>():
+    model = YOLO(<span class="hljs-string">"yolov8.yaml"</span>).load(<span class="hljs-string">"yolov8n.pt"</span>)
+    model.train(data=<span class="hljs-string">"./data.yaml"</span>, epochs=<span class="hljs-number">300</span>, imgsz=<span class="hljs-number">640</span>)
+    model.val(data=<span class="hljs-string">"./data.yaml"</span>)
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    multiprocessing.freeze_support()
+    my_function()
+</code></pre>
+<p>Ultralytics 官方 Python 文件也提供相同方向的流程：建立或載入 YOLO 模型、呼叫 <code>train()</code> 訓練、呼叫 <code>val()</code> 驗證，再用模型物件進行預測（Ultralytics，存取日期：2026-08-28）。這裡沿用當時筆記中的 <code>yolov8.yaml</code> 與 <code>yolov8n.pt</code>，不延伸到其他新版模型命名。</p>
+</section><section aria-labelledby="datasets-dir-錯誤要怎麼處理"><h2 id="datasets-dir-錯誤要怎麼處理">datasets_dir 錯誤要怎麼處理？</h2>
+<p>YOLOv8 若找不到資料集，通常要檢查 Ultralytics 設定檔裡的 <code>datasets_dir</code>。資料集路徑不是訓練腳本猜出來的，<code>data.yaml</code> 和 Ultralytics 全域設定都可能影響實際讀取位置。</p>
+<p>這時候可能會出現錯誤如下，因為資料集放在哪邊也是剛剛才自動下載或解壓縮好的，所以要打開設定檔案，設定資料集的正確位置 <code>datasets_dir</code>。</p>
+<figure class="article-figure"><img src="/images/articles/yolov8-usage-example-03.webp" alt="YOLOv8 訓練時 datasets_dir 路徑錯誤訊息" loading="lazy" class="markdown-img"></figure>
+<p>我的排查順序通常是：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查項目</th><th>要確認的內容</th></tr></thead><tbody><tr><td><code>data.yaml</code> 位置</td><td>程式中的 <code>data='./data.yaml'</code> 是否真的讀得到檔案</td></tr><tr><td><code>train</code> / <code>val</code> 路徑</td><td><code>data.yaml</code> 裡的相對路徑是否對到圖片資料夾</td></tr><tr><td><code>datasets_dir</code></td><td>Ultralytics 設定檔是否指向資料集所在目錄</td></tr><tr><td>執行工作目錄</td><td>終端機目前目錄是否和程式預期一致</td></tr></tbody></table></div>
+<p>看到這些訊息就代表成功開始建模型了：</p>
+<figure class="article-figure"><img src="/images/articles/yolov8-usage-example-04.webp" alt="YOLOv8 開始訓練模型的終端機輸出" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="訓練完成後如何載入-best-pt-做偵測"><h2 id="訓練完成後如何載入-best-pt-做偵測">訓練完成後如何載入 best.pt 做偵測？</h2>
+<p>YOLOv8 訓練完成後，推論重點是載入自己的 <code>best.pt</code>。<code>best.pt</code> 是訓練過程保留下來的模型權重，載入後就可以對圖片、影片或攝影機畫面呼叫模型進行預測。</p>
+<p>重點是在這行：</p>
+<pre><code class="hljs language-python">model = YOLO(<span class="hljs-string">"best.pt"</span>)
+</code></pre>
+<p>這行在載入我們建好的模型：</p>
+<pre><code class="hljs language-python">results = model(image, show=<span class="hljs-literal">False</span>, verbose=<span class="hljs-literal">False</span>)
+</code></pre>
+<p><code>model</code> 這個預測方法有很多可控制的參數，例如要不要直接秀出圖片、要不要存圖片等等。Ultralytics 官方文件說明，預測結果會回傳 <code>Results</code> 物件；對物件偵測任務來說，常用欄位包含 <code>result.boxes</code>、<code>result.boxes.xywh</code>、<code>result.boxes.cls</code> 與 <code>result.names</code>（Ultralytics，存取日期：2026-08-28）。</p>
+<figure class="article-figure"><img src="/images/articles/yolov8-usage-example-05.webp" alt="YOLOv8 model predict 可用參數與輸出範例" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="yolov8-如何搭配-opencv-做即時攝影機偵測"><h2 id="yolov8-如何搭配-opencv-做即時攝影機偵測">YOLOv8 如何搭配 OpenCV 做即時攝影機偵測？</h2>
+<p>YOLOv8 搭配 OpenCV 做即時偵測時，流程是讀取攝影機畫面、縮放影像、呼叫模型預測、取出 bounding box，再用 OpenCV 畫框與標籤。<code>result.boxes.xywh</code> 可用來取得中心點、寬與高。</p>
+<p>YOLOv8 很方便的一點是，吐出的物件如 <code>result</code>，只要 <code>print</code> 這個物件，就會有很詳細的結構和屬性意義教學，在開發上很省時間。</p>
+<figure class="article-figure"><img src="/images/articles/yolov8-usage-example-06.webp" alt="YOLOv8 Results 物件列印後顯示偵測結構" loading="lazy" class="markdown-img"></figure>
+<p>下面是搭配 OpenCV 即時攝影機畫面做偵測的範例。這段程式保留當時的 <code>VideoStream</code> 使用方式；如果專案沒有這個自訂模組，需要改成自己的攝影機讀取類別或 OpenCV 的 <code>cv2.VideoCapture()</code>。</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">import</span> VideoStream
+<span class="hljs-keyword">import</span> cv2
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> ultralytics <span class="hljs-keyword">import</span> YOLO
+
+
+videostream = VideoStream.VideoStream((<span class="hljs-number">1280</span>, <span class="hljs-number">720</span>), <span class="hljs-number">30</span>, <span class="hljs-number">0</span>).start()
+cam_quit = <span class="hljs-number">0</span>
+model = YOLO(<span class="hljs-string">"best.pt"</span>)
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">detect</span>(<span class="hljs-params">image</span>):
+    results = model(image, show=<span class="hljs-literal">False</span>, verbose=<span class="hljs-literal">False</span>)
+    result = <span class="hljs-built_in">list</span>(results)[<span class="hljs-number">0</span>]
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(result.boxes)):
+        r = result[i].boxes
+        cls = <span class="hljs-built_in">int</span>(r.cls[<span class="hljs-number">0</span>].item())
+        xywh = r.xywh[<span class="hljs-number">0</span>].tolist()
+        x_center, y_center, width, height = [<span class="hljs-built_in">int</span>(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> xywh[:<span class="hljs-number">4</span>]]
+
+        <span class="hljs-keyword">if</span> width &#x3C; <span class="hljs-number">100</span> <span class="hljs-keyword">and</span> height &#x3C; <span class="hljs-number">100</span>:
+            x1 = <span class="hljs-built_in">int</span>(x_center - (width / <span class="hljs-number">2</span>))
+            y1 = <span class="hljs-built_in">int</span>(y_center - (height / <span class="hljs-number">2</span>))
+            x2 = x1 + width
+            y2 = y1 + height
+            cv2.rectangle(image, (x1, y1), (x2, y2), (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), <span class="hljs-number">3</span>)
+            cv2.putText(
+                image,
+                result.names[cls],
+                (x1, y1),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                <span class="hljs-number">0.8</span>,
+                (<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>),
+                <span class="hljs-number">1</span>,
+                cv2.LINE_AA,
+            )
+
+
+<span class="hljs-keyword">while</span> cam_quit == <span class="hljs-number">0</span>:
+    imageSource = videostream.read()
+    imageSource = cv2.resize(imageSource, (<span class="hljs-number">960</span>, <span class="hljs-number">540</span>))
+    detect(imageSource)
+    cv2.imshow(<span class="hljs-string">"image"</span>, imageSource)
+    key = cv2.waitKey(<span class="hljs-number">1</span>) &#x26; <span class="hljs-number">0xFF</span>
+
+    <span class="hljs-keyword">if</span> key == <span class="hljs-built_in">ord</span>(<span class="hljs-string">"q"</span>):
+        cam_quit = <span class="hljs-number">1</span>
+
+videostream.stop()
+cv2.destroyAllWindows()
+</code></pre>
+<p>這段範例有一個實務限制：只畫出寬高都小於 100 的偵測框。如果自己的任務不是小物件偵測，<code>if width &#x3C; 100 and height &#x3C; 100:</code> 這個條件要拿掉或改成符合應用場景的門檻。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>YOLOv8 使用範例一定要先準備 Roboflow 資料集嗎？</span></h3>
+<p>YOLOv8 使用範例不一定要用 Roboflow，但訓練自己的物件偵測模型時，一定要有符合 YOLO 格式的圖片與標註。Roboflow 的好處是可以直接匯出 YOLOv8 格式，減少手動整理資料夾與 label 的時間。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>YOLOv8 的 <code>data.yaml</code> 是做什麼用的？</span></h3>
+<p><code>data.yaml</code> 是 YOLOv8 訓練資料的入口設定檔。Ultralytics 會透過 <code>data.yaml</code> 找到訓練集、驗證集與類別名稱，所以路徑錯誤時模型通常不是壞掉，而是資料集位置沒有對齊。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>yolov8.yaml</code>、<code>yolov8n.pt</code> 和 <code>best.pt</code> 差在哪？</span></h3>
+<p><code>yolov8.yaml</code> 描述模型結構，<code>yolov8n.pt</code> 是預訓練權重，<code>best.pt</code> 是用自己的資料訓練後保留下來的最佳權重。訓練時可以從預訓練權重開始，推論時則載入自己的 <code>best.pt</code>。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>YOLOv8 找不到資料集時應該先改哪裡？</span></h3>
+<p>YOLOv8 找不到資料集時，先確認程式執行目錄與 <code>data='./data.yaml'</code> 是否一致，再檢查 <code>data.yaml</code> 裡的 <code>train</code> 和 <code>val</code> 路徑。若錯誤訊息指向 Ultralytics 設定檔，再調整 <code>datasets_dir</code>。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>YOLOv8 可以直接吃 OpenCV 的影像陣列嗎？</span></h3>
+<p>YOLOv8 可以直接對 OpenCV 讀到的影像陣列做預測。Ultralytics Python API 支援圖片路徑、影片、URL、PIL 影像與 NumPy 陣列等輸入型態，因此攝影機串流可以先由 OpenCV 讀取，再交給模型推論。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Roboflow Universe，〈<a href="https://universe.roboflow.com/" target="_blank" rel="noopener noreferrer">Roboflow Universe</a>〉，存取日期：2026-08-28。</li>
+<li>Ultralytics，〈<a href="https://docs.ultralytics.com/usage/python/" target="_blank" rel="noopener noreferrer">YOLO Python Usage</a>〉，存取日期：2026-08-28。</li>
+<li>Ultralytics，〈<a href="https://docs.ultralytics.com/modes/predict/" target="_blank" rel="noopener noreferrer">Model Prediction with Ultralytics YOLO</a>〉，存取日期：2026-08-28。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/opencv-template-matching-object-detection">OpenCV Template Matching 教學：在圖像中查找物件與縮放旋轉限制</a>：同樣聚焦 OpenCV、物件偵測，可接著比較不同情境的做法。</li>
+<li><a href="/post/yolov8-object-detection-model">YOLOv8 物件偵測模型介紹：安裝、預測、訓練與輸出流程</a>：同樣聚焦 YOLOv8，可接著比較不同情境的做法。</li>
+<li><a href="/post/yolov8-training-metrics-optimization">YOLOv8 模型訓練指標解析：IoU、mAP、Precision、Recall 與優化策略</a>：同樣聚焦 YOLOv8，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2023-12-15（本文保留 2023-12-15 的實作筆記內容，並補上 GEO 結構、FAQ 與站內延伸閱讀。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-12-15</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

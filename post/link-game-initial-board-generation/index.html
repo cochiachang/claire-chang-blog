@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>連連看初始盤面產生：用二維陣列建立隨機棋盤與測試畫面｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明連連看初始盤面如何用二維陣列儲存，隨機產生 6x6 測試棋盤，並用 AngularJS table 呈現盤面。" />
+<meta name="keywords" content="後端開發, 連連看, JavaScript, AngularJS, TypeScript, 遊戲邏輯" />
+<link rel="canonical" href="https://claire-chang.com/post/link-game-initial-board-generation/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="連連看初始盤面產生：用二維陣列建立隨機棋盤與測試畫面｜Claire Chang" />
+<meta property="og:description" content="說明連連看初始盤面如何用二維陣列儲存，隨機產生 6x6 測試棋盤，並用 AngularJS table 呈現盤面。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/link-game-initial-board-generation/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_link-game-algorithm-introduction-fc404241.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_link-game-algorithm-introduction-fc404241.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="連連看初始盤面產生：用二維陣列建立隨機棋盤與測試畫面｜Claire Chang" />
+<meta name="twitter:description" content="說明連連看初始盤面如何用二維陣列儲存，隨機產生 6x6 測試棋盤，並用 AngularJS table 呈現盤面。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_link-game-algorithm-introduction-fc404241.jpg" />
+<meta property="article:published_time" content="2018-10-19" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="連連看" />
+<meta property="article:tag" content="JavaScript" />
+<meta property="article:tag" content="AngularJS" />
+<meta property="article:tag" content="TypeScript" />
+<meta property="article:tag" content="遊戲邏輯" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"連連看初始盤面產生：用二維陣列建立隨機棋盤與測試畫面","item":"https://claire-chang.com/post/link-game-initial-board-generation/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/link-game-initial-board-generation/#article","headline":"連連看初始盤面產生：用二維陣列建立隨機棋盤與測試畫面","description":"說明連連看初始盤面如何用二維陣列儲存，隨機產生 6x6 測試棋盤，並用 AngularJS table 呈現盤面。","image":"https://claire-chang.com/images/tech/hero_link-game-algorithm-introduction.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-10-19","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/link-game-initial-board-generation/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"連連看, JavaScript, AngularJS, TypeScript, 遊戲邏輯","about":[{"@type":"Thing","name":"連連看"},{"@type":"Thing","name":"遊戲邏輯"}],"mentions":[{"@type":"Thing","name":"JavaScript"},{"@type":"Thing","name":"AngularJS"},{"@type":"Thing","name":"TypeScript"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/link-game-initial-board-generation/#faq","mainEntity":[{"@type":"Question","name":"連連看初始盤面為什麼要用二維陣列？","acceptedAnswer":{"@type":"Answer","text":"連連看初始盤面用二維陣列，可以自然對應棋盤的列與欄。玩家點擊任一格時，程式只要記錄 `[row, column]`，就能查到該格圖形編號並進行配對判斷。"}},{"@type":"Question","name":"連連看每種圖形一定要出現四次嗎？","acceptedAnswer":{"@type":"Answer","text":"連連看每種圖形不一定要出現四次，但每種圖形最好出現偶數次，否則最後可能留下無法配對的單張圖形。這篇測試版使用四次，是因為 10x10 正式盤面與 6x6 測試盤面都能剛好整除。"}},{"@type":"Question","name":"`sort(() => Math.random() > .5)` 適合正式遊戲嗎？","acceptedAnswer":{"@type":"Answer","text":"`sort(() => Math.random() > .5)` 適合快速示範，不適合正式遊戲。正式遊戲建議改用 Fisher-Yates shuffle，讓洗牌結果比較穩定，也比較容易測試。"}},{"@type":"Question","name":"只檢查兩格數字相同就可以消除嗎？","acceptedAnswer":{"@type":"Answer","text":"只檢查兩格數字相同還不夠。連連看還要檢查兩個圖形之間是否存在合法路徑，通常限制為最多兩次轉折，且路徑中不能穿過其他未消除圖形。"}},{"@type":"Question","name":"為什麼先用 AngularJS table，而不是直接用 PixiJS？","acceptedAnswer":{"@type":"Answer","text":"AngularJS table 版本適合早期測試資料結構，因為畫面與資料綁定很快就能看出盤面是否正確。等遊戲邏輯穩定後，再用 PixiJS 把數字格子換成圖像、動畫與消除效果。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_link-game-algorithm-introduction.webp" alt="連連看棋盤上的兩點連線路徑，象徵初始盤面生成與遊戲邏輯設計" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-10-19">2018-10-19</time></span><span class="post-meta-pill">連連看 · JavaScript · AngularJS · TypeScript · 遊戲邏輯</span></div></div><h1 class="insights-hero-title">連連看初始盤面產生：用二維陣列建立隨機棋盤與測試畫面</h1><p class="insights-hero-description">說明連連看初始盤面如何用二維陣列儲存，隨機產生 6x6 測試棋盤，並用 AngularJS table 呈現盤面。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>連連看初始盤面可以先用二維陣列表示，每一格存放 <code>1</code> 到 <code>N</code> 的數字，數字代表不同圖形。開發早期不需要立刻接上美術素材，只要能產生成對資料、打散順序、顯示棋盤，就能開始測試後面的連線消除邏輯。</p>
+<p>本文主要查詢是「連連看初始盤面怎麼產生？」變體問題包含「連連看棋盤要用什麼資料結構？」、「如何用 JavaScript 隨機產生 6x6 盤面？」、「AngularJS 怎麼顯示連連看測試棋盤？」、「為什麼連連看圖形數量要成對出現？」資訊增益是把 2018 年連連看系列的測試盤面做成一份可直接理解的盤面生成流程。</p>
+</div><section aria-labelledby="連連看棋盤要用什麼資料結構"><h2 id="連連看棋盤要用什麼資料結構">連連看棋盤要用什麼資料結構？</h2>
+<p>連連看棋盤適合用二維陣列儲存。二維陣列的第一層可代表列，第二層可代表欄，每個元素存放圖形編號，後續點擊、配對與路徑判斷都能用座標查表完成。</p>
+<p>在這個版本裡，我先用一個陣列代表盤面資料，陣列中儲存 <code>1</code> 到 <code>N</code> 的數字。每一個數字是一種圖形，之後畫面層可以再把數字對應到不同 icon 或 sprite。</p>
+<figure class="article-figure"><img src="/images/tech/link-game-initial-board-generation-array.webp" alt="用陣列表示連連看棋盤內容" loading="lazy" class="markdown-img"></figure>
+<p>這種設計的好處是測試成本低。還沒有角色圖、動畫或消除效果時，只要看到數字分布，就能確認盤面資料是否真的被產生出來，也能先檢查選取兩格時拿到的座標和值是否正確。</p>
+</section><section aria-labelledby="連連看初始盤面怎麼隨機產生"><h2 id="連連看初始盤面怎麼隨機產生">連連看初始盤面怎麼隨機產生？</h2>
+<p>連連看初始盤面要先確保每種圖形有偶數個，才可能被配對消除。測試版使用 6x6 棋盤，9 種圖形各出現 4 次，總共正好填滿 36 格。</p>
+<p>觀察連連看遊戲，常見設計是同樣的圖形出現四個。若正式盤面是 <code>10 x 10</code>，總共有 100 個 icon；一種 icon 出現四個時，就會需要 25 種不同 icon。</p>
+<p>為了方便測試，我先製作 <code>6 x 6 = 36</code> 的棋盤。這樣 <code>36 / 4 = 9</code>，只需要 9 種不同 icon，就能讓每種 icon 都有四個可配對的格子。</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> boardContent = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>];
+
+<span class="hljs-comment">// 產生初始局面</span>
+boardContent = boardContent
+  .<span class="hljs-title function_">concat</span>(boardContent)
+  .<span class="hljs-title function_">concat</span>(boardContent)
+  .<span class="hljs-title function_">concat</span>(boardContent)
+  .<span class="hljs-title function_">sort</span>(<span class="hljs-function">() =></span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() > <span class="hljs-number">.5</span>);
+
+boardContent = [
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>,<span class="hljs-number">6</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">6</span>,<span class="hljs-number">12</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">12</span>,<span class="hljs-number">18</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">18</span>,<span class="hljs-number">24</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">24</span>,<span class="hljs-number">30</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">30</span>,<span class="hljs-number">36</span>)
+];
+</code></pre>
+<p>這段程式的流程很直接：先準備 9 種圖形編號，連續複製四份，再用隨機排序打散，最後切成 6 列，每列 6 個元素。</p>
+<figure class="article-figure"><img src="/images/tech/link-game-initial-board-generation-random.webp" alt="隨機產生後的 6x6 連連看盤面資料" loading="lazy" class="markdown-img"></figure>
+<p>若要把這段邏輯放進正式遊戲，建議補兩件事：第一，改用 Fisher-Yates shuffle 取代 <code>sort(() => Math.random() > .5)</code>；第二，盤面生成後檢查是否至少有一組可消除路徑，避免玩家一開局就遇到無解盤面。</p>
+</section><section aria-labelledby="盤面產生流程可以怎麼拆"><h2 id="盤面產生流程可以怎麼拆">盤面產生流程可以怎麼拆？</h2>
+<p>連連看盤面生成可以拆成四步：決定棋盤大小、決定每種圖形出現次數、打散一維資料、切回二維陣列。這樣拆法讓測試版與正式版可以共用同一個資料模型。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>步驟</th><th>目的</th><th>這篇的測試設定</th></tr></thead><tbody><tr><td>決定棋盤大小</td><td>確認總格數</td><td><code>6 x 6 = 36</code></td></tr><tr><td>決定圖形種類</td><td>確認每種圖形可成對</td><td>9 種圖形</td></tr><tr><td>複製圖形資料</td><td>讓每種圖形出現固定次數</td><td>每種出現 4 次</td></tr><tr><td>切成二維陣列</td><td>對應畫面列與欄</td><td>6 列，每列 6 格</td></tr></tbody></table></div>
+<p>這裡有一個容易忽略的小檢查：總格數必須能被每種圖形的出現次數整除。若設定為每種圖形出現四次，棋盤總格數就要能被 4 整除；否則產生資料時會多出或少掉格子。</p>
+</section><section aria-labelledby="angularjs-怎麼呈現連連看測試棋盤"><h2 id="angularjs-怎麼呈現連連看測試棋盤">AngularJS 怎麼呈現連連看測試棋盤？</h2>
+<p>AngularJS 測試畫面可以用 <code>ng-repeat</code> 讀取二維陣列，將每一列轉成 table row，將每一格轉成 table cell。這種畫面只為驗證邏輯，不是正式遊戲 UI。</p>
+<p>在邏輯撰寫版本裡，為了測試方便，我使用 AngularJS 呈現棋盤。AngularJS 的資料綁定能把 <code>boardContent</code> 直接映射到 HTML table，盤面資料改變時也比較容易看到畫面變化。</p>
+<p>HTML 檔案內容如下：</p>
+<pre><code class="hljs language-html"><span class="hljs-meta">&#x3C;!DOCTYPE <span class="hljs-keyword">html</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">html</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">head</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"viewport"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"width=device-width"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">title</span>></span>JS Bin<span class="hljs-tag">&#x3C;/<span class="hljs-name">title</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">style</span>></span><span class="css"><span class="hljs-selector-class">.red</span>{<span class="hljs-attribute">background</span>:red;}</span><span class="hljs-tag">&#x3C;/<span class="hljs-name">style</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://code.jquery.com/jquery-3.1.0.js"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">script</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">script</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">head</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">body</span> <span class="hljs-attr">ng-app</span>=<span class="hljs-string">"myApp"</span> <span class="hljs-attr">ng-controller</span>=<span class="hljs-string">"myCtrl"</span>></span>
+  select1=<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">ng-model</span>=<span class="hljs-string">"select1"</span> <span class="hljs-attr">disabled</span>></span>
+  select2=<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">ng-model</span>=<span class="hljs-string">"select2"</span> <span class="hljs-attr">disabled</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">table</span> <span class="hljs-attr">border</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"200"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">tr</span> <span class="hljs-attr">ng-repeat</span>=<span class="hljs-string">"lines in boardContent track by $index"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">td</span> <span class="hljs-attr">ng-repeat</span>=<span class="hljs-string">"x in lines track by $index"</span>
+          <span class="hljs-attr">ng-class</span>=<span class="hljs-string">"{'red':(select1[0]==$parent.$index&#x26;&#x26;select1[1]==$index &#x26;&#x26; selected)}"</span>
+          <span class="hljs-attr">ng-click</span>=<span class="hljs-string">"click($parent.$index,$index)"</span>></span>{{x}}<span class="hljs-tag">&#x3C;/<span class="hljs-name">td</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">tr</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">table</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">body</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">html</span>></span>
+</code></pre>
+<p>這段 HTML 的重點是雙層 <code>ng-repeat</code>。外層跑每一列，內層跑列中的每一格；點擊格子時，把列索引與欄索引傳進 <code>click()</code>，讓 JavaScript 取得玩家選到的位置。</p>
+</section><section aria-labelledby="點擊兩格時要記錄哪些狀態"><h2 id="點擊兩格時要記錄哪些狀態">點擊兩格時要記錄哪些狀態？</h2>
+<p>連連看點擊流程至少要記錄第一次選取座標、第二次選取座標，以及目前是否已經選過第一格。這三個狀態足以測試「兩格是否為相同圖形」。</p>
+<p>JavaScript 檔案內容如下：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> boardContent = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>];
+
+<span class="hljs-comment">// 產生初始局面</span>
+boardContent = boardContent
+  .<span class="hljs-title function_">concat</span>(boardContent)
+  .<span class="hljs-title function_">concat</span>(boardContent)
+  .<span class="hljs-title function_">concat</span>(boardContent)
+  .<span class="hljs-title function_">sort</span>(<span class="hljs-function">() =></span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() > <span class="hljs-number">.5</span>);
+
+boardContent = [
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>,<span class="hljs-number">6</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">6</span>,<span class="hljs-number">12</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">12</span>,<span class="hljs-number">18</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">18</span>,<span class="hljs-number">24</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">24</span>,<span class="hljs-number">30</span>),
+  boardContent.<span class="hljs-title function_">slice</span>(<span class="hljs-number">30</span>,<span class="hljs-number">36</span>)
+];
+
+<span class="hljs-comment">// 產生盤面</span>
+<span class="hljs-keyword">var</span> app = angular.<span class="hljs-title function_">module</span>(<span class="hljs-string">'myApp'</span>, []);
+
+app.<span class="hljs-title function_">controller</span>(<span class="hljs-string">'myCtrl'</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">$scope</span>) {
+  $scope.<span class="hljs-property">select1</span> = [-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>];
+  $scope.<span class="hljs-property">select2</span> = [-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>];
+  $scope.<span class="hljs-property">selected</span> = <span class="hljs-literal">false</span>;
+
+  $scope.<span class="hljs-property">boardContent</span> = boardContent;
+  $scope.<span class="hljs-property">click</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">x,y</span>) {
+    <span class="hljs-keyword">if</span> ($scope.<span class="hljs-property">selected</span>) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(boardContent[$scope.<span class="hljs-property">select1</span>[<span class="hljs-number">0</span>]][$scope.<span class="hljs-property">select1</span>[<span class="hljs-number">1</span>]]);
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(boardContent[x][y]);
+
+      <span class="hljs-keyword">if</span> (boardContent[$scope.<span class="hljs-property">select1</span>[<span class="hljs-number">0</span>]][$scope.<span class="hljs-property">select1</span>[<span class="hljs-number">1</span>]] == boardContent[x][y]) {
+        $scope.<span class="hljs-property">select2</span> = [x,y];
+      }
+
+      $scope.<span class="hljs-property">selected</span> = <span class="hljs-literal">false</span>;
+    } <span class="hljs-keyword">else</span> {
+      $scope.<span class="hljs-property">select1</span> = [x,y];
+      $scope.<span class="hljs-property">selected</span> = <span class="hljs-literal">true</span>;
+    }
+  };
+});
+</code></pre>
+<p>上面的程式碼會產生一個符合陣列內容的 table 盤面。每一格顯示數字，玩家任選一個數字後，該格會反紅作為提示；若第二次選到的數字與第一次相同，程式會把第二個座標存進 <code>select2</code>，並把 <code>selected</code> 設回 <code>false</code>。</p>
+<figure class="article-figure"><img src="/images/tech/link-game-initial-board-generation-table.webp" alt="AngularJS table 顯示連連看初始盤面" loading="lazy" class="markdown-img"></figure>
+<p>測試版目前只判斷兩格數字是否相同，還沒有判斷路徑中間是否被阻擋，也沒有處理最多兩次轉折的連線限制。這是下一階段「圖形連線消除邏輯」要解決的問題。</p>
+</section><section aria-labelledby="為什麼要把-js-bin-範例搬到-typescript-專案"><h2 id="為什麼要把-js-bin-範例搬到-typescript-專案">為什麼要把 JS Bin 範例搬到 TypeScript 專案？</h2>
+<p>TypeScript 專案比較適合承接後續複雜遊戲邏輯。當盤面生成、點擊狀態、路徑搜尋與消除流程越來越多，類別與型別能讓資料邊界更清楚。</p>
+<p>JS Bin 很適合快速驗證：寫一段 HTML、貼一段 JavaScript，就能看到盤面資料是否正確。但連連看的後續邏輯會越來越複雜，例如消除條件、搜尋路徑、提示、重整、過關判斷，都不適合長期塞在同一個範例檔裡。</p>
+<p>當時整理好的 TypeScript 專案可以下載後執行：</p>
+<pre><code class="hljs language-cmd">npm install
+</code></pre>
+<p>安裝完成後，用下列指令打開網站：</p>
+<pre><code class="hljs language-cmd">gulp default
+</code></pre>
+<p>這個階段的成果不是完成一款遊戲，而是把「盤面資料」從瀏覽器小範例搬到可以繼續擴充的專案結構中。後續加上 Board、Path、GameBoard 等類別時，才不會每改一個規則就牽動整個畫面。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>連連看初始盤面為什麼要用二維陣列？</span></h3>
+<p>連連看初始盤面用二維陣列，可以自然對應棋盤的列與欄。玩家點擊任一格時，程式只要記錄 <code>[row, column]</code>，就能查到該格圖形編號並進行配對判斷。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>連連看每種圖形一定要出現四次嗎？</span></h3>
+<p>連連看每種圖形不一定要出現四次，但每種圖形最好出現偶數次，否則最後可能留下無法配對的單張圖形。這篇測試版使用四次，是因為 10x10 正式盤面與 6x6 測試盤面都能剛好整除。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>sort(() => Math.random() > .5)</code> 適合正式遊戲嗎？</span></h3>
+<p><code>sort(() => Math.random() > .5)</code> 適合快速示範，不適合正式遊戲。正式遊戲建議改用 Fisher-Yates shuffle，讓洗牌結果比較穩定，也比較容易測試。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>只檢查兩格數字相同就可以消除嗎？</span></h3>
+<p>只檢查兩格數字相同還不夠。連連看還要檢查兩個圖形之間是否存在合法路徑，通常限制為最多兩次轉折，且路徑中不能穿過其他未消除圖形。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼先用 AngularJS table，而不是直接用 PixiJS？</span></h3>
+<p>AngularJS table 版本適合早期測試資料結構，因為畫面與資料綁定很快就能看出盤面是否正確。等遊戲邏輯穩定後，再用 PixiJS 把數字格子換成圖像、動畫與消除效果。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>JS Bin 測試範例：<a href="https://jsbin.com/raqilezuye/edit?html,js" target="_blank" rel="noopener noreferrer">https://jsbin.com/raqilezuye/edit?html,js</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/pixi-link-game-board">PixiJS 如何實作連連看盤面與消除邏輯</a>：同樣聚焦 TypeScript、連連看，可接著比較不同情境的做法。</li>
+<li><a href="/post/link-game-development-introduction">連連看遊戲開發前言：從規則、益智遊戲定位到 PixiJS 製作規劃</a>：同樣聚焦 TypeScript、連連看，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-hint-refresh-buttons-link-game">PixiJS 提示與重整按鈕教學：連連看遊戲功能實作</a>：同樣聚焦 TypeScript、連連看，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2018-10-19；本文依 2018 年連連看遊戲邏輯筆記整理，保留當時的 JavaScript、AngularJS 與 TypeScript 專案切換脈絡，並補上 GEO 結構。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-10-19</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

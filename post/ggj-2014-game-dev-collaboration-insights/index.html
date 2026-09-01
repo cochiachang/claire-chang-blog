@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GGJ 2014 遊戲開發心得：用 Pair Programming 與極限編程撐過 48 小時協作地獄｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="在 Global Game Jam 2014 的 48 小時內協作開發一款 Flash 遊戲，我學到 SVN 版本控制、MVC 框架與 Robotlegs 架構的重要性，以及 pair programming 如何讓兩個程式設計師在極短時間內寫出最穩固的程式碼。本文整理遊戲發想、協作工具選擇與極限編程（XP）的實戰心得。" />
+<meta name="keywords" content="DevOps, Global Game Jam, 遊戲開發, Pair Programming, 極限編程, 版本控制" />
+<link rel="canonical" href="https://claire-chang.com/post/ggj-2014-game-dev-collaboration-insights/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="GGJ 2014 遊戲開發心得：用 Pair Programming 與極限編程撐過 48 小時協作地獄｜Claire Chang" />
+<meta property="og:description" content="在 Global Game Jam 2014 的 48 小時內協作開發一款 Flash 遊戲，我學到 SVN 版本控制、MVC 框架與 Robotlegs 架構的重要性，以及 pair programming 如何讓兩個程式設計師在極短時間內寫出最穩固的程式碼。本文整理遊戲發想、協作工具選擇與極限編程（XP）的實戰心得。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/ggj-2014-game-dev-collaboration-insights/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_ggj-2014-game-dev-collaboration-insights-604a3f4e.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_ggj-2014-game-dev-collaboration-insights-604a3f4e.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="GGJ 2014 遊戲開發心得：用 Pair Programming 與極限編程撐過 48 小時協作地獄｜Claire Chang" />
+<meta name="twitter:description" content="在 Global Game Jam 2014 的 48 小時內協作開發一款 Flash 遊戲，我學到 SVN 版本控制、MVC 框架與 Robotlegs 架構的重要性，以及 pair programming 如何讓兩個程式設計師在極短時間內寫出最穩固的程式碼。本文整理遊戲發想、協作工具選擇與極限編程（XP）的實戰心得。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_ggj-2014-game-dev-collaboration-insights-604a3f4e.jpg" />
+<meta property="article:published_time" content="2014-02-05" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Global Game Jam" />
+<meta property="article:tag" content="遊戲開發" />
+<meta property="article:tag" content="Pair Programming" />
+<meta property="article:tag" content="極限編程" />
+<meta property="article:tag" content="版本控制" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"GGJ 2014 遊戲開發心得：用 Pair Programming 與極限編程撐過 48 小時協作地獄","item":"https://claire-chang.com/post/ggj-2014-game-dev-collaboration-insights/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/ggj-2014-game-dev-collaboration-insights/#article","headline":"GGJ 2014 遊戲開發心得：用 Pair Programming 與極限編程撐過 48 小時協作地獄","description":"在 Global Game Jam 2014 的 48 小時內協作開發一款 Flash 遊戲，我學到 SVN 版本控制、MVC 框架與 Robotlegs 架構的重要性，以及 pair programming 如何讓兩個程式設計師在極短時間內寫出最穩固的程式碼。本文整理遊戲發想、協作工具選擇與極限編程（XP）的實戰心得。","image":"https://claire-chang.com/images/tech/hero_ggj-2014-game-dev-collaboration-insights.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2014-02-05","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/ggj-2014-game-dev-collaboration-insights/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"DevOps","keywords":"Global Game Jam, 遊戲開發, Pair Programming, 極限編程, 版本控制","about":[{"@type":"Thing","name":"遊戲開發"},{"@type":"Thing","name":"極限編程"},{"@type":"Thing","name":"版本控制"}],"mentions":[{"@type":"Thing","name":"Global Game Jam"},{"@type":"Thing","name":"Pair Programming"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/ggj-2014-game-dev-collaboration-insights/#faq","mainEntity":[{"@type":"Question","name":"短期衝刺開發前該先準備什麼？","acceptedAnswer":{"@type":"Answer","text":"版本控制系統一定要事先設定好，並且確保所有協作者都熟悉該工具。我們因為在活動現場才設定 SVN 環境，浪費了寶貴的開發時間。"}},{"@type":"Question","name":"來不及拆 MVC 架構時該怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"越急越要有共通框架。我們的經驗是先硬寫之後再重構會付出更大代價，第二天晚上仍花了整晚用 Robotlegs 重寫架構。事前約定好目錄結構與命名慣例，能大幅降低協作摩擦。"}},{"@type":"Question","name":"Pair Programming 適合用在專案的哪些部分？","acceptedAnswer":{"@type":"Answer","text":"最適合用在共用、核心的架構程式碼上。我們把各關卡一定會共用的部分用 pair programming 開發，各自獨立的功能再拆分實作。這些兩人一起寫的程式碼，後來證實是整個專案最穩固、最少 bug 的部分。"}},{"@type":"Question","name":"發想遊戲點子時最容易犯什麼錯？","acceptedAnswer":{"@type":"Answer","text":"在發想階段就深入實作細節，會讓創意失焦。發想期的重點應該放在『想讓玩家感受到什麼』，而不是『怎麼做』，並且用一句話就能說清楚想傳達的內容。"}},{"@type":"Question","name":"極限編程（XP）適合 Game Jam 這種活動嗎？","acceptedAnswer":{"@type":"Answer","text":"非常適合。極限編程強調的快速迭代、簡單設計與 pair programming，正好對應 Game Jam 中需求快速變動、時間極度壓縮的情境。平常看起來抽象的敏捷理論，在時間壓力下反而最能驗證其實用性。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_ggj-2014-game-dev-collaboration-insights.webp" alt="Global Game Jam 2014 遊戲發想的心智圖，以樹狀圖將點子分為顛覆、人性、元素三類" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=DevOps" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ DevOps</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2014-02-05">2014-02-05</time></span><span class="post-meta-pill">Global Game Jam · 遊戲開發 · Pair Programming · 極限編程 · 版本控制</span></div></div><h1 class="insights-hero-title">GGJ 2014 遊戲開發心得：用 Pair Programming 與極限編程撐過 48 小時協作地獄</h1><p class="insights-hero-description">在 Global Game Jam 2014 的 48 小時內協作開發一款 Flash 遊戲，我學到 SVN 版本控制、MVC 框架與 Robotlegs 架構的重要性，以及 pair programming 如何讓兩個程式設計師在極短時間內寫出最穩固的程式碼。本文整理遊戲發想、協作工具選擇與極限編程（XP）的實戰心得。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>在 Global Game Jam 2014 的三天內與另一位程式設計師協作完成一款遊戲，讓我深刻體會到版本控制、共通框架與 pair programming 在快速開發中的價值。本文保留我在活動中的第一手筆記，從遊戲發想的心智圖方法，到程式協作踩過的坑，分享給同樣要短期衝刺開發的團隊。</p>
+</div><section aria-labelledby="短期開發需要哪些協作工具"><h2 id="短期開發需要哪些協作工具">短期開發需要哪些協作工具？</h2>
+<p>我們這次使用的協作工具很單純：</p>
+<ol>
+<li>FlashBuilder 4.7</li>
+<li>Flash</li>
+<li>心智圖</li>
+<li>SVN</li>
+</ol>
+<p>工具越簡單越好，重點是雙方都要熟悉——這一點後來在程式協作時讓我付出不小的代價。</p>
+</section><section aria-labelledby="遊戲發想為什麼要用心智圖"><h2 id="遊戲發想為什麼要用心智圖">遊戲發想為什麼要用心智圖？</h2>
+<p>我們這一組是使用心智圖的方式去發想遊戲的概念，並且紀錄下討論的內容、將發想的點子分門別類，以樹狀圖的形式，將所有的主題分類成三種：顛覆、人性、元素。</p>
+<p>下圖是我們當天所討論出的主題架構：</p>
+<figure class="article-figure"><img src="/images/articles/ggj-2014-game-dev-collaboration-insights-1.webp" alt="GGJ 2014 遊戲發想的主題架構心智圖，以樹狀圖將點子分類成顛覆、人性、元素三類" loading="lazy" class="markdown-img"></figure>
+<p>本屆主題是：We don't see things as they are, we see them as we are.</p>
+<p>我們以這主題去延伸，討論出幾點我們認為有符合這種概念的幾件事情，在討論時，Mao哥點出幾點我們在發想遊戲時，應該要注意的點：</p>
+<ol>
+<li>不要管怎麼實作（不要去想細節）</li>
+<li>點子越奇怪越好</li>
+<li>用一句話就能表達出你想傳達的內容</li>
+<li>用別人的點子去延伸自己的想法</li>
+<li>先思考遊戲『想要給人的感受』</li>
+</ol>
+</section><section aria-labelledby="發想階段最容易犯的錯誤是什麼"><h2 id="發想階段最容易犯的錯誤是什麼">發想階段最容易犯的錯誤是什麼？</h2>
+<p>一般人比較容易犯的錯誤，是很容易會在企劃發想時期就想到太多細節或實作面的東西，這樣會讓創意失焦，並且容易納入許多和主題不相符的內容到遊戲裡。因此<strong>在發想時期，應要把討論的重點放到『想讓玩家感受到什麼』，而不是『怎麼作』</strong>。</p>
+<p>在實際討論時，我也發現這樣的發想方式，更容易激發眾人的思考與創意，每個人可能說出他喜歡玩、以及曾經玩過的遊戲，在聽別人描述那個遊戲的玩法，以及玩那遊戲所感受到的好玩之處時，聽的人可以加上一些自己原本就有的 idea 和想法，提出來加以討論，很容易就能融合出很不一樣的創意。</p>
+</section><section aria-labelledby="為什麼-肯定他人的想法-在腦力激盪中這麼重要"><h2 id="為什麼-肯定他人的想法-在腦力激盪中這麼重要">為什麼『肯定他人的想法』在腦力激盪中這麼重要？</h2>
+<p>在遊戲發想時期，另一個很重要的點就是『延伸』。在這次的討論中，我發現在討論時期，『肯定他人的想法』是一件非常重要的事。台灣人大多比較害羞，會較不好意思說出自己的想法，因此，當有一個人說出自己的 idea 時，肯定它並加以延伸，是很重要的事。即使那個點子非常的無聊，主持者也可以用該點子去延伸出一個比較有趣的主題附加在上面。</p>
+<p>這會讓其他與會者更有膽量說出自己的看法，並且也更容易讓更多好點子融合在一起，成為一個新的點子。</p>
+<p>以我們的討論為例，當時我們組員有一位提出了太空這個想法，在一開始我聽到時，還並不覺得有趣，但是後來另一位組員又補上了『因為太空是未知的，所以太空的所有事物都可以是幻想的，可以充滿想像力。例如或許一群星球很靠近，但他們並不是像太陽系這樣是靠引力去維持運轉，或許某一個另外一個星球系，是因為每個星球彼此相斥，所以才能夠彼此維持相同不動的狀況』，這個想法一丟出來，大家就引發許多其他更多的想像空間去做發想，然後激發更多更好的點子。</p>
+</section><section aria-labelledby="快速協作開發會遇到什麼問題"><h2 id="快速協作開發會遇到什麼問題">快速協作開發會遇到什麼問題？</h2>
+<p>在這次的遊戲開發裡，我對於在短時間內要同時進行開發一個作品的協同開發上，有許多的心得。</p>
+<p>首先是，協作的版本控制系統非常重要，並且要是雙方都熟悉的工具。我們採用 SVN 來做檔案的版本控制，因為第一次參加活動，SVN 是在當場現場才設定好環境，花掉了我們開發的好一些時間，若有下次參加會建議事前要準備好版本管理系統的環境。</p>
+<p>我們在一開始時，因為很擔心進度趕不完，所以當時想要用最快、最簡單的方式做開發。也就是未將 MVC 拆開，將所有的功能皆用純手工打造，希望能以最快速的方式，將功能做出來。</p>
+<p>但我們後來卻遇到了嚴重的協作問題。</p>
+</section><section aria-labelledby="為什麼沒有共通架構會讓兩個高手寫出很醜的程式"><h2 id="為什麼沒有共通架構會讓兩個高手寫出很醜的程式">為什麼沒有共通架構會讓兩個高手寫出很醜的程式？</h2>
+<p>因為原作者寫 code 的方式，配合的人不了解。在遇到一些因原來作者所寫的 code 而產生的邏輯問題時，會變得只能去修改後面的開發邏輯去配合前面的開發者，而不會去修正前面寫不好的邏輯，這會造成到最後全部的 code 都看起來很奇怪。或許 A 跟 B 都是高手，但是因為需求改變，彼此寫 code 的方式不同，彼此看不懂彼此在幹麻（更可能的是為了尊重，不好意思擅自改其他人的 code），架構又沒有拆好，兩個高手開發出的程式卻很醜的狀況，就有可能會出現了。</p>
+<p>在需要快速開發的時候，因為需求以及遊戲內容會快速的隨著開發的時間而改變，在一開始幾乎會不可能可以完全正確的規劃出最好的設計邏輯。為了應變快速改變的需求，這時候 framework 和 MVC 的重要性就真切的在此時顯現出來了。</p>
+<p><strong>越是需要快速開發，越是需要應變頻繁的功能修改，共通的框架及開發模式就越是重要。</strong></p>
+</section><section aria-labelledby="我們如何用-robotlegs-與-pair-programming-補救"><h2 id="我們如何用-robotlegs-與-pair-programming-補救">我們如何用 Robotlegs 與 Pair Programming 補救？</h2>
+<p>我們在第二天晚上花了很多時間將架構整個用 Robotlegs 去改寫過，並且在最核心的架構部份採用 pair programming 的方式，兩個人同時盯著螢幕，一起開發程式。事後也證明，那一段兩人一起開發的程式，是所有部份裡最穩固最成熟，也最不容易出現 bug 的部份。</p>
+<p>Pair programming 是 eXtreme Programming 很提倡的一種方式，我認為 eXtreme Programming 的開發方法，特別適合用在於類似這種三天內要趕出一款遊戲的狀況下。這邊有關於 XP 的簡單介紹：<a href="http://zh.wikipedia.org/wiki/%E6%9E%81%E9%99%90%E7%BC%96%E7%A8%8B" target="_blank" rel="noopener noreferrer">極限編程（維基百科）</a>、<a href="http://blog.toright.com/archives/697" target="_blank" rel="noopener noreferrer">軟體開發之極限編程（極限開發）eXtreme Programming, XP</a>。</p>
+<p>因為時間不足，不太可能所有的程式碼都用 pair programming，我們先將功能以關卡劃分工作項目，然後討論出各關卡一定會共用到的部份，將共用的部份用 pair programming 去開發，剩的功能再拆分出來各自實作。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Pair Programming 的好處有哪些？</span></h3>
+<p>在這邊列出幾點我感受到的 pair programming 的好處：</p>
+<ol>
+<li><strong>參與的開發人員都能了解程式邏輯</strong>：一個能讓其他開發人員看得懂的程式，才叫做漂亮的程式。這也是為什麼近來大家總是很注重的在探討『如何寫出漂亮的程式碼』的原因。很多時候，完全看懂別人的程式邏輯比重寫一次還要更花時間，一起寫 code 能讓參與的人都能夠同時了解到程式的邏輯，而不用自己去當人腦編譯器理解別人寫的 code。</li>
+<li><strong>在合作中可以截長補短</strong>：在合作中，其實是可以學習到東西的，每個人都有不同的想法以及擅長的地方。一起寫 code 真的可以集結雙方寫程式的優點，能讓產出的 code 有更好的水準。</li>
+<li><strong>培養共通的開發習慣</strong>：這個因為我們合作時間較短，所以這一次活動裡比較沒有感受到這優點。但我覺得若是能夠長期讓一起合作的成員有機會去做 pair programming 的開發，這能讓大家在合作中更深入的了解到其他隊友的開發模式，對於未來的協同開發上將會能夠更加順暢。</li>
+</ol>
+<p>在其他敏捷開發的書裡也有談到許多關於快速開發的一些想法，在這次的聚會中，讓我真切的感受到書中許多論點的有力性。我覺得，像這種活動，因為時間上的緊迫性，書上許多過去看來像是難以理解的開發方法，在活動中都能讓我們感受到這些理論所說論點的實用性，是個很難能可貴的經驗。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>短期衝刺開發前該先準備什麼？</span></h3>
+<p>版本控制系統一定要事先設定好，並且確保所有協作者都熟悉該工具。我們因為在活動現場才設定 SVN 環境，浪費了寶貴的開發時間。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>來不及拆 MVC 架構時該怎麼辦？</span></h3>
+<p>越急越要有共通框架。我們的經驗是先硬寫之後再重構會付出更大代價，第二天晚上仍花了整晚用 Robotlegs 重寫架構。事前約定好目錄結構與命名慣例，能大幅降低協作摩擦。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Pair Programming 適合用在專案的哪些部分？</span></h3>
+<p>最適合用在共用、核心的架構程式碼上。我們把各關卡一定會共用的部分用 pair programming 開發，各自獨立的功能再拆分實作。這些兩人一起寫的程式碼，後來證實是整個專案最穩固、最少 bug 的部分。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>發想遊戲點子時最容易犯什麼錯？</span></h3>
+<p>在發想階段就深入實作細節，會讓創意失焦。發想期的重點應該放在『想讓玩家感受到什麼』，而不是『怎麼做』，並且用一句話就能說清楚想傳達的內容。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>極限編程（XP）適合 Game Jam 這種活動嗎？</span></h3>
+<p>非常適合。極限編程強調的快速迭代、簡單設計與 pair programming，正好對應 Game Jam 中需求快速變動、時間極度壓縮的情境。平常看起來抽象的敏捷理論，在時間壓力下反而最能驗證其實用性。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="http://zh.wikipedia.org/wiki/%E6%9E%81%E9%99%90%E7%BC%96%E7%A8%8B" target="_blank" rel="noopener noreferrer">極限編程 - 維基百科</a></li>
+<li><a href="http://blog.toright.com/archives/697" target="_blank" rel="noopener noreferrer">軟體開發之極限編程 eXtreme Programming, XP - ToRight Blog</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/ggj-2014-game-dev-collaboration-insights">Global Game Jam 2014 心得：遊戲發想方法與 Pair Programming 協作經驗</a>：同樣聚焦 Pair Programming、版本控制，可接著比較不同情境的做法。</li>
+<li><a href="/post/ggj-2014-participation-reflection">[GGJ-2014] 活動參與心得</a>：同樣聚焦 Global Game Jam、遊戲開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/ggj-2014-opening-video-theme">GGJ 2014 開場影片與主題介紹：遊戲發想與腦力激盪的啟發</a>：同樣聚焦 Global Game Jam、遊戲開發，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2014-02-05，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2014-02-05</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

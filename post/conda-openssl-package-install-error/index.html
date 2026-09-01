@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conda 無法安裝套件缺少 OpenSSL：CondaSSLError 解決方案｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Conda 無法安裝套件並出現 OpenSSL appears to be unavailable 時，通常是 Windows Anaconda 環境找不到 OpenSSL DLL。本文整理錯誤訊息、DLL 複製修復方式與環境檢查指令。" />
+<meta name="keywords" content="後端開發, Conda, OpenSSL, Anaconda, Python, 錯誤排解" />
+<link rel="canonical" href="https://claire-chang.com/post/conda-openssl-package-install-error/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Conda 無法安裝套件缺少 OpenSSL：CondaSSLError 解決方案｜Claire Chang" />
+<meta property="og:description" content="Conda 無法安裝套件並出現 OpenSSL appears to be unavailable 時，通常是 Windows Anaconda 環境找不到 OpenSSL DLL。本文整理錯誤訊息、DLL 複製修復方式與環境檢查指令。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/conda-openssl-package-install-error/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/2023-01-04_155944-7f53a852.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/2023-01-04_155944-7f53a852.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Conda 無法安裝套件缺少 OpenSSL：CondaSSLError 解決方案｜Claire Chang" />
+<meta name="twitter:description" content="Conda 無法安裝套件並出現 OpenSSL appears to be unavailable 時，通常是 Windows Anaconda 環境找不到 OpenSSL DLL。本文整理錯誤訊息、DLL 複製修復方式與環境檢查指令。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/2023-01-04_155944-7f53a852.jpg" />
+<meta property="article:published_time" content="2023-08-23" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Conda" />
+<meta property="article:tag" content="OpenSSL" />
+<meta property="article:tag" content="Anaconda" />
+<meta property="article:tag" content="Python" />
+<meta property="article:tag" content="錯誤排解" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Conda 無法安裝套件缺少 OpenSSL：CondaSSLError 解決方案","item":"https://claire-chang.com/post/conda-openssl-package-install-error/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/conda-openssl-package-install-error/#article","headline":"Conda 無法安裝套件缺少 OpenSSL：CondaSSLError 解決方案","description":"Conda 無法安裝套件並出現 OpenSSL appears to be unavailable 時，通常是 Windows Anaconda 環境找不到 OpenSSL DLL。本文整理錯誤訊息、DLL 複製修復方式與環境檢查指令。","image":"https://claire-chang.com/images/tech/2023-01-04_155944.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-08-23","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/conda-openssl-package-install-error/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"Conda, OpenSSL, Anaconda, Python, 錯誤排解","about":[{"@type":"Thing","name":"錯誤排解"}],"mentions":[{"@type":"Thing","name":"Conda"},{"@type":"Thing","name":"OpenSSL"},{"@type":"Thing","name":"Anaconda"},{"@type":"Thing","name":"Python"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/conda-openssl-package-install-error/#faq","mainEntity":[{"@type":"Question","name":"Conda 出現 OpenSSL appears to be unavailable 是套件來源壞掉嗎？","acceptedAnswer":{"@type":"Answer","text":"通常不是套件來源壞掉。`OpenSSL appears to be unavailable` 代表 Conda 本機無法載入 SSL/OpenSSL 支援，所以連 HTTPS metadata 都抓不到；套件名稱、channel 設定與版本衝突通常還沒進入真正判斷階段。"}},{"@type":"Question","name":"可以把 `ssl_verify` 關掉解決 Conda OpenSSL 錯誤嗎？","acceptedAnswer":{"@type":"Answer","text":"不建議把 `ssl_verify` 關掉當成主要解法。`ssl_verify` 影響憑證驗證，但 OpenSSL DLL 缺失是 SSL 模組載入問題；關掉驗證不一定有效，也會降低下載套件時的安全性。"}},{"@type":"Question","name":"`libcrypto-1_1-x64.dll` 和 `libssl-1_1-x64.dll` 找不到怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"新版 Anaconda 可能使用不同 OpenSSL DLL 檔名。可以先在 `anaconda3\\Library\\bin` 搜尋 `libcrypto` 與 `libssl`，確認是否存在同一組版本；如果 `Library\\bin` 本身沒有這些 DLL，安裝可能已經不完整，建議修復或重裝 Anaconda。"}},{"@type":"Question","name":"複製 DLL 後還是無法 `conda install` 怎麼排查？","acceptedAnswer":{"@type":"Answer","text":"先重開終端機，再執行 `where conda`、`conda info`、`python -c \"import ssl; print(ssl.OPENSSL_VERSION)\"`。如果 `import ssl` 失敗，繼續查 PATH 與 Python/Conda 混用；如果 SSL 正常但下載失敗，再看 proxy、公司憑證、channel 或網路設定。"}},{"@type":"Question","name":"這個 Conda OpenSSL 錯誤只會發生在 Windows 嗎？","acceptedAnswer":{"@type":"Answer","text":"這篇筆記的修復方式主要針對 Windows Anaconda。macOS 或 Linux 也可能遇到 SSL 相關問題，但處理方向通常會變成 shell activation、系統憑證、OpenSSL 套件或 Conda 安裝完整性，不一定適用複製 Windows DLL 的方式。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/2023-01-04_155944.webp" alt="Windows 環境變數中設定 Anaconda 路徑的畫面" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-08-23">2023-08-23</time></span><span class="post-meta-pill">Conda · OpenSSL · Anaconda · Python · 錯誤排解</span></div></div><h1 class="insights-hero-title">Conda 無法安裝套件缺少 OpenSSL：CondaSSLError 解決方案</h1><p class="insights-hero-description">Conda 無法安裝套件並出現 OpenSSL appears to be unavailable 時，通常是 Windows Anaconda 環境找不到 OpenSSL DLL。本文整理錯誤訊息、DLL 複製修復方式與環境檢查指令。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Conda 無法安裝套件並出現 <code>OpenSSL appears to be unavailable on this machine</code> 時，通常代表 Anaconda 或 Miniconda 的 Python 執行環境找不到 OpenSSL 相關 DLL，導致 Conda 不能透過 HTTPS 下載 package metadata。我的處理方式是先確認錯誤訊息，再把 <code>anaconda3\Library\bin</code> 裡的 OpenSSL DLL 複製到 <code>anaconda3\DLLs</code>，最後重開終端機測試 <code>conda install</code>。</p>
+</div><section aria-labelledby="conda-缺少-openssl-會出現什麼錯誤"><h2 id="conda-缺少-openssl-會出現什麼錯誤">Conda 缺少 OpenSSL 會出現什麼錯誤？</h2>
+<p>Conda 缺少 OpenSSL 時，常見錯誤會卡在 <code>Collecting package metadata</code>，接著顯示 <code>CondaSSLError</code>。錯誤重點不是套件不存在，而是 Conda 無法建立 HTTPS 連線。</p>
+<p>我當時用 <code>pip install</code> 或 <code>conda install</code> 安裝套件時，看到的錯誤訊息如下：</p>
+<pre><code class="hljs language-text">Collecting package metadata (current_repodata.json): failed
+CondaSSLError: OpenSSL appears to be unavailable on this machine.
+OpenSSL is required to download and install packages.
+
+Exception: HTTPSConnectionPool(host='conda.anaconda.org', port=443):
+Max retries exceeded with url: /conda-forge/win-64/current_repodata.json
+(Caused by SSLError("Can't connect to HTTPS URL because the SSL module is not available."))
+</code></pre>
+<p>Conda 官方 troubleshooting 文件也把 <code>Can't connect to HTTPS URL because the SSL module is not available</code> 歸在 SSL connection errors，原因通常是 Conda 找不到需要的 OpenSSL libraries，特別容易出現在 Windows 環境或 shell 沒有正確啟用 Conda environment 時（conda documentation，存取日期：2026-08-28）。</p>
+</section><section aria-labelledby="為什麼-conda-會因為-openssl-無法安裝套件"><h2 id="為什麼-conda-會因為-openssl-無法安裝套件">為什麼 Conda 會因為 OpenSSL 無法安裝套件？</h2>
+<p>Conda 安裝套件前會先透過 HTTPS 下載 channel 的 metadata；如果 Python 的 SSL 模組無法載入 OpenSSL library，Conda 連 metadata 都抓不到。這時候即使 package name 正確，也會在下載前失敗。</p>
+<p>這類錯誤常見於三種情境：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>情境</th><th>可能原因</th><th>優先檢查</th></tr></thead><tbody><tr><td>更新 Anaconda Navigator 或 Conda 後才出現</td><td>base environment 或 PATH 被改動</td><td>是否從 Anaconda Prompt 啟動</td></tr><tr><td>Windows 上突然不能 <code>conda install</code></td><td>OpenSSL DLL 不在 Python 可載入位置</td><td><code>Library\bin</code> 與 <code>DLLs</code> 是否有 DLL</td></tr><tr><td>GUI IDE 可以跑 Python 但不能安裝套件</td><td>IDE 沒有正確 activate Conda environment</td><td>IDE terminal 的 Conda 啟用方式</td></tr></tbody></table></div>
+<p>Anaconda Knowledge Base 對 OpenSSL error 的處理也建議先確認 environment、PATH 與 Conda environment 是否已啟用，再檢查 Windows 系統中是否缺少 OpenSSL DLL（Anaconda，2026-04-17）。</p>
+</section><section aria-labelledby="如何修復-openssl-appears-to-be-unavailable-on-this-machine"><h2 id="如何修復-openssl-appears-to-be-unavailable-on-this-machine">如何修復 <code>OpenSSL appears to be unavailable on this machine</code>？</h2>
+<p>Windows Anaconda 環境可先到 <code>anaconda3\Library\bin</code> 找 OpenSSL DLL，再複製到 <code>anaconda3\DLLs</code>。這個做法保留我當時成功修復 Conda 安裝套件問題的最短流程。</p>
+<p>我的修復流程是：</p>
+<ol>
+<li>開啟 Anaconda 安裝目錄。</li>
+<li>進入 <code>anaconda3\Library\bin</code>。</li>
+<li>找到這兩個檔案：
+<ul>
+<li><code>libcrypto-1_1-x64.dll</code></li>
+<li><code>libssl-1_1-x64.dll</code></li>
+</ul>
+</li>
+<li>複製這兩個 DLL。</li>
+<li>貼到 <code>anaconda3\DLLs</code>。</li>
+<li>關閉目前終端機，重新開啟 Anaconda Prompt 或命令列。</li>
+<li>重新執行 <code>conda install</code> 或 <code>pip install</code> 測試。</li>
+</ol>
+<p>如果 Anaconda 裝在 <code>C:\ProgramData\Anaconda3</code>，也可以用 PowerShell 參考下面指令：</p>
+<pre><code class="hljs language-powershell">Copy-Item "C:\ProgramData\Anaconda3\Library\bin\libcrypto-1_1-x64.dll" "C:\ProgramData\Anaconda3\DLLs\"
+Copy-Item "C:\ProgramData\Anaconda3\Library\bin\libssl-1_1-x64.dll" "C:\ProgramData\Anaconda3\DLLs\"
+</code></pre>
+<p>不同版本的 Anaconda 可能使用不同 OpenSSL DLL 檔名。若 <code>libcrypto-1_1-x64.dll</code> 或 <code>libssl-1_1-x64.dll</code> 不存在，我會先在 <code>Library\bin</code> 搜尋 <code>libcrypto</code>、<code>libssl</code>，再確認同一組版本的 DLL 是否都存在。</p>
+</section><section aria-labelledby="修復後要怎麼確認-conda-環境正常"><h2 id="修復後要怎麼確認-conda-環境正常">修復後要怎麼確認 Conda 環境正常？</h2>
+<p>修復 OpenSSL DLL 後，不要只看錯誤訊息有沒有消失，最好再檢查 Conda 是否從正確路徑啟動、Python 是否能載入 SSL 模組，以及 Conda 是否能抓到 channel metadata。</p>
+<p>我會依序跑這幾個檢查：</p>
+<pre><code class="hljs language-powershell">where conda
+conda info
+conda activate base
+python -c "import ssl; print(ssl.OPENSSL_VERSION)"
+conda install -c conda-forge requests
+</code></pre>
+<p>判斷重點如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查項目</th><th>正常狀態</th><th>異常時的方向</th></tr></thead><tbody><tr><td><code>where conda</code></td><td>指向同一套 Anaconda 或 Miniconda</td><td>移除混雜的舊 Conda 路徑</td></tr><tr><td><code>conda info</code></td><td>active environment 與 base 路徑合理</td><td>確認是否啟用錯誤環境</td></tr><tr><td><code>import ssl</code></td><td>印出 OpenSSL 版本</td><td>OpenSSL DLL 仍未被 Python 找到</td></tr><tr><td><code>conda install</code></td><td>能下載 metadata 並進入 solve</td><td>再檢查 proxy、certificate 或 channel</td></tr></tbody></table></div>
+<p>如果 <code>python -c "import ssl"</code> 還是失敗，代表問題還在 Python/Conda 的 DLL 載入層。這時候我會先回頭檢查 <code>PATH</code>、Conda 安裝目錄與是否有多套 Python 互相干擾，而不是一直重跑同一個安裝指令。</p>
+</section><section aria-labelledby="什麼時候應該重裝-anaconda-或-miniconda"><h2 id="什麼時候應該重裝-anaconda-或-miniconda">什麼時候應該重裝 Anaconda 或 Miniconda？</h2>
+<p>重裝 Anaconda 或 Miniconda 應該放在 DLL 修復、PATH 檢查與 environment 啟用都失敗之後。若 base environment 已經壞到 <code>conda info</code>、<code>conda activate base</code> 都不穩，乾淨重裝通常比繼續補檔更省時間。</p>
+<p>我會用下面順序判斷：</p>
+<ol>
+<li>先用 Anaconda Prompt 開啟，確認不是一般 CMD 沒有 activate Conda。</li>
+<li>再補 <code>libcrypto-1_1-x64.dll</code>、<code>libssl-1_1-x64.dll</code> 到 <code>DLLs</code>。</li>
+<li>檢查 <code>where conda</code> 是否混到舊版 Anaconda、Miniconda 或其他 Python。</li>
+<li>若 Conda 還能執行，先嘗試更新 Conda。</li>
+<li>若 base environment 已經無法正常載入 SSL，備份 environments 後重裝。</li>
+</ol>
+<p>Anaconda Forum 上也有使用者回報相同錯誤，討論串中的 DLL 複製方式與我這次筆記一致；同一串討論也提醒，若複製 DLL 後仍失敗，就要回到 Conda 安裝狀態、base environment 與 PATH 污染排查（Anaconda Forum，2022-12；GitHub conda issue #11982，2022-10）。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Conda 出現 OpenSSL appears to be unavailable 是套件來源壞掉嗎？</span></h3>
+<p>通常不是套件來源壞掉。<code>OpenSSL appears to be unavailable</code> 代表 Conda 本機無法載入 SSL/OpenSSL 支援，所以連 HTTPS metadata 都抓不到；套件名稱、channel 設定與版本衝突通常還沒進入真正判斷階段。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>可以把 <code>ssl_verify</code> 關掉解決 Conda OpenSSL 錯誤嗎？</span></h3>
+<p>不建議把 <code>ssl_verify</code> 關掉當成主要解法。<code>ssl_verify</code> 影響憑證驗證，但 OpenSSL DLL 缺失是 SSL 模組載入問題；關掉驗證不一定有效，也會降低下載套件時的安全性。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>libcrypto-1_1-x64.dll</code> 和 <code>libssl-1_1-x64.dll</code> 找不到怎麼辦？</span></h3>
+<p>新版 Anaconda 可能使用不同 OpenSSL DLL 檔名。可以先在 <code>anaconda3\Library\bin</code> 搜尋 <code>libcrypto</code> 與 <code>libssl</code>，確認是否存在同一組版本；如果 <code>Library\bin</code> 本身沒有這些 DLL，安裝可能已經不完整，建議修復或重裝 Anaconda。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>複製 DLL 後還是無法 <code>conda install</code> 怎麼排查？</span></h3>
+<p>先重開終端機，再執行 <code>where conda</code>、<code>conda info</code>、<code>python -c "import ssl; print(ssl.OPENSSL_VERSION)"</code>。如果 <code>import ssl</code> 失敗，繼續查 PATH 與 Python/Conda 混用；如果 SSL 正常但下載失敗，再看 proxy、公司憑證、channel 或網路設定。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>這個 Conda OpenSSL 錯誤只會發生在 Windows 嗎？</span></h3>
+<p>這篇筆記的修復方式主要針對 Windows Anaconda。macOS 或 Linux 也可能遇到 SSL 相關問題，但處理方向通常會變成 shell activation、系統憑證、OpenSSL 套件或 Conda 安裝完整性，不一定適用複製 Windows DLL 的方式。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>conda documentation：<a href="https://docs.conda.io/docs/troubleshooting.html" target="_blank" rel="noopener noreferrer">Troubleshooting - SSL connection errors</a>（存取日期：2026-08-28）</li>
+<li>Anaconda Knowledge Base：<a href="https://support.anaconda.com/hc/en-us/articles/18010943282067-Openssl-error" target="_blank" rel="noopener noreferrer">Openssl error</a>（更新日期：2026-04-17，存取日期：2026-08-28）</li>
+<li>GitHub conda issue：<a href="https://github.com/conda/conda/issues/11982" target="_blank" rel="noopener noreferrer">Conda SSL Error: OpenSSL appears to be unavailable on this machine</a>（開啟日期：2022-10-17，存取日期：2026-08-28）</li>
+<li>Anaconda Forum：<a href="https://forum.anaconda.com/t/getting-started-conda-workflow-tutorial-condasslerror/47854" target="_blank" rel="noopener noreferrer">Getting Started Conda Workflow tutorial - CondaSSLError</a>（討論日期：2022-12，存取日期：2026-08-28）</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/conda-python-environment-management">使用 Conda 管理 Python 版本與函式庫</a>：同樣聚焦 Conda、Python，可接著比較不同情境的做法。</li>
+<li><a href="/post/tensorflow-keras-version-compatibility-error">TensorFlow 和 Keras 版本不相容錯誤：cannot import name 'dtensor' 解法</a>：同樣聚焦 Python、錯誤排解，可接著比較不同情境的做法。</li>
+<li><a href="/post/install-pytorch-on-mac">PyTorch 於 Mac 系統下的安裝教學：conda、原始碼編譯與 iOS Demo</a>：同樣聚焦 Conda，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。初次發布於 2023-08-23，本文保留 Conda 缺少 OpenSSL、無法安裝套件、<code>libcrypto-1_1-x64.dll</code>、<code>libssl-1_1-x64.dll</code> 與 Windows Anaconda 環境修復流程，並補上 Answer Blocks、FAQ、參考資料與延伸閱讀。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-08-23</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

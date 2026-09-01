@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linux 基本操作指令介紹｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 Linux 最常用的檔案與目錄操作指令，包含 pwd、ls、rm、chmod 等指令的用法與注意事項。" />
+<meta name="keywords" content="DevOps, Linux, Shell, 檔案系統, 指令列" />
+<link rel="canonical" href="https://claire-chang.com/post/linux-basic-commands-cheatsheet/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Linux 基本操作指令介紹｜Claire Chang" />
+<meta property="og:description" content="整理 Linux 最常用的檔案與目錄操作指令，包含 pwd、ls、rm、chmod 等指令的用法與注意事項。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/linux-basic-commands-cheatsheet/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_linux-basic-commands-cheatsheet-d21533b4.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_linux-basic-commands-cheatsheet-d21533b4.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Linux 基本操作指令介紹｜Claire Chang" />
+<meta name="twitter:description" content="整理 Linux 最常用的檔案與目錄操作指令，包含 pwd、ls、rm、chmod 等指令的用法與注意事項。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_linux-basic-commands-cheatsheet-d21533b4.jpg" />
+<meta property="article:published_time" content="2019-09-22" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Linux" />
+<meta property="article:tag" content="Shell" />
+<meta property="article:tag" content="檔案系統" />
+<meta property="article:tag" content="指令列" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Linux 基本操作指令介紹","item":"https://claire-chang.com/post/linux-basic-commands-cheatsheet/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/linux-basic-commands-cheatsheet/#article","headline":"Linux 基本操作指令介紹","description":"整理 Linux 最常用的檔案與目錄操作指令，包含 pwd、ls、rm、chmod 等指令的用法與注意事項。","image":"https://claire-chang.com/images/tech/hero_linux-basic-commands-cheatsheet.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2019-09-22","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/linux-basic-commands-cheatsheet/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"DevOps","keywords":"Linux, Shell, 檔案系統, 指令列","about":[{"@type":"Thing","name":"檔案系統"},{"@type":"Thing","name":"指令列"}],"mentions":[{"@type":"Thing","name":"Linux"},{"@type":"Thing","name":"Shell"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/linux-basic-commands-cheatsheet/#faq","mainEntity":[{"@type":"Question","name":"`rm` 跟 `rm -rf` 什麼時候該用哪個？","acceptedAnswer":{"@type":"Answer","text":"單純刪除檔案用 `rm` 就好；要刪除整個目錄（尤其目錄底下還有子目錄或檔案）才需要加 `-rf`。因為 `-rf` 會強制且遞迴刪除、不會再次確認，下手前務必先確認路徑正確。"}},{"@type":"Question","name":"`whereis` 找不到檔案，是不是代表檔案不存在？","acceptedAnswer":{"@type":"Answer","text":"不一定。`whereis` 只查詢系統既有的索引資料，索引沒更新的話，即使檔案存在也可能查不到。想確認檔案是否真的存在，應該用 `find` 直接掃描檔案系統。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_linux-basic-commands-cheatsheet.webp" alt="伺服器機櫃中排列整齊的硬碟插槽" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=DevOps" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ DevOps</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2019-09-22">2019-09-22</time></span><span class="post-meta-pill">Linux · Shell · 檔案系統 · 指令列</span></div></div><h1 class="insights-hero-title">Linux 基本操作指令介紹</h1><p class="insights-hero-description">整理 Linux 最常用的檔案與目錄操作指令，包含 pwd、ls、rm、chmod 等指令的用法與注意事項。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>剛開始接觸 Linux 系統時，多數操作都要靠指令列完成，不像桌面系統可以用滑鼠點一點。這篇整理平常在檔案與目錄操作上最常用到的一批指令，從查看目前位置、切換目錄，到刪除、複製、找檔案、改權限，都是幾乎每天都會敲到的基本功。</p>
+</div><section aria-labelledby="如何查看與切換目錄"><h2 id="如何查看與切換目錄">如何查看與切換目錄？</h2>
+<p><code>pwd</code>（print working directory）會顯示目前所在的目錄路徑，是確認「我現在在哪」最快的方法。<code>cd</code>（change directory）則是用來切換到另一個目錄，例如 <code>cd /var/log</code> 會跳到系統日誌所在的目錄，<code>cd ..</code> 則是回到上一層。</p>
+</section><section aria-labelledby="ls-怎麼看檔案-a-跟-al-差在哪"><h2 id="ls-怎麼看檔案-a-跟-al-差在哪">ls 怎麼看檔案，<code>-a</code> 跟 <code>-al</code> 差在哪？</h2>
+<p><code>ls</code> 會列出目前目錄底下的檔案與資料夾名稱。單獨打 <code>ls</code> 只會顯示一般檔案，加上 <code>-a</code> 才會連隱藏檔（以 <code>.</code> 開頭的檔案，例如 <code>.bashrc</code>）一起列出來；再加上 <code>-l</code> 變成 <code>-al</code>，就會同時顯示檔案的權限、擁有者、大小、修改時間等詳細資料。實務上 <code>ls -al</code> 是最常用的組合，因為光看檔名往往不夠，權限跟大小才是排查問題時真正要看的資訊。</p>
+</section><section aria-labelledby="怎麼查看檔案內容-cat-跟-more-的差別"><h2 id="怎麼查看檔案內容-cat-跟-more-的差別">怎麼查看檔案內容？cat 跟 more 的差別</h2>
+<p><code>cat</code> 會把檔案內容整段印出來，適合檔案不大的情況，例如快速看一下設定檔內容。但如果檔案很長，<code>cat</code> 印出來的內容會一口氣捲過螢幕，這時候可以改用 <code>more</code>，它會一頁一頁顯示，按空白鍵翻下一頁。常見用法是搭配管線一起用，例如目錄項目很多時：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">ls</span> -al | more
+</code></pre>
+<p>這樣就能一頁一頁瀏覽，不會被洗版。</p>
+</section><section aria-labelledby="建立-刪除-搬移檔案要用哪些指令"><h2 id="建立-刪除-搬移檔案要用哪些指令">建立、刪除、搬移檔案要用哪些指令？</h2>
+<p>檔案與目錄的基本操作指令整理如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>指令</th><th>用途</th><th>範例</th></tr></thead><tbody><tr><td><code>mkdir</code></td><td>建立新目錄</td><td><code>mkdir project</code></td></tr><tr><td><code>rm</code></td><td>刪除檔案</td><td><code>rm test.txt</code></td></tr><tr><td><code>rm -rf</code></td><td>刪除整個目錄（含底下所有內容）</td><td><code>rm -rf test</code></td></tr><tr><td><code>rmdir</code></td><td>刪除空目錄</td><td><code>rmdir empty_folder</code>（目錄內有內容要改用 <code>rm -rf</code>）</td></tr><tr><td><code>mv</code></td><td>移動或重新命名檔案／目錄</td><td><code>mv a.txt b.txt</code></td></tr><tr><td><code>cp</code></td><td>複製檔案</td><td><code>cp a.txt backup.txt</code></td></tr></tbody></table></div>
+<p><code>rm -rf</code> 是這幾個指令裡最需要小心的一個——它會不經確認直接刪掉整個目錄，沒有回收桶可以撿回來，下指令前最好先用 <code>ls</code> 確認自己真的在對的目錄、對的檔案上。</p>
+</section><section aria-labelledby="find-跟-whereis-找檔案有什麼不同"><h2 id="find-跟-whereis-找檔案有什麼不同">find 跟 whereis 找檔案有什麼不同？</h2>
+<p><code>find</code> 是即時搜尋，會實際掃描指定路徑下的檔案系統，找得到最新建立的檔案，但目錄範圍大的時候會比較慢。<code>whereis</code> 則是查詢系統索引過的資料庫，速度快很多，不過缺點是它找不到不代表檔案真的不存在——資料庫可能還沒更新，或是那個檔案本來就不在它索引的範圍裡。兩者算是速度跟即時性的取捨：急著找剛建立的檔案用 <code>find</code>，找系統內建指令或套件位置通常用 <code>whereis</code> 就夠快。</p>
+</section><section aria-labelledby="怎麼管理檔案的權限與擁有者"><h2 id="怎麼管理檔案的權限與擁有者">怎麼管理檔案的權限與擁有者？</h2>
+<p><code>chmod</code> 用來變更檔案的存取權限（可讀、可寫、可執行），<code>chown</code> 用來改變檔案的擁有者，<code>chgrp</code> 則是改變檔案所屬的群組。這三個指令常常一起出現在部署或多人共用主機的場景，例如把某個檔案的擁有者從 root 換成一般使用者，或是把某個 script 加上執行權限才能跑起來。</p>
+</section><section aria-labelledby="怎麼檢查硬碟空間跟網路狀態"><h2 id="怎麼檢查硬碟空間跟網路狀態">怎麼檢查硬碟空間跟網路狀態？</h2>
+<p><code>df</code>（disk free）用來查看整台機器的硬碟空間使用情況，<code>du</code>（disk usage）則是查看某個目錄底下各個檔案／子目錄各自佔用了多少空間——两者常常搭配使用：<code>df</code> 先確認整體空間吃緊了，再用 <code>du</code> 找出是哪個目錄佔用最多。<code>ifconfig</code> 用來查詢目前網路卡的狀態，包含 IP 位址、子網路遮罩等資訊，是早期除錯網路連線問題的常用指令。</p>
+</section><section aria-labelledby="怎麼新增使用者"><h2 id="怎麼新增使用者">怎麼新增使用者？</h2>
+<p><code>adduser</code> 加上使用者名稱可以在系統上新增一個帳號，例如 <code>adduser username</code>。新增後通常還需要搭配設定密碼、指定群組等後續步驟，才能讓這個帳號正常登入使用。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>rm</code> 跟 <code>rm -rf</code> 什麼時候該用哪個？</span></h3>
+<p>單純刪除檔案用 <code>rm</code> 就好；要刪除整個目錄（尤其目錄底下還有子目錄或檔案）才需要加 <code>-rf</code>。因為 <code>-rf</code> 會強制且遞迴刪除、不會再次確認，下手前務必先確認路徑正確。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>whereis</code> 找不到檔案，是不是代表檔案不存在？</span></h3>
+<p>不一定。<code>whereis</code> 只查詢系統既有的索引資料，索引沒更新的話，即使檔案存在也可能查不到。想確認檔案是否真的存在，應該用 <code>find</code> 直接掃描檔案系統。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ol>
+<li>man7.org，<code>rm(1)</code> 手冊頁，說明 <code>rm</code>、<code>rm -rf</code> 的選項與行為，存取日期：2026-08-27。<a href="https://man7.org/linux/man-pages/man1/rm.1.html" target="_blank" rel="noopener noreferrer">https://man7.org/linux/man-pages/man1/rm.1.html</a></li>
+<li>man7.org，<code>chmod(1)</code> 手冊頁，說明檔案權限位元的變更方式，存取日期：2026-08-27。<a href="https://man7.org/linux/man-pages/man1/chmod.1.html" target="_blank" rel="noopener noreferrer">https://man7.org/linux/man-pages/man1/chmod.1.html</a></li>
+</ol>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/rm-directory-delete-commands">Linux 目錄刪除教學：rm 與 rmdir 指令用法整理</a>：同樣聚焦 Linux，可接著比較不同情境的做法。</li>
+<li><a href="/post/hard-link-vs-symbolic-link">Hard Link 與 Symbolic Link 的比較</a>：同樣聚焦 Linux、檔案系統，可接著比較不同情境的做法。</li>
+<li><a href="/post/linux-network-commands-intro">Linux 網路功能指令介紹：ifconfig、route、ping、nslookup、traceroute</a>：同樣聚焦 Linux、指令列，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2019-09-22</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-Document Agents：用 LlamaIndex 打造多文件問答代理｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="多文件代理（Multi-Document Agent）能整合分散在多份文件中的資訊，跨文件比對與推理後回答問題。本文介紹 LlamaIndex 的實作架構、Query Engine 與 Tool 的組合方式。" />
+<meta name="keywords" content="生成式AI, LlamaIndex, Multi-Document Agents, AI Agent, RAG, LLM" />
+<link rel="canonical" href="https://claire-chang.com/post/multi-document-agents-llamaindex/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Multi-Document Agents：用 LlamaIndex 打造多文件問答代理｜Claire Chang" />
+<meta property="og:description" content="多文件代理（Multi-Document Agent）能整合分散在多份文件中的資訊，跨文件比對與推理後回答問題。本文介紹 LlamaIndex 的實作架構、Query Engine 與 Tool 的組合方式。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/multi-document-agents-llamaindex/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_multi-document-agents-llamaindex-4e2d8400.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_multi-document-agents-llamaindex-4e2d8400.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Multi-Document Agents：用 LlamaIndex 打造多文件問答代理｜Claire Chang" />
+<meta name="twitter:description" content="多文件代理（Multi-Document Agent）能整合分散在多份文件中的資訊，跨文件比對與推理後回答問題。本文介紹 LlamaIndex 的實作架構、Query Engine 與 Tool 的組合方式。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_multi-document-agents-llamaindex-4e2d8400.jpg" />
+<meta property="article:published_time" content="2024-11-11" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="LlamaIndex" />
+<meta property="article:tag" content="Multi-Document Agents" />
+<meta property="article:tag" content="AI Agent" />
+<meta property="article:tag" content="RAG" />
+<meta property="article:tag" content="LLM" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Multi-Document Agents：用 LlamaIndex 打造多文件問答代理","item":"https://claire-chang.com/post/multi-document-agents-llamaindex/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/multi-document-agents-llamaindex/#article","headline":"Multi-Document Agents：用 LlamaIndex 打造多文件問答代理","description":"多文件代理（Multi-Document Agent）能整合分散在多份文件中的資訊，跨文件比對與推理後回答問題。本文介紹 LlamaIndex 的實作架構、Query Engine 與 Tool 的組合方式。","image":"https://claire-chang.com/images/tech/hero_multi-document-agents-llamaindex.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-11-11","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/multi-document-agents-llamaindex/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"LlamaIndex, Multi-Document Agents, AI Agent, RAG, LLM","about":[{"@type":"Thing","name":"AI Agent"},{"@type":"Thing","name":"RAG"},{"@type":"Thing","name":"LLM"}],"mentions":[{"@type":"Thing","name":"LlamaIndex"},{"@type":"Thing","name":"Multi-Document Agents"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/multi-document-agents-llamaindex/#faq","mainEntity":[{"@type":"Question","name":"什麼是多文件代理（Multi-Document Agent）？","acceptedAnswer":{"@type":"Answer","text":"多文件代理是一種能處理和理解多個文件內容的 AI 代理。它將分散在不同文件中的資訊整合起來，依據使用者的問題進行路由、檢索與跨文件推理，提供精準、全面的答案。"}},{"@type":"Question","name":"為什麼不把所有文件放進同一個向量索引就好？","acceptedAnswer":{"@type":"Answer","text":"文件一多，top-k 檢索結果會被稀釋，跨文件比較時各文件能取得的片段不足。每份文件獨立索引、由代理分別查詢再彙整，能維持單一文件內的檢索品質。"}},{"@type":"Question","name":"LlamaIndex 的 Agent 如何決定要查詢哪份文件？","acceptedAnswer":{"@type":"Answer","text":"代理依賴每個 `QueryEngineTool` 的 `description` 來判斷。LLM 閱讀工具描述與使用者的問題後，透過推理或 Function Calling 決定呼叫哪些工具，因此描述寫得精準與否直接決定路由品質。"}},{"@type":"Question","name":"Multi-Document Agents 適合哪些應用場景？","acceptedAnswer":{"@type":"Answer","text":"適合需要跨文件比較、彙整或多步推理的場景，例如多份年度報告的財務比較、多份合約的條款審閱、跨部門文件的資訊整合等。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_multi-document-agents-llamaindex.webp" alt="堆疊的大量文件資料夾，象徵多文件代理需要整合的多份文件" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-11-11">2024-11-11</time></span><span class="post-meta-pill">LlamaIndex · Multi-Document Agents · AI Agent · RAG · LLM</span></div></div><h1 class="insights-hero-title">Multi-Document Agents：用 LlamaIndex 打造多文件問答代理</h1><p class="insights-hero-description">多文件代理（Multi-Document Agent）能整合分散在多份文件中的資訊，跨文件比對與推理後回答問題。本文介紹 LlamaIndex 的實作架構、Query Engine 與 Tool 的組合方式。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>多文件代理（Multi-Document Agent）是一種能夠處理和理解多個文件內容的人工智慧代理。它透過自然語言處理（NLP）技術，將分散在不同文件中的資訊整合起來，並能根據使用者提出的問題，提供精準、全面的答案。當我的知識來源不再是一份文件，而是數十份報告、合約或手冊時，單純的 RAG 流程往往力有未逮——這正是 Multi-Document Agents 發揮價值的地方。</p>
+</div><section aria-labelledby="什麼是多文件代理-為什麼需要它"><h2 id="什麼是多文件代理-為什麼需要它">什麼是多文件代理？為什麼需要它？</h2>
+<p><strong>多文件代理</strong> 是一種能夠處理和理解多個文件內容的人工智慧代理。它透過自然語言處理（NLP）技術，將分散在不同文件中的資訊整合起來，並能根據使用者提出的問題，提供精準、全面的答案。</p>
+<p>傳統的 RAG 流程通常針對單一索引查詢：把文件切塊、建立向量索引，然後檢索最相關的片段交給 LLM 回答。但實務上常見的問題是跨文件的，例如：</p>
+<ul>
+<li>「比較 A 報告與 B 報告中對同一指標的說法有何差異？」</li>
+<li>「這三份合約中，哪一份的違約條款最嚴格？」</li>
+<li>「整合所有季度財報，整理出全年營收趨勢。」</li>
+</ul>
+<p>這類問題需要先決定「該查哪份文件」，再於文件內檢索，最後把多份文件的結果彙整、比對、推理——單一 Query Engine 做不到，這就是需要 Agent 的原因。</p>
+</section><section aria-labelledby="multi-document-agents-的核心架構"><h2 id="multi-document-agents-的核心架構">Multi-Document Agents 的核心架構</h2>
+<p>在 LlamaIndex 中，一個典型的多文件代理架構由三層組成：</p>
+<ol>
+<li><strong>每份文件一個 Query Engine</strong>：為每份文件建立獨立的索引與 Query Engine，讓代理可以「針對某份文件」提問。</li>
+<li><strong>把 Query Engine 包裝成 Tool</strong>：每個 Query Engine 透過 <code>QueryEngineTool</code> 包裝成工具，並附上清楚的描述（這份文件是什麼、適合回答什麼問題），供代理判斷何時使用。</li>
+<li><strong>Agent 負責路由與彙整</strong>：代理接收使用者的問題，利用 LLM 的推理（或 Function Calling）能力決定要呼叫哪些工具、呼叫幾次，最後把各工具的回應整合成最終答案。</li>
+</ol>
+<p>這種設計讓代理具備兩種關鍵能力：<strong>文件間路由（routing）</strong> 與 <strong>跨文件比對（reasoning across documents）</strong>。</p>
+</section><section aria-labelledby="用-llamaindex-實作的基本流程"><h2 id="用-llamaindex-實作的基本流程">用 LlamaIndex 實作的基本流程</h2>
+<p>以 Python 搭配 LlamaIndex，實作步驟大致如下：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> llama_index.core <span class="hljs-keyword">import</span> VectorStoreIndex, SimpleDirectoryReader
+<span class="hljs-keyword">from</span> llama_index.core.tools <span class="hljs-keyword">import</span> QueryEngineTool
+<span class="hljs-keyword">from</span> llama_index.core.agent <span class="hljs-keyword">import</span> ReActAgent
+
+<span class="hljs-comment"># 1. 讀取並為每份文件建立獨立的 Query Engine</span>
+docs = SimpleDirectoryReader(<span class="hljs-string">"./data"</span>).load_data()
+<span class="hljs-comment"># 實務上會依文件分開建立 index，這裡以兩份文件為例</span>
+index_a = VectorStoreIndex.from_documents(documents_a)
+index_b = VectorStoreIndex.from_documents(documents_b)
+
+engine_a = index_a.as_query_engine(similarity_top_k=<span class="hljs-number">3</span>)
+engine_b = index_b.as_query_engine(similarity_top_k=<span class="hljs-number">3</span>)
+
+<span class="hljs-comment"># 2. 把 Query Engine 包裝成 Tool，描述要寫清楚讓代理會選對工具</span>
+tool_a = QueryEngineTool.from_defaults(
+    query_engine=engine_a,
+    name=<span class="hljs-string">"report_2023"</span>,
+    description=<span class="hljs-string">"2023 年度報告，適合回答 2023 年營運與財務相關問題"</span>,
+)
+tool_b = QueryEngineTool.from_defaults(
+    query_engine=engine_b,
+    name=<span class="hljs-string">"report_2024"</span>,
+    description=<span class="hljs-string">"2024 年度報告，適合回答 2024 年營運與財務相關問題"</span>,
+)
+
+<span class="hljs-comment"># 3. 建立 Agent，讓它自行決定呼叫哪些工具並彙整答案</span>
+agent = ReActAgent.from_tools([tool_a, tool_b], verbose=<span class="hljs-literal">True</span>)
+response = agent.chat(<span class="hljs-string">"比較 2023 與 2024 年報中營收成長的差異"</span>)
+</code></pre>
+<p>關鍵在於每個 Tool 的 <code>description</code>：代理完全依賴這段描述決定要不要使用該工具，描述寫得越精準，路由就越可靠。</p>
+</section><section aria-labelledby="top-k-檢索在多文件場景的陷阱"><h2 id="top-k-檢索在多文件場景的陷阱">Top-K 檢索在多文件場景的陷阱</h2>
+<p>我在實作時遇到一個常見問題：若把所有文件放進同一個向量索引，<code>similarity_top_k</code> 的檢索結果容易被「文件數量」稀釋。文件越多，每份文件能擠進 top-k 的片段就越少，跨文件比較時代理反而拿不到足夠的資訊。</p>
+<p>解法就是前述架構：<strong>每份文件獨立索引、獨立 Query Engine</strong>，讓代理明確地對每份文件各查一次，再自行彙整。這樣 top-k 是在單一文件內競爭，檢索品質不會因為文件總數增加而下降。</p>
+</section><section aria-labelledby="代理-vs-傳統-rag-什麼時候該用-multi-document-agents"><h2 id="代理-vs-傳統-rag-什麼時候該用-multi-document-agents">代理 vs. 傳統 RAG：什麼時候該用 Multi-Document Agents？</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>面向</th><th>傳統 RAG</th><th>Multi-Document Agents</th></tr></thead><tbody><tr><td>適用問題</td><td>單一文件、事實型問題</td><td>跨文件比較、彙整、多步推理</td></tr><tr><td>查詢次數</td><td>一次檢索</td><td>代理決定呼叫多個工具、多次檢索</td></tr><tr><td>架構複雜度</td><td>低，容易維護</td><td>較高，需設計工具描述與路由</td></tr><tr><td>回答延遲</td><td>快</td><td>較慢（多次 LLM 呼叫）</td></tr><tr><td>成本</td><td>較低</td><td>較高</td></tr></tbody></table></div>
+<p>簡單說：如果一個 Query Engine 就能答對，就不需要代理；一旦問題需要「先選文件、再比對、再彙整」，代理架構就值得投入。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼是多文件代理（Multi-Document Agent）？</span></h3>
+<p>多文件代理是一種能處理和理解多個文件內容的 AI 代理。它將分散在不同文件中的資訊整合起來，依據使用者的問題進行路由、檢索與跨文件推理，提供精準、全面的答案。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼不把所有文件放進同一個向量索引就好？</span></h3>
+<p>文件一多，top-k 檢索結果會被稀釋，跨文件比較時各文件能取得的片段不足。每份文件獨立索引、由代理分別查詢再彙整，能維持單一文件內的檢索品質。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LlamaIndex 的 Agent 如何決定要查詢哪份文件？</span></h3>
+<p>代理依賴每個 <code>QueryEngineTool</code> 的 <code>description</code> 來判斷。LLM 閱讀工具描述與使用者的問題後，透過推理或 Function Calling 決定呼叫哪些工具，因此描述寫得精準與否直接決定路由品質。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Multi-Document Agents 適合哪些應用場景？</span></h3>
+<p>適合需要跨文件比較、彙整或多步推理的場景，例如多份年度報告的財務比較、多份合約的條款審閱、跨部門文件的資訊整合等。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://docs.llamaindex.ai/en/stable/use_cases/agents/" target="_blank" rel="noopener noreferrer">LlamaIndex 官方文件 — Multi-Document Agents</a></li>
+<li><a href="https://docs.llamaindex.ai/en/stable/module_guides/deploying/agents/tools/" target="_blank" rel="noopener noreferrer">LlamaIndex 官方文件 — Tools / QueryEngineTool</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/llamaindex-rag-introduction">LlamaIndex 介紹：用 Python 建立 RAG 索引與查詢流程</a>：同樣聚焦 LlamaIndex、RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/llamaindex-basic-components">LlamaIndex 的基礎元件：Node、Index、Retriever 與 Query Engine</a>：同樣聚焦 LlamaIndex、RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/llamaindex-query-flow">LlamaIndex 查詢流程解析：Retriever、Router 與 Response Synthesizer 怎麼分工</a>：同樣聚焦 LlamaIndex、RAG，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2024-11-11，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-11-11</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

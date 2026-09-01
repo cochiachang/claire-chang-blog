@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular Router 基礎教學：Routes、RouterLink、RouterOutlet 與路由事件｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="介紹 Angular Router 基礎用法，包含 base href、Routes 設定、RouterOutlet、RouterLink、RouterLinkActive、ActivatedRoute 與路由事件。" />
+<meta name="keywords" content="前端開發, Angular, Router, 前端路由" />
+<link rel="canonical" href="https://claire-chang.com/post/angular-router-basics/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Angular Router 基礎教學：Routes、RouterLink、RouterOutlet 與路由事件｜Claire Chang" />
+<meta property="og:description" content="介紹 Angular Router 基礎用法，包含 base href、Routes 設定、RouterOutlet、RouterLink、RouterLinkActive、ActivatedRoute 與路由事件。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/angular-router-basics/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_angular-cli-new-project-setup-5e5367cb.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_angular-cli-new-project-setup-5e5367cb.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Angular Router 基礎教學：Routes、RouterLink、RouterOutlet 與路由事件｜Claire Chang" />
+<meta name="twitter:description" content="介紹 Angular Router 基礎用法，包含 base href、Routes 設定、RouterOutlet、RouterLink、RouterLinkActive、ActivatedRoute 與路由事件。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_angular-cli-new-project-setup-5e5367cb.jpg" />
+<meta property="article:published_time" content="2018-01-09" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Angular" />
+<meta property="article:tag" content="Router" />
+<meta property="article:tag" content="前端路由" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Angular Router 基礎教學：Routes、RouterLink、RouterOutlet 與路由事件","item":"https://claire-chang.com/post/angular-router-basics/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/angular-router-basics/#article","headline":"Angular Router 基礎教學：Routes、RouterLink、RouterOutlet 與路由事件","description":"介紹 Angular Router 基礎用法，包含 base href、Routes 設定、RouterOutlet、RouterLink、RouterLinkActive、ActivatedRoute 與路由事件。","image":"https://claire-chang.com/images/tech/hero_angular-cli-new-project-setup.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-01-09","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/angular-router-basics/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Angular, Router, 前端路由","about":[{"@type":"Thing","name":"前端路由"}],"mentions":[{"@type":"Thing","name":"Angular"},{"@type":"Thing","name":"Router"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/angular-router-basics/#faq","mainEntity":[{"@type":"Question","name":"Angular Router 是什麼？","acceptedAnswer":{"@type":"Answer","text":"Angular Router 是 Angular 官方的前端路由套件，用來在單頁應用程式中依照 URL 顯示不同 component。Angular Router 會比對 `Routes`，再把符合的 component 顯示到 `RouterOutlet`。"}},{"@type":"Question","name":"Angular Router 一定要設定 `\u003cbase href=\"/\">` 嗎？","acceptedAnswer":{"@type":"Answer","text":"Angular Router 使用 History API 時需要正確的 `base href`。如果應用程式部署在根目錄，通常設定 `\u003cbase href=\"/\">`；如果部署在子目錄，就要改成對應的子路徑。"}},{"@type":"Question","name":"RouterModule.forRoot 和 provideRouter 差在哪？","acceptedAnswer":{"@type":"Answer","text":"`RouterModule.forRoot()` 是 NgModule 架構常見的根路由註冊方式。`provideRouter()` 是 standalone Angular 專案常見的路由註冊方式，兩者目的都是把根路由設定交給 Angular Router。"}},{"@type":"Question","name":"RouterOutlet 沒有顯示 component 時要先查什麼？","acceptedAnswer":{"@type":"Answer","text":"先確認 template 裡有放 `\u003crouter-outlet>`，再確認目前 URL 是否命中 `Routes` 裡的某條規則。也要檢查萬用路由 `` 是否過早放在具體路由前面。"}},{"@type":"Question","name":"routerLink 和 href 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"`routerLink` 會交給 Angular Router 在前端切換畫面，不會觸發整頁重新載入。一般 `href` 會讓瀏覽器重新向伺服器請求頁面，比較不適合 SPA 內部導航。"}},{"@type":"Question","name":"RouterLinkActive 可以只在完全符合 URL 時生效嗎？","acceptedAnswer":{"@type":"Answer","text":"可以。把 `[routerLinkActiveOptions]=\"{ exact: true }\"` 加到連結上，就能要求目前 URL 與 `routerLink` 完全符合時才套用 active class。"}},{"@type":"Question","name":"ActivatedRoute 的 params 和 paramMap 應該用哪個？","acceptedAnswer":{"@type":"Answer","text":"維護新版 Angular 專案時，建議優先使用 `paramMap`。`paramMap` 比舊版 `params` 更清楚地處理必要參數與可選參數，也與官方文件目前的方向一致。"}},{"@type":"Question","name":"Router events 適合拿來做什麼？","acceptedAnswer":{"@type":"Answer","text":"Router events 適合用來處理 loading 狀態、頁面瀏覽追蹤與導航錯誤記錄。例如 `NavigationStart` 可以顯示 loading，`NavigationEnd` 可以關閉 loading 或送出 page view。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_angular-cli-new-project-setup.webp" alt="Angular 專案結構與前端路由開發示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-01-09">2018-01-09</time></span><span class="post-meta-pill">Angular · Router · 前端路由</span></div></div><h1 class="insights-hero-title">Angular Router 基礎教學：Routes、RouterLink、RouterOutlet 與路由事件</h1><p class="insights-hero-description">介紹 Angular Router 基礎用法，包含 base href、Routes 設定、RouterOutlet、RouterLink、RouterLinkActive、ActivatedRoute 與路由事件。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Angular Router 是 Angular 官方提供的前端路由工具，用來在單頁應用程式（Single Page Application，SPA）裡依照 URL 顯示不同 component。建立 Angular Router 基礎設定時，通常會先設定 <code>base href</code>，再定義 <code>Routes</code>、載入 <code>RouterModule</code> 或 <code>provideRouter()</code>，最後用 <code>RouterOutlet</code>、<code>RouterLink</code> 與 <code>RouterLinkActive</code> 完成畫面切換。</p>
+</div><section aria-labelledby="angular-routing-是什麼"><h2 id="angular-routing-是什麼">Angular Routing 是什麼？</h2>
+<p>Angular Routing 是 Angular 單頁應用程式用 URL 決定畫面內容的機制。Angular Router 會比對目前 URL 與路由表，找到對應 component，再把 component 顯示到指定 outlet。</p>
+<p>Routing 意指路由，也就是由 router 決定現在要顯示哪一個頁面。在套用 Routing 時，會有下列實作流程：</p>
+<ol>
+<li>套用轉址設定，讓伺服器不要真的到該網址位置讀檔，而是交給 Angular Router 決定畫面。</li>
+<li>由 URL 分析要顯示的狀態。</li>
+<li>由狀態取得真正需要的資訊。</li>
+<li>從這些資訊組成頁面實體。</li>
+<li>套用導覽動作，從目前畫面切換到另一個畫面。</li>
+</ol>
+<figure class="article-figure"><img src="/images/tech/angular-router-basics-routing-flow.webp" alt="Angular Router Routing 流程示意圖" loading="lazy" class="markdown-img"></figure>
+<p>Angular Router 產生的是虛擬 URL，不是真的存在於檔案系統裡。因此正式部署時，伺服器需要把找不到的路徑導回 <code>index.html</code>，否則重新整理深層 URL 時可能出現 404。</p>
+</section><section aria-labelledby="angular-router-為什麼需要設定-base-href"><h2 id="angular-router-為什麼需要設定-base-href">Angular Router 為什麼需要設定 base href？</h2>
+<p>Angular Router 使用瀏覽器 History API 更新網址，<code>base href</code> 會告訴瀏覽器相對路徑從哪裡開始解析。缺少 <code>base href</code> 時，CSS、JavaScript 與前端路由都可能指向錯誤位置。</p>
+<p>Router 使用 <code>history.pushState()</code> 進行導航。靠著 <code>pushState()</code>，瀏覽器網址可以看起來像換到另一個真實頁面，但畫面實際上仍由前端應用程式接管（MDN，2025 年更新；Angular Docs，2026 年存取）。</p>
+<p>在 <code>src/index.html</code> 裡增加：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/"</span>></span>
+</code></pre>
+<p><code>&#x3C;base></code> 應放在 <code>&#x3C;head></code> 標籤內。不論 Angular 應用程式是不是部署在根目錄，都需要設定這個項目。</p>
+<p>像 Plunker 這類沒有固定網站基準位置的環境，可以用動態方式設定 base path：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">script</span>></span><span class="javascript"><span class="hljs-variable language_">document</span>.<span class="hljs-title function_">write</span>(<span class="hljs-string">'&#x3C;base href="'</span> + <span class="hljs-variable language_">document</span>.<span class="hljs-property">location</span> + <span class="hljs-string">'" />'</span>);</span><span class="hljs-tag">&#x3C;/<span class="hljs-name">script</span>></span>
+</code></pre>
+</section><section aria-labelledby="angular-router-要怎麼設定-routes"><h2 id="angular-router-要怎麼設定-routes">Angular Router 要怎麼設定 Routes？</h2>
+<p>Angular Router 的 <code>Routes</code> 是 URL 與 component 的對照表。舊版 NgModule 專案常用 <code>RouterModule.forRoot(routes)</code>，新版 standalone 專案也可以用 <code>provideRouter(routes)</code>。</p>
+<p>在 <code>src/app/app.module.ts</code> 導入 <code>RouterModule</code> 及 <code>Routes</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">RouterModule</span>, <span class="hljs-title class_">Routes</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/router'</span>;
+</code></pre>
+<p>在一個 Angular 應用程式中，全站通常只建立一個根 Router。當瀏覽器 URL 更改時，router 會尋找 <code>Routes</code> 裡符合的設定，確認要顯示哪一個 component。</p>
+<p>以下為 <code>src/app/app.module.ts</code> 的部分內容：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> <span class="hljs-attr">appRoutes</span>: <span class="hljs-title class_">Routes</span> = [
+  { <span class="hljs-attr">path</span>: <span class="hljs-string">'crisis-center'</span>, <span class="hljs-attr">component</span>: <span class="hljs-title class_">CrisisListComponent</span> },
+  { <span class="hljs-attr">path</span>: <span class="hljs-string">'hero/:id'</span>, <span class="hljs-attr">component</span>: <span class="hljs-title class_">HeroDetailComponent</span> },
+  {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">'heroes'</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-title class_">HeroListComponent</span>,
+    <span class="hljs-attr">data</span>: { <span class="hljs-attr">title</span>: <span class="hljs-string">'Heroes List'</span> },
+  },
+  {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">''</span>,
+    <span class="hljs-attr">redirectTo</span>: <span class="hljs-string">'/heroes'</span>,
+    <span class="hljs-attr">pathMatch</span>: <span class="hljs-string">'full'</span>,
+  },
+  { <span class="hljs-attr">path</span>: <span class="hljs-string">'**'</span>, <span class="hljs-attr">component</span>: <span class="hljs-title class_">PageNotFoundComponent</span> },
+];
+
+<span class="hljs-meta">@NgModule</span>({
+  <span class="hljs-attr">imports</span>: [
+    <span class="hljs-title class_">RouterModule</span>.<span class="hljs-title function_">forRoot</span>(
+      appRoutes,
+      { <span class="hljs-attr">enableTracing</span>: <span class="hljs-literal">true</span> } <span class="hljs-comment">// debugging purposes only</span>
+    ),
+    <span class="hljs-comment">// other imports here</span>
+  ],
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> {}
+</code></pre>
+<p><code>enableTracing: true</code> 適合用在除錯，因為 Angular Router 會輸出 navigation event；正式環境通常不會開啟。</p>
+</section><section aria-labelledby="routermodule-forroot-是做什麼的"><h2 id="routermodule-forroot-是做什麼的">RouterModule.forRoot 是做什麼的？</h2>
+<p><code>RouterModule.forRoot()</code> 會在根模組註冊全站 Router service 與根路由設定。這個方法應只在應用程式根層使用，功能模組的路由應交給 <code>RouterModule.forChild()</code>。</p>
+<p>在 NgModule 架構裡，如果希望某個 module 像核心元件一樣比其他子元件更早載入，或希望在所有元件初始化之前先設定值，可以透過 <code>forRoot()</code> 回傳 <code>ModuleWithProviders</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">static</span> <span class="hljs-title function_">forRoot</span>(<span class="hljs-attr">config</span>: <span class="hljs-title class_">UserServiceConfig</span>): <span class="hljs-title class_">ModuleWithProviders</span> {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">ngModule</span>: <span class="hljs-title class_">CoreModule</span>,
+    <span class="hljs-attr">providers</span>: [
+      { <span class="hljs-attr">provide</span>: <span class="hljs-title class_">UserServiceConfig</span>, <span class="hljs-attr">useValue</span>: config },
+    ],
+  };
+}
+</code></pre>
+<p>Angular Router 使用同樣概念，讓根路由設定能在應用程式啟動時先被註冊，決定目前 URL 對應的頁面。</p>
+</section><section aria-labelledby="routeroutlet-要放在哪裡"><h2 id="routeroutlet-要放在哪裡">RouterOutlet 要放在哪裡？</h2>
+<p><code>RouterOutlet</code> 是 Angular Router 插入目前路由 component 的位置。Angular 會保留 <code>&#x3C;router-outlet></code> 元素，再把符合 URL 的 component 顯示在 outlet 附近。</p>
+<p>Router 會根據網址決定要顯示哪個 component 的 view，所以需要設定一個區塊來顯示要被插入的 view：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">router-outlet</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">router-outlet</span>></span>
+<span class="hljs-comment">&#x3C;!-- Routed views go here --></span>
+</code></pre>
+<p>在典型版面裡，<code>RouterOutlet</code> 會放在導覽列下方或主要內容區：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h1</span>></span>Angular Router<span class="hljs-tag">&#x3C;/<span class="hljs-name">h1</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">nav</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">routerLink</span>=<span class="hljs-string">"/crisis-center"</span> <span class="hljs-attr">routerLinkActive</span>=<span class="hljs-string">"active"</span>></span>Crisis Center<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">routerLink</span>=<span class="hljs-string">"/heroes"</span> <span class="hljs-attr">routerLinkActive</span>=<span class="hljs-string">"active"</span>></span>Heroes<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">nav</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">router-outlet</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">router-outlet</span>></span>
+</code></pre>
+<figure class="article-figure"><img src="/images/tech/angular-router-basics-routerlink-demo.webp" alt="Angular RouterLink 切換畫面示意動畫" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="angular-routes-有哪些常見設定"><h2 id="angular-routes-有哪些常見設定">Angular Routes 有哪些常見設定？</h2>
+<p>Angular Routes 可以處理子路由、多 outlet、萬用路由、重新導向、空路徑、<code>pathMatch</code> 與延遲載入。路由設定的順序很重要，越具體的規則應放越前面。</p>
+<p>更多 Router 設定方式可看 Angular 官方 Routes API（Angular Docs，2026 年存取）。</p>
+<figure class="article-figure"><img src="/images/tech/angular-router-basics-routes-api.webp" alt="Angular Routes API 文件截圖" loading="lazy" class="markdown-img"></figure>
+<p>常見設定如下。</p>
+<h3>設定子連結</h3>
+<pre><code class="hljs language-ts">[{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'team/:id'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Team</span>,
+  <span class="hljs-attr">children</span>: [{
+    <span class="hljs-attr">path</span>: <span class="hljs-string">'user/:name'</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-title class_">User</span>,
+  }],
+}]
+</code></pre>
+<p>當 URL 為 <code>/team/11/user/bob</code> 時，Router 會顯示 <code>Team</code> component，並在裡面產生一個 <code>User</code> component。</p>
+<h3>Multiple Outlets</h3>
+<pre><code class="hljs language-ts">[{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'team/:id'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Team</span>,
+}, {
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'chat/:user'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Chat</span>,
+  <span class="hljs-attr">outlet</span>: <span class="hljs-string">'aux'</span>,
+}]
+</code></pre>
+<p>當 URL 為 <code>/team/11(aux:chat/jim)</code> 時，Router 會先建立 <code>Team</code> component，再建立 <code>Chat</code> component，接著將 <code>Chat</code> component 放到 <code>Team</code> component 內名為 <code>aux</code> 的 outlet。</p>
+<h3>萬用路由</h3>
+<pre><code class="hljs language-ts">[{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'**'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Sink</span>,
+}]
+</code></pre>
+<p><code>path: '**'</code> 會符合所有未被前面路由命中的 URL，常用來顯示 404 頁面。因為 Angular Router 採用 first-match wins，萬用路由應放在路由表最後。</p>
+<h3>重新導向</h3>
+<pre><code class="hljs language-ts">[{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'team/:id'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Team</span>,
+  <span class="hljs-attr">children</span>: [{
+    <span class="hljs-attr">path</span>: <span class="hljs-string">'legacy/user/:name'</span>,
+    <span class="hljs-attr">redirectTo</span>: <span class="hljs-string">'user/:name'</span>,
+  }, {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">'user/:name'</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-title class_">User</span>,
+  }],
+}]
+</code></pre>
+<p>當 URL 為 <code>/team/11/legacy/user/jim</code> 時，Router 會自動導轉到 <code>/team/11/user/jim</code>，然後產生 <code>Team</code> component，並在裡面產生 <code>User</code> component。</p>
+<h3>於 path 設定空字串</h3>
+<pre><code class="hljs language-ts">[{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'team/:id'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Team</span>,
+  <span class="hljs-attr">children</span>: [{
+    <span class="hljs-attr">path</span>: <span class="hljs-string">''</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-title class_">AllUsers</span>,
+  }, {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">'user/:name'</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-title class_">User</span>,
+  }],
+}]
+</code></pre>
+<p>當導覽至 <code>/team/11</code>，Router 會產生 <code>AllUsers</code> component 實體。</p>
+<p>空路徑也可以設定子項目：</p>
+<pre><code class="hljs language-ts">[{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'team/:id'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Team</span>,
+  <span class="hljs-attr">children</span>: [{
+    <span class="hljs-attr">path</span>: <span class="hljs-string">''</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-title class_">WrapperCmp</span>,
+    <span class="hljs-attr">children</span>: [{
+      <span class="hljs-attr">path</span>: <span class="hljs-string">'user/:name'</span>,
+      <span class="hljs-attr">component</span>: <span class="hljs-title class_">User</span>,
+    }],
+  }],
+}]
+</code></pre>
+<p>當 URL 為 <code>/team/11/user/jim</code> 時，Router 會產生一個 <code>WrapperCmp</code> 實體，並在裡面產生 <code>User</code>。</p>
+<h3>設定 pathMatch</h3>
+<pre><code class="hljs language-ts">[{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">''</span>,
+  <span class="hljs-attr">pathMatch</span>: <span class="hljs-string">'prefix'</span>, <span class="hljs-comment">// default</span>
+  <span class="hljs-attr">redirectTo</span>: <span class="hljs-string">'main'</span>,
+}, {
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'main'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Main</span>,
+}]
+</code></pre>
+<p>上面這種寫法，即使導覽至 <code>/main</code>，因為前綴字元符合 <code>path: ''</code>，Router 還是會執行轉址至 <code>main</code> 的動作。</p>
+<p>因此根路徑 redirect 通常要改成下面這樣：</p>
+<pre><code class="hljs language-ts">[{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">''</span>,
+  <span class="hljs-attr">pathMatch</span>: <span class="hljs-string">'full'</span>,
+  <span class="hljs-attr">redirectTo</span>: <span class="hljs-string">'main'</span>,
+}, {
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'main'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Main</span>,
+}]
+</code></pre>
+<h3>延遲載入</h3>
+<pre><code class="hljs language-ts">[{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'team/:id'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Team</span>,
+  <span class="hljs-attr">loadChildren</span>: <span class="hljs-string">'team'</span>,
+}]
+</code></pre>
+<p>這是 Angular 早期的字串式 lazy loading 範例。現行 Angular 專案通常改用動態 <code>import()</code> 載入 module 或 route，例如 <code>loadChildren: () => import('./team/team.routes').then(m => m.TEAM_ROUTES)</code>。</p>
+</section><section aria-labelledby="routerlink-怎麼建立導航連結"><h2 id="routerlink-怎麼建立導航連結">RouterLink 怎麼建立導航連結？</h2>
+<p><code>RouterLink</code> 是 Angular Router 的宣告式導航指令。開發者可以把 <code>routerLink</code> 放在 <code>&#x3C;a></code> 元素上，讓連結切換前端路由，而不是觸發整頁重新載入。</p>
+<p><code>routerLink</code> 要填的值需與 <code>Routes</code> 裡設定的 <code>path</code> 對應。這邊有 <code>RouterLink</code> 的詳細說明：Angular 官方 RouterLink API（Angular Docs，2026 年存取）。</p>
+<figure class="article-figure"><img src="/images/tech/angular-router-basics-routerlink-api.webp" alt="Angular RouterLink API 文件截圖" loading="lazy" class="markdown-img"></figure>
+<p>傳入 <code>queryParams</code> 與 <code>fragment</code> 的範例如下：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> [<span class="hljs-attr">routerLink</span>]=<span class="hljs-string">"['/user/bob']"</span> [<span class="hljs-attr">queryParams</span>]=<span class="hljs-string">"{debug: true}"</span> <span class="hljs-attr">fragment</span>=<span class="hljs-string">"education"</span>></span>
+  link to user component
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+</code></pre>
+<p>這會產生帶有 fragment 與 query parameter 的連結，例如 <code>/user/bob?debug=true#education</code>。我當時的筆記範例中的順序寫成 <code>/user/bob#education?debug=true</code>，但瀏覽器 URL 的標準順序通常是 query string 在前、fragment 在後。</p>
+<p>如果設定 <code>queryParams</code>，可以決定使用者原本從網址列帶入 GET 參數時要如何處理：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>選項</th><th>說明</th></tr></thead><tbody><tr><td><code>merge</code></td><td>將新的 <code>queryParams</code> 合併到目前的 query parameters</td></tr><tr><td><code>preserve</code></td><td>保留目前的 query parameters</td></tr><tr><td><code>default</code> 或 <code>''</code></td><td>只使用此次指定的 <code>queryParams</code></td></tr></tbody></table></div>
+<p>使用範例：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> [<span class="hljs-attr">routerLink</span>]=<span class="hljs-string">"['/user/bob']"</span> [<span class="hljs-attr">queryParams</span>]=<span class="hljs-string">"{debug: true}"</span> <span class="hljs-attr">queryParamsHandling</span>=<span class="hljs-string">"merge"</span>></span>
+  link to user component
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+</code></pre>
+<p>Angular 4 以前曾使用 <code>preserveQueryParams</code>，後來改為 <code>queryParamsHandling</code>。維護舊專案時，如果看到 <code>preserveQueryParams</code>，建議改成現行寫法。</p>
+</section><section aria-labelledby="routerlinkactive-怎麼標示目前頁面"><h2 id="routerlinkactive-怎麼標示目前頁面">RouterLinkActive 怎麼標示目前頁面？</h2>
+<p><code>RouterLinkActive</code> 會在目前 URL 與連結相符時，把指定 CSS class 加到元素上。這個指令常用來標示目前選單、目前分頁或目前所在導覽項目。</p>
+<p><code>RouterLinkActive</code> 的詳細說明可看 Angular 官方 RouterLinkActive API（Angular Docs，2026 年存取）。</p>
+<figure class="article-figure"><img src="/images/tech/angular-router-basics-routerlinkactive-api.webp" alt="Angular RouterLinkActive API 文件截圖" loading="lazy" class="markdown-img"></figure>
+<p>可以傳入 <code>exact: true</code>，設定是否需要 URL 完全符合才顯示該 class：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span>
+  <span class="hljs-attr">routerLink</span>=<span class="hljs-string">"/user/bob"</span>
+  <span class="hljs-attr">routerLinkActive</span>=<span class="hljs-string">"active-link"</span>
+  [<span class="hljs-attr">routerLinkActiveOptions</span>]=<span class="hljs-string">"{ exact: true }"</span>
+></span>
+  Bob
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+</code></pre>
+<p>如果希望連結符合時能顯示額外文字，可以把 <code>RouterLinkActive</code> 存入 template variable：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">routerLink</span>=<span class="hljs-string">"/user/bob"</span> <span class="hljs-attr">routerLinkActive</span> #<span class="hljs-attr">rla</span>=<span class="hljs-string">"routerLinkActive"</span>></span>
+  Bob {{ rla.isActive ? '(already open)' : '' }}
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+</code></pre>
+<p>現行 Angular 也支援 <code>ariaCurrentWhenActive</code>，可在 active link 上加上 <code>aria-current</code>，讓輔助工具更容易辨識目前頁面。</p>
+</section><section aria-labelledby="activatedroute-可以取得哪些路由狀態"><h2 id="activatedroute-可以取得哪些路由狀態">ActivatedRoute 可以取得哪些路由狀態？</h2>
+<p><code>ActivatedRoute</code> 是目前 route 的狀態物件。Angular Router 完成導航生命週期後，開發者可以透過 <code>ActivatedRoute</code> 取得 URL 片段、route data、參數、query parameters、fragment 與父子路由關係。</p>
+<p>在每個 Router 完成生命週期後，Router 會產生當前導航頁面的 <code>ActivatedRoute</code> 及 <code>RouterState</code>。下面是一個舊版 RxJS 寫法範例：</p>
+<pre><code class="hljs language-ts"><span class="hljs-meta">@Component</span>({ <span class="hljs-attr">templateUrl</span>: <span class="hljs-string">'template.html'</span> })
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyComponent</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-attr">router</span>: <span class="hljs-title class_">Router</span></span>) {
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">state</span>: <span class="hljs-title class_">RouterState</span> = router.<span class="hljs-property">routerState</span>;
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">root</span>: <span class="hljs-title class_">ActivatedRoute</span> = state.<span class="hljs-property">root</span>;
+    <span class="hljs-keyword">const</span> child = root.<span class="hljs-property">firstChild</span>;
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">id</span>: <span class="hljs-title class_">Observable</span>&#x3C;<span class="hljs-built_in">string</span>> = child.<span class="hljs-property">params</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">p</span> =></span> p.<span class="hljs-property">id</span>);
+    <span class="hljs-comment">// ...</span>
+  }
+}
+</code></pre>
+<p>維護新版 Angular 專案時，建議優先使用 <code>paramMap</code> 搭配 RxJS <code>pipe()</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-meta">@Component</span>({ <span class="hljs-attr">templateUrl</span>: <span class="hljs-string">'template.html'</span> })
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyComponent</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> <span class="hljs-attr">route</span>: <span class="hljs-title class_">ActivatedRoute</span></span>) {
+    <span class="hljs-keyword">const</span> id$ = <span class="hljs-variable language_">this</span>.<span class="hljs-property">route</span>.<span class="hljs-property">paramMap</span>.<span class="hljs-title function_">pipe</span>(
+      <span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">params</span> =></span> params.<span class="hljs-title function_">get</span>(<span class="hljs-string">'id'</span>))
+    );
+  }
+}
+</code></pre>
+<p><code>ActivatedRoute</code> 常用資訊如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>屬性</th><th>描述</th></tr></thead><tbody><tr><td><code>url</code></td><td>在 router 裡設定的 path 值，型別為 Observable</td></tr><tr><td><code>data</code></td><td>route 裡設定的 data，也可能包含 resolve guard 回傳的值</td></tr><tr><td><code>paramMap</code></td><td>route 必要參數與可選參數的列表，可取代舊版 <code>params</code></td></tr><tr><td><code>queryParamMap</code></td><td>所有 route 可取得的 query parameters，可取代舊版 <code>queryParams</code></td></tr><tr><td><code>fragment</code></td><td>所有 route 可取得的 HTML 錨點</td></tr><tr><td><code>outlet</code></td><td>顯示這個 route 的 RouterOutlet 名稱</td></tr><tr><td><code>routeConfig</code></td><td>包含當時的 path 的 route configuration</td></tr><tr><td><code>parent</code></td><td>目前頁面在 Router 設定中的父層 <code>ActivatedRoute</code></td></tr><tr><td><code>firstChild</code></td><td>目前頁面下面第一個子 route 的 <code>ActivatedRoute</code></td></tr><tr><td><code>children</code></td><td>目前路徑下的所有子 route</td></tr></tbody></table></div>
+</section><section aria-labelledby="router-events-可以監聽哪些導航狀態"><h2 id="router-events-可以監聽哪些導航狀態">Router events 可以監聽哪些導航狀態？</h2>
+<p>Router events 可用來監聽 Angular Router 的導航生命週期。常見用途包含顯示 loading、記錄頁面瀏覽、追蹤導頁錯誤，或在導航完成後執行畫面狀態更新。</p>
+<p>可以藉由 <code>Router</code> 物件監聽所有 Router 相關事件：</p>
+<pre><code class="hljs language-ts"><span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> <span class="hljs-attr">router</span>: <span class="hljs-title class_">Router</span></span>) {
+  router.<span class="hljs-property">events</span>.<span class="hljs-title function_">subscribe</span>(<span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">event</span>: <span class="hljs-title class_">Event</span></span>) =></span> {
+    <span class="hljs-keyword">if</span> (event <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">NavigationStart</span>) {
+      <span class="hljs-comment">// Show loading indicator</span>
+    }
+
+    <span class="hljs-keyword">if</span> (event <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">NavigationEnd</span>) {
+      <span class="hljs-comment">// Hide loading indicator</span>
+    }
+  });
+}
+</code></pre>
+<p>常見 Router event 如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>Router Event</th><th>Description</th></tr></thead><tbody><tr><td><code>NavigationStart</code></td><td>導航開始時觸發</td></tr><tr><td><code>RoutesRecognized</code></td><td>Router 正在解析 URL 及 Routes 時觸發</td></tr><tr><td><code>RouteConfigLoadStart</code></td><td>lazy loaded router 配置載入之前觸發</td></tr><tr><td><code>RouteConfigLoadEnd</code></td><td>lazy loaded router 載入後觸發</td></tr><tr><td><code>NavigationEnd</code></td><td>導航成功完成後觸發</td></tr><tr><td><code>NavigationCancel</code></td><td>導航取消時觸發</td></tr><tr><td><code>NavigationError</code></td><td>導航因意外錯誤失敗時觸發</td></tr></tbody></table></div>
+</section><section aria-labelledby="angular-router-基礎設定檢查表"><h2 id="angular-router-基礎設定檢查表">Angular Router 基礎設定檢查表</h2>
+<p>Angular Router 基礎設定可以用六個項目檢查：<code>base href</code>、根路由設定、outlet、導覽連結、active 狀態與伺服器 fallback。這份檢查表適合用在新專案與舊專案除錯。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查項目</th><th>為什麼重要</th></tr></thead><tbody><tr><td><code>index.html</code> 有正確 <code>base href</code></td><td>讓相對路徑與 History API 導航能正確解析</td></tr><tr><td>根層只註冊一次 Router</td><td>避免重複建立 Router service 或路由行為混亂</td></tr><tr><td>每個主要版面有 <code>RouterOutlet</code></td><td>Router 需要 outlet 才能顯示目前 URL 對應的 component</td></tr><tr><td>導覽使用 <code>routerLink</code></td><td>避免 SPA 導航變成整頁重新載入</td></tr><tr><td>目前頁面使用 <code>routerLinkActive</code></td><td>讓使用者知道目前所在頁面</td></tr><tr><td>伺服器將深層 URL fallback 到 <code>index.html</code></td><td>避免重新整理 <code>/heroes/1</code> 這類 URL 時出現 404</td></tr></tbody></table></div>
+<p>資訊增益：我在維護舊版 Angular 專案時，會先檢查「能不能直接重新整理深層 URL」和「萬用路由是否放最後」。這兩個問題最常讓 Router 看起來像壞掉，但根因其實不是 component，而是部署 fallback 或 route order。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular Router 是什麼？</span></h3>
+<p>Angular Router 是 Angular 官方的前端路由套件，用來在單頁應用程式中依照 URL 顯示不同 component。Angular Router 會比對 <code>Routes</code>，再把符合的 component 顯示到 <code>RouterOutlet</code>。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular Router 一定要設定 <code>&#x3C;base href="/"></code> 嗎？</span></h3>
+<p>Angular Router 使用 History API 時需要正確的 <code>base href</code>。如果應用程式部署在根目錄，通常設定 <code>&#x3C;base href="/"></code>；如果部署在子目錄，就要改成對應的子路徑。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RouterModule.forRoot 和 provideRouter 差在哪？</span></h3>
+<p><code>RouterModule.forRoot()</code> 是 NgModule 架構常見的根路由註冊方式。<code>provideRouter()</code> 是 standalone Angular 專案常見的路由註冊方式，兩者目的都是把根路由設定交給 Angular Router。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RouterOutlet 沒有顯示 component 時要先查什麼？</span></h3>
+<p>先確認 template 裡有放 <code>&#x3C;router-outlet></code>，再確認目前 URL 是否命中 <code>Routes</code> 裡的某條規則。也要檢查萬用路由 <code>**</code> 是否過早放在具體路由前面。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>routerLink 和 href 有什麼不同？</span></h3>
+<p><code>routerLink</code> 會交給 Angular Router 在前端切換畫面，不會觸發整頁重新載入。一般 <code>href</code> 會讓瀏覽器重新向伺服器請求頁面，比較不適合 SPA 內部導航。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RouterLinkActive 可以只在完全符合 URL 時生效嗎？</span></h3>
+<p>可以。把 <code>[routerLinkActiveOptions]="{ exact: true }"</code> 加到連結上，就能要求目前 URL 與 <code>routerLink</code> 完全符合時才套用 active class。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ActivatedRoute 的 params 和 paramMap 應該用哪個？</span></h3>
+<p>維護新版 Angular 專案時，建議優先使用 <code>paramMap</code>。<code>paramMap</code> 比舊版 <code>params</code> 更清楚地處理必要參數與可選參數，也與官方文件目前的方向一致。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Router events 適合拿來做什麼？</span></h3>
+<p>Router events 適合用來處理 loading 狀態、頁面瀏覽追蹤與導航錯誤記錄。例如 <code>NavigationStart</code> 可以顯示 loading，<code>NavigationEnd</code> 可以關閉 loading 或送出 page view。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Angular Docs：<a href="https://angular.dev/guide/routing" target="_blank" rel="noopener noreferrer">Angular Routing</a></li>
+<li>Angular Docs：<a href="https://angular.dev/guide/routing/show-routes-with-outlets" target="_blank" rel="noopener noreferrer">Show routes with outlets</a></li>
+<li>Angular Docs：<a href="https://angular.dev/guide/routing/navigate-to-routes" target="_blank" rel="noopener noreferrer">Navigate to routes</a></li>
+<li>Angular API：<a href="https://angular.dev/api/router/RouterLink" target="_blank" rel="noopener noreferrer">RouterLink</a></li>
+<li>Angular API：<a href="https://angular.dev/api/router/RouterLinkActive" target="_blank" rel="noopener noreferrer">RouterLinkActive</a></li>
+<li>Angular Docs：<a href="https://angular.dev/guide/routing/customizing-route-behavior" target="_blank" rel="noopener noreferrer">Customizing route behavior</a></li>
+<li>MDN Web Docs：<a href="https://developer.mozilla.org/en-US/docs/Web/API/History/pushState" target="_blank" rel="noopener noreferrer">History: pushState() method</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/angular-routing-page-switching-tutorial">Angular Routing 切換頁面教學：AppRoutingModule、Routes 與 routerLink</a>：同樣聚焦 Angular、Router，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-router-advanced-guide">Angular Router 進階教學：RouterModule、子路由、參數與 CanActivate</a>：同樣聚焦 Angular、Router，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-cli-new-project-setup">建立一個 Angular 5 的專案</a>：同樣聚焦 Angular，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。我當時的筆記發布於 2018-01-09，本文保留 Angular Router 基礎範例與當時的程式碼脈絡，並補上現行站內格式、GEO 結構、FAQ、圖片路徑與官方參考資料。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-01-09</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

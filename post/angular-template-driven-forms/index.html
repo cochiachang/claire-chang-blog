@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular Template-Driven Forms 教學：ngModel、驗證與自訂 Validator｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="介紹 Angular 模版驅動表單的雙向綁定、內建驗證器、自訂 Validator 與 ngSubmit 送出流程。" />
+<meta name="keywords" content="前端開發, Angular, Forms, ngModel, TypeScript" />
+<link rel="canonical" href="https://claire-chang.com/post/angular-template-driven-forms/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Angular Template-Driven Forms 教學：ngModel、驗證與自訂 Validator｜Claire Chang" />
+<meta property="og:description" content="介紹 Angular 模版驅動表單的雙向綁定、內建驗證器、自訂 Validator 與 ngSubmit 送出流程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/angular-template-driven-forms/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_angular-template-driven-forms-12368c88.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_angular-template-driven-forms-12368c88.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Angular Template-Driven Forms 教學：ngModel、驗證與自訂 Validator｜Claire Chang" />
+<meta name="twitter:description" content="介紹 Angular 模版驅動表單的雙向綁定、內建驗證器、自訂 Validator 與 ngSubmit 送出流程。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_angular-template-driven-forms-12368c88.jpg" />
+<meta property="article:published_time" content="2018-01-04" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Angular" />
+<meta property="article:tag" content="Forms" />
+<meta property="article:tag" content="ngModel" />
+<meta property="article:tag" content="TypeScript" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Angular Template-Driven Forms 教學：ngModel、驗證與自訂 Validator","item":"https://claire-chang.com/post/angular-template-driven-forms/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/angular-template-driven-forms/#article","headline":"Angular Template-Driven Forms 教學：ngModel、驗證與自訂 Validator","description":"介紹 Angular 模版驅動表單的雙向綁定、內建驗證器、自訂 Validator 與 ngSubmit 送出流程。","image":"https://claire-chang.com/images/tech/hero_angular-template-driven-forms.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-01-04","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/angular-template-driven-forms/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Angular, Forms, ngModel, TypeScript","mentions":[{"@type":"Thing","name":"Angular"},{"@type":"Thing","name":"Forms"},{"@type":"Thing","name":"ngModel"},{"@type":"Thing","name":"TypeScript"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/angular-template-driven-forms/#faq","mainEntity":[{"@type":"Question","name":"ngModel 一定要搭配雙向綁定才能驗證嗎？","acceptedAnswer":{"@type":"Answer","text":"不用。只要 input 上有 `ngModel`（單純 `ngModel`，不寫成 `[(ngModel)]`），Angular 就會把它納入表單驗證，`formControlName` 或 `formControl` 也是同樣效果。"}},{"@type":"Question","name":"為什麼我的自訂 Validator directive 完全沒作用？","acceptedAnswer":{"@type":"Answer","text":"先檢查 selector 名稱是否跟 input 上寫的 attribute 完全一致，這正是官方範例曾經出過的落差（見上文 issue #20206）；其次確認有把它加進 `NG_VALIDATORS` 並設 `multi: true`，否則會直接覆蓋掉其他驗證器。"}},{"@type":"Question","name":"`[hidden]=\"name.valid || name.pristine\"` 這種寫法要注意什麼？","acceptedAnswer":{"@type":"Answer","text":"它只是控制錯誤訊息何時顯示的其中一種寫法，實務上要留意 `pristine` 只代表「使用者還沒動過」，如果表單一開始就帶入不合法的預設值，使用者不去碰它，錯誤訊息也不會跳出來，這種情況要另外處理。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_angular-template-driven-forms.webp" alt="使用筆電輸入表單資料的特寫畫面" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-01-04">2018-01-04</time></span><span class="post-meta-pill">Angular · Forms · ngModel · TypeScript</span></div></div><h1 class="insights-hero-title">Angular Template-Driven Forms 教學：ngModel、驗證與自訂 Validator</h1><p class="insights-hero-description">介紹 Angular 模版驅動表單的雙向綁定、內建驗證器、自訂 Validator 與 ngSubmit 送出流程。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Angular 的模版驅動表單（Template-Driven Forms）把大部分邏輯寫在 HTML 模版裡，靠 <code>ngModel</code> 做雙向綁定、靠內建或自訂的 directive 做驗證。它跟後來的 Reactive Forms 是兩條不同路線，但在中小型表單、原型驗證這類場景，模版驅動表單少寫很多樣板程式碼，上手也快。</p>
+</div><section aria-labelledby="如何用-event-從-template-傳資料給-component"><h2 id="如何用-event-從-template-傳資料給-component">如何用 Event 從 template 傳資料給 Component？</h2>
+<p>不透過 <code>ngModel</code>，直接用 <code>(keyup)</code> 這類事件把 <code>$event</code> 傳回 component，是最原始也最直接的做法：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> (<span class="hljs-attr">keyup</span>)=<span class="hljs-string">"onKey($event)"</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>{{values}}<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+</code></pre>
+<p>在 component 裡透過 <code>event.target</code> 存取這個 <code>HTMLInputElement</code> 的資料（詳細規格見 <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement" target="_blank" rel="noopener noreferrer">MDN HTMLInputElement</a>）：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">KeyUpComponent_v1</span> {
+  values = <span class="hljs-string">''</span>;
+
+  <span class="hljs-title function_">onKey</span>(<span class="hljs-params"><span class="hljs-attr">event</span>: <span class="hljs-built_in">any</span></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">values</span> += event.<span class="hljs-property">target</span>.<span class="hljs-property">value</span> + <span class="hljs-string">' | '</span>;
+  }
+}
+</code></pre>
+</section><section aria-labelledby="如何啟用模版驅動表單"><h2 id="如何啟用模版驅動表單">如何啟用模版驅動表單？</h2>
+<p>模版驅動表單需要先在 <code>AppModule</code> 匯入 <code>FormsModule</code>，才能使用 <code>ngModel</code> 等相關指令：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NgModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">BrowserModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/platform-browser'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">FormsModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/forms'</span>; <span class="hljs-comment">// 使用模版驅動表單需要 import 這個模組</span>
+
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppComponent</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./app.component'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">HeroFormComponent</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./hero-form/hero-form.component'</span>;
+
+<span class="hljs-meta">@NgModule</span>({
+  <span class="hljs-attr">imports</span>: [
+    <span class="hljs-title class_">BrowserModule</span>,
+    <span class="hljs-title class_">FormsModule</span>, <span class="hljs-comment">// 加上這個模組後，應用程式才能使用所有模版驅動表單功能，包括 ngModel</span>
+  ],
+  <span class="hljs-attr">declarations</span>: [<span class="hljs-title class_">AppComponent</span>, <span class="hljs-title class_">HeroFormComponent</span>],
+  <span class="hljs-attr">providers</span>: [],
+  <span class="hljs-attr">bootstrap</span>: [<span class="hljs-title class_">AppComponent</span>],
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> {}
+</code></pre>
+</section><section aria-labelledby="ngmodel-如何做雙向綁定"><h2 id="ngmodel-如何做雙向綁定">ngModel 如何做雙向綁定？</h2>
+<p><code>[(ngModel)]</code> 是 Angular 的 banana-in-a-box 語法，把 input 的值跟 component 屬性雙向同步，使用者打字時 component 裡的值即時更新，反過來改 component 屬性也會反映到畫面上：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">input</span>
+  <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span>
+  <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span>
+  <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span>
+  <span class="hljs-attr">required</span>
+  [(<span class="hljs-attr">ngModel</span>)]=<span class="hljs-string">"model.name"</span>
+  <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span>
+/></span>
+你所輸入的資料是：{{ model.name }}
+</code></pre>
+<p>component 端只要準備好被綁定的屬性即可：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HeroFormComponent</span> {
+  model = {};
+}
+</code></pre>
+</section><section aria-labelledby="ngmodel-會附加哪些-css-class"><h2 id="ngmodel-會附加哪些-css-class">ngModel 會附加哪些 CSS class？</h2>
+<p><code>ngModel</code> 會依照 input 的互動狀態自動切換一組 class，這些 class 可以直接拿來做樣式或驗證訊息判斷：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>狀態</th><th>Class if true</th><th>Class if false</th></tr></thead><tbody><tr><td>被點擊接觸過</td><td><code>ng-touched</code></td><td><code>ng-untouched</code></td></tr><tr><td>值被改變</td><td><code>ng-dirty</code></td><td><code>ng-pristine</code></td></tr><tr><td>值不符合驗證</td><td><code>ng-valid</code></td><td><code>ng-invalid</code></td></tr></tbody></table></div>
+<p>在 input 上加 <code>#spy</code> 這個模版參考變數，可以即時觀察 class 名稱如何隨互動變化：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">input</span>
+  <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span>
+  <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span>
+  <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span>
+  <span class="hljs-attr">required</span>
+  [(<span class="hljs-attr">ngModel</span>)]=<span class="hljs-string">"model.name"</span>
+  <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span>
+  #<span class="hljs-attr">spy</span>
+/></span>
+{{ spy.className }}
+</code></pre>
+</section><section aria-labelledby="如何顯示與隱藏驗證錯誤訊息"><h2 id="如何顯示與隱藏驗證錯誤訊息">如何顯示與隱藏驗證錯誤訊息？</h2>
+<p>要讓某個 input 支援驗證，它必須宣告 <code>ngModel</code>（不論有沒有做雙向綁定），或宣告 <code>formControlName</code> / <code>formControl</code> —— 沒有這三者之一，Angular 不會對這個欄位做任何驗證。</p>
+<p>最基本的必填驗證只要加上 <code>required</code>：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"fullName"</span> <span class="hljs-attr">ngModel</span> <span class="hljs-attr">required</span> /></span>
+</code></pre>
+<p>如果要顯示客製化的錯誤訊息，可以把 <code>ngModel</code> 匯出成模版變數，因為 <code>ngModel</code> directive 的 <a href="https://angular.io/api/core/Directive" target="_blank" rel="noopener noreferrer"><code>exportAs</code></a> 值剛好就是 <code>ngModel</code>：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"name"</span>></span>Name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span>
+  <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span>
+  <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span>
+  <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span>
+  <span class="hljs-attr">required</span>
+  [(<span class="hljs-attr">ngModel</span>)]=<span class="hljs-string">"model.name"</span>
+  <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span>
+  #<span class="hljs-attr">name</span>=<span class="hljs-string">"ngModel"</span>
+/></span>
+</code></pre>
+<p>拿到 <code>#name="ngModel"</code> 這個變數後，就能用 <code>name.valid</code>、<code>name.pristine</code> 判斷是否顯示錯誤：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> [<span class="hljs-attr">hidden</span>]=<span class="hljs-string">"name.valid || name.pristine"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"alert alert-danger"</span>></span>
+  Name is required
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p><code>pristine</code> 代表這個欄位還沒被使用者改變過。<code>[hidden]="name.valid || name.pristine"</code> 的意思是：只要欄位還沒填寫，或填寫的值合法，就不顯示錯誤訊息 —— 避免表單一載入就滿版紅字。</p>
+</section><section aria-labelledby="angular-內建哪些表單驗證器"><h2 id="angular-內建哪些表單驗證器">Angular 內建哪些表單驗證器？</h2>
+<p><code>required</code> 是最常見的驗證 directive，完整用法可以查 <a href="https://angular.io/api/forms/RequiredValidator" target="_blank" rel="noopener noreferrer">RequiredValidator</a> 的官方文件。要注意 <code>required</code> 不能直接用在 checkbox 上，checkbox 必填要換一個驗證器：</p>
+<ul>
+<li><a href="https://angular.io/api/forms/CheckboxRequiredValidator" target="_blank" rel="noopener noreferrer"><code>CheckboxRequiredValidator</code></a>：checkbox 必填驗證器</li>
+<li><a href="https://angular.io/api/forms/EmailValidator" target="_blank" rel="noopener noreferrer"><code>EmailValidator</code></a>：e-mail 格式驗證器</li>
+<li><a href="https://angular.io/api/forms/MaxLengthValidator" target="_blank" rel="noopener noreferrer"><code>MaxLengthValidator</code></a>：最長字元數驗證</li>
+<li><a href="https://angular.io/api/forms/MinLengthValidator" target="_blank" rel="noopener noreferrer"><code>MinLengthValidator</code></a>：最短字元數驗證</li>
+<li><a href="https://angular.io/api/forms/PatternValidator" target="_blank" rel="noopener noreferrer"><code>PatternValidator</code></a>：用 regular expression 驗證輸入字串</li>
+<li><a href="https://angular.io/api/forms/RequiredValidator" target="_blank" rel="noopener noreferrer"><code>RequiredValidator</code></a>：非 checkbox 的必填驗證器</li>
+</ul>
+</section><section aria-labelledby="如何寫一個自訂的模版驅動表單驗證器"><h2 id="如何寫一個自訂的模版驅動表單驗證器">如何寫一個自訂的模版驅動表單驗證器？</h2>
+<p>內建驗證器不夠用時，可以自己寫一個實作 <code>Validator</code> 介面的 directive，透過 <code>NG_VALIDATORS</code> token 註冊進表單驗證流程：</p>
+<pre><code class="hljs language-ts"><span class="hljs-meta">@Directive</span>({
+  <span class="hljs-attr">selector</span>: <span class="hljs-string">'[forbiddenName]'</span>,
+  <span class="hljs-attr">providers</span>: [
+    { <span class="hljs-attr">provide</span>: <span class="hljs-variable constant_">NG_VALIDATORS</span>, <span class="hljs-attr">useExisting</span>: <span class="hljs-title class_">ForbiddenValidatorDirective</span>, <span class="hljs-attr">multi</span>: <span class="hljs-literal">true</span> },
+  ],
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ForbiddenValidatorDirective</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Validator</span> {
+  <span class="hljs-meta">@Input</span>() <span class="hljs-attr">forbiddenName</span>: <span class="hljs-built_in">string</span>;
+
+  <span class="hljs-title function_">validate</span>(<span class="hljs-attr">control</span>: <span class="hljs-title class_">AbstractControl</span>): { [<span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">any</span> } {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">forbiddenName</span>
+      ? <span class="hljs-title function_">forbiddenNameValidator</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">forbiddenName</span>, <span class="hljs-string">'i'</span>))(control)
+      : <span class="hljs-literal">null</span>;
+  }
+}
+</code></pre>
+<p>使用方式跟內建驗證器一樣，直接當 attribute 加在 input 上：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">input</span>
+  <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span>
+  <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span>
+  <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span>
+  <span class="hljs-attr">required</span>
+  <span class="hljs-attr">minlength</span>=<span class="hljs-string">"2"</span>
+  <span class="hljs-attr">forbiddenName</span>=<span class="hljs-string">"bob"</span>
+  [(<span class="hljs-attr">ngModel</span>)]=<span class="hljs-string">"hero.name"</span>
+  #<span class="hljs-attr">name</span>=<span class="hljs-string">"ngModel"</span>
+/></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> *<span class="hljs-attr">ngIf</span>=<span class="hljs-string">"name.errors.forbiddenName"</span>></span>Name cannot be Bob.<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>資訊增益：Angular 官網早期範例把 <code>forbidden-name.directive.ts</code> 的 selector 誤寫成 <code>appForbiddenName</code>，實際上要用 <code>forbiddenName</code> 才能跟上面的 attribute 對起來，這個落差已經有人回報成 <a href="https://github.com/angular/angular/issues/20206" target="_blank" rel="noopener noreferrer">angular/angular#20206</a>。照抄官方範例卻驗證不生效時，這往往就是原因。</p>
+</section><section aria-labelledby="ngsubmit-怎麼送出表單"><h2 id="ngsubmit-怎麼送出表單">ngSubmit 怎麼送出表單？</h2>
+<p><code>&#x3C;form></code> 裡的 submit 按鈕按下後不會自己觸發任何事，Angular 會發出一個 <code>ngSubmit</code> 事件，需要自己在表單上註冊：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">form</span> (<span class="hljs-attr">ngSubmit</span>)=<span class="hljs-string">"onSubmit()"</span> #<span class="hljs-attr">heroForm</span>=<span class="hljs-string">"ngForm"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">form</span>></span>
+</code></pre>
+<p>把整個 <code>ngForm</code> 存進 <code>heroForm</code> 這個模版變數後，就能在 submit 按鈕上讀取表單目前是否通過驗證，決定要不要讓按鈕可以按：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"btn btn-success"</span> [<span class="hljs-attr">disabled</span>]=<span class="hljs-string">"!heroForm.form.valid"</span>></span>
+  Submit
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+</code></pre>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ngModel 一定要搭配雙向綁定才能驗證嗎？</span></h3>
+<p>不用。只要 input 上有 <code>ngModel</code>（單純 <code>ngModel</code>，不寫成 <code>[(ngModel)]</code>），Angular 就會把它納入表單驗證，<code>formControlName</code> 或 <code>formControl</code> 也是同樣效果。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼我的自訂 Validator directive 完全沒作用？</span></h3>
+<p>先檢查 selector 名稱是否跟 input 上寫的 attribute 完全一致，這正是官方範例曾經出過的落差（見上文 <a href="https://github.com/angular/angular/issues/20206" target="_blank" rel="noopener noreferrer">issue #20206</a>）；其次確認有把它加進 <code>NG_VALIDATORS</code> 並設 <code>multi: true</code>，否則會直接覆蓋掉其他驗證器。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>[hidden]="name.valid || name.pristine"</code> 這種寫法要注意什麼？</span></h3>
+<p>它只是控制錯誤訊息何時顯示的其中一種寫法，實務上要留意 <code>pristine</code> 只代表「使用者還沒動過」，如果表單一開始就帶入不合法的預設值，使用者不去碰它，錯誤訊息也不會跳出來，這種情況要另外處理。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://jeffwu85182.github.io/2016/09/27/angular2-form-template-driven/" target="_blank" rel="noopener noreferrer">Angular 2 Forms 介紹：Template-Driven Forms</a></li>
+<li><a href="https://dotblogs.com.tw/kinanson/2017/05/16/075506" target="_blank" rel="noopener noreferrer">2017-05-16 [angular2]表單的操作和驗證</a></li>
+<li><a href="https://ultimatecourses.com/blog/angular-2-forms-template-driven" target="_blank" rel="noopener noreferrer">Angular 2 form fundamentals: template-driven forms</a></li>
+<li>Angular API：<a href="https://angular.io/api/core/Directive" target="_blank" rel="noopener noreferrer">Directive.exportAs</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/angular-reactive-forms">Angular Reactive Forms 教學：Model-Driven Forms 的驗證、FormBuilder 與 FormArray</a>：同樣聚焦 Angular、TypeScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-reactive-forms">Angular Reactive Forms 完整教學：Model-Driven Forms 表單驗證實戰</a>：同樣聚焦 Angular，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-cli-new-project-setup">建立一個 Angular 5 的專案</a>：同樣聚焦 Angular、TypeScript，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。原文發布於 2018-01-04，內容保留原始的模版驅動表單教學與自訂驗證器範例，並重新整理為 GEO 適用的問答式段落。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-01-04</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

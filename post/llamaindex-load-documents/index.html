@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用 LlamaIndex 載入文檔：YouTube 字幕、PDF 與 Notion 一次搞定｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="實作筆記：用 LlamaIndex 的 download_loader 載入 YouTube 字幕、本地 PDF 與 Notion 筆記，把多種來源轉成統一 Document 格式，再用 VectorStoreIndex 建立索引，做出可跨來源問答的對話機器人。" />
+<meta name="keywords" content="機器學習, LlamaIndex, RAG, Python, 文件載入" />
+<link rel="canonical" href="https://claire-chang.com/post/llamaindex-load-documents/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="使用 LlamaIndex 載入文檔：YouTube 字幕、PDF 與 Notion 一次搞定｜Claire Chang" />
+<meta property="og:description" content="實作筆記：用 LlamaIndex 的 download_loader 載入 YouTube 字幕、本地 PDF 與 Notion 筆記，把多種來源轉成統一 Document 格式，再用 VectorStoreIndex 建立索引，做出可跨來源問答的對話機器人。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/llamaindex-load-documents/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_llamaindex-basic-components-b11db481.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_llamaindex-basic-components-b11db481.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="使用 LlamaIndex 載入文檔：YouTube 字幕、PDF 與 Notion 一次搞定｜Claire Chang" />
+<meta name="twitter:description" content="實作筆記：用 LlamaIndex 的 download_loader 載入 YouTube 字幕、本地 PDF 與 Notion 筆記，把多種來源轉成統一 Document 格式，再用 VectorStoreIndex 建立索引，做出可跨來源問答的對話機器人。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_llamaindex-basic-components-b11db481.jpg" />
+<meta property="article:published_time" content="2024-05-17" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="LlamaIndex" />
+<meta property="article:tag" content="RAG" />
+<meta property="article:tag" content="Python" />
+<meta property="article:tag" content="文件載入" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"使用 LlamaIndex 載入文檔：YouTube 字幕、PDF 與 Notion 一次搞定","item":"https://claire-chang.com/post/llamaindex-load-documents/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/llamaindex-load-documents/#article","headline":"使用 LlamaIndex 載入文檔：YouTube 字幕、PDF 與 Notion 一次搞定","description":"實作筆記：用 LlamaIndex 的 download_loader 載入 YouTube 字幕、本地 PDF 與 Notion 筆記，把多種來源轉成統一 Document 格式，再用 VectorStoreIndex 建立索引，做出可跨來源問答的對話機器人。","image":"https://claire-chang.com/images/tech/hero_llamaindex-basic-components.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-05-17","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/llamaindex-load-documents/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"LlamaIndex, RAG, Python, 文件載入","about":[{"@type":"Thing","name":"RAG"},{"@type":"Thing","name":"文件載入"}],"mentions":[{"@type":"Thing","name":"LlamaIndex"},{"@type":"Thing","name":"Python"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/llamaindex-load-documents/#faq","mainEntity":[{"@type":"Question","name":"LlamaIndex 的 download_loader 是什麼？","acceptedAnswer":{"@type":"Answer","text":"它會按需下載並回傳指定的資料載入器（Loader），例如 `YoutubeTranscriptReader`、`PDFReader`、`NotionPageReader`。每個 Loader 都把外部資料轉成 LlamaIndex 統一的 `Document` 格式，後續建立索引時不用再處理格式差異。"}},{"@type":"Question","name":"載入後的 Document 結構長什麼樣？","acceptedAnswer":{"@type":"Answer","text":"每個 Document 有 `id_`、`text`（實際內容）與 `metadata`（如 video_id、page_label、file_name）。還有 `text_template` 和 `metadata_template` 欄位，決定索引時如何把內容與 metadata 組合成文字。"}},{"@type":"Question","name":"PDF 會被切成多個文件嗎？","acceptedAnswer":{"@type":"Answer","text":"會。`PDFReader` 預設逐頁讀取，每一頁產生一個 `Document`，metadata 裡的 `page_label` 標示頁碼。這對之後做檢索時標記出處很方便。"}},{"@type":"Question","name":"載入多種來源後要怎麼一起查詢？","acceptedAnswer":{"@type":"Answer","text":"把各來源的 Document list 直接相加（如 `youtube_documents + pdf_document`），再丟給 `VectorStoreIndex.from_documents()` 建立單一索引，最後用 `index.as_query_engine().query(...)` 就能跨來源問答。"}},{"@type":"Question","name":"跑 NotionPageReader 前需要準備什麼？","acceptedAnswer":{"@type":"Answer","text":"需要一個 Notion integration token，以及要讀取的 database id。記得在 Notion 把該 integration 連結到目標資料庫，否則 API 會讀不到頁面。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_llamaindex-basic-components.webp" alt="LlamaIndex 文檔載入與 RAG 索引示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-05-17">2024-05-17</time></span><span class="post-meta-pill">LlamaIndex · RAG · Python · 文件載入</span></div></div><h1 class="insights-hero-title">使用 LlamaIndex 載入文檔：YouTube 字幕、PDF 與 Notion 一次搞定</h1><p class="insights-hero-description">實作筆記：用 LlamaIndex 的 download_loader 載入 YouTube 字幕、本地 PDF 與 Notion 筆記，把多種來源轉成統一 Document 格式，再用 VectorStoreIndex 建立索引，做出可跨來源問答的對話機器人。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>這篇文章解決「如何把各種資料來源餵進 LLM」的問題：我用 LlamaIndex 內建的 Loader 分別載入 YouTube 字幕、本地 PDF 和 Notion 筆記，把結果轉成統一的 Document 格式，最後建立向量索引做出一個可以對話問答的機器人。</p>
+</div><section aria-labelledby="怎麼用-llamaindex-載入-youtube-影片的文字記錄"><h2 id="怎麼用-llamaindex-載入-youtube-影片的文字記錄">怎麼用 LlamaIndex 載入 YouTube 影片的文字記錄？</h2>
+<p>用 <code>YoutubeTranscriptReader</code> 可以把 YouTube 影片的字幕（文字記錄）轉換為 Document 格式：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> llama_index.core <span class="hljs-keyword">import</span> download_loader
+<span class="hljs-comment"># 載入環境變數</span>
+<span class="hljs-keyword">from</span> dotenv <span class="hljs-keyword">import</span> load_dotenv
+load_dotenv()
+
+YoutubeTranscriptReader = download_loader(<span class="hljs-string">"YoutubeTranscriptReader"</span>)
+
+loader = YoutubeTranscriptReader()
+youtube_documents = loader.load_data(ytlinks=[<span class="hljs-string">'https://www.youtube.com/watch?v=nHcbHdgVUJg&#x26;ab_channel=WintWealth'</span>])
+</code></pre>
+<p>會得到如下格式的 JSON 資料：</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">[</span>Document(id_=<span class="hljs-string">'nHcbHdgVUJg'</span><span class="hljs-punctuation">,</span> embedding=None<span class="hljs-punctuation">,</span> metadata=<span class="hljs-punctuation">{</span><span class="hljs-attr">'video_id'</span><span class="hljs-punctuation">:</span> <span class="hljs-string">'nHcbHdgVUJg'</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span> excluded_embed_metadata_keys=<span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> excluded_llm_metadata_keys=<span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> relationships=<span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span> text=<span class="hljs-string">"I'm a Commerce graduate......."</span><span class="hljs-punctuation">,</span> start_char_idx=None<span class="hljs-punctuation">,</span> end_char_idx=None<span class="hljs-punctuation">,</span> text_template=<span class="hljs-string">'{metadata_str}\n\n{content}'</span><span class="hljs-punctuation">,</span> metadata_template=<span class="hljs-string">'{key}: {value}'</span><span class="hljs-punctuation">,</span> metadata_seperator=<span class="hljs-string">'\n'</span>)<span class="hljs-punctuation">]</span>
+</code></pre>
+<p>每支影片會變成一個 <code>Document</code>，<code>metadata</code> 裡帶有 <code>video_id</code>，<code>text</code> 就是完整字幕內容。</p>
+</section><section aria-labelledby="怎麼讀取本地-pdf-文件"><h2 id="怎麼讀取本地-pdf-文件">怎麼讀取本地 PDF 文件？</h2>
+<p>使用下面的程式碼可以讀取本地端的 PDF 文件，請確保該檔案存在：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path
+<span class="hljs-keyword">from</span> llama_index.core <span class="hljs-keyword">import</span> download_loader
+
+PDFReader = download_loader(<span class="hljs-string">"PDFReader"</span>)
+
+loader = PDFReader()
+
+pdf_document = loader.load_data(file=Path(<span class="hljs-string">'./sample.pdf'</span>))
+</code></pre>
+<p>會產生如下的 JSON 檔案：</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">[</span>Document(id_=<span class="hljs-string">'c63920fc-1f19-4112-ab6a-d18aa193c037'</span><span class="hljs-punctuation">,</span> embedding=None<span class="hljs-punctuation">,</span> metadata=<span class="hljs-punctuation">{</span><span class="hljs-attr">'page_label'</span><span class="hljs-punctuation">:</span> <span class="hljs-string">'1'</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">'file_name'</span><span class="hljs-punctuation">:</span> <span class="hljs-string">'sample.pdf'</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span> excluded_embed_metadata_keys=<span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> excluded_llm_metadata_keys=<span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> relationships=<span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span> text=<span class="hljs-string">' \n \nLangChain 技术解密： \n构建大模型应用的全景指南 \n王浩帆 编著 \n'</span><span class="hljs-punctuation">,</span> start_char_idx=None<span class="hljs-punctuation">,</span> end_char_idx=None<span class="hljs-punctuation">,</span> text_template=<span class="hljs-string">'{metadata_str}\n\n{content}'</span><span class="hljs-punctuation">,</span> metadata_template=<span class="hljs-string">'{key}: {value}'</span><span class="hljs-punctuation">,</span> metadata_seperator=<span class="hljs-string">'\n'</span>)<span class="hljs-punctuation">,</span> ......<span class="hljs-punctuation">]</span>
+</code></pre>
+<p>PDFReader 預設會逐頁切分，每頁一個 <code>Document</code>，<code>metadata</code> 裡記錄頁碼（<code>page_label</code>）與檔名。</p>
+</section><section aria-labelledby="怎麼載入-notion-筆記本"><h2 id="怎麼載入-notion-筆記本">怎麼載入 Notion 筆記本？</h2>
+<p>只要準備 Notion integration token 和 database id，就能把整個資料庫的頁面讀進來：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> llama_index.core <span class="hljs-keyword">import</span> download_loader
+<span class="hljs-keyword">import</span> os
+
+NotionPageReader = download_loader(<span class="hljs-string">'NotionPageReader'</span>)
+
+integration_token = <span class="hljs-string">"your-notion-token"</span>
+database_id = <span class="hljs-string">"your-database-id"</span>
+reader = NotionPageReader(integration_token=integration_token)
+notion_documents = reader.load_data(database_id=database_id)
+</code></pre>
+</section><section aria-labelledby="怎麼把載入的文檔建成對話機器人"><h2 id="怎麼把載入的文檔建成對話機器人">怎麼把載入的文檔建成對話機器人？</h2>
+<p>把不同來源的 Document 合併後丟給 <code>VectorStoreIndex</code>，一行就能建立向量索引：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">from</span> llama_index.core <span class="hljs-keyword">import</span> VectorStoreIndex
+
+all_documents = youtube_documents + pdf_document
+index = VectorStoreIndex.from_documents(all_documents)
+</code></pre>
+</section><section aria-labelledby="對話測試"><h2 id="對話測試">對話測試</h2>
+<p>接著把索引轉成 query engine，直接用自然語言提問：</p>
+<pre><code class="hljs language-python">query_engine = index.as_query_engine()
+response = query_engine.query(<span class="hljs-string">"介紹LangChain"</span>)
+<span class="hljs-built_in">print</span>(response)
+</code></pre>
+<blockquote>
+<p>LangChain 是一個基於大語言模型的應用程式開發框架，旨在簡化創建大模型應用程式的過程。它提供了一套完整的工具、組件和介面，使開發者能夠輕鬆地利用大語言模型的能力……可得到以上回應。</p>
+</blockquote>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LlamaIndex 的 download_loader 是什麼？</span></h3>
+<p>它會按需下載並回傳指定的資料載入器（Loader），例如 <code>YoutubeTranscriptReader</code>、<code>PDFReader</code>、<code>NotionPageReader</code>。每個 Loader 都把外部資料轉成 LlamaIndex 統一的 <code>Document</code> 格式，後續建立索引時不用再處理格式差異。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>載入後的 Document 結構長什麼樣？</span></h3>
+<p>每個 Document 有 <code>id_</code>、<code>text</code>（實際內容）與 <code>metadata</code>（如 video_id、page_label、file_name）。還有 <code>text_template</code> 和 <code>metadata_template</code> 欄位，決定索引時如何把內容與 metadata 組合成文字。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PDF 會被切成多個文件嗎？</span></h3>
+<p>會。<code>PDFReader</code> 預設逐頁讀取，每一頁產生一個 <code>Document</code>，metadata 裡的 <code>page_label</code> 標示頁碼。這對之後做檢索時標記出處很方便。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>載入多種來源後要怎麼一起查詢？</span></h3>
+<p>把各來源的 Document list 直接相加（如 <code>youtube_documents + pdf_document</code>），再丟給 <code>VectorStoreIndex.from_documents()</code> 建立單一索引，最後用 <code>index.as_query_engine().query(...)</code> 就能跨來源問答。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>跑 NotionPageReader 前需要準備什麼？</span></h3>
+<p>需要一個 Notion integration token，以及要讀取的 database id。記得在 Notion 把該 integration 連結到目標資料庫，否則 API 會讀不到頁面。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://docs.llamaindex.ai/" target="_blank" rel="noopener noreferrer">LlamaIndex 官方文件</a></li>
+<li><a href="https://github.com/run-llama/llama_index" target="_blank" rel="noopener noreferrer">LlamaIndex GitHub</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/llamaindex-load-multiple-document-types">LlamaIndex 載入多種類文件教學：PDF、YouTube 字幕與圖片 Reader 完整用法</a>：同樣聚焦 LlamaIndex、RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/llamaindex-load-multiple-file-types">使用LlamaIndex載入多種類文件</a>：同樣聚焦 LlamaIndex、RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/llamaindex-rag-introduction">LlamaIndex 介紹：用 Python 建立 RAG 索引與查詢流程</a>：同樣聚焦 LlamaIndex、RAG，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2024-05-17，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-05-17</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

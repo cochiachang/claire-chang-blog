@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nginx 基礎設定教學：安裝、設定檔檢查與反向代理入門｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 Nginx 的安裝、啟動、reload、設定檔位置、靜態資源快取與反向代理基本概念。" />
+<meta name="keywords" content="DevOps, Nginx, Reverse Proxy, Web Server" />
+<link rel="canonical" href="https://claire-chang.com/post/nginx-basic-configuration/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Nginx 基礎設定教學：安裝、設定檔檢查與反向代理入門｜Claire Chang" />
+<meta property="og:description" content="說明 Nginx 的安裝、啟動、reload、設定檔位置、靜態資源快取與反向代理基本概念。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/nginx-basic-configuration/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_nginx-basic-configuration-6e3afa44.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_nginx-basic-configuration-6e3afa44.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Nginx 基礎設定教學：安裝、設定檔檢查與反向代理入門｜Claire Chang" />
+<meta name="twitter:description" content="說明 Nginx 的安裝、啟動、reload、設定檔位置、靜態資源快取與反向代理基本概念。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_nginx-basic-configuration-6e3afa44.jpg" />
+<meta property="article:published_time" content="2019-10-07" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Nginx" />
+<meta property="article:tag" content="Reverse Proxy" />
+<meta property="article:tag" content="Web Server" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Nginx 基礎設定教學：安裝、設定檔檢查與反向代理入門","item":"https://claire-chang.com/post/nginx-basic-configuration/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/nginx-basic-configuration/#article","headline":"Nginx 基礎設定教學：安裝、設定檔檢查與反向代理入門","description":"說明 Nginx 的安裝、啟動、reload、設定檔位置、靜態資源快取與反向代理基本概念。","image":"https://claire-chang.com/images/tech/hero_nginx-basic-configuration.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2019-10-07","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/nginx-basic-configuration/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"DevOps","keywords":"Nginx, Reverse Proxy, Web Server","mentions":[{"@type":"Thing","name":"Nginx"},{"@type":"Thing","name":"Reverse Proxy"},{"@type":"Thing","name":"Web Server"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/nginx-basic-configuration/#faq","mainEntity":[{"@type":"Question","name":"Nginx 和 Apache 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"Nginx 常被用在高併發靜態檔案與反向代理場景。Apache 模組生態成熟，兩者都能做 Web Server，選擇通常取決於團隊經驗與部署架構。"}},{"@type":"Question","name":"Nginx 修改設定後一定要重啟嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定。多數設定可用 reload 套用，建議先 `nginx -t`，再執行 reload。"}},{"@type":"Question","name":"Nginx 可以代理 Node.js API 嗎？","acceptedAnswer":{"@type":"Answer","text":"可以。常見做法是讓 Node.js 監聽 localhost port，再由 Nginx 對外提供網域、HTTPS 與反向代理。"}},{"@type":"Question","name":"Nginx 設定檔錯了怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"若尚未 reload，修正設定後重新 `nginx -t`。若已造成服務異常，回復備份設定並 reload。"}},{"@type":"Question","name":"Nginx 反向代理需要設定 header 嗎？","acceptedAnswer":{"@type":"Answer","text":"通常需要。`Host`、`X-Real-IP`、`X-Forwarded-For` 與 `X-Forwarded-Proto` 可讓後端知道原始請求資訊。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_nginx-basic-configuration.webp" alt="Nginx 反向代理與伺服器設定示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=DevOps" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ DevOps</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2019-10-07">2019-10-07</time></span><span class="post-meta-pill">Nginx · Reverse Proxy · Web Server</span></div></div><h1 class="insights-hero-title">Nginx 基礎設定教學：安裝、設定檔檢查與反向代理入門</h1><p class="insights-hero-description">說明 Nginx 的安裝、啟動、reload、設定檔位置、靜態資源快取與反向代理基本概念。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Nginx 常用於靜態檔案服務、反向代理、快取與簡單負載平衡。入門時先掌握安裝、啟動、<code>nginx -t</code> 檢查設定、<code>nginx -s reload</code> 重新載入，再開始調整 server block 與 proxy 設定。</p>
+</div><section aria-labelledby="如何安裝與啟動-nginx"><h2 id="如何安裝與啟動-nginx">如何安裝與啟動 Nginx？</h2>
+<p>macOS 可用 Homebrew 安裝 Nginx。Linux 伺服器則通常用發行版套件管理工具，例如 <code>apt</code>、<code>dnf</code> 或 <code>yum</code>。</p>
+<p>macOS 安裝：</p>
+<pre><code class="hljs language-bash">brew install nginx
+</code></pre>
+<p>常用控制指令：</p>
+<pre><code class="hljs language-bash"><span class="hljs-comment"># 啟動 nginx</span>
+nginx
+
+<span class="hljs-comment"># 停止 nginx</span>
+nginx -s stop
+
+<span class="hljs-comment"># 重新讀取設定檔</span>
+nginx -s reload
+</code></pre>
+<p>在 Linux production 環境，通常會交給 systemd 管理：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> systemctl start nginx
+<span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> nginx
+<span class="hljs-built_in">sudo</span> systemctl reload nginx
+</code></pre>
+</section><section aria-labelledby="nginx-設定檔在哪裡"><h2 id="nginx-設定檔在哪裡">Nginx 設定檔在哪裡？</h2>
+<p>Nginx 設定檔位置會因安裝方式而不同。最可靠的方式是執行 <code>nginx -t</code>，它會顯示設定檔路徑並檢查語法。</p>
+<pre><code class="hljs language-bash">nginx -t
+</code></pre>
+<p>常見位置：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>環境</th><th>常見設定檔</th></tr></thead><tbody><tr><td>Homebrew macOS</td><td><code>/opt/homebrew/etc/nginx/nginx.conf</code></td></tr><tr><td>Ubuntu/Debian</td><td><code>/etc/nginx/nginx.conf</code></td></tr><tr><td>CentOS/RHEL</td><td><code>/etc/nginx/nginx.conf</code></td></tr></tbody></table></div>
+<p>注意：原文提到 <code>ngix.conf</code>，正確檔名通常是 <code>nginx.conf</code>。修改設定前先備份，修改後一定要跑 <code>nginx -t</code>。</p>
+</section><section aria-labelledby="nginx-主要可以做什麼"><h2 id="nginx-主要可以做什麼">Nginx 主要可以做什麼？</h2>
+<p>Nginx 最常見用途是提供靜態資源與反向代理。靜態資源由 Nginx 直接回應，動態 API 則轉發給後端應用程式。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>功能</th><th>說明</th></tr></thead><tbody><tr><td>靜態檔案服務</td><td>回應 HTML、CSS、JavaScript、圖片</td></tr><tr><td>反向代理</td><td>把外部請求轉給內部應用程式</td></tr><tr><td>快取</td><td>快取靜態資源或 upstream response</td></tr><tr><td>負載平衡</td><td>把流量分配到多台後端</td></tr><tr><td>TLS 終止</td><td>集中處理 HTTPS 憑證</td></tr></tbody></table></div>
+<p>資訊增益：把 Nginx 放在 Node.js、Python 或 Java 應用程式前面，通常不是為了「讓程式變快」而已，更重要的是把 TLS、靜態檔案、壓縮、proxy header 與 timeout 集中管理。</p>
+</section><section aria-labelledby="反向代理是什麼"><h2 id="反向代理是什麼">反向代理是什麼？</h2>
+<p>反向代理是由 Nginx 代表後端伺服器接收使用者請求，再把請求轉給內部服務。使用者只看到 Nginx 的網址，不需要知道後面有幾台 application server。</p>
+<p>最小反向代理範例：</p>
+<pre><code class="hljs language-nginx">server {
+    listen 80;
+    server_name example.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+</code></pre>
+<p>如果後端需要 WebSocket，還要補上 upgrade header：</p>
+<pre><code class="hljs language-nginx">proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "upgrade";
+</code></pre>
+</section><section aria-labelledby="修改-nginx-設定後怎麼安全套用"><h2 id="修改-nginx-設定後怎麼安全套用">修改 Nginx 設定後怎麼安全套用？</h2>
+<p>修改 Nginx 設定後，不要直接重啟。先用 <code>nginx -t</code> 檢查語法，確認成功後再 reload，避免服務因設定錯誤中斷。</p>
+<p>安全流程：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> nginx -t
+<span class="hljs-built_in">sudo</span> systemctl reload nginx
+</code></pre>
+<p>若不是 systemd 環境：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> nginx -s reload
+</code></pre>
+<p>reload 會讓 Nginx 重新讀取設定，通常比 stop/start 更適合線上服務。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Nginx 和 Apache 有什麼不同？</span></h3>
+<p>Nginx 常被用在高併發靜態檔案與反向代理場景。Apache 模組生態成熟，兩者都能做 Web Server，選擇通常取決於團隊經驗與部署架構。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Nginx 修改設定後一定要重啟嗎？</span></h3>
+<p>不一定。多數設定可用 reload 套用，建議先 <code>nginx -t</code>，再執行 reload。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Nginx 可以代理 Node.js API 嗎？</span></h3>
+<p>可以。常見做法是讓 Node.js 監聽 localhost port，再由 Nginx 對外提供網域、HTTPS 與反向代理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Nginx 設定檔錯了怎麼辦？</span></h3>
+<p>若尚未 reload，修正設定後重新 <code>nginx -t</code>。若已造成服務異常，回復備份設定並 reload。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Nginx 反向代理需要設定 header 嗎？</span></h3>
+<p>通常需要。<code>Host</code>、<code>X-Real-IP</code>、<code>X-Forwarded-For</code> 與 <code>X-Forwarded-Proto</code> 可讓後端知道原始請求資訊。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Nginx Documentation：<a href="https://nginx.org/en/docs/beginners_guide.html" target="_blank" rel="noopener noreferrer">Beginner's Guide</a></li>
+<li>Nginx Documentation：<a href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/" target="_blank" rel="noopener noreferrer">Reverse Proxy</a></li>
+<li>Nginx Documentation：<a href="https://nginx.org/en/docs/switches.html" target="_blank" rel="noopener noreferrer">Command-line parameters</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/install-nginx-rtmp-module-centos">CentOS 安裝 Nginx RTMP 模組：openssl、zlib、pcre 編譯流程</a>：同樣聚焦 Nginx，可接著比較不同情境的做法。</li>
+<li><a href="/post/pm2-node-server-management">使用 PM2 管理 Node.js 伺服器教學</a>：同樣聚焦 Nginx，可接著比較不同情境的做法。</li>
+<li><a href="/post/chunked-encoding-introduction">Chunked Encoding 分塊編碼介紹與 Nginx 設定教學</a>：同樣聚焦 Nginx，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。原文發布於 2019-10-07，本文補上 systemd、設定檔檢查與 WebSocket proxy 注意事項。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2019-10-07</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

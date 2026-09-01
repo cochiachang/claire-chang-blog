@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>如何切分訓練、驗證與測試資料：train_test_split 與 K-Fold 範例｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明訓練資料、驗證資料與測試資料的用途，並用 scikit-learn 與 TensorFlow 示範模型評估流程。" />
+<meta name="keywords" content="機器學習, 機器學習, train_test_split, TensorFlow, 模型評估" />
+<link rel="canonical" href="https://claire-chang.com/post/train-validation-test-data-split/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="如何切分訓練、驗證與測試資料：train_test_split 與 K-Fold 範例｜Claire Chang" />
+<meta property="og:description" content="說明訓練資料、驗證資料與測試資料的用途，並用 scikit-learn 與 TensorFlow 示範模型評估流程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/train-validation-test-data-split/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/2023-06-21_122024-c526d922.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/2023-06-21_122024-c526d922.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="如何切分訓練、驗證與測試資料：train_test_split 與 K-Fold 範例｜Claire Chang" />
+<meta name="twitter:description" content="說明訓練資料、驗證資料與測試資料的用途，並用 scikit-learn 與 TensorFlow 示範模型評估流程。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/2023-06-21_122024-c526d922.jpg" />
+<meta property="article:published_time" content="2023-06-21" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="機器學習" />
+<meta property="article:tag" content="train_test_split" />
+<meta property="article:tag" content="TensorFlow" />
+<meta property="article:tag" content="模型評估" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"如何切分訓練、驗證與測試資料：train_test_split 與 K-Fold 範例","item":"https://claire-chang.com/post/train-validation-test-data-split/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/train-validation-test-data-split/#article","headline":"如何切分訓練、驗證與測試資料：train_test_split 與 K-Fold 範例","description":"說明訓練資料、驗證資料與測試資料的用途，並用 scikit-learn 與 TensorFlow 示範模型評估流程。","image":"https://claire-chang.com/images/tech/2023-06-21_122024.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-06-21","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/train-validation-test-data-split/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"機器學習, train_test_split, TensorFlow, 模型評估","about":[{"@type":"Thing","name":"機器學習"},{"@type":"Thing","name":"模型評估"}],"mentions":[{"@type":"Thing","name":"train_test_split"},{"@type":"Thing","name":"TensorFlow"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/train-validation-test-data-split/#faq","mainEntity":[{"@type":"Question","name":"訓練資料和驗證資料差在哪裡？","acceptedAnswer":{"@type":"Answer","text":"訓練資料用來更新模型權重。驗證資料不直接更新權重，而是用來調整模型設計與訓練策略。"}},{"@type":"Question","name":"測試資料可以拿來調參嗎？","acceptedAnswer":{"@type":"Answer","text":"不建議。測試資料應該留到最後評估，如果反覆用測試資料調參，模型結果會對測試集過度適配。"}},{"@type":"Question","name":"train_test_split 的 test_size 要設多少？","acceptedAnswer":{"@type":"Answer","text":"常見設定是 0.1 到 0.3。資料量大時可保留較小比例作測試；資料量小時要小心測試集太少造成評估不穩。"}},{"@type":"Question","name":"為什麼圖片分類要看錯誤圖片？","acceptedAnswer":{"@type":"Answer","text":"錯誤圖片能指出模型真正混淆的視覺特徵。只看準確率無法知道是資料標註錯誤、類別太像，還是模型架構不足。"}},{"@type":"Question","name":"K-Fold 和 train_test_split 可以一起用嗎？","acceptedAnswer":{"@type":"Answer","text":"可以。K-Fold 可負責外層訓練與測試切分，`train_test_split` 可在每個訓練 fold 中再切出驗證資料。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/2023-06-21_122024.webp" alt="圖片資料集資料夾結構示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-06-21">2023-06-21</time></span><span class="post-meta-pill">機器學習 · train_test_split · TensorFlow · 模型評估</span></div></div><h1 class="insights-hero-title">如何切分訓練、驗證與測試資料：train_test_split 與 K-Fold 範例</h1><p class="insights-hero-description">說明訓練資料、驗證資料與測試資料的用途，並用 scikit-learn 與 TensorFlow 示範模型評估流程。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>訓練資料、驗證資料與測試資料分別負責建模、調參與最終評估。機器學習模型如果只訓練不測試，很容易產生看似準確、實際泛化能力不足的結果；因此資料切分是模型評估的基本工作。</p>
+</div><section aria-labelledby="為什麼要切分訓練資料與測試資料"><h2 id="為什麼要切分訓練資料與測試資料">為什麼要切分訓練資料與測試資料？</h2>
+<p>切分訓練資料與測試資料，是為了檢查模型能不能處理沒看過的資料。訓練分數高不代表模型泛化能力好，測試資料才是最後評估基準。</p>
+<p>在資料科學中，訓練資料與測試資料扮演不同角色：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>資料類型</th><th>用途</th></tr></thead><tbody><tr><td>訓練資料</td><td>用於建立模型，通常占較大比例。</td></tr><tr><td>測試資料</td><td>用於評估模型，通常占較小比例。</td></tr><tr><td>驗證資料</td><td>從訓練資料中再切出來，用於訓練過程調參。</td></tr></tbody></table></div>
+<p>未經測試的模型可能對訓練資料記得很好，卻在新資料上預測錯誤。這就是資料切分的核心目的：把「學習」與「評估」分開。</p>
+</section><section aria-labelledby="驗證資料是什麼"><h2 id="驗證資料是什麼">驗證資料是什麼？</h2>
+<p>驗證資料是從訓練資料中分離出來的子資料集。驗證資料用於訓練過程中的模型選擇、參數調整與 early stopping。</p>
+<p>測試資料應該留到最後使用，不能在調參過程中反覆偷看。若每次改模型都看測試資料分數，測試資料就會逐漸變成調參依據，最終評估會過度樂觀。</p>
+<p>驗證資料的用途包含：</p>
+<ol>
+<li>比較不同模型架構。</li>
+<li>調整 learning rate、batch size、epoch 等超參數。</li>
+<li>判斷是否 overfitting。</li>
+<li>選擇最佳 checkpoint。</li>
+</ol>
+</section><section aria-labelledby="如何使用-train-test-split-切驗證資料"><h2 id="如何使用-train-test-split-切驗證資料">如何使用 train_test_split 切驗證資料？</h2>
+<p><code>train_test_split</code> 可以把訓練資料再切成訓練與驗證兩份。常見做法是從訓練 fold 中切出 10% 作為 validation data。</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split
+
+<span class="hljs-comment"># 載入資料集</span>
+<span class="hljs-comment"># ...</span>
+
+X_train, X_val, y_train, y_val = train_test_split(
+    train_images_fold,
+    train_labels_fold,
+    test_size=<span class="hljs-number">0.1</span>,
+    random_state=<span class="hljs-number">42</span>,
+)
+
+model = create_model()
+keras_classifier.fit(X_train, y_train, validation_data=(X_val, y_val))
+</code></pre>
+<p><code>random_state</code> 可以讓切分結果可重現。若是分類問題，也可以加上 <code>stratify=y</code>，讓切出的資料維持類別比例。</p>
+</section><section aria-labelledby="如何用測試資料計算準確率"><h2 id="如何用測試資料計算準確率">如何用測試資料計算準確率？</h2>
+<p>測試資料應在模型訓練完成後使用。模型先對 <code>X_test</code> 產生預測，再用 <code>accuracy_score</code> 與 <code>y_test</code> 比較。</p>
+<pre><code class="hljs language-python">predictions = keras_classifier.predict(X_test)
+accuracy = accuracy_score(y_test, predictions)
+accuracy_scores.append(accuracy)
+</code></pre>
+<p>如果想保留模型預測錯誤的圖片，可以用 <code>np.where</code> 找出預測與標籤不一致的位置：</p>
+<pre><code class="hljs language-python">incorrect_indices = np.where(predictions != y_test)[<span class="hljs-number">0</span>]
+incorrect_images = X_test[incorrect_indices]
+incorrect_labels = y_test[incorrect_indices]
+incorrect_prediction = predictions[incorrect_indices]
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(incorrect_indices)):
+    incorrect.append({
+        <span class="hljs-string">"image"</span>: incorrect_images[i],
+        <span class="hljs-string">"label"</span>: incorrect_labels[i],
+        <span class="hljs-string">"pred"</span>: incorrect_prediction[i],
+        <span class="hljs-string">"idx"</span>: fold_index,
+    })
+</code></pre>
+<p>這種做法很適合圖片分類專案，因為只看 accuracy 不知道錯在哪裡；把錯誤圖片畫出來，才能觀察模型混淆的類別。</p>
+</section><section aria-labelledby="如何結合-stratifiedkfold-做完整評估"><h2 id="如何結合-stratifiedkfold-做完整評估">如何結合 StratifiedKFold 做完整評估？</h2>
+<p>StratifiedKFold 可以讓每個 fold 保持類別比例，再從訓練 fold 中切出驗證資料。這個流程能同時觀察 fold 穩定度與錯誤樣本。</p>
+<p>原文完整範例的流程是：把圖片資料切成 5 份，每次取 4 份訓練、1 份測試，再從訓練資料中切出 10% 當驗證集。每次訓練後記錄 accuracy，並把錯誤圖片保存到 <code>incorrect</code> 陣列。</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> StratifiedKFold, train_test_split
+<span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score
+
+kfold = StratifiedKFold(n_splits=<span class="hljs-number">5</span>, shuffle=<span class="hljs-literal">True</span>, random_state=<span class="hljs-number">123</span>)
+
+fold_index = <span class="hljs-number">1</span>
+accuracy_scores = []
+incorrect = []
+
+<span class="hljs-keyword">for</span> train_indices, val_indices <span class="hljs-keyword">in</span> kfold.split(train_images, train_labels_encoded):
+    train_images_fold = train_images[train_indices]
+    train_labels_fold = train_labels_encoded[train_indices]
+
+    X_test = train_images[val_indices]
+    y_test = train_labels_encoded[val_indices]
+
+    X_train, X_val, y_train, y_val = train_test_split(
+        train_images_fold,
+        train_labels_fold,
+        test_size=<span class="hljs-number">0.1</span>,
+        random_state=<span class="hljs-number">42</span>,
+    )
+
+    model = create_model()
+    keras_classifier.fit(X_train, y_train, validation_data=(X_val, y_val))
+
+    predictions = keras_classifier.predict(X_test)
+    accuracy = accuracy_score(y_test, predictions)
+    accuracy_scores.append(accuracy)
+
+    incorrect_indices = np.where(predictions != y_test)[<span class="hljs-number">0</span>]
+    fold_index += <span class="hljs-number">1</span>
+</code></pre>
+<p>最後可以用 <code>matplotlib.pyplot</code> 把錯誤圖片顯示出來，觀察模型是否固定把某些類別搞混。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>訓練資料和驗證資料差在哪裡？</span></h3>
+<p>訓練資料用來更新模型權重。驗證資料不直接更新權重，而是用來調整模型設計與訓練策略。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>測試資料可以拿來調參嗎？</span></h3>
+<p>不建議。測試資料應該留到最後評估，如果反覆用測試資料調參，模型結果會對測試集過度適配。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>train_test_split 的 test_size 要設多少？</span></h3>
+<p>常見設定是 0.1 到 0.3。資料量大時可保留較小比例作測試；資料量小時要小心測試集太少造成評估不穩。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼圖片分類要看錯誤圖片？</span></h3>
+<p>錯誤圖片能指出模型真正混淆的視覺特徵。只看準確率無法知道是資料標註錯誤、類別太像，還是模型架構不足。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>K-Fold 和 train_test_split 可以一起用嗎？</span></h3>
+<p>可以。K-Fold 可負責外層訓練與測試切分，<code>train_test_split</code> 可在每個訓練 fold 中再切出驗證資料。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>scikit-learn, train_test_split, <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html%EF%BC%8C%E5%AD%98%E5%8F%96%E6%97%A5%E6%9C%9F%EF%BC%9A2026-08-27%E3%80%82" target="_blank" rel="noopener noreferrer">https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html，存取日期：2026-08-27。</a></li>
+<li>scikit-learn, accuracy_score, <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html%EF%BC%8C%E5%AD%98%E5%8F%96%E6%97%A5%E6%9C%9F%EF%BC%9A2026-08-27%E3%80%82" target="_blank" rel="noopener noreferrer">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html，存取日期：2026-08-27。</a></li>
+<li>TensorFlow, Keras training with built-in methods, <a href="https://www.tensorflow.org/guide/keras/training_with_built_in_methods%EF%BC%8C%E5%AD%98%E5%8F%96%E6%97%A5%E6%9C%9F%EF%BC%9A2026-08-27%E3%80%82" target="_blank" rel="noopener noreferrer">https://www.tensorflow.org/guide/keras/training_with_built_in_methods，存取日期：2026-08-27。</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/k-fold-cross-validation">k-Fold Cross-Validation 交叉驗證教學：Holdout 與 StratifiedKFold 比較</a>：同樣聚焦 機器學習、TensorFlow，可接著比較不同情境的做法。</li>
+<li><a href="/post/tensorflow-object-detection-custom-training">TensorFlow 目標檢測 API：訓練自己的資料</a>：同樣聚焦 TensorFlow、機器學習，可接著比較不同情境的做法。</li>
+<li><a href="/post/tensorflow-developer-certificate">TensorFlow 開發者認證計劃介紹</a>：同樣聚焦 TensorFlow、機器學習，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>Wed Jun 21 2023 08:00:00 GMT+0800 (Taiwan Standard Time)</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-06-21</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

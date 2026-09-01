@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>在 VSCode 建構 Nx Meta 套件：NX SDK、CMake 與 MSYS2 設定｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明如何在 VSCode 準備 Nx Meta 套件開發環境，包含 NX SDK、CMake、MSYS2、CMake Tools 與 settings.json 設定。" />
+<meta name="keywords" content="前端開發, VS Code, Nx Meta, CMake, MSYS2, C++" />
+<link rel="canonical" href="https://claire-chang.com/post/vscode-nx-package-setup/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="在 VSCode 建構 Nx Meta 套件：NX SDK、CMake 與 MSYS2 設定｜Claire Chang" />
+<meta property="og:description" content="說明如何在 VSCode 準備 Nx Meta 套件開發環境，包含 NX SDK、CMake、MSYS2、CMake Tools 與 settings.json 設定。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/vscode-nx-package-setup/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_generate-used-library-list-80757ff7.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_generate-used-library-list-80757ff7.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="在 VSCode 建構 Nx Meta 套件：NX SDK、CMake 與 MSYS2 設定｜Claire Chang" />
+<meta name="twitter:description" content="說明如何在 VSCode 準備 Nx Meta 套件開發環境，包含 NX SDK、CMake、MSYS2、CMake Tools 與 settings.json 設定。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_generate-used-library-list-80757ff7.jpg" />
+<meta property="article:published_time" content="2025-05-11" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="VS Code" />
+<meta property="article:tag" content="Nx Meta" />
+<meta property="article:tag" content="CMake" />
+<meta property="article:tag" content="MSYS2" />
+<meta property="article:tag" content="C++" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"在 VSCode 建構 Nx Meta 套件：NX SDK、CMake 與 MSYS2 設定","item":"https://claire-chang.com/post/vscode-nx-package-setup/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/vscode-nx-package-setup/#article","headline":"在 VSCode 建構 Nx Meta 套件：NX SDK、CMake 與 MSYS2 設定","description":"說明如何在 VSCode 準備 Nx Meta 套件開發環境，包含 NX SDK、CMake、MSYS2、CMake Tools 與 settings.json 設定。","image":"https://claire-chang.com/images/tech/hero_generate-used-library-list.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2025-05-11","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/vscode-nx-package-setup/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"VS Code, Nx Meta, CMake, MSYS2, C++","mentions":[{"@type":"Thing","name":"VS Code"},{"@type":"Thing","name":"Nx Meta"},{"@type":"Thing","name":"CMake"},{"@type":"Thing","name":"MSYS2"},{"@type":"Thing","name":"C++"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/vscode-nx-package-setup/#faq","mainEntity":[{"@type":"Question","name":"VSCode 建構 Nx Meta 套件一定要用 CMake Tools 嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定，但 CMake Tools 可以直接在 VSCode 裡執行 configure、選 kit、切 build type 與啟動 build。若不使用 CMake Tools，也可以在終端機手動執行 CMake 指令，只是環境與路徑要自己管理。"}},{"@type":"Question","name":"`metadataSdkDir` 要填哪個路徑？","acceptedAnswer":{"@type":"Answer","text":"`metadataSdkDir` 要填 NX SDK 解壓後的本機資料夾路徑。範例使用 `D:/metadata_sdk`，實際專案要改成自己的 SDK 位置。"}},{"@type":"Question","name":"`SERVER_DIR` 要填哪個路徑？","acceptedAnswer":{"@type":"Answer","text":"`SERVER_DIR` 要填 Nx MetaVMS mediaserver 的安裝目錄。範例使用 `C:/Program Files/Network Optix/Nx MetaVMS/mediaserver`，如果 Nx MetaVMS 安裝在其他位置，必須同步修改。"}},{"@type":"Question","name":"CMake 找不到 MSYS2 或 GCC 怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"先確認 MSYS2 內的 `gcc --version` 可以正常輸出版本，再檢查 VSCode CMake Tools 選到的 kit。若電腦上同時有多套 compiler，建議手動選擇正確 kit，不要只依賴自動搜尋。"}},{"@type":"Question","name":"Nx Meta 套件建構失敗時先查什麼？","acceptedAnswer":{"@type":"Answer","text":"先查 `CMakeLists.txt` 是否在 VSCode 開啟的根目錄內，再查 `metadataSdkDir`、`SERVER_DIR`、generator、平台參數與中文路徑。這幾項是環境型錯誤最常見的位置。"}},{"@type":"Question","name":"為什麼建構成功後找不到 DLL？","acceptedAnswer":{"@type":"Answer","text":"DLL 位置取決於 CMake 專案設定、`cmake.buildDirectory` 與 `cmake.installPrefix`。先檢查 `${workspaceFolder}/build` 與 `${workspaceFolder}/install`，再看 CMake Tools 的 output log 有沒有列出實際輸出路徑。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_generate-used-library-list.webp" alt="深色程式碼編輯器與編譯工具畫面，象徵 VSCode 中的 CMake 與 C++ 套件建構流程" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2025-05-11">2025-05-11</time></span><span class="post-meta-pill">VS Code · Nx Meta · CMake · MSYS2 · C++</span></div></div><h1 class="insights-hero-title">在 VSCode 建構 Nx Meta 套件：NX SDK、CMake 與 MSYS2 設定</h1><p class="insights-hero-description">說明如何在 VSCode 準備 Nx Meta 套件開發環境，包含 NX SDK、CMake、MSYS2、CMake Tools 與 settings.json 設定。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>在 VSCode 建構 Nx Meta 套件時，核心流程是先下載 NX SDK，準備 CMake 與 C++ 編譯器，再用 VSCode 的 CMake Tools 對含有 <code>CMakeLists.txt</code> 的專案執行 configure 與 build。若專案是 Network Optix 的 C++ analytics plugin 範例，還需要在 <code>.vscode/settings.json</code> 指定 <code>metadataSdkDir</code> 與 <code>SERVER_DIR</code>，讓 CMake 找得到 SDK 與 Nx MetaVMS mediaserver。</p>
+</div><section aria-labelledby="建構-nx-meta-套件前需要哪些官方資源"><h2 id="建構-nx-meta-套件前需要哪些官方資源">建構 Nx Meta 套件前需要哪些官方資源？</h2>
+<p>建構 Nx Meta 套件前，先準備官方教學文件、官方範例套件與 NX SDK 下載頁。這三個資源分別對應 workspace 準備、plugin 範例程式碼與本機 SDK。</p>
+<p>我會先把這三個連結放在同一份筆記裡，避免環境設定做到一半才回頭找資料：</p>
+<ul>
+<li>官方教學文件：<a href="https://meta.nxvms.com/docs/developers/knowledgebase/234-preparing-a-workspace" target="_blank" rel="noopener noreferrer">Preparing a Workspace</a></li>
+<li>官方範例套件：<a href="https://github.com/networkoptix/nx_open_integrations/tree/72d9c30658531d954e0de59e73b431122bcf29cc/cpp/vms_server_plugins/opencv_object_detection_analytics_plugin" target="_blank" rel="noopener noreferrer">opencv_object_detection_analytics_plugin</a></li>
+<li>NX SDK 下載頁：<a href="https://meta.nxvms.com/download/releases/sdk" target="_blank" rel="noopener noreferrer">Nx Meta SDK releases</a></li>
+</ul>
+<p>這篇的設定以 Windows 開發環境為主，因為範例中使用 MSYS2、Visual Studio 2022 generator，以及 <code>C:/Program Files/Network Optix/Nx MetaVMS/mediaserver</code> 這類 Windows 路徑。</p>
+</section><section aria-labelledby="vscode-建構-nx-meta-套件要安裝哪些工具"><h2 id="vscode-建構-nx-meta-套件要安裝哪些工具">VSCode 建構 Nx Meta 套件要安裝哪些工具？</h2>
+<p>VSCode 建構 Nx Meta 套件至少需要 CMake、C++ 編譯器、Ninja，以及 VSCode 的 CMake Tools 與 C/C++ Extension Pack。缺少任一工具都可能讓 configure 或 build 階段失敗。</p>
+<p>需要先準備的工具如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>工具</th><th>用途</th><th>來源</th></tr></thead><tbody><tr><td>CMake</td><td>讀取 <code>CMakeLists.txt</code> 並產生建置設定</td><td><a href="https://cmake.org/download/" target="_blank" rel="noopener noreferrer">CMake Download</a></td></tr><tr><td>MSYS2</td><td>在 Windows 上提供 MinGW / UCRT64 編譯環境</td><td><a href="https://www.msys2.org/" target="_blank" rel="noopener noreferrer">MSYS2</a></td></tr><tr><td>GCC</td><td>C++ 編譯器</td><td>透過 MSYS2 <code>pacman</code> 安裝</td></tr><tr><td>Ninja</td><td>CMake 可使用的 build tool</td><td>透過 MSYS2 <code>pacman</code> 安裝</td></tr><tr><td>CMake Tools</td><td>VSCode 裡執行 configure、build 與切換 kit</td><td>VSCode Extensions</td></tr><tr><td>C/C++ Extension Pack</td><td>VSCode 的 C/C++ 編輯、IntelliSense 與除錯支援</td><td>VSCode Extensions</td></tr></tbody></table></div>
+<p>來源稿建議 CMake 使用 3.15 以上版本。版本太舊時，CMake 對 generator、toolchain 或 project 設定的支援可能跟範例專案需求不一致。</p>
+</section><section aria-labelledby="如何用-msys2-安裝-gcc-與-ninja"><h2 id="如何用-msys2-安裝-gcc-與-ninja">如何用 MSYS2 安裝 GCC 與 Ninja？</h2>
+<p>MSYS2 安裝完成後，打開 MSYS2 終端機並用 <code>pacman</code> 安裝 UCRT64 版本的 GCC 與 Ninja。安裝後先檢查 <code>gcc --version</code>，確認編譯器已可被終端機呼叫。</p>
+<p>在 MSYS2 裡執行：</p>
+<pre><code class="hljs language-bash">pacman -S mingw-w64-ucrt-x86_64-gcc
+pacman -S mingw-w64-ucrt-x86_64-ninja
+gcc --version
+</code></pre>
+<p>如果 <code>gcc --version</code> 沒有輸出版本資訊，先檢查目前開的是不是正確的 MSYS2 shell，以及 UCRT64 的路徑是否被加入環境變數。CMake Tools 後續選 kit 時，也需要找得到這個編譯環境。</p>
+</section><section aria-labelledby="如何在-vscode-設定-cmake-tools"><h2 id="如何在-vscode-設定-cmake-tools">如何在 VSCode 設定 CMake Tools？</h2>
+<p>VSCode 開啟 C++ 專案根目錄後，專案根目錄應該要有 <code>CMakeLists.txt</code>。接著用 Command Palette 執行 <code>CMake: Configure</code>，選擇合適的編譯環境後再執行 <code>CMake: Build</code>。</p>
+<p>操作流程很短：</p>
+<ol>
+<li>用 VSCode 開啟 C++ 專案資料夾。</li>
+<li>確認資料夾根目錄有 <code>CMakeLists.txt</code>。</li>
+<li>按 <code>F1</code>，搜尋並執行 <code>CMake: Configure</code>。</li>
+<li>選擇編譯環境；若不確定，可以先讓 CMake Tools 自動搜尋。</li>
+<li>再按 <code>F1</code>，執行 <code>CMake: Build</code>。</li>
+</ol>
+<p>我在這一步會特別留意 CMake Tools 找到的是哪一組 kit。電腦同時裝了 Visual Studio、MSYS2、MinGW 或其他 compiler 時，自動搜尋不一定會選到你真正想用的環境。</p>
+</section><section aria-labelledby="vscode-settings-json-要設定哪些-cmake-參數"><h2 id="vscode-settings-json-要設定哪些-cmake-參數"><code>.vscode/settings.json</code> 要設定哪些 CMake 參數？</h2>
+<p>Nx Meta 套件建構時，<code>.vscode/settings.json</code> 的重點是指定 CMake generator、NX SDK 路徑、mediaserver 路徑、build 目錄、Release 模式與 install 目錄。路徑要改成本機實際安裝位置。</p>
+<p>可以在專案根目錄新增 <code>.vscode/settings.json</code>：</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"cmake.generator"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Visual Studio 17 2022"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"cmake.configureSettings"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"metadataSdkDir"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"D:/metadata_sdk"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"SERVER_DIR"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"C:/Program Files/Network Optix/Nx MetaVMS/mediaserver"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"cmake.buildDirectory"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"${workspaceFolder}/build"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"cmake.buildType"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Release"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"cmake.configureArgs"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">"-A"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"x64"</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"cmake.installPrefix"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"${workspaceFolder}/install"</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><code>metadataSdkDir</code> 要指向解壓後的 NX SDK 目錄，<code>SERVER_DIR</code> 要指向 Nx MetaVMS 的 mediaserver 目錄。若這兩個路徑寫錯，CMake configure 階段通常會找不到 header、library 或伺服器相關檔案。</p>
+</section><section aria-labelledby="建構完成後如何確認-dll-已產生"><h2 id="建構完成後如何確認-dll-已產生">建構完成後如何確認 DLL 已產生？</h2>
+<p>Nx Meta 套件 build 成功後，通常要到 build 或 install 目錄確認 DLL 是否產生。若 VSCode 顯示 build 成功但找不到 DLL，優先檢查 build directory、install prefix 與 CMake output log。</p>
+<p>我會用這份檢查表排除常見問題：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查項目</th><th>判斷方式</th></tr></thead><tbody><tr><td><code>CMakeLists.txt</code> 位置</td><td>VSCode 開啟的是專案根目錄，不是上層或子資料夾</td></tr><tr><td>NX SDK 路徑</td><td><code>metadataSdkDir</code> 指到 SDK 實際解壓位置</td></tr><tr><td>Nx MetaVMS 路徑</td><td><code>SERVER_DIR</code> 指到 mediaserver 目錄</td></tr><tr><td>目標平台</td><td><code>cmake.configureArgs</code> 有設定 <code>-A x64</code></td></tr><tr><td>建置模式</td><td><code>cmake.buildType</code> 使用 <code>Release</code></td></tr><tr><td>產出位置</td><td>檢查 <code>${workspaceFolder}/build</code> 與 <code>${workspaceFolder}/install</code></td></tr><tr><td>中文路徑</td><td>若 configure 或 build 出現奇怪錯誤，先把專案搬到英文路徑</td></tr></tbody></table></div>
+<p>資訊增益：CMake 在某些 Windows 開發環境下會因為中文路徑或空白路徑出現難讀的錯誤訊息。若錯誤看起來不像程式碼問題，先把專案移到例如 <code>D:/workspace/nx-plugin</code> 這類純英文路徑，常常比追 log 更快找到方向。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>VSCode 建構 Nx Meta 套件一定要用 CMake Tools 嗎？</span></h3>
+<p>不一定，但 CMake Tools 可以直接在 VSCode 裡執行 configure、選 kit、切 build type 與啟動 build。若不使用 CMake Tools，也可以在終端機手動執行 CMake 指令，只是環境與路徑要自己管理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>metadataSdkDir</code> 要填哪個路徑？</span></h3>
+<p><code>metadataSdkDir</code> 要填 NX SDK 解壓後的本機資料夾路徑。範例使用 <code>D:/metadata_sdk</code>，實際專案要改成自己的 SDK 位置。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>SERVER_DIR</code> 要填哪個路徑？</span></h3>
+<p><code>SERVER_DIR</code> 要填 Nx MetaVMS mediaserver 的安裝目錄。範例使用 <code>C:/Program Files/Network Optix/Nx MetaVMS/mediaserver</code>，如果 Nx MetaVMS 安裝在其他位置，必須同步修改。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>CMake 找不到 MSYS2 或 GCC 怎麼辦？</span></h3>
+<p>先確認 MSYS2 內的 <code>gcc --version</code> 可以正常輸出版本，再檢查 VSCode CMake Tools 選到的 kit。若電腦上同時有多套 compiler，建議手動選擇正確 kit，不要只依賴自動搜尋。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Nx Meta 套件建構失敗時先查什麼？</span></h3>
+<p>先查 <code>CMakeLists.txt</code> 是否在 VSCode 開啟的根目錄內，再查 <code>metadataSdkDir</code>、<code>SERVER_DIR</code>、generator、平台參數與中文路徑。這幾項是環境型錯誤最常見的位置。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼建構成功後找不到 DLL？</span></h3>
+<p>DLL 位置取決於 CMake 專案設定、<code>cmake.buildDirectory</code> 與 <code>cmake.installPrefix</code>。先檢查 <code>${workspaceFolder}/build</code> 與 <code>${workspaceFolder}/install</code>，再看 CMake Tools 的 output log 有沒有列出實際輸出路徑。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Network Optix，〈<a href="https://meta.nxvms.com/docs/developers/knowledgebase/234-preparing-a-workspace" target="_blank" rel="noopener noreferrer">Preparing a Workspace</a>〉。</li>
+<li>Network Optix GitHub，〈<a href="https://github.com/networkoptix/nx_open_integrations/tree/72d9c30658531d954e0de59e73b431122bcf29cc/cpp/vms_server_plugins/opencv_object_detection_analytics_plugin" target="_blank" rel="noopener noreferrer">opencv_object_detection_analytics_plugin</a>〉。</li>
+<li>Network Optix，〈<a href="https://meta.nxvms.com/download/releases/sdk" target="_blank" rel="noopener noreferrer">Nx Meta SDK releases</a>〉。</li>
+<li>CMake，〈<a href="https://cmake.org/download/" target="_blank" rel="noopener noreferrer">Download CMake</a>〉。</li>
+<li>MSYS2，〈<a href="https://www.msys2.org/" target="_blank" rel="noopener noreferrer">MSYS2 Installation</a>〉。</li>
+</ul>
+<p><strong>最後更新：</strong> 2026-08-28</p>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/emscripten-webassembly-compile-guide">Emscripten 編譯 WebAssembly 實作筆記：從 MSYS2 到 emmake</a>：同樣聚焦 C++，可接著比較不同情境的做法。</li>
+<li><a href="/post/vscode-plantuml-diagrams">使用VSCode繪製UML文件</a>：同樣聚焦 VSCode，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-language-service-ide-support">讓 IDE 支援 Angular Language Service</a>：同屬「前端開發」主題，可延伸理解相近問題的判斷方式。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2025-05-11</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

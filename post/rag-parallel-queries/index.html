@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG Parallel Queries 是什麼？並行查詢如何提升 RAG 檢索品質｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="RAG Parallel Queries 透過把原始查詢拆成多個子查詢並行檢索，一次從多個數據源取得資訊。本文介紹其優點、工作流程，以及「子查詢結果作為上下文」與 Prio-reasoning 兩種實現方法。" />
+<meta name="keywords" content="機器學習, RAG, LLM, Multi-Query Retrieval, LlamaIndex, 檢索增強生成" />
+<link rel="canonical" href="https://claire-chang.com/post/rag-parallel-queries/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="RAG Parallel Queries 是什麼？並行查詢如何提升 RAG 檢索品質｜Claire Chang" />
+<meta property="og:description" content="RAG Parallel Queries 透過把原始查詢拆成多個子查詢並行檢索，一次從多個數據源取得資訊。本文介紹其優點、工作流程，以及「子查詢結果作為上下文」與 Prio-reasoning 兩種實現方法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/rag-parallel-queries/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_rag-parallel-queries-e831da8e.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_rag-parallel-queries-e831da8e.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="RAG Parallel Queries 是什麼？並行查詢如何提升 RAG 檢索品質｜Claire Chang" />
+<meta name="twitter:description" content="RAG Parallel Queries 透過把原始查詢拆成多個子查詢並行檢索，一次從多個數據源取得資訊。本文介紹其優點、工作流程，以及「子查詢結果作為上下文」與 Prio-reasoning 兩種實現方法。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_rag-parallel-queries-e831da8e.jpg" />
+<meta property="article:published_time" content="2024-11-11" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="RAG" />
+<meta property="article:tag" content="LLM" />
+<meta property="article:tag" content="Multi-Query Retrieval" />
+<meta property="article:tag" content="LlamaIndex" />
+<meta property="article:tag" content="檢索增強生成" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"RAG Parallel Queries 是什麼？並行查詢如何提升 RAG 檢索品質","item":"https://claire-chang.com/post/rag-parallel-queries/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/rag-parallel-queries/#article","headline":"RAG Parallel Queries 是什麼？並行查詢如何提升 RAG 檢索品質","description":"RAG Parallel Queries 透過把原始查詢拆成多個子查詢並行檢索，一次從多個數據源取得資訊。本文介紹其優點、工作流程，以及「子查詢結果作為上下文」與 Prio-reasoning 兩種實現方法。","image":"https://claire-chang.com/images/tech/hero_rag-parallel-queries.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-11-11","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/rag-parallel-queries/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"RAG, LLM, Multi-Query Retrieval, LlamaIndex, 檢索增強生成","about":[{"@type":"Thing","name":"RAG"},{"@type":"Thing","name":"LLM"},{"@type":"Thing","name":"檢索增強生成"}],"mentions":[{"@type":"Thing","name":"Multi-Query Retrieval"},{"@type":"Thing","name":"LlamaIndex"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/rag-parallel-queries/#faq","mainEntity":[{"@type":"Question","name":"RAG Parallel Queries 和多查詢檢索（Multi-Query Retrieval）有什麼差別？","acceptedAnswer":{"@type":"Answer","text":"兩者都會把原始查詢拆成多個子查詢並分別檢索。差別在於 Parallel Queries 更強調「並行」處理與高層次的結果整合，跳過逐一呈現檢索細節，直接產生一個全局性的總結答案。"}},{"@type":"Question","name":"什麼時候該用「子查詢結果作為上下文」的方法？","acceptedAnswer":{"@type":"Answer","text":"當你的問題是綜合性、需要跨多個面向彙整答案時，這種方法最合適。它把原始查詢與所有子查詢結果整合成新的上下文，一次產生完整的總結，而不是一堆獨立的片段回應。"}},{"@type":"Question","name":"Prio-reasoning 和 RIG 該怎麼選？","acceptedAnswer":{"@type":"Answer","text":"如果你的查詢需要多步推理、依賴先前結果逐步累積資訊，選 Prio-reasoning（例如 LlamaIndex 的 MultiStepQueryEngine）。如果情境需要即時、動態地在檢索與生成之間交替，RIG 會更靈活。"}},{"@type":"Question","name":"使用 Parallel Queries 會不會增加成本？","acceptedAnswer":{"@type":"Answer","text":"會。因為每個子查詢都要獨立進行檢索（甚至呼叫 LLM 生成子查詢），查詢次數與 token 用量都會增加。但換來的是更全面的資訊與更好的答案品質，對複雜問題通常值得。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_rag-parallel-queries.webp" alt="由多個立方體節點與連線組成的網路結構，象徵多個查詢並行檢索與資訊匯聚" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-11-11">2024-11-11</time></span><span class="post-meta-pill">RAG · LLM · Multi-Query Retrieval · LlamaIndex · 檢索增強生成</span></div></div><h1 class="insights-hero-title">RAG Parallel Queries 是什麼？並行查詢如何提升 RAG 檢索品質</h1><p class="insights-hero-description">RAG Parallel Queries 透過把原始查詢拆成多個子查詢並行檢索，一次從多個數據源取得資訊。本文介紹其優點、工作流程，以及「子查詢結果作為上下文」與 Prio-reasoning 兩種實現方法。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>RAG Parallel Queries 把一個複雜查詢拆成多個子查詢，同時向多個數據源並行發出檢索請求，再將結果聚合生成答案。這篇文章說明它的優點、完整工作流程，以及兩種常見的實現策略，幫你判斷哪一種適合自己的 RAG 系統。</p>
+</div><section aria-labelledby="rag-parallel-queries-是什麼"><h2 id="rag-parallel-queries-是什麼">RAG Parallel Queries 是什麼？</h2>
+<p>RAG（Retrieval Augmented Generation）是一種結合了搜尋和生成能力的人工智慧技術。簡單來說，就是當你向 RAG 模型提出一個問題時，它會先去搜尋相關的資料，然後再根據這些資料生成一個最符合問題的答案。</p>
+<p>而 Parallel Queries 則是 RAG 的一種執行方式，它允許模型同時向多個數據源發出查詢請求，並並行處理這些請求的結果。這就像我們同時在多個搜索引擎上搜索一樣，可以大大提高找到相關資訊的效率。</p>
+<p>這種模式是基於使用原始查詢來生成多個「相似」的子查詢，這些子查詢可以被用來增強查詢的上下文，從而提高原始查詢的信息檢索效果。</p>
+<p>系統會針對相似但略有不同的查詢進行多次獨立的檢索，並行處理各個查詢的結果，並將相關資訊聚合展示，方便使用者快速比較和選擇不同來源的答案。</p>
+</section><section aria-labelledby="rag-parallel-queries-有哪些優點"><h2 id="rag-parallel-queries-有哪些優點">RAG Parallel Queries 有哪些優點？</h2>
+<ul>
+<li><strong>效率提升：</strong> 並行查詢可以縮短查詢時間，讓模型更快地生成答案。</li>
+<li><strong>資訊更全面：</strong> 查詢多個數據源可以獲取更豐富、更全面的資訊，從而生成更準確、更有深度的答案。</li>
+<li><strong>可擴展性強：</strong> 可以輕鬆地添加新的數據源，以擴展模型的知識範圍。</li>
+</ul>
+</section><section aria-labelledby="rag-parallel-queries-的工作流程是什麼"><h2 id="rag-parallel-queries-的工作流程是什麼">RAG Parallel Queries 的工作流程是什麼？</h2>
+<ol>
+<li><strong>接收問題：</strong> 使用者提出一個問題。</li>
+<li><strong>並行查詢：</strong> 模型將問題拆分成多個子問題，並同時向多個數據源發出查詢請求。</li>
+<li><strong>獲取結果：</strong> 各個數據源返回查詢結果。</li>
+<li><strong>結果融合：</strong> 模型對所有查詢結果進行整合和排序，選取最相關的資訊。</li>
+<li><strong>生成答案：</strong> 模型根據選取的資訊，生成一個最符合問題的答案。</li>
+</ol>
+</section><section aria-labelledby="實現方法一-把每個子查詢的結果視為新的查詢-上下文"><h2 id="實現方法一-把每個子查詢的結果視為新的查詢-上下文">實現方法一：把每個子查詢的結果視為新的查詢「上下文」</h2>
+<p>將子查詢和相應的答案，以及原始查詢本身的檢索，作為查詢的「上下文」。這類似於<a href="https://teetracker.medium.com/langchain-llama-index-rag-with-multi-query-retrieval-4e7df1a62f83" target="_blank" rel="noopener noreferrer">多查詢檢索</a>，但不同之處在於跳過檢索細節，直接在<strong>更高的層次</strong>上討論。</p>
+<p>也就是將<strong>原始查詢</strong>和<strong>每個子查詢的結果</strong>視為新的查詢「上下文」，進行更高層次的查詢和生成。這種方法類似於「多查詢檢索」（Multi-Query Retrieval），但跳過了檢索過程中的細節，而是將重點放在更高層次的資訊整合和討論上。以下是詳細解釋：</p>
+<h3>方法概述</h3>
+<ol>
+<li><strong>原始查詢與子查詢</strong>
+<ul>
+<li>當有一個複雜的查詢時，系統會將這個查詢拆分成多個子查詢，每個子查詢針對不同的面向或需求。</li>
+<li>每個子查詢會返回相應的答案，這些答案構成了該子查詢的「結果」。</li>
+</ul>
+</li>
+<li><strong>作為「上下文」的多層次資訊</strong>
+<ul>
+<li>這種方法並不是單純地返回每個子查詢的答案，而是將<strong>原始查詢</strong>、<strong>所有子查詢</strong>以及它們的<strong>結果</strong>整合起來，作為新的「上下文」。</li>
+<li>這個「上下文」包含了原始查詢的主要目標和子查詢的具體細節，但並不逐一呈現每次檢索的細節。也就是說，它跳過了子查詢檢索過程中的技術細節，而是關注在更高層次上的總結和整體討論。</li>
+</ul>
+</li>
+<li><strong>與多查詢檢索的異同</strong>
+<ul>
+<li>在「多查詢檢索」中，通常會為每個子查詢進行獨立的檢索，並直接將檢索結果（包括相關細節）返回給用戶。</li>
+<li>而這種策略的不同之處在於，它不逐一展示每個子查詢的檢索過程，而是將最終的子查詢結果和原始查詢的意圖整合成一個更高層次的回答或總結。這種方法更適合用來回答綜合性問題，因為它能夠提供一個「全局性的答案」，而不是一系列獨立的回應。</li>
+</ul>
+</li>
+</ol>
+<h3>實際範例</h3>
+<p>假設用戶的原始查詢是：「如何在大型組織中實施遠端工作政策？」</p>
+<ol>
+<li>系統拆分為幾個子查詢，如：
+<ol>
+<li>遠端工作的技術需求是什麼？</li>
+<li>遠端工作政策對公司文化的影響？</li>
+<li>如何確保遠端工作的安全性？</li>
+</ol>
+</li>
+<li>每個子查詢會得到獨立的答案：
+<ul>
+<li>子查詢 1 的答案可能涉及遠端工作所需的軟硬體。</li>
+<li>子查詢 2 的答案可能涉及到員工的合作和溝通方式。</li>
+<li>子查詢 3 的答案則可能是有關網絡安全和資料保護。</li>
+</ul>
+</li>
+<li><strong>在更高層次的整合</strong>：系統會將原始查詢和所有子查詢的答案整合起來，並產生一個總結性的答案，例如：「要在大型組織中成功實施遠端工作政策，企業需準備合適的技術支持、制定安全的遠端工作流程，同時考量遠端工作的文化影響……」</li>
+</ol>
+<p>這樣一來，用戶得到的是一個完整的、全局性的答案，而不是單獨呈現每個子查詢的答案。這種方法更適合處理需要綜合理解的問題。</p>
+</section><section aria-labelledby="實現方法二-prio-reasoning"><h2 id="實現方法二-prio-reasoning">實現方法二：Prio-reasoning</h2>
+<p>另一種方法是類似於 Prio-reasoning，每個子查詢的結果會被存儲在一個「記憶」中，並且每個子查詢的問題不僅基於自己的檢索結果，還基於之前子查詢的結果。</p>
+<p><strong>MultiStepQueryEngine</strong> 的 <strong>Llama-Index</strong> 也是一種「Prio-reasoning」實現。</p>
+<ul>
+<li><strong>逐步查詢與記憶</strong>：在 Prio-reasoning 中，每個子查詢的結果會被存儲在一個「記憶」中，這個「記憶」會被用來輔助後續的查詢和推理。</li>
+<li><strong>基於上下文累積的查詢</strong>：每個子查詢的問題不僅依賴當前的檢索結果，還會參考之前查詢的結果來生成新的查詢。這樣可以利用之前獲得的資訊，逐步推進答案的完整性和精確性。</li>
+<li><strong>多步推理</strong>：Prio-reasoning 可以根據用戶的查詢逐步檢索多層次的資訊，適合處理複雜的問題，因為每一輪查詢都建立在之前的結果基礎上，使得系統能夠進行更深入的推理。</li>
+</ul>
+<p>在 Prio-reasoning 中，每個子查詢的結果都存儲在「記憶」中，這些記憶會在每輪查詢時被用作上下文。RIG 以及 Prio-reasoning 都特別適合處理需要多步推理的查詢，例如需要不同層次資訊、跨主題的複雜問題。因為每一步的查詢都建立在之前的結果上，所以能逐步產生符合查詢需求的答案。</p>
+<h3>與 RIG 的不同點</h3>
+<p>Prio-reasoning 和 RIG 都屬於多步推理和動態查詢的策略，兩者都利用前一步的資訊來指導下一步的檢索，但 Prio-reasoning 更加強調「記憶」的持續累積，而 RIG 更注重「交替檢索和生成」。</p>
+<p><strong>記憶機制的側重點</strong>：</p>
+<ul>
+<li>在 Prio-reasoning 中，每個子查詢的結果會存入「記憶」，這樣的設計使得系統可以累積並調用之前的查詢結果。</li>
+<li>而 RIG 更像是一種「交替的檢索-生成」過程，並沒有專門的「記憶」模組，主要依賴的是當前生成的內容來引導下一輪檢索。</li>
+</ul>
+<p><strong>系統結構和實現</strong>：</p>
+<ul>
+<li>Prio-reasoning 是建立在 MultiStepQueryEngine 中的，這個引擎強調持續累積查詢結果並利用這些記憶進行推理。</li>
+<li>RIG 則更加靈活和即時化，強調根據每一輪生成的內容來動態進行檢索調整，而不一定需要將所有歷史結果保存下來。</li>
+</ul>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RAG Parallel Queries 和多查詢檢索（Multi-Query Retrieval）有什麼差別？</span></h3>
+<p>兩者都會把原始查詢拆成多個子查詢並分別檢索。差別在於 Parallel Queries 更強調「並行」處理與高層次的結果整合，跳過逐一呈現檢索細節，直接產生一個全局性的總結答案。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼時候該用「子查詢結果作為上下文」的方法？</span></h3>
+<p>當你的問題是綜合性、需要跨多個面向彙整答案時，這種方法最合適。它把原始查詢與所有子查詢結果整合成新的上下文，一次產生完整的總結，而不是一堆獨立的片段回應。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Prio-reasoning 和 RIG 該怎麼選？</span></h3>
+<p>如果你的查詢需要多步推理、依賴先前結果逐步累積資訊，選 Prio-reasoning（例如 LlamaIndex 的 MultiStepQueryEngine）。如果情境需要即時、動態地在檢索與生成之間交替，RIG 會更靈活。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>使用 Parallel Queries 會不會增加成本？</span></h3>
+<p>會。因為每個子查詢都要獨立進行檢索（甚至呼叫 LLM 生成子查詢），查詢次數與 token 用量都會增加。但換來的是更全面的資訊與更好的答案品質，對複雜問題通常值得。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://medium.com/@kbdhunga/advanced-rag-multi-query-retriever-approach-ad8cd0ea0f5b" target="_blank" rel="noopener noreferrer">Advanced RAG: Multi-Query Retriever Approach</a></li>
+<li><a href="https://teetracker.medium.com/rag-with-multi-query-pattern-7272deb3401a" target="_blank" rel="noopener noreferrer">RAG with Multi-Query pattern</a></li>
+<li><a href="https://teetracker.medium.com/langchain-llama-index-rag-with-multi-query-retrieval-4e7df1a62f83" target="_blank" rel="noopener noreferrer">LangChain / LlamaIndex: RAG with Multi-Query Retrieval</a></li>
+<li><a href="https://teetracker.medium.com/prio-reasoning-919fd6e90d86" target="_blank" rel="noopener noreferrer">Prio-reasoning</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/retrieval-augmented-llm">檢索增強生成（RAG）與 RETA-LLM 框架完整解析</a>：同樣聚焦 RAG、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/graph-rag">Graph RAG：圖形式的檢索增強生成完整解析</a>：同樣聚焦 RAG、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/retrieval-augmented-generation">檢索增強生成（RAG）如何讓 LLM 回答更準確</a>：同樣聚焦 RAG、檢索增強生成，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2024-11-11，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-11-11</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

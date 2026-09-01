@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stage3D 運作原理：Flash 如何用 GPU 完成 3D 渲染？｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 Stage3D 如何把 Flash 3D 渲染從 CPU 軟體模式轉到 GPU 硬體加速，並整理 rendering pipeline、shader、Stage3D 與 Display List 的層級關係。" />
+<meta name="keywords" content="前端開發, Stage3D, ActionScript, Flash, GPU, 3D渲染" />
+<link rel="canonical" href="https://claire-chang.com/post/stage3d-rendering-principles/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Stage3D 運作原理：Flash 如何用 GPU 完成 3D 渲染？｜Claire Chang" />
+<meta property="og:description" content="說明 Stage3D 如何把 Flash 3D 渲染從 CPU 軟體模式轉到 GPU 硬體加速，並整理 rendering pipeline、shader、Stage3D 與 Display List 的層級關係。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/stage3d-rendering-principles/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/stage3d-programmable-pipeline-35fa43c0.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/stage3d-programmable-pipeline-35fa43c0.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Stage3D 運作原理：Flash 如何用 GPU 完成 3D 渲染？｜Claire Chang" />
+<meta name="twitter:description" content="說明 Stage3D 如何把 Flash 3D 渲染從 CPU 軟體模式轉到 GPU 硬體加速，並整理 rendering pipeline、shader、Stage3D 與 Display List 的層級關係。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/stage3d-programmable-pipeline-35fa43c0.jpg" />
+<meta property="article:published_time" content="2014-01-30" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Stage3D" />
+<meta property="article:tag" content="ActionScript" />
+<meta property="article:tag" content="Flash" />
+<meta property="article:tag" content="GPU" />
+<meta property="article:tag" content="3D渲染" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Stage3D 運作原理：Flash 如何用 GPU 完成 3D 渲染？","item":"https://claire-chang.com/post/stage3d-rendering-principles/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/stage3d-rendering-principles/#article","headline":"Stage3D 運作原理：Flash 如何用 GPU 完成 3D 渲染？","description":"說明 Stage3D 如何把 Flash 3D 渲染從 CPU 軟體模式轉到 GPU 硬體加速，並整理 rendering pipeline、shader、Stage3D 與 Display List 的層級關係。","image":"https://claire-chang.com/images/tech/stage3d-programmable-pipeline.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2014-01-30","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/stage3d-rendering-principles/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Stage3D, ActionScript, Flash, GPU, 3D渲染","about":[{"@type":"Thing","name":"GPU"},{"@type":"Thing","name":"3D渲染"}],"mentions":[{"@type":"Thing","name":"Stage3D"},{"@type":"Thing","name":"ActionScript"},{"@type":"Thing","name":"Flash"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/stage3d-rendering-principles/#faq","mainEntity":[{"@type":"Question","name":"Stage3D 是什麼？","acceptedAnswer":{"@type":"Answer","text":"Stage3D 是 Adobe 在 Flash Player 11 和 AIR 3 後提供的底層 3D 繪圖 API。Stage3D 讓 Flash/AIR 應用可以把頂點、三角形、紋理與 shader 資料交給 GPU 處理。"}},{"@type":"Question","name":"Stage3D 一定只能做 3D 嗎？","acceptedAnswer":{"@type":"Answer","text":"Stage3D 不只用於 3D 場景，也常被 2D 渲染框架拿來加速 2D 畫面。Starling Framework 就是建立在 Stage3D 上的 2D 框架，透過 GPU 繪製三角形與材質來呈現 2D 遊戲物件。"}},{"@type":"Question","name":"Stage3D 和 WebGL 有什麼相似之處？","acceptedAnswer":{"@type":"Answer","text":"Stage3D 和 WebGL 都讓開發者透過瀏覽器或執行環境使用 GPU 加速渲染。兩者都需要理解頂點、紋理、shader 與 rendering pipeline，但 Stage3D 屬於 Flash/AIR 生態，WebGL 則屬於現代瀏覽器標準。"}},{"@type":"Question","name":"為什麼 Stage3D 比 Flash Player 10 的軟體渲染快？","acceptedAnswer":{"@type":"Answer","text":"Stage3D 把大量頂點、三角形與像素運算交給 GPU。GPU 專門為圖形渲染設計，能平行處理許多重複圖形計算；Flash Player 10 的軟體渲染則主要依賴 CPU，CPU 是通用處理器，沒有針對 3D 三角形渲染最佳化。"}},{"@type":"Question","name":"Stage3D 的 shader 有什麼限制？","acceptedAnswer":{"@type":"Answer","text":"Stage3D 的 shader 能力受跨平台抽象層限制，通常不能直接使用高階 shader model 的全部特性。AGAL 程式較適合寫短小、穩定、跨平台的頂點與片段著色邏輯。"}},{"@type":"Question","name":"Stage3D 能和傳統 Flash DisplayObject 混用嗎？","acceptedAnswer":{"@type":"Answer","text":"Stage3D 可以和傳統 Flash DisplayObject 共存在同一個應用裡，但兩者不是任意混合。Stage3D 內容位於主舞台後方，Flash Display List 會疊在 Stage3D 上方，這適合做「3D 場景加 2D UI」的結構。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/stage3d-programmable-pipeline.webp" alt="Stage3D 可編程圖形渲染管線流程圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2014-01-30">2014-01-30</time></span><span class="post-meta-pill">Stage3D · ActionScript · Flash · GPU · 3D渲染</span></div></div><h1 class="insights-hero-title">Stage3D 運作原理：Flash 如何用 GPU 完成 3D 渲染？</h1><p class="insights-hero-description">說明 Stage3D 如何把 Flash 3D 渲染從 CPU 軟體模式轉到 GPU 硬體加速，並整理 rendering pipeline、shader、Stage3D 與 Display List 的層級關係。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Stage3D 是 Flash Player 11 與 AIR 3 之後提供的底層 3D 繪圖 API，核心價值是讓 Flash 應用把 3D 場景資料交給 GPU 渲染，而不是讓 CPU 用軟體模式逐一計算三角形。對 Flash 遊戲與互動應用來說，Stage3D 讓即時 3D、複雜模型、著色器效果與 2D 介面疊加變得可行。</p>
+<p>這篇整理自 Adobe 的 How Stage3D works，並保留原先對 Flash 3D、GPU、rendering pipeline 與舞台層級的說明脈絡。</p>
+</div><section aria-labelledby="stage3d-為什麼是-flash-3d-技術的突破"><h2 id="stage3d-為什麼是-flash-3d-技術的突破">Stage3D 為什麼是 Flash 3D 技術的突破？</h2>
+<p>Stage3D 的突破在於 Flash 可以直接使用 GPU 做 3D 硬體加速。Flash Player 11 以前的 3D 引擎多半靠 CPU 軟體渲染，效能與畫面精細度都受到明顯限制。</p>
+<p>在 Stage3D 出現以前，Flash 開發者已經用 Papervision3D、Away3D、Alternativa3D 等工具做出不少 3D 應用。這些引擎證明 Flash 社群對即時 3D 有強烈需求，但渲染能力仍受限於當時的 Flash Player。</p>
+<p>早期 Flash 3D 多半不使用 3D 硬體加速，而是依靠 CPU 完成渲染，也就是常說的 software mode。software mode 可以做出基礎 3D 效果，但速度慢，不適合呈現細緻場景，也難以支撐 3D 遊戲常見的高階圖形效果。</p>
+<p>Flash Player 11 發布後，Stage3D API 讓開發者可以把 3D 渲染交給圖形處理單元（Graphics Processing Unit，GPU）。GPU 是專門為圖形渲染設計的硬體，能快速處理頂點、三角形、紋理與像素運算，因此 Stage3D 對 Flash 開發者是一次很大的技術分界。</p>
+</section><section aria-labelledby="3d-硬體加速和-cpu-軟體模式差在哪裡"><h2 id="3d-硬體加速和-cpu-軟體模式差在哪裡">3D 硬體加速和 CPU 軟體模式差在哪裡？</h2>
+<p>3D 硬體加速把幾何資料與渲染參數上傳到 GPU，由 GPU 完成主要繪製工作。CPU 軟體模式則由處理器逐步計算三角形位置與填色，三角形數量一多就容易卡住。</p>
+<p>一般 3D 場景可以被定義為一組 3D 幾何形狀，也就是 mesh。每個 mesh 由許多三角形組成，每個三角形再由 3 個頂點組成。換句話說，一個 3D 場景需要描述頂點集合、三角形索引、紋理、頂點著色與其他渲染資訊。</p>
+<p>在 Flash Player 10 以前的 software mode 裡，Away3D 這類 3D 引擎會接收頂點流，計算三角形在螢幕上的位置，再透過 <code>drawTriangles()</code>、<code>fill()</code> 等操作讓 Flash Player 把三角形畫到舞台上。即使 3D 引擎寫得很好，這個過程仍然很慢。</p>
+<p>software mode 還有一個問題：3D 內容通常以三角形為最小呈現單位，而不是以像素為單位處理深度。這容易造成 depth sorting error，讓三角形出現在錯誤位置或錯誤深度上。來源內容提到，在可接受的腳本幀率下，Flash Player 10 software mode 通常只能呈現約 4,000 個三角形。</p>
+<p>使用 Stage3D 後，開發者只需要定義幾何形狀，將資料上傳到 GPU 的顯示記憶體，由 GPU 處理頂點流並渲染三角形。應用程式仍然需要指定攝影機位置、燈光位置與其他渲染細節，但大量重複的圖形計算會在顯卡硬體內完成。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>比較項目</th><th>CPU 軟體模式</th><th>Stage3D GPU 硬體加速</th></tr></thead><tbody><tr><td>主要運算位置</td><td>CPU</td><td>GPU</td></tr><tr><td>常見繪製方式</td><td><code>drawTriangles()</code>、<code>fill()</code> 等 Flash 繪圖操作</td><td>上傳頂點、索引、紋理與 shader 資料到 GPU</td></tr><tr><td>深度處理</td><td>容易受三角形排序限制</td><td>可使用 GPU 管線中的深度緩衝測試</td></tr><tr><td>適合場景</td><td>少量 3D、簡單效果</td><td>即時 3D、遊戲場景、大量三角形</td></tr><tr><td>來源內容提到的規模</td><td>約 4,000 個三角形</td><td>幾百萬個三角形並不少見</td></tr></tbody></table></div>
+</section><section aria-labelledby="3d-rendering-pipeline-在-stage3d-裡扮演什麼角色"><h2 id="3d-rendering-pipeline-在-stage3d-裡扮演什麼角色">3D rendering pipeline 在 Stage3D 裡扮演什麼角色？</h2>
+<p>3D rendering pipeline 負責把場景資料轉成螢幕上的像素。Stage3D 背後的 GPU 會依序處理頂點轉換、裁切、光柵化、貼圖、混合與深度測試等工作。</p>
+<p>3D rendering pipeline 可以想成一條資料處理流水線。GPU 在邏輯上由多個功能區塊組成，每個區塊負責一種基本資料操作；上一個區塊的輸出會變成下一個區塊的輸入。</p>
+<p>最早期的 3D 圖形渲染管線被稱為 fixed-function pipeline，也就是固定功能管線。固定功能管線不可由開發者自由編寫，只會把輸入的形狀資料依照預先設計好的流程處理成最終圖像。</p>
+<figure class="article-figure"><img src="/images/tech/stage3d-fixed-function-pipeline.webp" alt="固定功能圖形渲染管線流程圖" loading="lazy" class="markdown-img"></figure>
+<p>固定功能管線的輸入通常包含頂點集合、三角形、紋理資料、3D 場景的位置與方向、攝影機的位置與方向、光線的顏色、位置、強度，以及其他控制渲染方式的參數。</p>
+<p>固定功能管線會先透過 transform and lighting 區塊，把頂點集合從模型本地座標轉換成螢幕舞台座標，並處理頂點照明。接著 viewport clipping 會裁切不在可見範圍內的場景資料。處理完的資料再進入 rasterizer，進行 texture mapping、霧化、alpha blending 與 depth buffer test。</p>
+<p>固定功能管線使用多年，但缺點也很明顯：光照和材質效果容易受限於預設模型，例如 Gouraud shading 和 Phong shading。當所有開發者都只能使用相似的預設渲染流程，畫面風格也容易變得相似。</p>
+</section><section aria-labelledby="可編程管線和-shader-改變了什麼"><h2 id="可編程管線和-shader-改變了什麼">可編程管線和 shader 改變了什麼？</h2>
+<p>可編程圖形渲染管線讓開發者能用 shader 影響頂點與像素呈現。Vertex Shader 控制頂點轉換，Fragment Shader 控制每個像素的顏色與效果。</p>
+<p>隨著 GPU 技術發展，programmable graphics pipeline 取代了僵硬的固定功能管線。Stage3D 使用的概念也朝這個方向靠攏：開發者可以撰寫 shader 程式碼，讓渲染流程不再只能依賴預設模型。</p>
+<figure class="article-figure"><img src="/images/tech/stage3d-programmable-pipeline.webp" alt="可編程圖形渲染管線流程圖" loading="lazy" class="markdown-img"></figure>
+<p>Vertex Shader 會影響頂點轉換與變形，例如模型位置、骨骼動畫與座標投影。Fragment Shader 則會影響三角形內每個像素的顏色、貼圖、光照與特殊效果。</p>
+<p>shader 帶來的改變很大。開發者可以用自訂光照取代預設管線照明模型，也能做出陰影、骨骼加速、特殊材質、後製效果等過去 Flash 3D 很難自然達成的畫面。</p>
+</section><section aria-labelledby="使用-stage3d-有哪些優勢"><h2 id="使用-stage3d-有哪些優勢">使用 Stage3D 有哪些優勢？</h2>
+<p>Stage3D 的優勢是把 GPU 加速、多平台部署與 Flash 2D 製作能力放在同一個開發模型裡。開發者可以做 3D 背景，也可以把 3D 內容嵌入傳統 2D 介面。</p>
+<p>直接用 DirectX 或 OpenGL 開發 3D 應用並不簡單。畫出一個三角形很容易，但用 C++ 建立完整 3D 應用，需要理解顯示卡差異、硬體特性、平台限制與大量細節調校。</p>
+<p>原生 3D API 通常更接近硬體。這代表開發者能壓榨特定 GPU 的能力，也代表專案必須針對不同顯示卡與驅動程式做測試與調整。遊戲開發商常需要同時考慮 NVIDIA、ATI/AMD 等不同顯示卡行為，這正是原生 3D 開發的現實成本。</p>
+<p>Stage3D 採取不同路線。開發者面向 <code>Context3D</code>、<code>Program3D</code> 等 Stage3D 物件編程，讓同一套 Flash/AIR 應用可以運行在支援 Flash Player 或 AIR 的平台上。這種抽象層讓 Stage3D 比 DirectX、OpenGL 更容易使用，也讓 Flash 既有的 2D UI 製作能力能繼續保留。</p>
+<p>實務上，Stage3D 可以讓 3D 場景成為背景，也可以把 3D 物件嵌入既有 2D 內容。傳統 2D 顯示物件能繼續負責按鈕、文字、介面與遊戲 UI，Stage3D 則專心負責高效能 3D 畫面。</p>
+<p>Stage3D 也能用在 AIR 應用裡。這表示開發者可以用 Stage3D 建立桌面 3D 應用，也可以把相同概念帶到 iOS 和 Android 上的 AIR 專案。</p>
+</section><section aria-labelledby="stage3d-有哪些限制"><h2 id="stage3d-有哪些限制">Stage3D 有哪些限制？</h2>
+<p>Stage3D 的限制來自跨平台抽象層。為了讓同一套 API 跑在多種硬體與平台上，Stage3D 只能使用各裝置共有的 GPU 能力，無法完整開放最新硬體特性。</p>
+<p>Stage3D 的多平台能力是優勢，也是限制來源。為了讓應用能在不同平台運作，Stage3D 必須抽象出一個共通的 3D 硬體設備，而這個抽象層只能包含多數硬體都能支援的功能。</p>
+<p>來源內容提到，當時現代 GPU 已經支援 Shader Model 4.0，但 Stage3D 主要對應 Shader Model 2.0 等級的能力。這代表 Stage3D 開發者會遇到 shader 暫存器數量、opcode 長度、迴圈與條件語義等限制。</p>
+<p>例如 Stage3D 使用的 Adobe Graphics Assembly Language（AGAL）可用暫存器相當有限，shader 程式長度也不能像 Shader Model 4.0 那樣寫到很複雜。Stage3D 適合撰寫相對簡單、跨平台穩定的 shader，不適合直接移植 AAA 遊戲裡依賴高階 shader model 的效果。</p>
+<p>另外，Stage3D 也可能受特定晶片、驅動程式或平台支援狀態影響。這類限制在 Flash Player 11 與 AIR 3 年代尤其需要測試，不能只靠開發機順跑就假設所有使用者裝置都能正常運作。</p>
+</section><section aria-labelledby="stage3d-和-flash-display-list-的層級關係是什麼"><h2 id="stage3d-和-flash-display-list-的層級關係是什麼">Stage3D 和 Flash Display List 的層級關係是什麼？</h2>
+<p>Stage3D 位於主 Flash 舞台後方，傳統 2D Display List 會顯示在 Stage3D 內容上方。這種層級設計讓 3D 場景可以當背景，2D UI 則保留在最上層。</p>
+<p>Stage3D 可以被理解成舞台背後的舞台。每個 Stage3D 都會在自己的矩形視野中渲染 3D 內容，而一般 Flash 2D 顯示物件會顯示在 Stage3D 內容之上。</p>
+<figure class="article-figure"><img src="/images/tech/stage3d-stage-layers.webp" alt="Stage3D、Display List 與 StageVideo 的層級關係" loading="lazy" class="markdown-img"></figure>
+<p>開發者可以使用多個 Stage3D。每個 Stage3D 都有自己的矩形 viewport，也就是 <code>width</code>、<code>height</code>、<code>x</code>、<code>y</code>。因此畫面上可以有多個不同區域各自渲染 3D 內容，再讓傳統 2D Display List 疊在最上層。</p>
+<p>Stage3D 和 StageVideo 層可以部分重疊，甚至完全重疊。不過早期 Stage3D 版本不支援層與層之間的混合模式，因此上層 Stage3D 會覆蓋下層 Stage3D，只能看到頂層內容，以及底下沒有被遮住的部分。</p>
+<p>這個層級模型對 Flash 遊戲很實用：3D 場景使用硬體加速渲染，分數、按鈕、選單、對話框等 UI 仍然可以用 Flash 熟悉的 2D 工具製作。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Stage3D 是什麼？</span></h3>
+<p>Stage3D 是 Adobe 在 Flash Player 11 和 AIR 3 後提供的底層 3D 繪圖 API。Stage3D 讓 Flash/AIR 應用可以把頂點、三角形、紋理與 shader 資料交給 GPU 處理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Stage3D 一定只能做 3D 嗎？</span></h3>
+<p>Stage3D 不只用於 3D 場景，也常被 2D 渲染框架拿來加速 2D 畫面。Starling Framework 就是建立在 Stage3D 上的 2D 框架，透過 GPU 繪製三角形與材質來呈現 2D 遊戲物件。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Stage3D 和 WebGL 有什麼相似之處？</span></h3>
+<p>Stage3D 和 WebGL 都讓開發者透過瀏覽器或執行環境使用 GPU 加速渲染。兩者都需要理解頂點、紋理、shader 與 rendering pipeline，但 Stage3D 屬於 Flash/AIR 生態，WebGL 則屬於現代瀏覽器標準。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼 Stage3D 比 Flash Player 10 的軟體渲染快？</span></h3>
+<p>Stage3D 把大量頂點、三角形與像素運算交給 GPU。GPU 專門為圖形渲染設計，能平行處理許多重複圖形計算；Flash Player 10 的軟體渲染則主要依賴 CPU，CPU 是通用處理器，沒有針對 3D 三角形渲染最佳化。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Stage3D 的 shader 有什麼限制？</span></h3>
+<p>Stage3D 的 shader 能力受跨平台抽象層限制，通常不能直接使用高階 shader model 的全部特性。AGAL 程式較適合寫短小、穩定、跨平台的頂點與片段著色邏輯。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Stage3D 能和傳統 Flash DisplayObject 混用嗎？</span></h3>
+<p>Stage3D 可以和傳統 Flash DisplayObject 共存在同一個應用裡，但兩者不是任意混合。Stage3D 內容位於主舞台後方，Flash Display List 會疊在 Stage3D 上方，這適合做「3D 場景加 2D UI」的結構。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Adobe, How Stage3D works：<a href="https://www.adobe.com/devnet/flashplayer/articles/how-stage3d-works.html" target="_blank" rel="noopener noreferrer">https://www.adobe.com/devnet/flashplayer/articles/how-stage3d-works.html</a></li>
+<li>Adobe HelpX, Stage3D unsupported chipsets and drivers：<a href="https://helpx.adobe.com/x-productkb/multi/stage3d-unsupported-chipsets-drivers-flash.html" target="_blank" rel="noopener noreferrer">https://helpx.adobe.com/x-productkb/multi/stage3d-unsupported-chipsets-drivers-flash.html</a></li>
+<li>初探 Stage3D（一）3D 渲染基礎原理：<a href="https://www.cnblogs.com/eran/archive/2012/12/14/Stage3D_1.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/eran/archive/2012/12/14/Stage3D_1.html</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/starling-presentation-share">Starling 簡報分享：Stage3D 與 GPU 加速的 Flash 3D 渲染入門</a>：同樣聚焦 Stage3D、Flash，可接著比較不同情境的做法。</li>
+<li><a href="/post/starling-stage3d-presentation">Starling簡報分享：基於Stage3D的GPU加速2D渲染框架入門</a>：同樣聚焦 Stage3D、ActionScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/starling-framework-intro">Starling Framework簡介</a>：同樣聚焦 ActionScript、Stage3D，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2014-01-30</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

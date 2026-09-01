@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用 OpenCV 找出圖片中的紅色區塊｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="用 OpenCV 找出圖片中的紅色區塊：透過 BGR 轉 HSV 色域、inRange 建立紅色遮罩，再用 findContours 輪廓找出目標位置與中心點。附完整 Python 範例程式碼與 HSV 參數調整心得。" />
+<meta name="keywords" content="機器學習, OpenCV, HSV, 影像處理, Python, 遮罩" />
+<link rel="canonical" href="https://claire-chang.com/post/opencv-detect-red-region/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="使用 OpenCV 找出圖片中的紅色區塊｜Claire Chang" />
+<meta property="og:description" content="用 OpenCV 找出圖片中的紅色區塊：透過 BGR 轉 HSV 色域、inRange 建立紅色遮罩，再用 findContours 輪廓找出目標位置與中心點。附完整 Python 範例程式碼與 HSV 參數調整心得。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/opencv-detect-red-region/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_opencv-detect-red-region-3fa979eb.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_opencv-detect-red-region-3fa979eb.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="使用 OpenCV 找出圖片中的紅色區塊｜Claire Chang" />
+<meta name="twitter:description" content="用 OpenCV 找出圖片中的紅色區塊：透過 BGR 轉 HSV 色域、inRange 建立紅色遮罩，再用 findContours 輪廓找出目標位置與中心點。附完整 Python 範例程式碼與 HSV 參數調整心得。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_opencv-detect-red-region-3fa979eb.jpg" />
+<meta property="article:published_time" content="2022-12-16" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="OpenCV" />
+<meta property="article:tag" content="HSV" />
+<meta property="article:tag" content="影像處理" />
+<meta property="article:tag" content="Python" />
+<meta property="article:tag" content="遮罩" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"使用 OpenCV 找出圖片中的紅色區塊","item":"https://claire-chang.com/post/opencv-detect-red-region/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/opencv-detect-red-region/#article","headline":"使用 OpenCV 找出圖片中的紅色區塊","description":"用 OpenCV 找出圖片中的紅色區塊：透過 BGR 轉 HSV 色域、inRange 建立紅色遮罩，再用 findContours 輪廓找出目標位置與中心點。附完整 Python 範例程式碼與 HSV 參數調整心得。","image":"https://claire-chang.com/images/tech/hero_opencv-detect-red-region.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2022-12-16","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/opencv-detect-red-region/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"OpenCV, HSV, 影像處理, Python, 遮罩","about":[{"@type":"Thing","name":"影像處理"},{"@type":"Thing","name":"遮罩"}],"mentions":[{"@type":"Thing","name":"OpenCV"},{"@type":"Thing","name":"HSV"},{"@type":"Thing","name":"Python"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/opencv-detect-red-region/#faq","mainEntity":[{"@type":"Question","name":"為什麼紅色需要兩個 HSV 區間？","acceptedAnswer":{"@type":"Answer","text":"因為 OpenCV 的 H 分量範圍是 0–180，紅色正好橫跨環的兩端（接近 0 和接近 180），單一區間會漏掉其中一側，所以要用兩個 lower/upper 分別建立遮罩，再以 `cv2.bitwise_or` 合併。"}},{"@type":"Question","name":"為什麼線上工具查到的 H 值要除以 2？","acceptedAnswer":{"@type":"Answer","text":"線上轉換器通常用 0–360 表示色相，而 OpenCV 為了塞進 uint8 使用 0–180，換算時就是把 H 除以 2。S、V 則從 0–100% 換成 0–255。"}},{"@type":"Question","name":"`cv2.inRange` 回傳的是什麼？","acceptedAnswer":{"@type":"Answer","text":"回傳一張二值化遮罩：落在指定 HSV 範圍內的像素為 255，其餘為 0。統計遮罩中大於 0 的像素數，就能得到該顏色區塊的面積。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_opencv-detect-red-region.webp" alt="亮著紅燈與橙燈的路口交通號誌" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2022-12-16">2022-12-16</time></span><span class="post-meta-pill">OpenCV · HSV · 影像處理 · Python · 遮罩</span></div></div><h1 class="insights-hero-title">使用 OpenCV 找出圖片中的紅色區塊</h1><p class="insights-hero-description">用 OpenCV 找出圖片中的紅色區塊：透過 BGR 轉 HSV 色域、inRange 建立紅色遮罩，再用 findContours 輪廓找出目標位置與中心點。附完整 Python 範例程式碼與 HSV 參數調整心得。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>想在 OpenCV 裡抓出圖片中的紅色區塊，關鍵是先把圖轉到 HSV 色彩空間，再用 <code>cv2.inRange</code> 做雙區間遮罩（因為紅色橫跨 H 軸兩端）。這篇筆記整理線上色碼轉換工具的用法、HSV 的基本概念，以及計算紅色區域面積的完整程式碼。</p>
+</div><section aria-labelledby="怎麼用線上-hsv-色碼轉換器"><h2 id="怎麼用線上-hsv-色碼轉換器">怎麼用線上 HSV 色碼轉換器？</h2>
+<p>挑顏色範圍時，一個好用的線上工具是<a href="https://www.peko-step.com/zhtw/tool/hsvrgb.html" target="_blank" rel="noopener noreferrer">色碼轉換器</a>，可以直接把 RGB 換算成 HSV：</p>
+<figure class="article-figure"><img src="/images/articles/opencv-detect-red-region-1.webp" alt="線上 HSV/RGB 色碼轉換器介面截圖，顯示 HSV 值為 (26, 90, 223)" loading="lazy" class="markdown-img"></figure>
+<p>要注意的是，若要把轉換過的顏色套用到 Python 的色碼，記得：</p>
+<ul>
+<li>將 S、V 的範圍改為 0–255</li>
+<li>網站上看到的 H 值（如這邊為 26）要除以 2，也就是 13</li>
+</ul>
+<p>以上圖來說，網站顯示的色碼為 HSV:(26, 90, 223)，填進 Python 裡面要使用 HSV:(13, 90, 223)。</p>
+</section><section aria-labelledby="python-裡面的-hsv-識別空間長怎樣"><h2 id="python-裡面的-hsv-識別空間長怎樣">Python 裡面的 HSV 識別空間長怎樣？</h2>
+<p>一般對顏色空間的圖像進行有效處理都是在 HSV 空間進行的。基本色對應的 HSV 分量範圍為：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>分量</th><th>範圍</th></tr></thead><tbody><tr><td>H（色相）</td><td>0 — 180</td></tr><tr><td>S（飽和度）</td><td>0 — 255</td></tr><tr><td>V（明度）</td><td>0 — 255</td></tr></tbody></table></div>
+</section><section aria-labelledby="基本的-hsv-顏色是怎麼劃分的"><h2 id="基本的-hsv-顏色是怎麼劃分的">基本的 HSV 顏色是怎麼劃分的？</h2>
+<p>下面兩張圖整理了常用顏色在 HSV 空間中的大致區間，抓顏色範圍時可以直接對照：</p>
+<figure class="article-figure"><img src="/images/articles/opencv-detect-red-region-2.webp" alt="HSV 基本色顏色劃分對照表截圖" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/articles/opencv-detect-red-region-3.webp" alt="HSV 各色相區間對照表截圖" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="hsv-和-hsl-到底差在哪"><h2 id="hsv-和-hsl-到底差在哪">HSV 和 HSL 到底差在哪？</h2>
+<p>HSB 又稱 HSV，表示一種顏色模式：在 HSB 模式中，H（hues）表示色相，S（saturation）表示飽和度，B（brightness）表示亮度。HSB 模式對應的媒介是人眼。</p>
+<p>HSL 和 HSV 二者都把顏色描述在圓柱體內的點：圓柱的中心軸取值為自底部的黑色到頂部的白色，中間是灰色；繞這個軸的角度對應於「色相」，到這個軸的距離對應於「飽和度」，沿著這個軸的距離對應於「亮度」、「色調」或「明度」。這兩種表示在用途上類似，但在方法上有區別。</p>
+<figure class="article-figure"><img src="/images/articles/opencv-detect-red-region-4.webp" alt="HSV 色彩圓柱模型示意圖" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/articles/opencv-detect-red-region-5.webp" alt="HSL 色彩雙圓錐模型示意圖" loading="lazy" class="markdown-img"></figure>
+<p>二者在數學上都是圓柱，但 HSV（色相、飽和度、明度）在概念上可以被認為是顏色的倒圓錐體（黑點在下頂點，白色在上底面圓心）；HSL 在概念上則表示了一個雙圓錐體和圓球體（白色在上頂點，黑色在下頂點，最大橫切面的圓心是半程灰色）。注意儘管在 HSL 和 HSV 中「色相」指稱相同的性質，它們的「飽和度」的定義是明顯不同的。</p>
+</section><section aria-labelledby="怎麼用程式碼抓取圖片中紅色-膚色-區塊的大小"><h2 id="怎麼用程式碼抓取圖片中紅色-膚色-區塊的大小">怎麼用程式碼抓取圖片中紅色（膚色）區塊的大小？</h2>
+<p>紅色在 H 軸上是環繞的（0 附近和 180 附近都有），所以要建立兩個遮罩再用 <code>bitwise_or</code> 合併：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">import</span> cv2
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">find_white_color_size</span>(<span class="hljs-params">image, upper, lower, upper2=<span class="hljs-literal">None</span>, lower2=<span class="hljs-literal">None</span></span>):
+    imageHSV = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    mask = cv2.inRange(imageHSV, lower, upper)
+    <span class="hljs-keyword">if</span> lower2 <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> upper2 <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:
+        mask2 = cv2.inRange(imageHSV, lower2, upper2)
+        mask = cv2.bitwise_or(mask, mask2)
+    area = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(mask)):
+        filter_color = mask[i] > <span class="hljs-number">0</span>
+        area += <span class="hljs-built_in">len</span>(mask[i][filter_color])
+    <span class="hljs-keyword">return</span> area
+
+lower_red1 = np.array([<span class="hljs-number">0</span>, <span class="hljs-number">70</span>, <span class="hljs-number">100</span>], dtype=np.uint8)
+upper_red1 = np.array([<span class="hljs-number">20</span>, <span class="hljs-number">120</span>, <span class="hljs-number">240</span>], dtype=np.uint8)
+lower_red2 = np.array([<span class="hljs-number">150</span>, <span class="hljs-number">70</span>, <span class="hljs-number">100</span>], dtype=np.uint8)
+upper_red2 = np.array([<span class="hljs-number">180</span>, <span class="hljs-number">120</span>, <span class="hljs-number">240</span>], dtype=np.uint8)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">'color size:'</span>, find_white_color_size(card_image, upper_red1, lower_red1, upper_red2, lower_red2))
+</code></pre>
+<p>這段程式碼會回傳遮罩中值大於 0 的像素數量，也就是紅色區塊的總面積。實測上也可以直接改用來抓膚色大小的估算。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼紅色需要兩個 HSV 區間？</span></h3>
+<p>因為 OpenCV 的 H 分量範圍是 0–180，紅色正好橫跨環的兩端（接近 0 和接近 180），單一區間會漏掉其中一側，所以要用兩個 lower/upper 分別建立遮罩，再以 <code>cv2.bitwise_or</code> 合併。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼線上工具查到的 H 值要除以 2？</span></h3>
+<p>線上轉換器通常用 0–360 表示色相，而 OpenCV 為了塞進 uint8 使用 0–180，換算時就是把 H 除以 2。S、V 則從 0–100% 換成 0–255。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>cv2.inRange</code> 回傳的是什麼？</span></h3>
+<p>回傳一張二值化遮罩：落在指定 HSV 範圍內的像素為 255，其餘為 0。統計遮罩中大於 0 的像素數，就能得到該顏色區塊的面積。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://www.peko-step.com/zhtw/tool/hsvrgb.html" target="_blank" rel="noopener noreferrer">HSV/RGB 線上色碼轉換器</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/opencv-rotate-image">用 OpenCV 旋轉圖片：getRotationMatrix2D 與 warpAffine 範例</a>：同樣聚焦 OpenCV、Python，可接著比較不同情境的做法。</li>
+<li><a href="/post/opencv-adjust-image-brightness">使用 OpenCV 調整圖片亮度：convertScaleAbs 範例</a>：同樣聚焦 OpenCV、Python，可接著比較不同情境的做法。</li>
+<li><a href="/post/opencv-photo-editing-like-photoshop">使用 OpenCV 做圖片後製處理（如 Photoshop）的三個實用技巧</a>：同樣聚焦 OpenCV、影像處理，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2022-12-16，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2022-12-16</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

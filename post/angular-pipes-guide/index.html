@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular Pipes 完整介紹：內建管道用法與自訂 Pipe 教學｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 Angular 內建 Pipes 清單與用法，包含 DatePipe、UpperCasePipe、CurrencyPipe 等，示範如何在模板中傳參數、串接多個管道，以及如何用 @Pipe 與 PipeTransform 定義自己的 Pipe，並說明 pure 與 impure pipes 的效能差異。" />
+<meta name="keywords" content="前端開發, Angular, pipes, 前端開發, TypeScript" />
+<link rel="canonical" href="https://claire-chang.com/post/angular-pipes-guide/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Angular Pipes 完整介紹：內建管道用法與自訂 Pipe 教學｜Claire Chang" />
+<meta property="og:description" content="整理 Angular 內建 Pipes 清單與用法，包含 DatePipe、UpperCasePipe、CurrencyPipe 等，示範如何在模板中傳參數、串接多個管道，以及如何用 @Pipe 與 PipeTransform 定義自己的 Pipe，並說明 pure 與 impure pipes 的效能差異。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/angular-pipes-guide/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_angular-pipes-guide-aa885e1d.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_angular-pipes-guide-aa885e1d.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Angular Pipes 完整介紹：內建管道用法與自訂 Pipe 教學｜Claire Chang" />
+<meta name="twitter:description" content="整理 Angular 內建 Pipes 清單與用法，包含 DatePipe、UpperCasePipe、CurrencyPipe 等，示範如何在模板中傳參數、串接多個管道，以及如何用 @Pipe 與 PipeTransform 定義自己的 Pipe，並說明 pure 與 impure pipes 的效能差異。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_angular-pipes-guide-aa885e1d.jpg" />
+<meta property="article:published_time" content="2018-01-03" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Angular" />
+<meta property="article:tag" content="pipes" />
+<meta property="article:tag" content="前端開發" />
+<meta property="article:tag" content="TypeScript" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Angular Pipes 完整介紹：內建管道用法與自訂 Pipe 教學","item":"https://claire-chang.com/post/angular-pipes-guide/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/angular-pipes-guide/#article","headline":"Angular Pipes 完整介紹：內建管道用法與自訂 Pipe 教學","description":"整理 Angular 內建 Pipes 清單與用法，包含 DatePipe、UpperCasePipe、CurrencyPipe 等，示範如何在模板中傳參數、串接多個管道，以及如何用 @Pipe 與 PipeTransform 定義自己的 Pipe，並說明 pure 與 impure pipes 的效能差異。","image":"https://claire-chang.com/images/tech/hero_angular-pipes-guide.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-01-03","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/angular-pipes-guide/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Angular, pipes, 前端開發, TypeScript","about":[{"@type":"Thing","name":"前端開發"}],"mentions":[{"@type":"Thing","name":"Angular"},{"@type":"Thing","name":"pipes"},{"@type":"Thing","name":"TypeScript"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/angular-pipes-guide/#faq","mainEntity":[{"@type":"Question","name":"什麼是 Angular 的 Pipe？","acceptedAnswer":{"@type":"Answer","text":"Pipe（管道）是一個把輸入值轉換成輸出格式的類別，在模板中用 `|` 符號使用，例如 `{{ birthday | date }}` 會把日期物件格式化成文字。它讓格式化的邏輯不用寫在元件裡，模板可讀性更好。"}},{"@type":"Question","name":"如何在 Pipe 中傳入多個參數？","acceptedAnswer":{"@type":"Answer","text":"用冒號串接多個參數即可，例如 `{{ value | myPipe:arg1:arg2 }}`。這些參數會依序傳入 `transform(value, arg1, arg2)` 方法，DatePipe 的 `date:\"MM/dd/yy\"` 就是一個參數的例子。"}},{"@type":"Question","name":"為什麼 pure pipe 不會偵測到物件屬性的變化？","acceptedAnswer":{"@type":"Answer","text":"Pure pipe 只在輸入值的參考改變時才重新執行，修改物件內部屬性不會改變參考，所以 pipe 不會跑。解法是建立新的物件參考、改用元件偵測變化，或改用 impure pipe（`pure: false`），但要注意效能。"}},{"@type":"Question","name":"什麼時候該用 impure pipe？","acceptedAnswer":{"@type":"Answer","text":"只有在確實需要 pipe 對物件內部變化做出反應、且效能影響可控時才用。Impure pipe 在每一次變更偵測週期都可能執行，用得不好會明顯拖慢系統速度，官方一般建議以元件方式處理。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_angular-pipes-guide.webp" alt="紫色漸層背景上的紅色程式碼括號符號" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-01-03">2018-01-03</time></span><span class="post-meta-pill">Angular · pipes · 前端開發 · TypeScript</span></div></div><h1 class="insights-hero-title">Angular Pipes 完整介紹：內建管道用法與自訂 Pipe 教學</h1><p class="insights-hero-description">整理 Angular 內建 Pipes 清單與用法，包含 DatePipe、UpperCasePipe、CurrencyPipe 等，示範如何在模板中傳參數、串接多個管道，以及如何用 @Pipe 與 PipeTransform 定義自己的 Pipe，並說明 pure 與 impure pipes 的效能差異。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Angular 的 Pipe（管道）把資料當作輸入，轉換成模板要顯示的輸出格式，例如日期、貨幣、大小寫。這篇文章整理 Angular 內建的所有 Pipes、基本用法、參數傳遞與串接方式，並示範如何自訂一個 Pipe，以及 pure 與 impure pipes 的效能差異。</p>
+</div><section aria-labelledby="angular-內建有哪些-pipes"><h2 id="angular-內建有哪些-pipes">Angular 內建有哪些 Pipes？</h2>
+<p>常用的 Pipes 有 <a href="https://angular.io/api/common/DatePipe" target="_blank" rel="noopener noreferrer">DatePipe</a>、<a href="https://angular.io/api/common/UpperCasePipe" target="_blank" rel="noopener noreferrer">UpperCasePipe</a>、<a href="https://angular.io/api/common/LowerCasePipe" target="_blank" rel="noopener noreferrer">LowerCasePipe</a>、<a href="https://angular.io/api/common/CurrencyPipe" target="_blank" rel="noopener noreferrer">CurrencyPipe</a> 和 <a href="https://angular.io/api/common/PercentPipe" target="_blank" rel="noopener noreferrer">PercentPipe</a>，它們都可用於任何模板。</p>
+<p>下面是 Angular 內建所有的 Pipes 說明：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>Pipe</th><th>說明</th></tr></thead><tbody><tr><td><a href="https://angular.io/api/common/AsyncPipe" target="_blank" rel="noopener noreferrer">AsyncPipe</a></td><td>給 Observable 或 Promise 返回已發出的最新值</td></tr><tr><td><a href="https://angular.io/api/common/CurrencyPipe" target="_blank" rel="noopener noreferrer">CurrencyPipe</a></td><td>格式化數字為錢幣格式</td></tr><tr><td><a href="https://angular.io/api/common/DatePipe" target="_blank" rel="noopener noreferrer">DatePipe</a></td><td>格式化一串日期文字</td></tr><tr><td><a href="https://angular.io/api/common/DecimalPipe" target="_blank" rel="noopener noreferrer">DecimalPipe</a></td><td>格式化小數點</td></tr><tr><td><a href="https://angular.io/api/common/DeprecatedCurrencyPipe" target="_blank" rel="noopener noreferrer">DeprecatedCurrencyPipe</a></td><td>Use currency to format a number as currency</td></tr><tr><td><a href="https://angular.io/api/common/DeprecatedDatePipe" target="_blank" rel="noopener noreferrer">DeprecatedDatePipe</a></td><td>已棄用的舊版日期管道</td></tr><tr><td><a href="https://angular.io/api/common/DeprecatedDecimalPipe" target="_blank" rel="noopener noreferrer">DeprecatedDecimalPipe</a></td><td>已棄用的舊版數字管道</td></tr><tr><td><a href="https://angular.io/api/common/DeprecatedPercentPipe" target="_blank" rel="noopener noreferrer">DeprecatedPercentPipe</a></td><td>已棄用的舊版百分比管道</td></tr><tr><td><a href="https://angular.io/api/common/I18nPluralPipe" target="_blank" rel="noopener noreferrer">I18nPluralPipe</a></td><td>Maps a value to a string that pluralizes the value according to locale rules</td></tr><tr><td><a href="https://angular.io/api/common/I18nSelectPipe" target="_blank" rel="noopener noreferrer">I18nSelectPipe</a></td><td>Generic selector that displays the string that matches the current value</td></tr><tr><td><a href="https://angular.io/api/common/JsonPipe" target="_blank" rel="noopener noreferrer">JsonPipe</a></td><td>Converts value into JSON string</td></tr><tr><td><a href="https://angular.io/api/common/LowerCasePipe" target="_blank" rel="noopener noreferrer">LowerCasePipe</a></td><td>轉文字為小寫</td></tr><tr><td><a href="https://angular.io/api/common/PercentPipe" target="_blank" rel="noopener noreferrer">PercentPipe</a></td><td>轉為百分比</td></tr><tr><td><a href="https://angular.io/api/common/SlicePipe" target="_blank" rel="noopener noreferrer">SlicePipe</a></td><td>Creates a new List or String containing a subset (slice) of the elements</td></tr><tr><td><a href="https://angular.io/api/common/TitleCasePipe" target="_blank" rel="noopener noreferrer">TitleCasePipe</a></td><td>Transforms text to titlecase</td></tr><tr><td><a href="https://angular.io/api/common/UpperCasePipe" target="_blank" rel="noopener noreferrer">UpperCasePipe</a></td><td>轉文字為大寫</td></tr></tbody></table></div>
+</section><section aria-labelledby="如何使用-pipes"><h2 id="如何使用-pipes">如何使用 Pipes？</h2>
+<p>管道將數據作為輸入並將其轉換為所需的輸出，語法是在模板中用 <code>|</code> 把值交給管道。下面是使用 <a href="https://angular.io/api/common/DatePipe" target="_blank" rel="noopener noreferrer">DatePipe</a> 的範例：</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+
+<span class="hljs-meta">@Component</span>({
+  <span class="hljs-attr">selector</span>: <span class="hljs-string">'app-hero-birthday'</span>,
+  <span class="hljs-attr">template</span>: <span class="hljs-string">`&#x3C;p>The hero's birthday is {{ birthday | date }}&#x3C;/p>`</span>
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HeroBirthdayComponent</span> {
+  birthday = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">1988</span>, <span class="hljs-number">4</span>, <span class="hljs-number">15</span>); <span class="hljs-comment">// April 15, 1988</span>
+}
+</code></pre>
+</section><section aria-labelledby="在-pipes-裡使用參數"><h2 id="在-pipes-裡使用參數">在 Pipes 裡使用參數</h2>
+<p>管道可以用冒號（<code>:</code>）傳入參數，例如 DatePipe 的日期格式字串：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>The hero's birthday is {{ birthday | date:"MM/dd/yy" }} <span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>The hero's birthday is {{ birthday | date:"shortDate" }} <span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>The hero's birthday is {{ birthday | date:"fullDate" }} <span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+</code></pre>
+<p>這樣會顯示結果如下：</p>
+<ul>
+<li><code>MM/dd/yy</code>：04/15/88</li>
+<li><code>shortDate</code>：04/15/1988</li>
+<li><code>fullDate</code>：Friday, April 15, 1988</li>
+</ul>
+</section><section aria-labelledby="如何串接多個管道"><h2 id="如何串接多個管道">如何串接多個管道？</h2>
+<p>管道可以用多個 <code>|</code> 串接，前一個管道的輸出會變成下一個管道的輸入：</p>
+<pre><code class="hljs language-html">{{ birthday | date:'fullDate' | uppercase}}
+</code></pre>
+<p>結果會顯示：</p>
+<pre><code>FRIDAY, APRIL 15, 1988
+</code></pre>
+</section><section aria-labelledby="如何定義自己的-pipes"><h2 id="如何定義自己的-pipes">如何定義自己的 Pipes？</h2>
+<p>下面是一個自製 Pipe 的例子：</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Pipe</span>, <span class="hljs-title class_">PipeTransform</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-comment">/*
+ * Raise the value exponentially
+ * Takes an exponent argument that defaults to 1.
+ * Usage:
+ *   value | exponentialStrength:exponent
+ * Example:
+ *   {{ 2 | exponentialStrength:10 }}
+ *   formats to: 1024
+*/</span>
+<span class="hljs-meta">@Pipe</span>({<span class="hljs-attr">name</span>: <span class="hljs-string">'exponentialStrength'</span>})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ExponentialStrengthPipe</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">PipeTransform</span> {
+  <span class="hljs-title function_">transform</span>(<span class="hljs-attr">value</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">exponent</span>: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">let</span> exp = <span class="hljs-built_in">parseFloat</span>(exponent);
+    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(value, <span class="hljs-built_in">isNaN</span>(exp) ? <span class="hljs-number">1</span> : exp);
+  }
+}
+</code></pre>
+<p>在上面的例子中可以看到：</p>
+<ul>
+<li>會以 <code>@Pipe({name:'XXXX'})</code> 來宣告這個 class 是一個 pipe</li>
+<li>pipe 類別需 implements <code>PipeTransform</code> 介面並依照要 input 的值來選擇要實作的 <code>transform</code> 方法</li>
+<li><code>transform</code> 有一個可選參數 <code>exponent</code>，可讓使用者帶要帶入的參數進 Pipes</li>
+<li>Pipe 的名字需要是一個合法的 Javascript 命名</li>
+</ul>
+<p>下面是一個使用範例：</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+
+<span class="hljs-meta">@Component</span>({
+  <span class="hljs-attr">selector</span>: <span class="hljs-string">'app-power-booster'</span>,
+  <span class="hljs-attr">template</span>: <span class="hljs-string">`
+    &#x3C;h2>Power Booster&#x3C;/h2>
+    &#x3C;p>Super power boost: {{2 | exponentialStrength: 10}}&#x3C;/p>
+  `</span>
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PowerBoosterComponent</span> { }
+</code></pre>
+<p>顯示的結果如下：</p>
+<figure class="article-figure"><img src="/images/articles/angular-pipes-guide-1.webp" alt="Power Booster 執行結果，顯示 2 的 10 次方 1024" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="pure-與-impure-pipes-的差異"><h2 id="pure-與-impure-pipes-的差異">Pure 與 Impure Pipes 的差異？</h2>
+<p>在每次被綁定的值更動時，都會再跑一次 Pipes 的功能。一般來說，Pipe 只會偵測值的變化才會執行 pure pipes，如對象是 String、Number、Boolean、Symbol、Date、Array、Function、Object。但如果裡面是一個物件，則 pure pipes 會忽略它的更動。</p>
+<p>這是因為效能的考量：若為純粹物件的值的更動，在偵測上較快，但是在物件上屬性的更改的偵測效能會較差，會建議改使用元件的方式去偵測改變。</p>
+<p>但 Angular 還是提供了 impure pipes 的方式可以偵測物件的改變，只是使用上要小心不能因此而拖慢系統速度。它看起來會像這樣：</p>
+<pre><code class="hljs language-typescript"><span class="hljs-meta">@Pipe</span>({
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'flyingHeroesImpure'</span>,
+  <span class="hljs-attr">pure</span>: <span class="hljs-literal">false</span>
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FlyingHeroesImpurePipe</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">FlyingHeroesPipe</span> {}
+</code></pre>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼是 Angular 的 Pipe？</span></h3>
+<p>Pipe（管道）是一個把輸入值轉換成輸出格式的類別，在模板中用 <code>|</code> 符號使用，例如 <code>{{ birthday | date }}</code> 會把日期物件格式化成文字。它讓格式化的邏輯不用寫在元件裡，模板可讀性更好。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>如何在 Pipe 中傳入多個參數？</span></h3>
+<p>用冒號串接多個參數即可，例如 <code>{{ value | myPipe:arg1:arg2 }}</code>。這些參數會依序傳入 <code>transform(value, arg1, arg2)</code> 方法，DatePipe 的 <code>date:"MM/dd/yy"</code> 就是一個參數的例子。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼 pure pipe 不會偵測到物件屬性的變化？</span></h3>
+<p>Pure pipe 只在輸入值的參考改變時才重新執行，修改物件內部屬性不會改變參考，所以 pipe 不會跑。解法是建立新的物件參考、改用元件偵測變化，或改用 impure pipe（<code>pure: false</code>），但要注意效能。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼時候該用 impure pipe？</span></h3>
+<p>只有在確實需要 pipe 對物件內部變化做出反應、且效能影響可控時才用。Impure pipe 在每一次變更偵測週期都可能執行，用得不好會明顯拖慢系統速度，官方一般建議以元件方式處理。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://angular.io/api/common/DatePipe" target="_blank" rel="noopener noreferrer">Angular 官方文件 — Pipes</a></li>
+<li><a href="https://angular.io/api/common/AsyncPipe" target="_blank" rel="noopener noreferrer">Angular API — AsyncPipe</a></li>
+<li><a href="https://angular.io/api/common/PipeTransform" target="_blank" rel="noopener noreferrer">Angular API — PipeTransform</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/typescript-tsconfig-settings">TypeScript 設定全攻略：看懂 tsconfig.json 的核心編譯選項</a>：同樣聚焦 typescript、angular，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-architecture-overview">Angular 架構總覽：Component、Template、Metadata、NgModule、Directive 與 Dependency Injection 入門</a>：同樣聚焦 angular、typescript，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-create-component">Angular 元件建立教學：用 CLI 產生元件、綁定資料與雙向繫結</a>：同樣聚焦 angular、前端開發，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2018-01-03，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-01-03</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

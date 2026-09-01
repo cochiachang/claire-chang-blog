@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>專為連接性設計的查詢語言 – Cypher｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Cypher 是 Neo4j 圖形資料庫的查詢語言，用節點與關係取代表格，語法比 SQL 直覺" />
+<meta name="keywords" content="後端開發, Cypher, Neo4j, 圖形資料庫, 查詢語言, NoSQL" />
+<link rel="canonical" href="https://claire-chang.com/post/cypher-query-language-intro/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="專為連接性設計的查詢語言 – Cypher｜Claire Chang" />
+<meta property="og:description" content="Cypher 是 Neo4j 圖形資料庫的查詢語言，用節點與關係取代表格，語法比 SQL 直覺" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/cypher-query-language-intro/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_cypher-query-language-intro-e831da8e.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_cypher-query-language-intro-e831da8e.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="專為連接性設計的查詢語言 – Cypher｜Claire Chang" />
+<meta name="twitter:description" content="Cypher 是 Neo4j 圖形資料庫的查詢語言，用節點與關係取代表格，語法比 SQL 直覺" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_cypher-query-language-intro-e831da8e.jpg" />
+<meta property="article:published_time" content="2024-07-24" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Cypher" />
+<meta property="article:tag" content="Neo4j" />
+<meta property="article:tag" content="圖形資料庫" />
+<meta property="article:tag" content="查詢語言" />
+<meta property="article:tag" content="NoSQL" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"專為連接性設計的查詢語言 – Cypher","item":"https://claire-chang.com/post/cypher-query-language-intro/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/cypher-query-language-intro/#article","headline":"專為連接性設計的查詢語言 – Cypher","description":"Cypher 是 Neo4j 圖形資料庫的查詢語言，用節點與關係取代表格，語法比 SQL 直覺","image":"https://claire-chang.com/images/tech/hero_cypher-query-language-intro.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-07-24","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/cypher-query-language-intro/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"Cypher, Neo4j, 圖形資料庫, 查詢語言, NoSQL","about":[{"@type":"Thing","name":"圖形資料庫"},{"@type":"Thing","name":"查詢語言"},{"@type":"Thing","name":"NoSQL"}],"mentions":[{"@type":"Thing","name":"Cypher"},{"@type":"Thing","name":"Neo4j"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/cypher-query-language-intro/#faq","mainEntity":[{"@type":"Question","name":"Cypher 只能用在 Neo4j 嗎?","acceptedAnswer":{"@type":"Answer","text":"Cypher 最初是 Neo4j 開發的查詢語言，目前也透過 openCypher 專案被其他圖形資料庫採用，但主流使用場景仍然集中在 Neo4j。"}},{"@type":"Question","name":"學過 SQL 之後學 Cypher 會很難嗎?","acceptedAnswer":{"@type":"Answer","text":"不會。兩者的關鍵字概念（`MATCH` 對應 `SELECT`、`WHERE` 篩選、`RETURN` 對應輸出欄位）高度相似，主要差異在於 Cypher 用箭頭符號直接表達關係方向，不必靠 JOIN 拼接。"}},{"@type":"Question","name":"什麼情況該選圖形資料庫而不是關聯式資料庫?","acceptedAnswer":{"@type":"Answer","text":"當資料本身的重點是「關係」而不是「屬性」——例如社交網路的好友鏈、推薦系統的關聯路徑、組織架構的層級查詢——圖形資料庫和 Cypher 通常比關聯式資料庫加多層 JOIN 更直接、也更容易維護。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_cypher-query-language-intro.webp" alt="抽象的節點與連線網絡圖，象徵圖形資料庫的節點與關係結構" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-07-24">2024-07-24</time></span><span class="post-meta-pill">Cypher · Neo4j · 圖形資料庫 · 查詢語言 · NoSQL</span></div></div><h1 class="insights-hero-title">專為連接性設計的查詢語言 – Cypher</h1><p class="insights-hero-description">Cypher 是 Neo4j 圖形資料庫的查詢語言，用節點與關係取代表格，語法比 SQL 直覺</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Cypher 是 Neo4j 圖形資料庫的查詢語言，設計靈感來自 SQL，但操作對象從表格換成了節點（Node）和關係（Relationship）。同樣是要問「誰的主管是誰」這種問題，SQL 需要靠好幾層 JOIN 才能拼出答案，Cypher 直接把關係寫進查詢語法裡，讀起來更接近你腦中原本的那張關係圖。</p>
+</div><section aria-labelledby="cypher-跟-sql-有什麼不一樣"><h2 id="cypher-跟-sql-有什麼不一樣">Cypher 跟 SQL 有什麼不一樣？</h2>
+<p>SQL 針對的是表格資料，關聯要靠外鍵和 JOIN 一層層串起來；Cypher 針對的是圖形資料，關係本身就是查詢的一部分，用箭頭符號直接畫出節點之間怎麼連。查一個組織的主管鏈就是最直接的例子，兩種語言的差異一比就懂：</p>
+<pre><code class="hljs language-sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">ON</span> e.department_id <span class="hljs-operator">=</span> d.department_id
+<span class="hljs-keyword">JOIN</span> locations l <span class="hljs-keyword">ON</span> d.location_id <span class="hljs-operator">=</span> l.location_id
+<span class="hljs-keyword">WHERE</span> e.manager_id <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+</code></pre>
+<p>換成 Cypher，同樣的查詢意圖寫成這樣：</p>
+<pre><code class="hljs language-cypher">MATCH (e:Employee)-[:MANAGES*0..]->(m:Employee)
+WHERE m.manager_id IS NULL
+RETURN e
+</code></pre>
+<p><code>-[:MANAGES*0..]-></code> 這段語法直接表達「沿著 MANAGES 關係走任意層」，不需要額外的 JOIN 去拼表格。資料本身如果就是高度連結的（社交網路、組織架構、推薦系統），這種寫法會比 SQL 省事很多。</p>
+</section><section aria-labelledby="cypher-查詢的基本組成有哪些"><h2 id="cypher-查詢的基本組成有哪些">Cypher 查詢的基本組成有哪些？</h2>
+<p>Cypher 把圖形資料的操作拆成幾個關鍵字，各自負責一件事：</p>
+<ul>
+<li><strong>CREATE</strong>：建立節點和關係。</li>
+<li><strong>MATCH</strong>：尋找符合特定模式的節點和關係。</li>
+<li><strong>WHERE</strong>：對 <code>MATCH</code> 或其他操作的結果加上篩選條件。</li>
+<li><strong>RETURN</strong>：指定要回傳的資料。</li>
+<li><strong>SET</strong>：更新節點或關係的屬性。</li>
+<li><strong>DELETE</strong>：刪除節點或關係。</li>
+</ul>
+<p>這幾個關鍵字組合起來，就能涵蓋從建模到查詢的完整流程。</p>
+</section><section aria-labelledby="如何用-cypher-建立節點和關係"><h2 id="如何用-cypher-建立節點和關係">如何用 Cypher 建立節點和關係？</h2>
+<p>先建立兩個節點，一個是人、一個是學校：</p>
+<pre><code class="hljs language-cypher">CREATE (p:Person {name: "John", age: 25})
+CREATE (s:School {name: "Stanford University", location: "California"})
+</code></pre>
+<p><code>Person</code> 和 <code>School</code> 是節點標籤，用來標示節點的類型；花括號裡的是這個節點的屬性。接著把兩者連起來：</p>
+<pre><code class="hljs language-cypher">MATCH (p:Person {name: "John"}), (s:School {name: "Stanford University"})
+CREATE (p)-[:STUDIED_AT]->(s)
+</code></pre>
+<p><code>MATCH</code> 先找出名字是 John 的人和名字是 Stanford University 的學校，<code>CREATE</code> 再建立一條叫 <code>STUDIED_AT</code> 的關係，方向是從人指向學校。這個「先找節點、再建關係」的順序，是 Cypher 建模時最常見的寫法。</p>
+</section><section aria-labelledby="怎麼從既有的-csv-資料批次匯入"><h2 id="怎麼從既有的-csv-資料批次匯入">怎麼從既有的 CSV 資料批次匯入？</h2>
+<p>手動一筆一筆 <code>CREATE</code> 只適合示範，實際資料通常是現成的 CSV。Cypher 提供 <code>LOAD CSV</code> 直接讀檔匯入：</p>
+<pre><code class="hljs language-cypher">LOAD CSV WITH HEADERS FROM 'file:///path_to_your_file.csv' AS line
+CREATE (:Person {name: line.name, age: toInteger(line.age)})
+</code></pre>
+<p>這行會依照 CSV 每一列的資料建立一個 <code>Person</code> 節點，<code>line.name</code>、<code>line.age</code> 對應到 CSV 的欄位名稱，<code>toInteger()</code> 則負責把字串型態的年齡欄位轉成數字。資料量大的時候通常會搭配 <code>USING PERIODIC COMMIT</code> 分批提交，避免單一交易吃掉太多記憶體。</p>
+<p>匯入完成後可以用查詢驗證資料是否正確落地，例如列出所有學生和他們就讀的學校：</p>
+<pre><code class="hljs language-cypher">MATCH (p:Person)-[:STUDIED_AT]->(s:School)
+RETURN p.name, s.name
+</code></pre>
+</section><section aria-labelledby="如何更新節點屬性和篩選查詢結果"><h2 id="如何更新節點屬性和篩選查詢結果">如何更新節點屬性和篩選查詢結果？</h2>
+<p>更新一個已存在節點的屬性，用 <code>MATCH</code> 找到目標，再用 <code>SET</code> 賦值：</p>
+<pre><code class="hljs language-cypher">MATCH (n:Person {name: 'Ann'})
+SET n.age = 26
+</code></pre>
+<p>篩選條件則交給 <code>WHERE</code>，例如找出所有 2000 年後上映的電影：</p>
+<pre><code class="hljs language-cypher">MATCH (movie:Movie)
+WHERE movie.releaseDate >= 2000
+RETURN movie
+</code></pre>
+<p><code>WHERE</code> 可以疊加多個條件，處理起來跟 SQL 的邏輯運算子（<code>AND</code>、<code>OR</code>、<code>NOT</code>）用法一致，差別只在於篩選對象是圖上的節點或關係，而不是表格的欄位。</p>
+</section><section aria-labelledby="cypher-的聚合函數跟-sql-有什麼不同"><h2 id="cypher-的聚合函數跟-sql-有什麼不同">Cypher 的聚合函數跟 SQL 有什麼不同?</h2>
+<p>SQL 做聚合查詢必須明確寫 <code>GROUP BY</code> 指定分組欄位，Cypher 不用——查詢裡沒被聚合函數包住的欄位會自動變成分組依據。例如統計每個演員參演了幾部電影：</p>
+<pre><code class="hljs language-cypher">MATCH (actor:Person)-[:ACTED_IN]->(movie:Movie)
+RETURN actor.name, COUNT(movie)
+</code></pre>
+<p><code>actor.name</code> 沒有被聚合函數包住，Cypher 就自動拿它當分組鍵；<code>COUNT(movie)</code> 算出每個分組裡電影節點的數量。少了一行 <code>GROUP BY</code>，查詢讀起來更精簡，但也代表你得清楚自己 <code>RETURN</code> 了哪些欄位，才不會不小心分出多餘的組。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Cypher 只能用在 Neo4j 嗎?</span></h3>
+<p>Cypher 最初是 Neo4j 開發的查詢語言，目前也透過 openCypher 專案被其他圖形資料庫採用，但主流使用場景仍然集中在 Neo4j。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>學過 SQL 之後學 Cypher 會很難嗎?</span></h3>
+<p>不會。兩者的關鍵字概念（<code>MATCH</code> 對應 <code>SELECT</code>、<code>WHERE</code> 篩選、<code>RETURN</code> 對應輸出欄位）高度相似，主要差異在於 Cypher 用箭頭符號直接表達關係方向，不必靠 JOIN 拼接。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼情況該選圖形資料庫而不是關聯式資料庫?</span></h3>
+<p>當資料本身的重點是「關係」而不是「屬性」——例如社交網路的好友鏈、推薦系統的關聯路徑、組織架構的層級查詢——圖形資料庫和 Cypher 通常比關聯式資料庫加多層 JOIN 更直接、也更容易維護。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<p>Neo4j, Inc.，Cypher Manual：Introduction，存取日期：2026-08-27。<a href="https://neo4j.com/docs/cypher-manual/current/introduction/" target="_blank" rel="noopener noreferrer">https://neo4j.com/docs/cypher-manual/current/introduction/</a></p>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/neo4j-graph-database-introduction">Neo4j 圖形資料庫介紹</a>：同樣聚焦 Neo4j、Cypher，可接著比較不同情境的做法。</li>
+<li><a href="/post/graph-database-concepts-introduction">圖形資料庫的概念入門</a>：同樣聚焦 圖形資料庫、NoSQL，可接著比較不同情境的做法。</li>
+<li><a href="/post/graph-rag-node-embeddings">Graph RAG 的 Node Embeddings 技術：把圖節點變成向量</a>：同樣聚焦 Neo4j，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-07-24</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

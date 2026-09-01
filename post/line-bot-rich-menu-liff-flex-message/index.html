@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Line Bot圖文回覆的幾個功能｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 LINE Bot 開發常用的互動功能：快速回覆按鈕、LIFF 前端框架、圖文選單（Rich Menu）與 Flex Message。包含 LIFF 起始應用程式安裝步驟、Netlify 部署、圖文選單設定方式與 Flex Message 結構說明。" />
+<meta name="keywords" content="後端開發, LINE Bot, Messaging API, LIFF, Rich Menu, Flex Message" />
+<link rel="canonical" href="https://claire-chang.com/post/line-bot-rich-menu-liff-flex-message/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Line Bot圖文回覆的幾個功能｜Claire Chang" />
+<meta property="og:description" content="整理 LINE Bot 開發常用的互動功能：快速回覆按鈕、LIFF 前端框架、圖文選單（Rich Menu）與 Flex Message。包含 LIFF 起始應用程式安裝步驟、Netlify 部署、圖文選單設定方式與 Flex Message 結構說明。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/line-bot-rich-menu-liff-flex-message/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_line-bot-rich-menu-liff-flex-message-154128c0.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_line-bot-rich-menu-liff-flex-message-154128c0.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Line Bot圖文回覆的幾個功能｜Claire Chang" />
+<meta name="twitter:description" content="整理 LINE Bot 開發常用的互動功能：快速回覆按鈕、LIFF 前端框架、圖文選單（Rich Menu）與 Flex Message。包含 LIFF 起始應用程式安裝步驟、Netlify 部署、圖文選單設定方式與 Flex Message 結構說明。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_line-bot-rich-menu-liff-flex-message-154128c0.jpg" />
+<meta property="article:published_time" content="2024-11-08" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="LINE Bot" />
+<meta property="article:tag" content="Messaging API" />
+<meta property="article:tag" content="LIFF" />
+<meta property="article:tag" content="Rich Menu" />
+<meta property="article:tag" content="Flex Message" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Line Bot圖文回覆的幾個功能","item":"https://claire-chang.com/post/line-bot-rich-menu-liff-flex-message/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/line-bot-rich-menu-liff-flex-message/#article","headline":"Line Bot圖文回覆的幾個功能","description":"整理 LINE Bot 開發常用的互動功能：快速回覆按鈕、LIFF 前端框架、圖文選單（Rich Menu）與 Flex Message。包含 LIFF 起始應用程式安裝步驟、Netlify 部署、圖文選單設定方式與 Flex Message 結構說明。","image":"https://claire-chang.com/images/tech/hero_line-bot-rich-menu-liff-flex-message.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-11-08","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/line-bot-rich-menu-liff-flex-message/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"LINE Bot, Messaging API, LIFF, Rich Menu, Flex Message","mentions":[{"@type":"Thing","name":"LINE Bot"},{"@type":"Thing","name":"Messaging API"},{"@type":"Thing","name":"LIFF"},{"@type":"Thing","name":"Rich Menu"},{"@type":"Thing","name":"Flex Message"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/line-bot-rich-menu-liff-flex-message/#faq","mainEntity":[{"@type":"Question","name":"每則訊息最多可以設定幾個快速回覆按鈕？","acceptedAnswer":{"@type":"Answer","text":"每則訊息最多可設定 13 個快速回覆按鈕，並可在一對一聊天、群組聊天與多人聊天中使用。使用者點擊後按鈕會消失，但相機、相簿等需要使用者提供資訊的動作會保留。"}},{"@type":"Question","name":"LIFF 應用程式一定要部署到 Netlify 嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定。Netlify 只是起始應用程式文件中建議的部署選項，任何能提供 HTTPS 端點的伺服器都可以。重點是端點 URL 必須可以透過 HTTPS 正常存取。"}},{"@type":"Question","name":"圖文選單該用管理後台還是 Messaging API 設定？","acceptedAnswer":{"@type":"Answer","text":"如果只需要快速建立固定的選單，用 LINE 官方帳號管理後台的圖形介面最省事。若需要 postback、日期時間選擇器，或要為不同使用者動態切換專屬選單，就要用 Messaging API。"}},{"@type":"Question","name":"Flex Message 和一般文字訊息有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"Flex Message 用 JSON 定義訊息的結構與樣式，可以做出卡片、輪播等豐富版面，適合商品推薦、訂單確認等情境。開發時可先用官方 Flex Simulator 線上預覽效果。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_line-bot-rich-menu-liff-flex-message.webp" alt="手持智慧型手機使用聊天應用程式傳送訊息的畫面" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-11-08">2024-11-08</time></span><span class="post-meta-pill">LINE Bot · Messaging API · LIFF · Rich Menu · Flex Message</span></div></div><h1 class="insights-hero-title">Line Bot圖文回覆的幾個功能</h1><p class="insights-hero-description">整理 LINE Bot 開發常用的互動功能：快速回覆按鈕、LIFF 前端框架、圖文選單（Rich Menu）與 Flex Message。包含 LIFF 起始應用程式安裝步驟、Netlify 部署、圖文選單設定方式與 Flex Message 結構說明。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>我在開發 LINE Bot 時，最常被問到的就是「機器人除了回文字之外還能做什麼」。這篇筆記整理我在實作中常用的幾個互動功能：快速回覆按鈕、LIFF 網頁前端框架、圖文選單（Rich Menu）與 Flex Message，並附上我在設定 LIFF 與圖文選單時的實際步驟。</p>
+</div><section aria-labelledby="快速回覆按鈕怎麼用-什麼時候會消失"><h2 id="快速回覆按鈕怎麼用-什麼時候會消失">快速回覆按鈕怎麼用？什麼時候會消失？</h2>
+<p>官網教學：<a href="https://developers.line.biz/en/docs/messaging-api/using-quick-reply/#set-quick-reply-buttons" target="_blank" rel="noopener noreferrer">https://developers.line.biz/en/docs/messaging-api/using-quick-reply/#set-quick-reply-buttons</a></p>
+<p>可在訊息中加入快速回覆按鈕，讓使用者能夠快速回應。快速回覆功能可在一對一聊天、群組聊天和多人的聊天中使用，每則訊息最多可設定 13 個快速回覆按鈕。</p>
+<p>快速回覆按鈕的消失時機：</p>
+<ul>
+<li>當使用者點擊快速回覆按鈕時，按鈕會消失（相機、相簿、日期時間選擇器和位置資訊等動作除外，這些按鈕會保留直到使用者提供所需資訊）。</li>
+<li>如果聊天室中有新的訊息（無論是來自官方帳號、使用者或其他成員），快速回覆按鈕也會消失。若新訊息被刪除，按鈕會重新出現。</li>
+</ul>
+</section><section aria-labelledby="什麼是-line-front-end-framework-liff"><h2 id="什麼是-line-front-end-framework-liff">什麼是 LINE Front-end Framework（LIFF）？</h2>
+<p>LINE 前端框架（LIFF，LINE Front-end Framework）是由 LINE 提供的網頁應用程式框架，透過將 LIFF SDK 整合至網頁應用程式，我可以存取 LINE 平台提供的資訊，或使用 LINE 應用程式的功能。</p>
+<p>主要功能：</p>
+<ul>
+<li><strong>與 LINE Login 和 LINE 平台整合</strong>：LIFF 與 LINE Login 整合，可以透過 LINE 平台的授權流程，安全地存取使用者的個人資料。</li>
+<li><strong>分享目標選擇器</strong>：這是一個強大的工具，允許使用者透過 LIFF 應用程式，選擇 LINE 好友並傳送訊息。</li>
+</ul>
+</section><section aria-labelledby="如何開始使用-liff-起始應用程式"><h2 id="如何開始使用-liff-起始應用程式">如何開始使用 LIFF 起始應用程式？</h2>
+<p>為了協助新手快速上手，LINE 提供了 LIFF 起始應用程式，這是一個包含基本功能的範本，開發者可以在此基礎上進行自訂和開發。</p>
+<p>開始使用 LIFF 起始應用程式的步驟：</p>
+<ol>
+<li>
+<p><strong>環境準備</strong>：</p>
+<ul>
+<li><strong>Node.js</strong>：確保已安裝 Node.js，建議版本為 16.13.1。</li>
+<li><strong>Yarn</strong>：使用 Yarn 作為套件管理工具，建議版本為 1.22.17。</li>
+<li><strong>Netlify CLI</strong>：若計劃使用 Netlify 部署，建議版本為 9.16.3。</li>
+</ul>
+</li>
+<li>
+<p><strong>下載並執行原始碼</strong>：</p>
+<ul>
+<li><strong>下載原始碼</strong>：在終端機中執行以下指令，下載 LIFF 起始應用程式的原始碼：</li>
+</ul>
+<pre><code class="hljs language-bash">git <span class="hljs-built_in">clone</span> https://github.com/line/line-liff-v2-starter.git
+</code></pre>
+<ul>
+<li><strong>選擇實作版本</strong>：在 <code>line-liff-v2-starter/src/</code> 目錄下，有三種實作版本可供選擇：
+<ul>
+<li><strong>Vanilla JavaScript</strong>：<code>line-liff-v2-starter/src/vanilla</code></li>
+<li><strong>Next.js</strong>：<code>line-liff-v2-starter/src/nextjs</code></li>
+<li><strong>Nuxt.js</strong>：<code>line-liff-v2-starter/src/nuxtjs</code></li>
+</ul>
+</li>
+<li><strong>安裝依賴套件並啟動</strong>：進入所選目錄後，執行以下指令安裝套件並啟動應用程式：</li>
+</ul>
+<pre><code class="hljs language-bash">yarn install
+yarn dev
+</code></pre>
+<p>啟動後，可在瀏覽器中訪問 <code>http://localhost:3000</code> 查看應用程式。</p>
+</li>
+<li>
+<p><strong>部署至伺服器</strong>：</p>
+<ul>
+<li><strong>使用 Netlify 部署</strong>：若尚未有 Netlify 帳號，請先註冊。安裝 Netlify CLI 後，執行以下指令部署應用程式：</li>
+</ul>
+<pre><code class="hljs language-bash">netlify deploy
+</code></pre>
+<p>按照指示完成部署流程。</p>
+</li>
+<li>
+<p><strong>取得並設定 LIFF ID</strong>：</p>
+<ul>
+<li><strong>建立 LINE Login 頻道</strong>：在 LINE Developers Console 中，建立一個 LINE Login 頻道。</li>
+<li><strong>新增 LIFF 應用程式</strong>：在該頻道中，新增 LIFF 應用程式，並設定相關資訊，如端點 URL。</li>
+<li><strong>設定 LIFF ID</strong>：取得 LIFF ID 後，將其設定為環境變數，確保應用程式能正確運行。</li>
+</ul>
+</li>
+</ol>
+<p>LIFF 視窗的大小可以以下三種大小之一顯示：Compact、Tall、Full。</p>
+</section><section aria-labelledby="如何在-line-平台上新增-liff-應用程式"><h2 id="如何在-line-平台上新增-liff-應用程式">如何在 LINE 平台上新增 LIFF 應用程式？</h2>
+<p>要在 LINE 平台上運行 LIFF 應用程式，需要將其新增至 LINE Login 頻道。以下是詳細步驟：</p>
+<ol>
+<li><strong>準備工作</strong>
+<ul>
+<li><strong>建立頻道</strong>：在 LINE Developers Console 中，建立一個 LINE Login 頻道。</li>
+<li><strong>部署應用程式</strong>：將 LIFF 應用程式部署至伺服器，確保其可透過 HTTPS 存取。</li>
+</ul>
+</li>
+<li><strong>新增 LIFF 應用程式</strong>
+<ul>
+<li><strong>登入 LINE Developers Console</strong>：使用帳號登入。</li>
+<li><strong>選擇頻道</strong>：在主控台中，選擇要新增 LIFF 應用程式的 LINE Login 頻道。</li>
+<li><strong>進入 LIFF 頁籤</strong>：點擊「LIFF」頁籤。</li>
+<li><strong>新增 LIFF 應用程式</strong>：點擊「新增」按鈕，開始設定。</li>
+</ul>
+</li>
+<li><strong>設定 LIFF 應用程式資訊</strong>
+<ul>
+<li><strong>應用程式名稱</strong>：輸入 LIFF 應用程式的名稱，請避免使用「LINE」或類似字樣。</li>
+<li><strong>視圖大小</strong>：選擇應用程式的視圖大小，可選擇「Compact」、「Tall」或「Full」。</li>
+<li><strong>端點 URL</strong>：輸入 LIFF 應用程式的 HTTPS URL，請確保該 URL 可正常存取。</li>
+<li><strong>權限範圍（Scopes）</strong>：根據應用程式需求，選擇所需的權限範圍，如 <code>openid</code>、<code>profile</code>、<code>email</code> 等。</li>
+<li><strong>加好友選項</strong>：設定使用者在使用應用程式時，是否顯示加好友選項。</li>
+</ul>
+</li>
+<li><strong>完成設定</strong>
+<ul>
+<li><strong>確認並新增</strong>：檢查所有設定，確保無誤後，點擊「新增」按鈕。</li>
+</ul>
+</li>
+</ol>
+<p>取得 LIFF ID 和 URL：新增成功後，系統會生成 LIFF ID 和 LIFF URL，可在應用程式中使用這些資訊。</p>
+</section><section aria-labelledby="圖文選單-rich-menu-是什麼-怎麼設定"><h2 id="圖文選單-rich-menu-是什麼-怎麼設定">圖文選單（Rich Menu）是什麼？怎麼設定？</h2>
+<p>在 LINE 的 Messaging API 中，圖文選單（Rich Menu）是一種可自訂的互動式選單，可提升使用者與 LINE 官方帳號之間的互動體驗。</p>
+<p>圖文選單的結構：</p>
+<ul>
+<li><strong>選單圖片</strong>：一張 JPEG 或 PNG 格式的圖片，包含選單項目。</li>
+<li><strong>可點擊區域</strong>：在圖片上定義的區域，每個區域可設定不同的動作，如開啟網址或發送訊息。</li>
+<li><strong>聊天列</strong>：位於聊天視窗底部的選單，可自訂其顯示文字，用於開啟或關閉圖文選單。</li>
+</ul>
+<p>設定圖文選單的方法：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>方法</th><th>特點</th><th>適合情境</th></tr></thead><tbody><tr><td><a href="https://manager.line.biz/" target="_blank" rel="noopener noreferrer">使用 LINE 官方帳號管理後台</a></td><td>透過圖形介面快速建立和設定圖文選單</td><td>需要快速開發且不需高度自訂的情境</td></tr><tr><td>使用 Messaging API</td><td>提供進階自訂功能，如設定 postback 動作或日期時間選擇器</td><td>需要高度自訂和動態管理圖文選單的情境</td></tr></tbody></table></div>
+<p>在 LINE 的 Messaging API 中，可以為特定使用者設定專屬的圖文選單（Rich Menu）：</p>
+<p><a href="https://developers.line.biz/en/docs/messaging-api/use-per-user-rich-menus/#unlink-the-rich-menu-from-user" target="_blank" rel="noopener noreferrer">https://developers.line.biz/en/docs/messaging-api/use-per-user-rich-menus/#unlink-the-rich-menu-from-user</a></p>
+<p>同一個使用者可設定多個選單來切換。</p>
+</section><section aria-labelledby="flex-message-的結構是怎麼組成的"><h2 id="flex-message-的結構是怎麼組成的">Flex Message 的結構是怎麼組成的？</h2>
+<p>Flex Message 是 LINE 提供的一種訊息格式，允許開發者透過 JSON 定義訊息的結構和樣式，以實現高度自訂的訊息內容。這種訊息格式適用於各種情境，如商品推薦、訂單確認等，提供豐富的視覺效果和互動性。</p>
+<p>這個模擬器可以線上模擬呈現效果：<a href="https://developers.line.biz/flex-simulator/" target="_blank" rel="noopener noreferrer">https://developers.line.biz/flex-simulator/</a></p>
+<p>Flex Message 的結構由三個主要部分組成：</p>
+<ol>
+<li><strong>容器（Container）</strong>：最外層的結構，包含訊息的主要內容。主要有兩種類型：
+<ul>
+<li><strong>Bubble</strong>：單一訊息泡泡。</li>
+<li><strong>Carousel</strong>：多個訊息泡泡的輪播。</li>
+</ul>
+</li>
+<li><strong>區塊（Block）</strong>：組成 Bubble 的部分，包括：
+<ul>
+<li><strong>Header</strong>：標題區塊。</li>
+<li><strong>Hero</strong>：主要圖片或影片區塊。</li>
+<li><strong>Body</strong>：主要內容區塊。</li>
+<li><strong>Footer</strong>：底部區塊。</li>
+</ul>
+</li>
+<li><strong>元件（Component）</strong>：構成區塊的元素，如文字、圖片、按鈕等。</li>
+</ol>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>每則訊息最多可以設定幾個快速回覆按鈕？</span></h3>
+<p>每則訊息最多可設定 13 個快速回覆按鈕，並可在一對一聊天、群組聊天與多人聊天中使用。使用者點擊後按鈕會消失，但相機、相簿等需要使用者提供資訊的動作會保留。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LIFF 應用程式一定要部署到 Netlify 嗎？</span></h3>
+<p>不一定。Netlify 只是起始應用程式文件中建議的部署選項，任何能提供 HTTPS 端點的伺服器都可以。重點是端點 URL 必須可以透過 HTTPS 正常存取。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>圖文選單該用管理後台還是 Messaging API 設定？</span></h3>
+<p>如果只需要快速建立固定的選單，用 LINE 官方帳號管理後台的圖形介面最省事。若需要 postback、日期時間選擇器，或要為不同使用者動態切換專屬選單，就要用 Messaging API。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Flex Message 和一般文字訊息有什麼不同？</span></h3>
+<p>Flex Message 用 JSON 定義訊息的結構與樣式，可以做出卡片、輪播等豐富版面，適合商品推薦、訂單確認等情境。開發時可先用官方 Flex Simulator 線上預覽效果。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://developers.line.biz/en/docs/messaging-api/using-quick-reply/#set-quick-reply-buttons" target="_blank" rel="noopener noreferrer">LINE Messaging API：Quick reply 官方文件</a></li>
+<li><a href="https://developers.line.biz/en/docs/messaging-api/use-per-user-rich-menus/#unlink-the-rich-menu-from-user" target="_blank" rel="noopener noreferrer">LINE Messaging API：Per-user rich menu 官方文件</a></li>
+<li><a href="https://developers.line.biz/flex-simulator/" target="_blank" rel="noopener noreferrer">LINE Flex Message Simulator</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/line-bot-rich-menu-liff-flex-message">LINE Bot 圖文回覆實戰：快速回覆、LIFF、圖文選單與 Flex Message 完整整理</a>：同樣聚焦 LINE Bot、LIFF，可接著比較不同情境的做法。</li>
+<li><a href="/post/n8n-linebot-rag-ai-application">使用 n8n 與 LINE Bot 搭建 RAG AI 應用</a>：同樣聚焦 LINE Bot，可接著比較不同情境的做法。</li>
+<li><a href="/post/no-code-chatgpt-line-bot-integration">免程式碼將 ChatGPT 串接到 LINE 對話：FancyAI 與 LINE Bot 設定流程</a>：同樣聚焦 LINE Bot，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2024-11-08，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-11-08</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Agent 落地五層診斷｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="AI Agent 技術逐漸成熟，企業專案卻仍可能卡關。本文以目標、流程、知識、信任、營運五層診斷，協助台灣中小企業找出真正根因與補救順序。" />
+<meta name="keywords" content="AI策略, AI Agent, 組織導入, 流程設計" />
+<link rel="canonical" href="https://claire-chang.com/post/ai-agent-adoption/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="AI Agent 落地五層診斷｜Claire Chang" />
+<meta property="og:description" content="AI Agent 技術逐漸成熟，企業專案卻仍可能卡關。本文以目標、流程、知識、信任、營運五層診斷，協助台灣中小企業找出真正根因與補救順序。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/ai-agent-adoption/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_ai-agent-adoption-000f3ad4.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_ai-agent-adoption-000f3ad4.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AI Agent 落地五層診斷｜Claire Chang" />
+<meta name="twitter:description" content="AI Agent 技術逐漸成熟，企業專案卻仍可能卡關。本文以目標、流程、知識、信任、營運五層診斷，協助台灣中小企業找出真正根因與補救順序。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_ai-agent-adoption-000f3ad4.jpg" />
+<meta property="article:published_time" content="2026-08-24" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="AI Agent" />
+<meta property="article:tag" content="組織導入" />
+<meta property="article:tag" content="流程設計" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"AI Agent 落地五層診斷","item":"https://claire-chang.com/post/ai-agent-adoption/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/ai-agent-adoption/#article","headline":"AI Agent 落地五層診斷","description":"AI Agent 技術逐漸成熟，企業專案卻仍可能卡關。本文以目標、流程、知識、信任、營運五層診斷，協助台灣中小企業找出真正根因與補救順序。","image":"https://claire-chang.com/images/articles/hero_ai-agent-adoption.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2026-08-24","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/ai-agent-adoption/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"AI策略","keywords":"AI Agent, 組織導入, 流程設計","about":[{"@type":"Thing","name":"AI Agent"},{"@type":"Thing","name":"組織導入"},{"@type":"Thing","name":"流程設計"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/ai-agent-adoption/#faq","mainEntity":[{"@type":"Question","name":"企業導入 AI Agent 一定要先整理完整 SOP 嗎？","acceptedAnswer":{"@type":"Answer","text":"不需要等到所有 SOP 都完整才開始，但至少要選定單一流程，記錄輸入、輸出、正常路徑、例外與錯誤處理。正式文件之外，也要透過近期案例取得領域專家的實際判斷。"}},{"@type":"Question","name":"員工不願意提供工作細節時，企業應該怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"企業應先釐清員工擔心的是被取代、工作增加，還是導入目的不明。先從能減輕員工負擔的低風險工作開始，並明確說明導入後的角色與決策權，比要求員工立即交出全部知識更有效。"}},{"@type":"Question","name":"AI Agent 與一般工作流程自動化有什麼差別？","acceptedAnswer":{"@type":"Answer","text":"傳統工作流程自動化通常依固定規則執行；AI Agent 可以根據目標與情境規劃步驟、使用工具並處理部分不確定性。AI Agent 的彈性較高，也更需要權限、監控、人工攔截與責任設計。"}},{"@type":"Question","name":"哪些工作不能直接交給 AI Agent 自動執行？","acceptedAnswer":{"@type":"Answer","text":"涉及重大金錢、法律責任、人身安全、客戶承諾或不可逆操作的工作，不宜在缺乏人工核准與復原機制時直接自動執行。企業也應評估錯誤能否及時發現與攔截。"}},{"@type":"Question","name":"PoC 成功後，為什麼仍然無法正式上線？","acceptedAnswer":{"@type":"Answer","text":"概念驗證（Proof of Concept，PoC）通常只證明技術可以在受控情境執行。正式上線還需要處理資料權限、系統整合、負責人、監控、例外升級、復原方式與成效追蹤。"}},{"@type":"Question","name":"AI Agent 導入成效應該看使用率，還是節省的時間？","acceptedAnswer":{"@type":"Answer","text":"使用率只能作為採用情況的輔助指標，主要指標應對應營運成果，例如處理時間、錯誤率、成本、服務品質或決策速度。高使用率不代表工作流程已獲得改善。"}},{"@type":"Question","name":"中小企業沒有專門 AI 團隊，也能導入 AI Agent 嗎？","acceptedAnswer":{"@type":"Answer","text":"中小企業可以從單一、低風險且可人工攔截的流程開始，指定流程負責人與外部技術支援。企業不必先建立大型 AI 團隊，但必須有人負責規則、權限、品質與持續改善。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/articles/hero_ai-agent-adoption.webp" alt="企業工作者檢視 AI 系統流程" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/insights/?category=AI%E7%AD%96%E7%95%A5" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ AI策略</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2026-08-24">2026-08-24</time></span><span class="post-meta-pill">AI Agent · 組織導入 · 流程設計</span></div></div><h1 class="insights-hero-title">AI Agent 落地五層診斷</h1><p class="insights-hero-description">AI Agent 技術逐漸成熟，企業專案卻仍可能卡關。本文以目標、流程、知識、信任、營運五層診斷，協助台灣中小企業找出真正根因與補救順序。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>AI Agent 是能根據目標規劃步驟、使用工具並執行任務的人工智慧系統。當 Agent2Agent Protocol（A2A）與 Model Context Protocol（MCP）等連接技術持續發展，企業面對的核心問題已逐漸從「AI 能不能做」，轉向「公司如何讓 AI 安全、可靠地參與工作」（Axios，2026 年 8 月）。</p>
+<p><a href="https://news.microsoft.com/source/asia/2026/06/08/2026-work-trend-index-report-reveals-how-frontier-firms-are-rebuilding-the-operating-model-for-the-age-of-ai/" target="_blank" rel="noopener noreferrer">Microsoft 2026 Work Trend Index</a>將人機協作分成 Author、Editor、Director 與 Orchestrator 四種模式，並指出企業領導者需要依工作性質，決定人類應參與到什麼程度，而不是把所有流程都推向完全自動化（Microsoft，2026 年 6 月）。</p>
+</div><section aria-labelledby="真正的問題不是-ai-不夠聰明-而是企業還沒準備好改造工作"><h2 id="真正的問題不是-ai-不夠聰明-而是企業還沒準備好改造工作">真正的問題不是 AI 不夠聰明，而是企業還沒準備好改造工作</h2>
+<blockquote>
+<p><strong>AI Agent 專案卡關通常不只因模型能力不足，而是企業尚未重新設計工作流程、隱性知識、人機權責、系統整合與成效指標。技術能執行任務，卻不能替企業定義正確結果。</strong></p>
+</blockquote>
+<p>許多企業的起點是：「這項工作很重複，AI 應該可以做。」進入現場後，顧問才會發現工作還包含優先順序、特殊客戶、跨部門協調與臨時例外。執行者每天都在決定，卻未必曾把判斷說成規則。</p>
+<p>一篇跨組織 Agentic AI 實務研究也指出，企業常因領域知識整合不足、流程責任不清，以及缺少可持續的人機協作模式，而停留在零散工具或概念驗證階段（Bandara 等人，2026 年 1 月）。企業真正要導入的不是一項新工具，而是一種新的工作設計。</p>
+</section><section aria-labelledby="五個表面症狀-如何看出-ai-agent-導入出了什麼問題"><h2 id="五個表面症狀-如何看出-ai-agent-導入出了什麼問題">五個表面症狀，如何看出 AI Agent 導入出了什麼問題？</h2>
+<blockquote>
+<p><strong>企業若以 Token 使用量、建立多少個 Skill 或參加多少課程作為主要績效指標，可能製造出看似積極、實際沒有改善流程的「AI 表演」。真正的成效應回到節省時間、降低錯誤、改善決策與提升服務成果（商業周刊，2026 年 6 月）。</strong></p>
+</blockquote>
+<p>工具沒人使用、AI Agent 經常出錯、概念驗證無法上線或使用率高卻沒成效，分別指向流程、知識、信任、整合與衡量缺口。</p>
+<p>企業應先診斷根因，再決定是否更換工具。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>企業看到的症狀</th><th>可能的真正根因</th><th>應訪談的人</th><th>必須取得的資訊</th><th>第一個補救動作</th></tr></thead><tbody><tr><td>員工不願配合</td><td>員工擔心交出知識後被取代</td><td>第一線員工、直屬主管</td><td>工作價值、職責與決策權如何改變</td><td>先自動化低價值重複工作，保留專業判斷權</td></tr><tr><td>AI Agent 做得不準</td><td>規則與例外只存在員工腦中</td><td>領域專家、流程負責人</td><td>判斷條件、例外案例與錯誤後果</td><td>先拆解工作，不急著全自動化</td></tr><tr><td>工具很多但沒人使用</td><td>工具沒有融入原本的工作路徑</td><td>實際使用者</td><td>輸入、輸出、交接點與現有系統</td><td>重做單一端到端情境</td></tr><tr><td>PoC 成功卻無法上線</td><td>權限、責任與人工攔截點不清楚</td><td>業務、資訊、法務或資安</td><td>誰核准、誰負責、錯誤如何復原</td><td>建立人機權責與例外升級機制</td></tr><tr><td>使用率很高卻沒有效益</td><td>把工具使用量誤當營運成果</td><td>主管、流程負責人</td><td>時間、錯誤率、成本與服務成果</td><td>改用流程成果衡量成效</td></tr></tbody></table></div>
+<figure class="article-figure"><img src="/images/articles/ai-agent-root-cause-diagnosis.webp" alt="AI Agent 為什麼做不好？表象 ➔ 根因對照圖：從員工不願配合、做得不準、沒人使用、PoC 無法上線到沒效益的根因分析" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="企業-ai-agent-落地五層診斷-目標-流程-知識-信任-營運"><h2 id="企業-ai-agent-落地五層診斷-目標-流程-知識-信任-營運">企業 AI Agent 落地五層診斷：目標、流程、知識、信任、營運</h2>
+<blockquote>
+<p><strong>台灣產業人才政策資料指出，員工技能不足、組織文化抗拒與資料科技基礎，都是企業擔心的轉型障礙；有效推動需要跨部門合作、學習資源與可取得的內部諮詢支援（經濟部產業發展署，2026 年 1 月）。</strong></p>
+</blockquote>
+<p>企業應依序檢查營運目標、真實工作流程、隱性知識、員工信任及正式營運條件。前一層問題尚未釐清時，持續增加 AI Agent 數量或更換模型，通常只會放大原有混亂。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>診斷層</th><th>必問問題</th><th>通過條件</th></tr></thead><tbody><tr><td>目標</td><td>要改善哪一項營運成果？</td><td>有具體的時間、錯誤、成本、服務或風險指標</td></tr><tr><td>流程</td><td>真實工作如何輸入、判斷、交接與輸出？</td><td>已記錄正常路徑、例外路徑與失敗處理</td></tr><tr><td>知識</td><td>關鍵規則在哪裡？誰知道例外？</td><td>文件規則與員工經驗都已盤點，且可持續更新</td></tr><tr><td>信任</td><td>員工導入後扮演什麼角色？</td><td>員工知道專業價值、決策權與職涯安排</td></tr><tr><td>營運</td><td>誰管理 Agent？誰對結果負責？</td><td>權限、監控、人工攔截、復原與成效追蹤皆明確</td></tr></tbody></table></div>
+<p>五層診斷的順序很重要。企業若沒有先定義成果，就無法判斷哪段流程值得改造；沒有理解流程，就無法取得正確知識；沒有建立信任，領域專家也不會說出真正的例外；沒有營運責任，成功的 PoC 仍無法安全上線。</p>
+</section><section aria-labelledby="員工抗拒-ai-可能不是不願改變-而是不相信公司會保留他的價值"><h2 id="員工抗拒-ai-可能不是不願改變-而是不相信公司會保留他的價值">員工抗拒 AI，可能不是不願改變，而是不相信公司會保留他的價值</h2>
+<blockquote>
+<p><strong>員工若認為企業蒐集工作知識是為了取代自己，不合作是一種可以理解的自我保護。企業必須在訪談前說明導入目的、保留的決策權與未來角色，信任才可能轉化為可用的流程知識。</strong></p>
+</blockquote>
+<p>在一個匿名企業導入情境中，關鍵流程高度依賴單一員工。企業若直接要求員工交出全部工作方法，員工很容易解讀成：「系統學會後，公司就不需要我了。」消極配合可能源自職涯安全感受到威脅。</p>
+<p>較可行的做法，是先處理每月固定報表等低風險工作，讓員工先感受到負擔降低。例外與最終決策仍由領域專家掌握，員工則轉成流程設計者與品質把關者。</p>
+<p>CIO Taiwan 也指出，員工對職涯保障與被取代的憂慮會影響 AI 導入；主管需要以同理與角色發展降低不安全感（CIO Taiwan，2023 年 12 月）。</p>
+</section><section aria-labelledby="sop-寫得很完整-為什麼-ai-agent-還是做不好"><h2 id="sop-寫得很完整-為什麼-ai-agent-還是做不好">SOP 寫得很完整，為什麼 AI Agent 還是做不好？</h2>
+<blockquote>
+<p><strong>隱性知識是員工長期工作形成、卻未必能直接說成規則的判斷能力。企業內真正重要的知識，往往不在企業資源規劃系統（ERP）、客戶關係管理系統（CRM）或正式手冊中，而在資深員工判斷「哪一個例外值得注意」的經驗裡（Kuzmanko，2026 年 7 月）。</strong></p>
+</blockquote>
+<p>正式標準作業程序通常只描述正常路徑，真實工作還包含例外、優先順序、風險感知與經驗判斷。隱性知識若沒有被說明、驗證並轉成可維護規則，AI Agent 就無法可靠執行。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>標準流程文件常寫的內容</th><th>真實工作還需要知道的內容</th></tr></thead><tbody><tr><td>收到訂單後輸入系統</td><td>哪些客戶、品項或時段必須優先處理</td></tr><tr><td>資料齊全即可往下執行</td><td>哪些看似齊全的資料仍需要再次確認</td></tr><tr><td>發生異常時通知主管</td><td>哪種異常可自行處理，哪種必須立即升級</td></tr><tr><td>依排程完成工作</td><td>插單、缺料、設備狀況與交期衝突如何取捨</td></tr></tbody></table></div>
+<p>顧問不必要求員工一次寫出完美 SOP，而應利用真實案例追問：「最近一次破例是什麼？資料相同但客戶不同，結果會改變嗎？做錯能否復原？」案例比對後，才能形成條件、例外與人工升級規則。</p>
+</section><section aria-labelledby="不要一次拿走整份工作-先把任務拆成三種人機分工"><h2 id="不要一次拿走整份工作-先把任務拆成三種人機分工">不要一次拿走整份工作：先把任務拆成三種人機分工</h2>
+<blockquote>
+<p><strong>企業可將工作拆成 AI Agent 直接執行、AI Agent 執行後由人工確認，以及必須由領域專家判斷三類。任務分類應依錯誤影響與可復原性決定，再逐步提高自動化程度。</strong></p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>人機分工</th><th>適合任務</th><th>必要控制</th></tr></thead><tbody><tr><td>AI Agent 直接執行</td><td>格式轉換、固定彙整、低風險查找、例行通知</td><td>執行紀錄、權限限制、失敗重試</td></tr><tr><td>AI Agent 執行，人工確認</td><td>報價草稿、訂單欄位判讀、異常分類、排程建議</td><td>核准點、資料來源、撤回與修正機制</td></tr><tr><td>領域專家判斷</td><td>高影響決策、罕見例外、客戶承諾、不可逆操作</td><td>AI 提供資料與建議，人類保留最終責任</td></tr></tbody></table></div>
+</section><section aria-labelledby="哪些情況不能讓-ai-agent-自動執行"><h2 id="哪些情況不能讓-ai-agent-自動執行">哪些情況不能讓 AI Agent 自動執行？</h2>
+<blockquote>
+<p><strong>AI Agent 是否能自動執行，不應只看模型準確度，而要同時評估錯誤影響、可復原性、資料敏感度、例外覆蓋與責任歸屬。</strong></p>
+</blockquote>
+<p>任一高風險條件尚未處理，就應保留人工審核。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>判斷條件</th><th>可否自動執行</th><th>最低要求</th><th>原因</th></tr></thead><tbody><tr><td>動作可能造成人身安全、重大金錢或法律影響</td><td>不可</td><td>由具權限的人員逐案核准</td><td>錯誤後果重大，不能只靠事後修正</td></tr><tr><td>動作包含客戶承諾、付款、退款、刪除或正式簽核</td><td>不可</td><td>執行前核准，並提供預覽與撤回機制</td><td>屬於對外承諾或不可逆操作</td></tr><tr><td>AI Agent 需要讀取個資、商業機密或敏感製程資料</td><td>條件式</td><td>最小權限、資料遮罩、存取紀錄與定期複核</td><td>資料外洩風險高於單次任務效益</td></tr><tr><td>輸入資料不完整、互相矛盾或低於信心門檻</td><td>不可</td><td>自動停止並轉交指定人員</td><td>AI Agent 不應自行猜測關鍵缺漏</td></tr><tr><td>新例外尚未被規則、測試案例或升級程序涵蓋</td><td>不可</td><td>交由領域專家判斷並回寫規則</td><td>未知情境無法沿用既有授權</td></tr><tr><td>任務低風險、可復原、規則穩定且結果可追蹤</td><td>可以</td><td>限定權限、保留活動紀錄與抽樣檢查</td><td>錯誤可被發現、攔截並復原</td></tr></tbody></table></div>
+</section><section aria-labelledby="安全護欄與審核責任矩陣"><h2 id="安全護欄與審核責任矩陣">安全護欄與審核責任矩陣</h2>
+<blockquote>
+<p><strong>金融業近期的實務提供了一個很清楚的例子：部分銀行為數位工作者配置登入帳號、指定任務與人類主管；涉及客戶與關鍵功能時，仍保留人工監督與品質控制（Reuters，2026 年 7 月）。企業可以把 AI Agent 當成需要訓練、授權、考核與管理的新角色，而不是部署後便不需負責的軟體。</strong></p>
+</blockquote>
+<p>安全護欄必須同時回答「誰設定規則、誰批准行動、誰監控異常、誰負責結果」。AI Agent 不能成為責任歸屬不明的執行者。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>控制項目</th><th>主要執行者</th><th>最終核准／負責者</th><th>必留紀錄</th></tr></thead><tbody><tr><td>選定使用情境與風險等級</td><td>流程負責人、領域專家</td><td>部門主管或專案贊助人</td><td>導入目的、預期成果、禁止範圍</td></tr><tr><td>定義規則、例外與信心門檻</td><td>領域專家、AI 導入顧問</td><td>流程負責人</td><td>規則版本、測試案例、變更原因</td></tr><tr><td>設定資料與系統權限</td><td>資訊人員、資安人員</td><td>資料擁有者</td><td>帳號、授權範圍、存取與撤銷紀錄</td></tr><tr><td>執行前人工審核</td><td>指定審核人</td><td>流程負責人</td><td>輸入資料、AI 建議、核准人與時間</td></tr><tr><td>監控執行結果與異常</td><td>系統維運人員</td><td>流程負責人</td><td>活動日誌、錯誤、重試、人工介入</td></tr><tr><td>抽樣檢查輸出品質</td><td>領域專家</td><td>部門主管</td><td>抽樣方式、錯誤率、修正與回訓事項</td></tr><tr><td>發生事件時暫停與復原</td><td>系統維運人員、流程負責人</td><td>事件指揮者或主管</td><td>停用時間、影響範圍、復原與改善措施</td></tr><tr><td>檢查導入成效</td><td>流程負責人</td><td>專案贊助人</td><td>處理時間、錯誤率、成本與服務成果</td></tr></tbody></table></div>
+<p>Microsoft 的四種人機協作模式顯示，人類參與程度應隨工作而改變，不是所有任務都要走到多個 Agent 自主協調的 Orchestrator 模式（Microsoft，2026 年 6 月）。</p>
+</section><section aria-labelledby="已經卡關的-ai-agent-專案-如何重新啟動"><h2 id="已經卡關的-ai-agent-專案-如何重新啟動">已經卡關的 AI Agent 專案，如何重新啟動？</h2>
+<blockquote>
+<p><strong>卡關的 AI Agent 專案應先停止增加工具，重新確認成果指標、訪談實際工作者、拆解單一流程並設定人工攔截點。小範圍試行通過後，再逐步擴大權限與自動化程度。</strong></p>
+</blockquote>
+<p>Dcard 的內部轉型經驗顯示，企業必須重新梳理部門流程，再整合系統、資料權限與企業情境（科技新報，2026 年 5 月）。缺少整合、API／MCP 管理與集中治理，可能造成 Agent 增加但信任不足。</p>
+<ol>
+<li><strong>停止擴張：</strong> 暫停新增模型、工具與 Agent，列出目前的實際使用情況。</li>
+<li><strong>重設成果：</strong> 選定一項可衡量的流程成果，例如處理時間、錯誤率或延誤件數。</li>
+<li><strong>訪談執行者：</strong> 找實際工作者重走近期案例，記錄正常路徑、例外與判斷依據。</li>
+<li><strong>拆解人機分工：</strong> 將任務分成直接執行、人工確認與專家判斷三類。</li>
+<li><strong>補上營運控制：</strong> 明確設定資料權限、負責人、人工攔截、活動紀錄與復原方法。</li>
+<li><strong>用單一流程重試：</strong> 先驗證端到端的小流程，再依結果擴大範圍。</li>
+</ol>
+<p>重新啟動不是為了證明 AI Agent 一定可行，而是用最低成本確認工作是否適合自動化、知識是否取得，以及企業能否承擔結果。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>企業導入 AI Agent 一定要先整理完整 SOP 嗎？</span></h3>
+<p>不需要等到所有 SOP 都完整才開始，但至少要選定單一流程，記錄輸入、輸出、正常路徑、例外與錯誤處理。正式文件之外，也要透過近期案例取得領域專家的實際判斷。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>員工不願意提供工作細節時，企業應該怎麼辦？</span></h3>
+<p>企業應先釐清員工擔心的是被取代、工作增加，還是導入目的不明。先從能減輕員工負擔的低風險工作開始，並明確說明導入後的角色與決策權，比要求員工立即交出全部知識更有效。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI Agent 與一般工作流程自動化有什麼差別？</span></h3>
+<p>傳統工作流程自動化通常依固定規則執行；AI Agent 可以根據目標與情境規劃步驟、使用工具並處理部分不確定性。AI Agent 的彈性較高，也更需要權限、監控、人工攔截與責任設計。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>哪些工作不能直接交給 AI Agent 自動執行？</span></h3>
+<p>涉及重大金錢、法律責任、人身安全、客戶承諾或不可逆操作的工作，不宜在缺乏人工核准與復原機制時直接自動執行。企業也應評估錯誤能否及時發現與攔截。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PoC 成功後，為什麼仍然無法正式上線？</span></h3>
+<p>概念驗證（Proof of Concept，PoC）通常只證明技術可以在受控情境執行。正式上線還需要處理資料權限、系統整合、負責人、監控、例外升級、復原方式與成效追蹤。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI Agent 導入成效應該看使用率，還是節省的時間？</span></h3>
+<p>使用率只能作為採用情況的輔助指標，主要指標應對應營運成果，例如處理時間、錯誤率、成本、服務品質或決策速度。高使用率不代表工作流程已獲得改善。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>中小企業沒有專門 AI 團隊，也能導入 AI Agent 嗎？</span></h3>
+<p>中小企業可以從單一、低風險且可人工攔截的流程開始，指定流程負責人與外部技術支援。企業不必先建立大型 AI 團隊，但必須有人負責規則、權限、品質與持續改善。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ol>
+<li>經濟部產業發展署，〈企業如何成功推動 AI 人才與組織文化轉型〉，2026-01-19。<a href="https://ipd.nat.gov.tw/italent/ePaperD/9/ePaper20260100007" target="_blank" rel="noopener noreferrer">https://ipd.nat.gov.tw/italent/ePaperD/9/ePaper20260100007</a></li>
+<li>Bandara, E. et al., “A Practical Guide to Agentic AI Transition in Organizations,” 2026-01-27。<a href="https://arxiv.org/html/2602.10122v1" target="_blank" rel="noopener noreferrer">https://arxiv.org/html/2602.10122v1</a></li>
+<li>科技新報，〈年輕人論壇靠 AI「轉大人」，Dcard 成立企業 AI Agent 事業〉，2026-05-28。<a href="https://finance.technews.tw/2026/05/28/dcard-ai-agent-gntc/" target="_blank" rel="noopener noreferrer">https://finance.technews.tw/2026/05/28/dcard-ai-agent-gntc/</a></li>
+<li>黃昭瑛，〈公司導入 AI，為何無效工作反而變多？〉，商業周刊，2026-06-08。<a href="https://www.businessweekly.com.tw/management/blog/3021620" target="_blank" rel="noopener noreferrer">https://www.businessweekly.com.tw/management/blog/3021620</a></li>
+<li>Microsoft, “2026 Work Trend Index report reveals how Frontier Firms are rebuilding the operating model for the age of AI,” 2026-06-08。<a href="https://news.microsoft.com/source/asia/2026/06/08/2026-work-trend-index-report-reveals-how-frontier-firms-are-rebuilding-the-operating-model-for-the-age-of-ai/" target="_blank" rel="noopener noreferrer">https://news.microsoft.com/source/asia/2026/06/08/2026-work-trend-index-report-reveals-how-frontier-firms-are-rebuilding-the-operating-model-for-the-age-of-ai/</a>。存取日期：2026-08-28。研究範圍：橫跨 10 個國家、20,000 名 AI 使用者的問卷調查，另以相同方法延伸至 11 個市場，並結合數兆筆匿名化 Microsoft 365 生產力訊號與超過 10 萬則 Copilot 對話分析，訪談 AI、工作與組織心理學專家。本文引用內容為報告提出的 Author、Editor、Director、Orchestrator 四種人機協作模式分類，未引用其中個別百分比數字。</li>
+<li>Reuters, “Wall Street banks ramp up digital assistants in bid to win productivity race,” 2026-07-13。<a href="https://www.reuters.com/business/finance/wall-street-banks-ramp-up-digital-assistants-bid-to-win-productivity-race-2026-07-13/" target="_blank" rel="noopener noreferrer">https://www.reuters.com/business/finance/wall-street-banks-ramp-up-digital-assistants-bid-to-win-productivity-race-2026-07-13/</a></li>
+<li>Express Computer, “86% of enterprises have deployed AI agents; but just 34% trust them: Forrester study,” 2026-07-20。<a href="https://www.expresscomputer.in/news/86-of-enterprises-have-deployed-ai-agents-but-just-34-trust-them-forrester-study/136898/" target="_blank" rel="noopener noreferrer">https://www.expresscomputer.in/news/86-of-enterprises-have-deployed-ai-agents-but-just-34-trust-them-forrester-study/136898/</a></li>
+<li>Jonathan Kuzmanko, “The Hidden Enterprise Knowledge Problem AI Cannot Ignore,” 2026-07-22。<a href="https://www.kuzmanko.com/insights/hidden-enterprise-knowledge-problem-ai-cannot-ignore" target="_blank" rel="noopener noreferrer">https://www.kuzmanko.com/insights/hidden-enterprise-knowledge-problem-ai-cannot-ignore</a></li>
+<li>Axios, “Google’s A2A protocol gets a new home,” 2026-08-17。<a href="https://www.axios.com/2026/08/17/a2a-agentic-ai-foundation-open-ai-standards" target="_blank" rel="noopener noreferrer">https://www.axios.com/2026/08/17/a2a-agentic-ai-foundation-open-ai-standards</a></li>
+<li>王義智，〈企業 AI 轉型如何避免員工抗拒心態〉，CIO Taiwan，2023-12-14。<a href="https://www.cio.com.tw/how-enterprise-ai-transformation-avoids-employee-resistance-to-mindsets/" target="_blank" rel="noopener noreferrer">https://www.cio.com.tw/how-enterprise-ai-transformation-avoids-employee-resistance-to-mindsets/</a></li>
+</ol>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/ai-agent-core-capabilities">企業導入前必懂的 MCP、Skills、Automation</a>：同樣聚焦 AI Agent，可接著比較不同情境的做法。</li>
+<li><a href="/post/ai-agent-permission">如何串接 Email、ERP 與企業資料，自動執行完整工作流程？</a>：同樣聚焦 AI Agent，可接著比較不同情境的做法。</li>
+<li><a href="/post/ai-poc-to-scale">企業 AI 規模化怎麼診斷、怎麼衡量？七個障礙與五層指標</a>：同屬「AI策略」主題，可延伸理解相近問題的判斷方式。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2026-08-24</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIGC 文字與圖片生成：ChatGPT、Bing、Bard、Claude 工具入門觀察｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 AIGC 文字與圖片生成的入門路線、工具差異、提示詞模板與實務觀察。" />
+<meta name="keywords" content="生成式AI, AIGC, 生成式AI, ChatGPT, 圖像生成" />
+<link rel="canonical" href="https://claire-chang.com/post/aigc-text-image-generation/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="AIGC 文字與圖片生成：ChatGPT、Bing、Bard、Claude 工具入門觀察｜Claire Chang" />
+<meta property="og:description" content="整理 AIGC 文字與圖片生成的入門路線、工具差異、提示詞模板與實務觀察。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/aigc-text-image-generation/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_aigc-text-image-generation-fb18d1ef.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_aigc-text-image-generation-fb18d1ef.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AIGC 文字與圖片生成：ChatGPT、Bing、Bard、Claude 工具入門觀察｜Claire Chang" />
+<meta name="twitter:description" content="整理 AIGC 文字與圖片生成的入門路線、工具差異、提示詞模板與實務觀察。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_aigc-text-image-generation-fb18d1ef.jpg" />
+<meta property="article:published_time" content="2024-07-09" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="AIGC" />
+<meta property="article:tag" content="生成式AI" />
+<meta property="article:tag" content="ChatGPT" />
+<meta property="article:tag" content="圖像生成" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"AIGC 文字與圖片生成：ChatGPT、Bing、Bard、Claude 工具入門觀察","item":"https://claire-chang.com/post/aigc-text-image-generation/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/aigc-text-image-generation/#article","headline":"AIGC 文字與圖片生成：ChatGPT、Bing、Bard、Claude 工具入門觀察","description":"整理 AIGC 文字與圖片生成的入門路線、工具差異、提示詞模板與實務觀察。","image":"https://claire-chang.com/images/tech/hero_aigc-text-image-generation.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-07-09","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/aigc-text-image-generation/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"AIGC, 生成式AI, ChatGPT, 圖像生成","about":[{"@type":"Thing","name":"生成式AI"},{"@type":"Thing","name":"圖像生成"}],"mentions":[{"@type":"Thing","name":"AIGC"},{"@type":"Thing","name":"ChatGPT"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/aigc-text-image-generation/#faq","mainEntity":[{"@type":"Question","name":"AIGC 文字生成和圖片生成要先學哪一個？","acceptedAnswer":{"@type":"Answer","text":"建議先學 AIGC 文字生成，再學圖片生成。文字生成能先訓練任務拆解、輸出格式與限制條件，這些能力會直接影響圖片 prompt 的品質。"}},{"@type":"Question","name":"ChatGPT、Bing、Bard、Claude 可以互相取代嗎？","acceptedAnswer":{"@type":"Answer","text":"ChatGPT、Bing、Bard、Claude 不完全能互相取代。不同工具在搜尋整合、長文處理、回答風格與工作流程串接上各有差異，實務上更適合依任務選用。"}},{"@type":"Question","name":"提示詞模板是不是只適合初學者？","acceptedAnswer":{"@type":"Answer","text":"提示詞模板不只適合初學者，也適合團隊協作。當多人需要產出同一類內容時，模板能讓需求、格式與品質標準比較一致。"}},{"@type":"Question","name":"AIGC 圖片可以直接拿來商業使用嗎？","acceptedAnswer":{"@type":"Answer","text":"AIGC 圖片不應該在沒有檢查授權、肖像、品牌元素與平台條款的情況下直接商用。即使圖片看起來可用，也需要確認來源工具的使用條款與生成內容是否侵犯他人權益。"}},{"@type":"Question","name":"企業導入 AIGC 要先買工具還是先設流程？","acceptedAnswer":{"@type":"Answer","text":"企業導入 AIGC 應該先設流程，再決定工具。流程要先定義資料能不能輸入、誰負責校對、哪些內容可以發布、錯誤如何回報，工具採購才有判斷依據。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_aigc-text-image-generation.webp" alt="Women Who Code Taipei AIGC 文字與圖片生成線上直播分享海報" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-07-09">2024-07-09</time></span><span class="post-meta-pill">AIGC · 生成式AI · ChatGPT · 圖像生成</span></div></div><h1 class="insights-hero-title">AIGC 文字與圖片生成：ChatGPT、Bing、Bard、Claude 工具入門觀察</h1><p class="insights-hero-description">整理 AIGC 文字與圖片生成的入門路線、工具差異、提示詞模板與實務觀察。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>AIGC 文字與圖片生成的入門重點，不是一次學完所有工具，而是先理解「文字生成、圖片生成、提示詞模板、延伸應用」四個層次。這篇文章整理我在 Women Who Code Taipei 線上分享中使用的課程脈絡，讓想開始用生成式 AI 的人能先抓到工具差異與實作方向。</p>
+</div><section aria-labelledby="aigc-文字與圖片生成適合從哪裡開始"><h2 id="aigc-文字與圖片生成適合從哪裡開始">AIGC 文字與圖片生成適合從哪裡開始？</h2>
+<p>AIGC 文字與圖片生成適合先從文字工具開始，再進到圖片生成與工作流程整合。文字工具能訓練提問與拆任務能力，圖片工具則更需要理解模型限制與生成控制。</p>
+<p>我會把入門路線分成四堂課來看：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>順序</th><th>主題</th><th>重點</th></tr></thead><tbody><tr><td>1</td><td>ChatGPT、Bing、Bard、Claude 指南</td><td>認識主流對話式 AI 工具的使用情境。</td></tr><tr><td>2</td><td>透過模板指令掌握使用技巧</td><td>用固定結構讓 AI 產出更穩定。</td></tr><tr><td>3</td><td>圖像生成及應用</td><td>學習 prompt、風格、構圖與圖片生成限制。</td></tr><tr><td>4</td><td>AIGC 的延伸應用介紹</td><td>把文字與圖片生成接到工作、學習與自動化流程。</td></tr></tbody></table></div>
+<p>這個順序很務實。先用文字工具練習任務拆解，再把提示詞觀念帶到圖片生成，最後才討論工作流程整合，學習者比較不會卡在工具名稱和功能列表裡。</p>
+</section><section aria-labelledby="chatgpt-bing-bard-claude-各自適合做什麼"><h2 id="chatgpt-bing-bard-claude-各自適合做什麼">ChatGPT、Bing、Bard、Claude 各自適合做什麼？</h2>
+<p>ChatGPT、Bing、Bard、Claude 都屬於對話式生成工具，但適合的任務不完全相同。使用者應該依照資料來源、回答風格、檔案處理與搜尋需求選工具。</p>
+<p>在入門教學裡，我通常不把工具比較做成「誰最好」。更實用的問法是：我要讓 AI 幫我完成哪一段工作？</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>工具</th><th>適合任務</th><th>使用觀察</th></tr></thead><tbody><tr><td>ChatGPT</td><td>寫作、摘要、腦力激盪、程式輔助</td><td>適合把一個模糊任務拆成可執行步驟。</td></tr><tr><td>Bing</td><td>搭配搜尋情境的問答</td><td>適合需要連到公開網頁資訊的問題。</td></tr><tr><td>Bard</td><td>Google 生態系使用者的生成式 AI 入門</td><td>適合用來觀察不同模型回答同一問題的差異。</td></tr><tr><td>Claude</td><td>長文整理、改寫、語氣調整</td><td>適合處理結構較長、需要文字品質的內容。</td></tr></tbody></table></div>
+<p>課程資源包含「ChatGPT_Bing_Bard_Claude 指南」投影片與課程錄影，適合先建立工具地圖，再回頭練習自己的日常任務（Slideshare，2024；YouTube，2024）。</p>
+</section><section aria-labelledby="為什麼提示詞模板比單次靈感更重要"><h2 id="為什麼提示詞模板比單次靈感更重要">為什麼提示詞模板比單次靈感更重要？</h2>
+<p>提示詞模板的價值在於把需求、角色、格式、限制與範例固定下來。固定結構能降低每次重新描述需求的成本，也讓生成結果更容易比較與迭代。</p>
+<p>我在教 AIGC 時，會請初學者先練習這五個欄位：</p>
+<ol>
+<li><strong>任務目標</strong>：請 AI 完成什麼事，例如摘要、改寫、規劃、比較或產圖。</li>
+<li><strong>使用情境</strong>：成果要給誰看、用在哪裡、需要多正式。</li>
+<li><strong>輸出格式</strong>：表格、條列、段落、JSON、簡報大綱或圖片 prompt。</li>
+<li><strong>限制條件</strong>：字數、語氣、不可捏造來源、不可使用特定詞彙。</li>
+<li><strong>範例或反例</strong>：提供喜歡與不喜歡的樣子，讓 AI 對齊標準。</li>
+</ol>
+<p>模板不是為了把創意框死，而是讓使用者保留判斷力。當輸出結果不好時，使用者可以知道是目標不清、格式不對、限制不足，還是缺少範例。</p>
+</section><section aria-labelledby="圖像生成要觀察哪些地方"><h2 id="圖像生成要觀察哪些地方">圖像生成要觀察哪些地方？</h2>
+<p>圖像生成不只是在 prompt 裡塞更多形容詞。圖像生成需要同時觀察主體、風格、構圖、比例、文字、細節一致性與後製成本。</p>
+<p>文字生成的錯誤多半可以用閱讀發現，圖片生成的錯誤常常藏在細節裡。常見問題包含手指不自然、中文字錯誤、品牌元素不準、人物比例失衡、同一張圖裡風格不一致。</p>
+<p>我會建議把圖片 prompt 拆成幾個欄位：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>欄位</th><th>寫法</th></tr></thead><tbody><tr><td>主體</td><td>圖片裡最重要的人、物件或場景。</td></tr><tr><td>用途</td><td>社群貼文、簡報封面、網站 hero、產品示意圖或教學圖。</td></tr><tr><td>風格</td><td>寫實、插畫、扁平、3D、攝影、海報、資訊圖表。</td></tr><tr><td>構圖</td><td>遠景、近景、俯視、對稱、留白、主體靠左或靠右。</td></tr><tr><td>限制</td><td>不要文字、不要商標、避免過度寫實人物或避免特定顏色。</td></tr></tbody></table></div>
+<p>如果圖片要用在公開頁面，我會特別檢查授權、人物肖像、品牌識別與可讀性。AIGC 圖片可以很快產出方向感，但真正能發布的圖片仍需要人工選圖、裁切、修圖與替代文字。</p>
+</section><section aria-labelledby="aigc-可以延伸到哪些工作流程"><h2 id="aigc-可以延伸到哪些工作流程">AIGC 可以延伸到哪些工作流程？</h2>
+<p>AIGC 的延伸應用通常不是單一工具，而是把文字生成、圖片生成、檔案處理、搜尋與自動化串在一起。真正的效率來自流程設計，不只是生成一段內容。</p>
+<p>我常看到的延伸應用有四類：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>應用類型</th><th>例子</th><th>關鍵判斷</th></tr></thead><tbody><tr><td>內容生產</td><td>社群貼文、電子報、文章大綱、簡報草稿</td><td>是否有清楚受眾與審稿流程。</td></tr><tr><td>視覺輔助</td><td>封面圖、提案示意、情境圖、教學素材</td><td>是否需要一致風格與商用授權。</td></tr><tr><td>知識整理</td><td>文件摘要、FAQ、會議重點、課程筆記</td><td>是否需要來源追溯與人工校對。</td></tr><tr><td>自動化流程</td><td>表單整理、客服草稿、資料分類、通知</td><td>是否有權限控管與錯誤回報。</td></tr></tbody></table></div>
+<p>這也是我最想提醒的地方：AIGC 工具本身只是入口。當任務牽涉公司資料、客戶內容、合約條款或公開發布素材時，流程裡要放進檢查點，不能只看生成速度。</p>
+</section><section aria-labelledby="初學者練習-aigc-時要避免哪些誤區"><h2 id="初學者練習-aigc-時要避免哪些誤區">初學者練習 AIGC 時要避免哪些誤區？</h2>
+<p>初學者練習 AIGC 時最容易過度相信第一次輸出。比較好的做法是把 AI 當成協作草稿工具，並用明確標準檢查事實、語氣、格式與使用權限。</p>
+<p>我會提醒初學者避開五個誤區：</p>
+<ul>
+<li><strong>把生成結果當答案</strong>：AI 產出需要校對，尤其是人名、日期、數據與來源。</li>
+<li><strong>只追最新工具名稱</strong>：工具會變，任務拆解與評估標準比較不容易過時。</li>
+<li><strong>沒有留下提示詞版本</strong>：無法回溯就難以改善流程。</li>
+<li><strong>忽略圖片授權與肖像風險</strong>：公開使用素材前要確認來源、授權與人物呈現方式。</li>
+<li><strong>把機密資料貼進公開工具</strong>：公司資料、客戶資料與個資需要先確認內部規範。</li>
+</ul>
+<p>AIGC 最有價值的地方，是把「想法到草稿」的速度變快。但最後能不能被採用，仍取決於使用者是否知道目標、限制與審核標準。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<p>AIGC 文字與圖片生成的常見問題，通常集中在工具選擇、提示詞、圖片品質、授權與企業使用風險。以下用入門使用者最常遇到的情境回答。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AIGC 文字生成和圖片生成要先學哪一個？</span></h3>
+<p>建議先學 AIGC 文字生成，再學圖片生成。文字生成能先訓練任務拆解、輸出格式與限制條件，這些能力會直接影響圖片 prompt 的品質。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ChatGPT、Bing、Bard、Claude 可以互相取代嗎？</span></h3>
+<p>ChatGPT、Bing、Bard、Claude 不完全能互相取代。不同工具在搜尋整合、長文處理、回答風格與工作流程串接上各有差異，實務上更適合依任務選用。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>提示詞模板是不是只適合初學者？</span></h3>
+<p>提示詞模板不只適合初學者，也適合團隊協作。當多人需要產出同一類內容時，模板能讓需求、格式與品質標準比較一致。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AIGC 圖片可以直接拿來商業使用嗎？</span></h3>
+<p>AIGC 圖片不應該在沒有檢查授權、肖像、品牌元素與平台條款的情況下直接商用。即使圖片看起來可用，也需要確認來源工具的使用條款與生成內容是否侵犯他人權益。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>企業導入 AIGC 要先買工具還是先設流程？</span></h3>
+<p>企業導入 AIGC 應該先設流程，再決定工具。流程要先定義資料能不能輸入、誰負責校對、哪些內容可以發布、錯誤如何回報，工具採購才有判斷依據。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Slideshare, <a href="https://www.slideshare.net/slideshows/1chatgptbingbardclaudepdf/265753441" target="_blank" rel="noopener noreferrer">ChatGPT_Bing_Bard_Claude 指南</a>，存取日期：2026-08-28。</li>
+<li>YouTube, <a href="https://www.youtube.com/watch?v=AjNXpRn3G0s" target="_blank" rel="noopener noreferrer">ChatGPT / Bing / Bard / Claude 指南課程錄影</a>，存取日期：2026-08-28。</li>
+<li>Slideshare, <a href="https://www.slideshare.net/slideshows/2pdf-116d/265753345" target="_blank" rel="noopener noreferrer">透過模板指令掌握使用技巧</a>，存取日期：2026-08-28。</li>
+<li>YouTube, <a href="https://www.youtube.com/watch?v=k33MNZA44Tw" target="_blank" rel="noopener noreferrer">透過模板指令掌握使用技巧課程錄影</a>，存取日期：2026-08-28。</li>
+<li>Slideshare, <a href="https://www.slideshare.net/ssuser834f031/3pdf" target="_blank" rel="noopener noreferrer">圖像生成及應用</a>，存取日期：2026-08-28。</li>
+<li>YouTube, <a href="https://www.youtube.com/watch?v=tcrJpJgavMA" target="_blank" rel="noopener noreferrer">圖像生成及應用課程錄影</a>，存取日期：2026-08-28。</li>
+<li>Slideshare, <a href="https://www.slideshare.net/slideshows/4aigcpdf/265924625" target="_blank" rel="noopener noreferrer">AIGC 的延伸應用介紹</a>，存取日期：2026-08-28。</li>
+<li>YouTube, <a href="https://www.youtube.com/watch?v=2wQ6JTFu0Fs" target="_blank" rel="noopener noreferrer">AIGC 的延伸應用介紹課程錄影</a>，存取日期：2026-08-28。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/chatgpt-bing-bard-claude-guide">ChatGPT / Bing / Bard / Claude指南</a>：同樣聚焦 ChatGPT、生成式AI，可接著比較不同情境的做法。</li>
+<li><a href="/post/ai-3d-model-generation">AI技術於3D模型領域的應用：用 Meshy 從文字與圖片生成 3D 模型</a>：同樣聚焦 生成式AI，可接著比較不同情境的做法。</li>
+<li><a href="/post/stable-diffusion-features-applications">Stable Diffusion 主要功能與應用全解析：從圖像生成到科學研究</a>：同樣聚焦 生成式AI、圖像生成，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。此次更新補齊 GEO Answer Blocks、FAQ、站內延伸閱讀、參考資料與 webp hero 圖片。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-07-09</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

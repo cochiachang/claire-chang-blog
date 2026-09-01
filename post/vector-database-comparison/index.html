@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>向量搜尋資料庫比較：RAG 系統該如何選擇 Vector Database｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="比較 ChromaDB、Elasticsearch、Faiss、Redis 四種向量資料庫的技術特性、優缺點與適用場景，附 ChromaDB 完整操作範例。" />
+<meta name="keywords" content="後端開發, Vector Database, RAG, 資料庫" />
+<link rel="canonical" href="https://claire-chang.com/post/vector-database-comparison/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="向量搜尋資料庫比較：RAG 系統該如何選擇 Vector Database｜Claire Chang" />
+<meta property="og:description" content="比較 ChromaDB、Elasticsearch、Faiss、Redis 四種向量資料庫的技術特性、優缺點與適用場景，附 ChromaDB 完整操作範例。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/vector-database-comparison/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_prometheus-exporter-target-info-ab49c852.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_prometheus-exporter-target-info-ab49c852.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="向量搜尋資料庫比較：RAG 系統該如何選擇 Vector Database｜Claire Chang" />
+<meta name="twitter:description" content="比較 ChromaDB、Elasticsearch、Faiss、Redis 四種向量資料庫的技術特性、優缺點與適用場景，附 ChromaDB 完整操作範例。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_prometheus-exporter-target-info-ab49c852.jpg" />
+<meta property="article:published_time" content="2024-07-24" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Vector Database" />
+<meta property="article:tag" content="RAG" />
+<meta property="article:tag" content="資料庫" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"向量搜尋資料庫比較：RAG 系統該如何選擇 Vector Database","item":"https://claire-chang.com/post/vector-database-comparison/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/vector-database-comparison/#article","headline":"向量搜尋資料庫比較：RAG 系統該如何選擇 Vector Database","description":"比較 ChromaDB、Elasticsearch、Faiss、Redis 四種向量資料庫的技術特性、優缺點與適用場景，附 ChromaDB 完整操作範例。","image":"https://claire-chang.com/images/tech/hero_prometheus-exporter-target-info.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-07-24","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/vector-database-comparison/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"Vector Database, RAG, 資料庫","about":[{"@type":"Thing","name":"Vector Database"},{"@type":"Thing","name":"RAG"},{"@type":"Thing","name":"資料庫"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/vector-database-comparison/#faq","mainEntity":[{"@type":"Question","name":"這四種向量資料庫該怎麼選？","acceptedAnswer":{"@type":"Answer","text":"如果專案已經在用 Elasticsearch 做全文搜索，且需要向量搜索結合豐富的過濾條件，直接擴充 Elasticsearch 是省事的選擇；如果目標是輕量、快速上手的嵌入式方案，ChromaDB 很適合原型開發；如果資料規模極大、需要極致的搜索速度與 GPU 加速，Faiss 的技術深度更適合；如果專案本來就在用 Redis 做快取，且想要低延遲的向量搜索，Redis 的 HNSW 支援也是合理選項。"}},{"@type":"Question","name":"ChromaDB 和 Faiss 有什麼本質差異？","acceptedAnswer":{"@type":"Answer","text":"ChromaDB 定位是「開箱即用的嵌入式向量資料庫」，內建集合管理、metadata 過濾等應用層功能；Faiss 則更像是一個相似性搜索的演算法庫，提供多種索引技術讓開發者自行組裝，彈性更高但也需要自己處理更多資料庫層面的工程（如持久化、多用戶存取）。"}},{"@type":"Question","name":"Elasticsearch 缺乏 ANN/HNSW 支援會有什麼實際影響？","acceptedAnswer":{"@type":"Answer","text":"在資料集規模不大或查詢頻率不高時影響有限；但當向量資料量成長到需要極致搜索速度時，缺乏原生 ANN/HNSW 支援會讓 Elasticsearch 的搜索延遲相對其他專用向量資料庫更高，這時可以靠額外的過濾條件縮小搜索空間來緩解，或考慮換用原生支援 HNSW 的資料庫。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_prometheus-exporter-target-info.webp" alt="向量搜尋資料庫比較：RAG 系統該如何選擇 Vector Database 技術文章封面圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-07-24">2024-07-24</time></span><span class="post-meta-pill">Vector Database · RAG · 資料庫</span></div></div><h1 class="insights-hero-title">向量搜尋資料庫比較：RAG 系統該如何選擇 Vector Database</h1><p class="insights-hero-description">比較 ChromaDB、Elasticsearch、Faiss、Redis 四種向量資料庫的技術特性、優缺點與適用場景，附 ChromaDB 完整操作範例。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+</div><section aria-labelledby="chromadb-是什麼-適合什麼情境"><h2 id="chromadb-是什麼-適合什麼情境">ChromaDB 是什麼，適合什麼情境？</h2>
+<p>Chroma 是一個新的 AI 原生開源嵌入式資料庫，非常輕量且易用。它讓知識、事實和技能可插入，從而輕鬆建立 LLM 應用程式。可以運行在記憶體中（也可保存在磁碟中），也可做為資料庫伺服器來使用（這和傳統資料庫類似）。</p>
+<ul>
+<li>官方文件：<a href="https://docs.trychroma.com/getting-started" target="_blank" rel="noopener noreferrer">Getting Started</a></li>
+<li>GitHub：<a href="https://github.com/chroma-core/chroma" target="_blank" rel="noopener noreferrer">chroma-core/chroma</a></li>
+</ul>
+<h3>ChromaDB 基本使用範例</h3>
+<pre><code class="hljs language-python"><span class="hljs-keyword">import</span> chromadb
+
+<span class="hljs-comment"># 建立客戶端</span>
+<span class="hljs-comment"># 記憶體模式</span>
+<span class="hljs-comment"># client = chromadb.Client()</span>
+
+<span class="hljs-comment"># 持久模式，資料保存在磁碟</span>
+client = chromadb.PersistentClient(path=<span class="hljs-string">"./chromac"</span>)
+
+<span class="hljs-comment"># Docker客戶端模式</span>
+<span class="hljs-comment"># chroma_client = chromadb.HttpClient(host="localhost", port=8000)</span>
+
+<span class="hljs-comment"># 遍歷所有集合</span>
+collections = client.list_collections()
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"現有的集合:"</span>, collections)
+
+<span class="hljs-comment"># 建立新集合</span>
+collection = client.create_collection(<span class="hljs-string">"testname"</span>)
+
+<span class="hljs-comment"># 取得集合</span>
+collection = client.get_collection(<span class="hljs-string">"testname"</span>)
+
+<span class="hljs-comment"># 建立或取得集合</span>
+collection = client.get_or_create_collection(<span class="hljs-string">"testname"</span>)
+
+<span class="hljs-comment"># 刪除集合</span>
+client.delete_collection(<span class="hljs-string">"testname"</span>)
+
+<span class="hljs-comment"># 建立或取得集合（帶有嵌入函數）</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">embedding_function</span>(<span class="hljs-params">doc</span>):
+    <span class="hljs-comment"># 定義你的嵌入函數</span>
+    <span class="hljs-keyword">return</span> [<span class="hljs-number">0.1</span>, <span class="hljs-number">0.2</span>, <span class="hljs-number">0.3</span>]
+
+collection = client.get_or_create_collection(name=<span class="hljs-string">"my_collection2"</span>, embedding_function=embedding_function)
+
+<span class="hljs-comment"># 取得集合中最新的5條資料</span>
+latest_documents = collection.peek()
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"最新的資料:"</span>, latest_documents)
+
+<span class="hljs-comment"># 新增資料</span>
+collection.add(
+    documents=[
+        <span class="hljs-string">"2022年2月2號，美國國防部宣布：將向歐洲增派部隊，應對俄烏邊境地區的緊張局勢。"</span>,
+        <span class="hljs-string">"2月17號，烏克蘭軍方稱：東部民間武裝向政府軍控制區發動砲擊，而東部民間武裝則指責烏政府軍先動用了重型武器發動襲擊，烏東地區緊張局勢持續升級。"</span>
+    ],
+    metadatas=[
+        {<span class="hljs-string">"source"</span>: <span class="hljs-string">"my_source"</span>},
+        {<span class="hljs-string">"source"</span>: <span class="hljs-string">"my_source"</span>}
+    ],
+    ids=[<span class="hljs-string">"id1"</span>, <span class="hljs-string">"id2"</span>]
+)
+
+<span class="hljs-comment"># 改變資料（更新或新增）</span>
+collection.upsert(
+    ids=[<span class="hljs-string">"id1"</span>],
+    documents=[<span class="hljs-string">"更新後的文檔內容"</span>],
+    metadatas=[{<span class="hljs-string">"source"</span>: <span class="hljs-string">"updated_source"</span>}]
+)
+
+<span class="hljs-comment"># 刪除資料</span>
+collection.delete(ids=[<span class="hljs-string">"id1"</span>, <span class="hljs-string">"id2"</span>])
+
+<span class="hljs-comment"># 查詢資料</span>
+results = collection.query(
+    query_texts=[<span class="hljs-string">"俄烏戰爭發生在哪天？"</span>],
+    n_results=<span class="hljs-number">2</span>
+)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"查詢結果:"</span>, results)
+</code></pre>
+</section><section aria-labelledby="elasticsearch-拿來做向量搜尋合適嗎"><h2 id="elasticsearch-拿來做向量搜尋合適嗎">Elasticsearch 拿來做向量搜尋合適嗎？</h2>
+<p>Elasticsearch 是一個非常強大和靈活的搜索和分析引擎。雖然它的主要用例圍繞全文搜索，但它的用途足夠廣泛，可以用於各種其他功能，其中一個引起許多開發人員和數據科學家注意的功能，就是把 Elasticsearch 當成向量資料庫使用。隨著 <code>dense_vector</code> 數據類型的出現，以及利用 <code>script_score</code> 函數的能力，Elasticsearch 的功能已經擴展到促進向量相似性搜索。</p>
+<h3>Elasticsearch 相比專用向量搜索庫的優點</h3>
+<p>使用 Elasticsearch 作為向量資料庫的一大優勢，是它內建的功能可以過濾對特定數據子集的查詢——當你想縮小搜索空間範圍，或應用程式需要上下文感知向量搜索時，這個功能非常有用。相比之下，雖然其他專用的向量搜索庫（如 ChromaDB 和 Faiss）為純向量搜索提供了無可挑剔的速度和效率，但它們缺乏 Elasticsearch 那種全功能查詢能力。例如 ChromaDB 確實允許查詢元數據，但僅限於字元串的精確匹配，這個限制有時會妨礙複雜搜索方案中所需的靈活性和粒度。</p>
+<p>將 Elasticsearch 豐富的查詢環境與向量相似度搜索相結合，意味著使用者可以兩全其美：基於向量的精確結果，並透過使用細緻入微的上下文感知篩檢程式對這些搜索進行分層的能力來增強。這種合併使 Elasticsearch 成為需要深度和廣度的開發人員的有力選擇。</p>
+<h3>Elasticsearch 相比專用向量搜索庫的缺點</h3>
+<p>Elasticsearch 憑藉其廣泛的工具集和適應性，在搜尋引擎領域為自己開闢了一席之地。然而，當與 Faiss 和 ChromaDB 等專門的向量搜索庫相比時，它在某些領域暴露了自己的局限性。</p>
+<p><strong>近似最近鄰和分層可導航小世界技術</strong>：對於 Elasticsearch 的 OpenSearch 版本 7 來說，它缺乏對近似最近鄰（ANN）演算法和分層可導航小世界（HNSW）技術的內置支持。這些先進的方法對於提高在廣泛數據集中的搜索速度至關重要，利用它們可以大大加快搜索速度，而準確性只有很小的權衡。</p>
+<p><strong>Faiss 和 ChromaDB</strong>：把這些策略作為核心技術，展現了快速導航廣闊向量空間的天生能力，因此在圍繞廣泛數據集、需要快速結果的應用中具有優勢。</p>
+<p><strong>用過濾器來緩解</strong>：對於 Elasticsearch 愛好者來說，一切並不黯淡。該系統固有的靈活性提供了一種對策——透過熟練地將過濾器應用於查詢，可以減少 Elasticsearch 中的搜索空間，在一定程度上平衡因缺乏 ANN 和 HNSW 支持而造成的效率差距，讓 Elasticsearch 能夠專注於相關數據子集，使搜索過程更易於管理和更快速。</p>
+</section><section aria-labelledby="faiss-適合什麼場景"><h2 id="faiss-適合什麼場景">Faiss 適合什麼場景？</h2>
+<p>官方網站：<a href="https://faiss.ai/index.html" target="_blank" rel="noopener noreferrer">faiss.ai</a></p>
+<p>Faiss 是一個用於高效相似性搜索和密集向量聚類的庫，包含搜索任何大小向量集的演算法，即使是可能不適合放進 RAM 的向量集，還包含用於評估和參數調整的支援代碼。Faiss 基於多年研究，實現了多種先進技術，使其在大規模向量數據搜索中具有顯著優勢，能夠快速在大量數據中找到匹配項、節省存儲空間，同時保持搜索準確性，並可利用 GPU 進行加速。這些特性使 Faiss 非常適合需要快速檢索大量資料的應用。以下是 Faiss 用到的主要技術：</p>
+<ol>
+<li><strong>非詳盡搜索</strong>：基於「Video google: A text retrieval approach to object matching in videos」的倒排文件技術，使大型數據集的非詳盡搜索成為可能，避免全量掃描，提高搜索效率。</li>
+<li><strong>產品量化（PQ）</strong>：來自「Product quantization for nearest neighbor search」的方法，是一種高維向量的有損壓縮技術，能在壓縮域中進行相對準確的重建和距離計算，減少存儲和計算成本。</li>
+<li><strong>三級量化（IVFADC-R）</strong>：從「Searching in one billion vectors: re-rank with source coding」引入的三級量化方法，進一步提高搜索效率。</li>
+<li><strong>倒排多重索引</strong>：基於「The inverted multi-index」的技術，大大提高倒排索引的速度，適用於快速且精度要求不高的操作。</li>
+<li><strong>優化產品量化（OPQ）</strong>：來自「Optimized product quantization」的技術，透過向量空間的線性變換，使索引更為高效。</li>
+<li><strong>GPU 加速</strong>：「Billion-scale similarity search with GPUs」中描述的 GPU 實現和快速 k 選擇，使大規模相似性搜索能充分利用 GPU 的計算能力。</li>
+<li><strong>分層可導航小世界（HNSW）</strong>：使用「Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs」的 HNSW 索引方法，提供高效而穩健的近似最近鄰搜索。</li>
+<li><strong>二進位多索引哈希</strong>：基於「Fast Search in Hamming Space with Multi-Index Hashing」的方法，提高哈希空間中的搜索速度。</li>
+<li><strong>基於圖的索引（NSG）</strong>：從「Fast Approximate Nearest Neighbor Search With The Navigating Spreading-out Graph」引入的 NSG 方法，進一步提高近似最近鄰搜索的效率。</li>
+<li><strong>殘差量化器</strong>：來自「Improved Residual Vector Quantization for High-dimensional Approximate Nearest Neighbor Search」的技術，改進高維度近似最近鄰搜索的性能。</li>
+</ol>
+</section><section aria-labelledby="redis-也能做向量搜尋嗎"><h2 id="redis-也能做向量搜尋嗎">Redis 也能做向量搜尋嗎？</h2>
+<p>官方介紹：<a href="https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/" target="_blank" rel="noopener noreferrer">Redis Vectors</a></p>
+<p>大多數具有 Web 服務背景的開發人員可能都熟悉 Redis。從本質上講，Redis 是一個開源鍵值存儲，可以用作緩存、消息代理和資料庫，開發人員選擇它是因為速度快、擁有龐大的客戶端庫生態系統，並且已被各大企業部署多年。</p>
+<p>RediSearch 是一個 Redis 模組，為 Redis 提供查詢、二級索引、全文搜索和向量搜索。要使用 RediSearch，首先要在 Redis 數據上聲明索引，然後就可以用 RediSearch 客戶端查詢該數據。</p>
+<p>Redis 向量資料庫支援兩種向量索引類型：暴力搜尋的 FLAT，以及近似搜尋的 HNSW；同時提供餘弦距離、內積距離和歐幾里德距離三種距離運算；另外還支援範圍搜尋，以及可以添加組合過濾器和語義搜尋的混合搜尋，並提供 JSON 物件支援。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>這四種向量資料庫該怎麼選？</span></h3>
+<p>如果專案已經在用 Elasticsearch 做全文搜索，且需要向量搜索結合豐富的過濾條件，直接擴充 Elasticsearch 是省事的選擇；如果目標是輕量、快速上手的嵌入式方案，ChromaDB 很適合原型開發；如果資料規模極大、需要極致的搜索速度與 GPU 加速，Faiss 的技術深度更適合；如果專案本來就在用 Redis 做快取，且想要低延遲的向量搜索，Redis 的 HNSW 支援也是合理選項。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ChromaDB 和 Faiss 有什麼本質差異？</span></h3>
+<p>ChromaDB 定位是「開箱即用的嵌入式向量資料庫」，內建集合管理、metadata 過濾等應用層功能；Faiss 則更像是一個相似性搜索的演算法庫，提供多種索引技術讓開發者自行組裝，彈性更高但也需要自己處理更多資料庫層面的工程（如持久化、多用戶存取）。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Elasticsearch 缺乏 ANN/HNSW 支援會有什麼實際影響？</span></h3>
+<p>在資料集規模不大或查詢頻率不高時影響有限；但當向量資料量成長到需要極致搜索速度時，缺乏原生 ANN/HNSW 支援會讓 Elasticsearch 的搜索延遲相對其他專用向量資料庫更高，這時可以靠額外的過濾條件縮小搜索空間來緩解，或考慮換用原生支援 HNSW 的資料庫。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://docs.trychroma.com/getting-started" target="_blank" rel="noopener noreferrer">ChromaDB Getting Started</a></li>
+<li><a href="https://github.com/chroma-core/chroma" target="_blank" rel="noopener noreferrer">chroma-core/chroma</a></li>
+<li><a href="https://faiss.ai/index.html" target="_blank" rel="noopener noreferrer">Faiss</a></li>
+<li><a href="https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/" target="_blank" rel="noopener noreferrer">Redis Vectors</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/cloud-similarity-search-databases-research">雲端相似性搜尋資料庫研究：AWS DocDB、阿里雲 OpenSearch 與 Amazon Neptune 向量搜尋比較</a>：同樣聚焦 RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/cloud-similarity-search-databases-research">雲端相似性搜尋資料庫研究：DocumentDB、OpenSearch Vector 與 Neptune Analytics 比較</a>：同樣聚焦 RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/rag-retrieval-data-preparation">RAG 檢索資料準備指南：切分、向量化與索引設計</a>：同樣聚焦 RAG，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-07-24</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

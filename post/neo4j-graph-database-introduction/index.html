@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neo4j 圖形資料庫介紹｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="介紹 Neo4j 如何用 graph database 模型儲存節點與關係，並用 Cypher 查詢社交圖譜、企業關係與詐欺偵測場景。" />
+<meta name="keywords" content="後端開發, Neo4j, graph database, Cypher, 圖形資料庫, NoSQL" />
+<link rel="canonical" href="https://claire-chang.com/post/neo4j-graph-database-introduction/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Neo4j 圖形資料庫介紹｜Claire Chang" />
+<meta property="og:description" content="介紹 Neo4j 如何用 graph database 模型儲存節點與關係，並用 Cypher 查詢社交圖譜、企業關係與詐欺偵測場景。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/neo4j-graph-database-introduction/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_neo4j-graph-database-introduction-a7c9985f.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_neo4j-graph-database-introduction-a7c9985f.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Neo4j 圖形資料庫介紹｜Claire Chang" />
+<meta name="twitter:description" content="介紹 Neo4j 如何用 graph database 模型儲存節點與關係，並用 Cypher 查詢社交圖譜、企業關係與詐欺偵測場景。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_neo4j-graph-database-introduction-a7c9985f.jpg" />
+<meta property="article:published_time" content="2024-07-24" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Neo4j" />
+<meta property="article:tag" content="graph database" />
+<meta property="article:tag" content="Cypher" />
+<meta property="article:tag" content="圖形資料庫" />
+<meta property="article:tag" content="NoSQL" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Neo4j 圖形資料庫介紹","item":"https://claire-chang.com/post/neo4j-graph-database-introduction/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/neo4j-graph-database-introduction/#article","headline":"Neo4j 圖形資料庫介紹","description":"介紹 Neo4j 如何用 graph database 模型儲存節點與關係，並用 Cypher 查詢社交圖譜、企業關係與詐欺偵測場景。","image":"https://claire-chang.com/images/tech/hero_neo4j-graph-database-introduction.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-07-24","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/neo4j-graph-database-introduction/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"Neo4j, graph database, Cypher, 圖形資料庫, NoSQL","about":[{"@type":"Thing","name":"圖形資料庫"},{"@type":"Thing","name":"NoSQL"}],"mentions":[{"@type":"Thing","name":"Neo4j"},{"@type":"Thing","name":"graph database"},{"@type":"Thing","name":"Cypher"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/neo4j-graph-database-introduction/#faq","mainEntity":[{"@type":"Question","name":"Neo4j 是什麼資料庫？","acceptedAnswer":{"@type":"Answer","text":"Neo4j 是一套 graph database，也就是圖形資料庫。Neo4j 用節點保存實體，用關係保存實體之間的連接，適合處理社交網路、企業關係、推薦系統、知識圖譜與詐欺偵測。"}},{"@type":"Question","name":"graph database 和 relational database 差在哪裡？","acceptedAnswer":{"@type":"Answer","text":"graph database 直接把關係存成資料模型的一部分，relational database 則通常用外鍵和 JOIN 表示關係。當查詢需要跨很多層連接時，graph database 的建模和查詢語法會更貼近問題本身。"}},{"@type":"Question","name":"Neo4j 和 MongoDB 都是 NoSQL，差異是什麼？","acceptedAnswer":{"@type":"Answer","text":"MongoDB 偏向文件資料庫，適合保存 JSON-like 文件和半結構化資料。Neo4j 偏向圖形資料庫，適合查節點之間的路徑、關係模式與多跳連接。"}},{"@type":"Question","name":"Cypher 是 SQL 嗎？","acceptedAnswer":{"@type":"Answer","text":"Cypher 不是 SQL，但 Cypher 借用了不少 SQL 類似概念，例如 `WHERE`、`ORDER BY`、宣告式查詢。Cypher 的差異在於查詢對象是節點與關係，並用箭頭語法描述 graph pattern。"}},{"@type":"Question","name":"Neo4j 適合拿來做 RAG 嗎？","acceptedAnswer":{"@type":"Answer","text":"Neo4j 可以用在 graph RAG 或 knowledge graph RAG 場景，特別適合保存實體、概念與來源文件之間的關係。向量搜尋負責語意相似度，graph database 則補上結構化脈絡與可追溯路徑。"}},{"@type":"Question","name":"什麼時候不該用 Neo4j？","acceptedAnswer":{"@type":"Answer","text":"如果資料主要是固定欄位、單表查詢、標準交易或傳統 BI 報表，Neo4j 不一定是第一選擇。PostgreSQL、MySQL 這類關聯式資料庫在這些場景通常更簡單，也更容易找到維運經驗。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_neo4j-graph-database-introduction.webp" alt="Neo4j 查詢效能示意圖，呈現圖形資料庫在高度連結資料中的查詢優勢" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-07-24">2024-07-24</time></span><span class="post-meta-pill">Neo4j · graph database · Cypher · 圖形資料庫 · NoSQL</span></div></div><h1 class="insights-hero-title">Neo4j 圖形資料庫介紹</h1><p class="insights-hero-description">介紹 Neo4j 如何用 graph database 模型儲存節點與關係，並用 Cypher 查詢社交圖譜、企業關係與詐欺偵測場景。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Neo4j 是一套以 graph database 為核心的圖形資料庫，適合處理「資料之間的關係比單筆資料更重要」的問題。社交網路、企業關係、推薦系統、知識圖譜與詐欺偵測都屬於這類場景；我在整理 Neo4j 時，最想記住的不是資料庫名稱，而是它把節點（Node）與關係（Relationship）直接當成資料模型的一部分。</p>
+</div><section aria-labelledby="neo4j-是什麼"><h2 id="neo4j-是什麼">Neo4j 是什麼？</h2>
+<p>Neo4j 是使用 property graph model 的圖形資料庫。Neo4j 以節點表示實體，以關係表示實體之間的連接，並讓兩者都可以帶有屬性。</p>
+<p>圖形資料庫和關聯式資料庫最大的差異，在於「關係」不是查詢時才用 JOIN 拼出來，而是資料本身就保存了連線。Neo4j 官方文件把 property graph model 拆成節點、關係、標籤與屬性：節點描述領域裡的實體，關係連接來源節點與目標節點，屬性則用 key-value 補充節點或關係的細節（Neo4j Graph Database Concepts，存取日期：2026-08-28）。</p>
+<figure class="article-figure"><img src="/images/tech/neo4j-property-graph-example.webp" alt="Neo4j property graph 節點與關係示意圖" loading="lazy" class="markdown-img"></figure>
+<p>我會把 Neo4j 想成一種「先承認世界是網狀的」資料庫。當資料問題本來就是「誰認識誰」「哪家公司投資哪家公司」「哪個帳號和哪支手機重複出現」時，graph database 的模型會比把所有東西硬塞進表格更自然。</p>
+</section><section aria-labelledby="graph-database-和一般-nosql-有什麼不同"><h2 id="graph-database-和一般-nosql-有什麼不同">graph database 和一般 NoSQL 有什麼不同？</h2>
+<p>graph database 是 NoSQL 的一種，但 graph database 的重點不是只追求彈性 schema，而是把連接關係變成第一級資料。Neo4j 因此適合查多跳關聯。</p>
+<p>常見 NoSQL 類型可以用這張表快速區分：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>NoSQL 類型</th><th>常見例子</th><th>適合處理的資料形狀</th></tr></thead><tbody><tr><td>鍵值資料庫</td><td>Redis</td><td>用 key 快速取 value</td></tr><tr><td>文件資料庫</td><td>MongoDB</td><td>以 JSON-like 文件保存半結構化資料</td></tr><tr><td>寬欄資料庫</td><td>Apache HBase</td><td>大量稀疏欄位與分散式寫入</td></tr><tr><td>圖形資料庫</td><td>Neo4j</td><td>節點、關係、多跳路徑與模式匹配</td></tr></tbody></table></div>
+<p>如果問題只是在查某個商品的價格，鍵值資料庫或關聯式資料庫就能處理；如果問題是「哪些商品被同一群高價值客戶一起購買，而且這些客戶又和哪些家庭成員共享地址」，圖形資料庫的查詢思路會更直覺。Neo4j 官方 use cases 也把 real-time recommendations、fraud detection、supply chain management、knowledge graphs 列為 graph technology 的常見應用方向（Neo4j Use Cases，存取日期：2026-08-28）。</p>
+</section><section aria-labelledby="neo4j-為什麼適合處理高度連結資料"><h2 id="neo4j-為什麼適合處理高度連結資料">Neo4j 為什麼適合處理高度連結資料？</h2>
+<p>Neo4j 適合高度連結資料，因為 Neo4j 查詢會沿著既有關係走訪，而不是每次重新計算表格之間的連接。關係越密集，差異越明顯。</p>
+<p>在關聯式資料庫裡，複雜關係常常被拆成多張表，再靠外鍵與 JOIN 串回來。這不是錯，只是當查詢一路跨過很多層時，SQL 會愈寫愈長，查詢計畫也更難閱讀。</p>
+<p>Neo4j 的原生圖形架構把節點和關係存在貼近圖結構的位置。Neo4j 在知識圖譜說明中也強調 index-free adjacency 可以避免複雜 JOIN，並讓關聯走訪更快；官方頁面以「up to 1000x faster queries」描述特定圖形查詢相對於關聯式或非原生圖形資料庫的效能優勢（Neo4j Knowledge Graph，存取日期：2026-08-28）。這類數字要回到實際資料模型和查詢條件驗證，但方向很清楚：Neo4j 的強項是連線密集的問題。</p>
+<figure class="article-figure"><img src="/images/tech/neo4j-query-performance.webp" alt="Neo4j 查詢效能示意圖" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="neo4j-可以用在哪些場景"><h2 id="neo4j-可以用在哪些場景">Neo4j 可以用在哪些場景？</h2>
+<p>Neo4j 常見應用包含社交網路圖譜、企業關係圖譜、金融詐欺偵測、推薦系統與知識圖譜。這些場景共同特徵是答案藏在關係路徑裡。</p>
+<p>我會先用三個場景判斷 Neo4j 是否值得導入：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>場景</th><th>Neo4j 可以回答的問題</th><th>為什麼 graph database 合適</th></tr></thead><tbody><tr><td>社交網路圖譜</td><td>某個使用者和哪些人、內容或群組有直接或間接關係？</td><td>好友、追蹤、互動都能用節點與關係表示</td></tr><tr><td>企業關係圖譜</td><td>一家公司和股東、客戶、供應商、投資人之間如何連動？</td><td>企業查詢通常不是單點資料，而是多層關係網</td></tr><tr><td>金融詐欺偵測</td><td>多個帳號是否共享電話、裝置、地址或交易對手？</td><td>可沿著帳號、交易、IMEI、地址等節點找可疑路徑</td></tr></tbody></table></div>
+<p>Neo4j 官方的 fraud detection demo 也採用相同思路：詐欺行為常透過複雜關係隱藏，圖形資料庫能把可疑路徑、中介節點與重複身份關係攤開來分析（Neo4j Fraud Demo，存取日期：2026-08-28）。這也是我覺得 Neo4j 很適合放在「調查型查詢」的原因。</p>
+<figure class="article-figure"><img src="/images/tech/neo4j-graph-database-use-cases.webp" alt="Neo4j graph database 使用場景整理圖" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="cypher-在-neo4j-裡扮演什麼角色"><h2 id="cypher-在-neo4j-裡扮演什麼角色">Cypher 在 Neo4j 裡扮演什麼角色？</h2>
+<p>Cypher 是 Neo4j 的宣告式圖形查詢語言。Cypher 用括號表示節點、用箭頭表示關係，讓查詢看起來接近一張可讀的關係圖。</p>
+<p>Neo4j 官方文件說明，Cypher 和 SQL 一樣讓使用者描述「要取回什麼」，而不是命令資料庫「如何一步步取回」。差別在於 Cypher 的語法把圖形模式直接寫進查詢，例如 <code>(:Person)-[:ACTED_IN]->(:Movie)</code> 這種 ASCII-art 形式（Neo4j Cypher Manual，存取日期：2026-08-28）。</p>
+<p>下面這段查詢保留我當時筆記裡的核心例子：找出參演某部電影的人。</p>
+<pre><code class="hljs language-cypher">MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
+WHERE m.title = "雲圖"
+RETURN p
+</code></pre>
+<p><code>MATCH</code> 負責描述要找的圖形模式，<code>WHERE</code> 加上篩選條件，<code>RETURN</code> 指定輸出。Cypher 的 <code>MATCH</code> clause 會在 graph structure 中尋找符合模式的節點、關係與屬性（Neo4j MATCH documentation，存取日期：2026-08-28）。對熟 SQL 的人來說，Cypher 不難上手；真正需要轉換的是建模角度。</p>
+</section><section aria-labelledby="什麼情況不一定要選-neo4j"><h2 id="什麼情況不一定要選-neo4j">什麼情況不一定要選 Neo4j？</h2>
+<p>Neo4j 不需要取代所有資料庫。資料關係簡單、主要做交易寫入或固定報表統計時，PostgreSQL 等關聯式資料庫通常更直接、更容易維運。</p>
+<p>我會用這份檢查表做初步判斷：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>問題</th><th>偏向 Neo4j</th><th>偏向 PostgreSQL 或其他關聯式資料庫</th></tr></thead><tbody><tr><td>查詢是否需要跨很多層關係？</td><td>是，常見 3 hops 以上</td><td>否，多數是一兩張表查詢</td></tr><tr><td>關係本身是否有屬性？</td><td>是，例如關係時間、角色、權重</td><td>否，關係只是外鍵</td></tr><tr><td>團隊是否需要探索未知模式？</td><td>是，例如可疑網絡、推薦路徑</td><td>否，報表欄位固定</td></tr><tr><td>系統是否以交易一致性和標準 SQL 報表為主？</td><td>不一定</td><td>是，關聯式資料庫更穩</td></tr></tbody></table></div>
+<p>資訊增益放在這裡：不要只因為資料很多就選 Neo4j，要因為「關係很多、路徑重要、模式需要被查出來」才選 Neo4j。資料量大但關係簡單，通常先把 PostgreSQL 索引、查詢設計與資料表結構調好，會比引入新的 graph database 更務實。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Neo4j 是什麼資料庫？</span></h3>
+<p>Neo4j 是一套 graph database，也就是圖形資料庫。Neo4j 用節點保存實體，用關係保存實體之間的連接，適合處理社交網路、企業關係、推薦系統、知識圖譜與詐欺偵測。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>graph database 和 relational database 差在哪裡？</span></h3>
+<p>graph database 直接把關係存成資料模型的一部分，relational database 則通常用外鍵和 JOIN 表示關係。當查詢需要跨很多層連接時，graph database 的建模和查詢語法會更貼近問題本身。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Neo4j 和 MongoDB 都是 NoSQL，差異是什麼？</span></h3>
+<p>MongoDB 偏向文件資料庫，適合保存 JSON-like 文件和半結構化資料。Neo4j 偏向圖形資料庫，適合查節點之間的路徑、關係模式與多跳連接。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Cypher 是 SQL 嗎？</span></h3>
+<p>Cypher 不是 SQL，但 Cypher 借用了不少 SQL 類似概念，例如 <code>WHERE</code>、<code>ORDER BY</code>、宣告式查詢。Cypher 的差異在於查詢對象是節點與關係，並用箭頭語法描述 graph pattern。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Neo4j 適合拿來做 RAG 嗎？</span></h3>
+<p>Neo4j 可以用在 graph RAG 或 knowledge graph RAG 場景，特別適合保存實體、概念與來源文件之間的關係。向量搜尋負責語意相似度，graph database 則補上結構化脈絡與可追溯路徑。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼時候不該用 Neo4j？</span></h3>
+<p>如果資料主要是固定欄位、單表查詢、標準交易或傳統 BI 報表，Neo4j 不一定是第一選擇。PostgreSQL、MySQL 這類關聯式資料庫在這些場景通常更簡單，也更容易找到維運經驗。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Neo4j，〈<a href="https://neo4j.com/docs/getting-started/appendix/graphdb-concepts/" target="_blank" rel="noopener noreferrer">Graph Database Concepts</a>〉，存取日期：2026-08-28。</li>
+<li>Neo4j，〈<a href="https://neo4j.com/docs/cypher-manual/current/introduction/cypher-overview/" target="_blank" rel="noopener noreferrer">Overview - Cypher Manual</a>〉，存取日期：2026-08-28。</li>
+<li>Neo4j，〈<a href="https://neo4j.com/docs/cypher-manual/current/clauses/match/" target="_blank" rel="noopener noreferrer">MATCH - Cypher Manual</a>〉，存取日期：2026-08-28。</li>
+<li>Neo4j，〈<a href="https://neo4j.com/use-cases/" target="_blank" rel="noopener noreferrer">Graph Database Use Cases &#x26; Solutions</a>〉，存取日期：2026-08-28。</li>
+<li>Neo4j，〈<a href="https://neo4j.com/use-cases/knowledge-graph/" target="_blank" rel="noopener noreferrer">Knowledge Graph</a>〉，存取日期：2026-08-28。</li>
+<li>Neo4j，〈<a href="https://neo4j.com/developer/demos/fraud-demo/" target="_blank" rel="noopener noreferrer">Neo4j Fraud Demo</a>〉，存取日期：2026-08-28。</li>
+<li>GitHub，〈<a href="https://github.com/neo4j/neo4j" target="_blank" rel="noopener noreferrer">neo4j/neo4j</a>〉，存取日期：2026-08-28。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/graph-database-concepts-introduction">圖形資料庫的概念入門</a>：同樣聚焦 圖形資料庫、NoSQL，可接著比較不同情境的做法。</li>
+<li><a href="/post/cypher-query-language-intro">專為連接性設計的查詢語言 – Cypher</a>：同樣聚焦 Cypher、Neo4j，可接著比較不同情境的做法。</li>
+<li><a href="/post/graph-rag-node-embeddings">Graph RAG 的 Node Embeddings 技術：把圖節點變成向量</a>：同樣聚焦 Neo4j，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。本文依 2024-07-24 初次發布的 Neo4j 學習脈絡整理，保留 Neo4j、graph database 與 Cypher 核心內容，並補上 GEO Answer Blocks、FAQ、參考資料、站內延伸閱讀與圖片 webp 路徑。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-07-24</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

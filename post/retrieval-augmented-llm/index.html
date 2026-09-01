@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>檢索增強生成（RAG）與 RETA-LLM 框架完整解析｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="解析檢索增強生成（RAG）的完整工作流程：從向量資料庫檢索、填入提示到生成答案，並深入介紹 RETA-LLM 框架的五大模組設計與 RAG 實作上常見的挑戰。" />
+<meta name="keywords" content="機器學習, RAG, RETA-LLM, LLM, 向量資料庫, 檢索增強生成" />
+<link rel="canonical" href="https://claire-chang.com/post/retrieval-augmented-llm/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="檢索增強生成（RAG）與 RETA-LLM 框架完整解析｜Claire Chang" />
+<meta property="og:description" content="解析檢索增強生成（RAG）的完整工作流程：從向量資料庫檢索、填入提示到生成答案，並深入介紹 RETA-LLM 框架的五大模組設計與 RAG 實作上常見的挑戰。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/retrieval-augmented-llm/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_retrieval-augmented-llm-484a072d.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_retrieval-augmented-llm-484a072d.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="檢索增強生成（RAG）與 RETA-LLM 框架完整解析｜Claire Chang" />
+<meta name="twitter:description" content="解析檢索增強生成（RAG）的完整工作流程：從向量資料庫檢索、填入提示到生成答案，並深入介紹 RETA-LLM 框架的五大模組設計與 RAG 實作上常見的挑戰。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_retrieval-augmented-llm-484a072d.jpg" />
+<meta property="article:published_time" content="2024-05-01" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="RAG" />
+<meta property="article:tag" content="RETA-LLM" />
+<meta property="article:tag" content="LLM" />
+<meta property="article:tag" content="向量資料庫" />
+<meta property="article:tag" content="檢索增強生成" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"檢索增強生成（RAG）與 RETA-LLM 框架完整解析","item":"https://claire-chang.com/post/retrieval-augmented-llm/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/retrieval-augmented-llm/#article","headline":"檢索增強生成（RAG）與 RETA-LLM 框架完整解析","description":"解析檢索增強生成（RAG）的完整工作流程：從向量資料庫檢索、填入提示到生成答案，並深入介紹 RETA-LLM 框架的五大模組設計與 RAG 實作上常見的挑戰。","image":"https://claire-chang.com/images/tech/hero_retrieval-augmented-llm.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-05-01","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/retrieval-augmented-llm/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"RAG, RETA-LLM, LLM, 向量資料庫, 檢索增強生成","about":[{"@type":"Thing","name":"RAG"},{"@type":"Thing","name":"LLM"},{"@type":"Thing","name":"向量資料庫"},{"@type":"Thing","name":"檢索增強生成"}],"mentions":[{"@type":"Thing","name":"RETA-LLM"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/retrieval-augmented-llm/#faq","mainEntity":[{"@type":"Question","name":"什麼是檢索增強生成（RAG）？","acceptedAnswer":{"@type":"Answer","text":"RAG 是一種讓 LLM 在回答前先從外部知識來源（如向量資料庫）檢索相關文件的技術。檢索到的內容會被填入提示中作為參考，使模型能產生更準確、更貼近事實的答案，減少幻覺。"}},{"@type":"Question","name":"為什麼需要請求重寫模組？","acceptedAnswer":{"@type":"Answer","text":"使用者在多輪對話中的提問往往語意不完整，例如只問「經濟學院怎麼樣？」而不包含前文脈絡。請求重寫模組利用 LLM 結合對話歷史，把當前請求改寫成完整清晰的查詢，提高後續檢索的品質。"}},{"@type":"Question","name":"RETA-LLM 和 LangChain 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"LangChain 是通用的 LLM 增強工具包，而 RETA-LLM 專注於檢索增強 LLMs，提供更多插件模組（如請求重寫、片段萃取、事實檢查）。RETA-LLM 也把 IR 系統和 LLMs 完全解綁，方便使用者分別自訂搜索引擎和語言模型。"}},{"@type":"Question","name":"為什麼檢索到文件後還需要片段萃取？","acceptedAnswer":{"@type":"Answer","text":"LLM 的輸入長度有限（通常是 2048 或 4096 個標記），無法直接塞入所有檢索到的文件內容，直接截斷又可能遺失重要資訊。片段萃取利用 LLM 自身以滑動視窗策略從文件中提取與請求相關的片段，串接成精簡的參考文獻。"}},{"@type":"Question","name":"事實檢查模組如何減少幻覺？","acceptedAnswer":{"@type":"Answer","text":"即使提供了檢索證據，LLM 仍可能產生幻覺。事實檢查模組把參考文獻和生成的答案一起交給 LLM 判斷一致性，決定輸出答案或回覆「我無法回答這個問題」，避免輸出錯誤資訊。"}},{"@type":"Question","name":"RAG 中稠密表示和稀疏表示該怎麼選？","acceptedAnswer":{"@type":"Answer","text":"稠密表示（向量嵌入）維度較高、資訊較豐富，適合語意相似度檢索，但計算成本較高；稀疏表示（如 BM25）效率高，但可能遺失細節語意。實務上常依場景混合使用兩者，兼顧效果與效率。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_retrieval-augmented-llm.webp" alt="檢索增強生成（RAG）架構概念圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-05-01">2024-05-01</time></span><span class="post-meta-pill">RAG · RETA-LLM · LLM · 向量資料庫 · 檢索增強生成</span></div></div><h1 class="insights-hero-title">檢索增強生成（RAG）與 RETA-LLM 框架完整解析</h1><p class="insights-hero-description">解析檢索增強生成（RAG）的完整工作流程：從向量資料庫檢索、填入提示到生成答案，並深入介紹 RETA-LLM 框架的五大模組設計與 RAG 實作上常見的挑戰。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>這篇文章整理檢索增強生成（Retrieval-Augmented Generation，RAG）的完整工作流程：從使用者查詢開始，透過向量資料庫檢索相關文件，填入提示（prompt），最終形成回答。我也整理了 RETA-LLM 框架的模組化設計，說明它如何把外部知識整合到語言模型中，以及實作 RAG 時常見的挑戰。</p>
+</div><section aria-labelledby="什麼是-rag-的工作流程"><h2 id="什麼是-rag-的工作流程">什麼是 RAG 的工作流程？</h2>
+<p>RAG 的核心流程是：從使用者查詢開始，透過向量資料庫檢索相關內容，把檢索結果填入提示，最終形成回答的整個過程。</p>
+<figure class="article-figure"><img src="/images/articles/retrieval-augmented-llm-1.webp" alt="RAG 工作流程示意圖" loading="lazy" class="markdown-img"></figure>
+<p>RETA-LLM 框架可以看作是實現 RAG 目標的一種具體實現方式，它提供了一套模組化的工具和方法來將外部知識整合到語言模型中，以提升其產生答案的能力。</p>
+</section><section aria-labelledby="reta-llm-framework-是什麼"><h2 id="reta-llm-framework-是什麼">RETA-LLM Framework 是什麼？</h2>
+<p>研究論文：<a href="https://arxiv.org/pdf/2306.05212v1" target="_blank" rel="noopener noreferrer">https://arxiv.org/pdf/2306.05212v1</a></p>
+<p>過去通用的 LLM 增強工具包（如 LangChain）與 RETA-LLM 有所不同，RETA-LLM 專注於檢索增強 LLMs，並提供更多的插件模組。</p>
+<p>檢索增強 LLMs 使用兩個模組的檢索和生成策略：</p>
+<ul>
+<li>根據用戶的請求檢索文件或段落（文件檢索模組）</li>
+<li>利用這些相關文件作為參考生成答案（答案生成模組）</li>
+</ul>
+<p>除了這兩個基本模組外，RETA-LLM 還提供了三個可選模組：</p>
+<ul>
+<li>請求重寫模組，以使用戶當前的請求更完整和清晰</li>
+<li>萃取模組，從檢索到的整個文件內容中提取相關段落或片段</li>
+<li>事實檢查模組，以驗證生成答案中是否存在事實錯誤</li>
+</ul>
+<p>這些可選模組可以使 IR 系統和 LLMs 之間的交互更加有效和順暢。RETA-LLM 中 LLMs 和 IR 系統之間的解綁更加徹底，這使得搜索引擎和 LLMs 的定制更加方便。</p>
+</section><section aria-labelledby="reta-llm-的工作流程是怎麼運作的"><h2 id="reta-llm-的工作流程是怎麼運作的">RETA-LLM 的工作流程是怎麼運作的？</h2>
+<figure class="article-figure"><img src="/images/articles/retrieval-augmented-llm-2.webp" alt="RETA-LLM 框架圖" loading="lazy" class="markdown-img"></figure>
+<p>RETA-LLM 的工作流程如下：</p>
+<ul>
+<li>使用請求<strong>重寫模組修改目前使用者請求，使其完整且清晰</strong>。由於使用者可能向 RETA-LLM 提出一系列問題，目前使用者請求的語意可能不完整。例如，使用者可能會問「經濟學院怎麼樣？」而歷史請求是「介紹資訊學院的專業」。在這種情況下，使用者的準確意思是「介紹經濟學院的專業」。由於 LLMs 在對話式密集檢索中顯示出出色的重寫查詢能力，RETA-LLM 將當前使用者請求和先前的對話歷史提供給 LLMs 進行重寫。</li>
+<li>然後，RETA-LLM 使用文件檢索模組<strong>根據修訂後的使用者請求從外部語料庫中檢索相關文件</strong>。文檔檢索模組是與 IR 系統連接的模組，它從外部知識語料庫中檢索相關文件並傳回前 K 個。</li>
+<li>接下來，RETA-LLM 使用段萃取模組從檢索到的文件中提取與使用者請求相關的片段，以形成參考文獻。由於 LLMs 的輸入長度限制（通常為 2048 或 4096 個標記），因此不可能直接將所有前 K 個相關文件內容連接起來作為它們產生答案的參考文獻。透過截斷文件內容的瑣碎方法可能會遺失其中的重要資訊。因此，<strong>RETA-LLM 重複使用 LLMs 自身從修訂後的請求中提取相關片段</strong>。由於一個文件的長度也可能超出限制，RETA-LLM 採用滑動視窗策略逐步擷取片段。在預設配置中，滑動視窗大小和步長設定為 512 和 256。然後，這些片段被連接在一起作為參考文獻。</li>
+<li>此外，RETA-LLM 使用答案產生模組為使用者請求產生答案。如同先前的研究所建議的，透過提供來自外部語料庫檢索到的參考文獻，LLMs 可以產生更準確的答案。</li>
+<li>最後，RETA-LLM 使用事實檢查模組驗證產生的答案是否包含事實錯誤，並為使用者要求輸出最終回應。儘管提供了產生的額外證據，LLMs 也可能出現幻覺，有必要設計一個模組進行進一步的事實驗證。由於 LLMs 具有強大的自然語言理解能力，RETA-LLM 將參考文獻和生成的答案提供給它們進行判斷，因此可以決定是否輸出產生的答案，或只是說「我無法回答這個問題」。</li>
+</ul>
+<p>請注意，LLMs 的所有輸入都包含在指示或提示中。如圖所示，在 RETA-LLM 中完全解開了 IR 系統和 LLMs 之間的連結。這種分離設計使用戶可以自訂自己的個人搜尋引擎和 LLMs。</p>
+</section><section aria-labelledby="知識檢索的過程包含哪些步驟"><h2 id="知識檢索的過程包含哪些步驟">知識檢索的過程包含哪些步驟？</h2>
+<ul>
+<li><strong>內建工具增強助手功能</strong>：內建的工具可以將上傳的文件中的外部知識與助手功能結合起來，使助手能夠存取並利用這些外部知識來回答使用者的問題。</li>
+<li><strong>內容分塊、索引和嵌入儲存</strong>：上傳的檔案內容將被分成區塊，然後進行索引和嵌入儲存。這意味著文件內容將被切割成較小的片段，每個片段都會被賦予一個特定的標識，並且會轉換成向量表示，以便更有效地處理和檢索。</li>
+<li><strong>檢索嵌入以回答輸入查詢</strong>：當使用者提出查詢時，系統會將檢索嵌入的向量表示以尋找與查詢相關的內容區塊。這些內容區塊中包含的知識將被用來回答使用者的查詢，以提供更準確和全面的答案。</li>
+</ul>
+</section><section aria-labelledby="rag-有哪些常見挑戰"><h2 id="rag-有哪些常見挑戰">RAG 有哪些常見挑戰？</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>挑戰</th><th>說明</th></tr></thead><tbody><tr><td>檢索模型</td><td>選擇合適的檢索模型是一項挑戰。不同的檢索模型可能適用於不同的場景，需要仔細選擇以確保檢索的效果和效率</td></tr><tr><td>稠密或稀疏表示</td><td>稠密表示通常具有更高的維度和更多的資訊，但可能更加計算密集；稀疏表示可能更加高效，但可能會遺失某些細節資訊</td></tr><tr><td>內容區塊的單位</td><td>區塊的大小和粒度會影響到檢索和處理的效率，需要找到合適的單位來平衡資訊的完整性和處理的複雜性</td></tr><tr><td>類似的參考引入噪音</td><td>當有多個相似的參考資料時，可能會引入噪音，使系統難以確定哪個參考最相關，影響答案的準確性和一致性</td></tr><tr><td>跨文件引用</td><td>某些問題需要引用多個文件中的資訊才能回答，增加了檢索和整合資訊的複雜性，需要系統能夠有效處理跨文件的引用和關聯資訊</td></tr></tbody></table></div>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼是檢索增強生成（RAG）？</span></h3>
+<p>RAG 是一種讓 LLM 在回答前先從外部知識來源（如向量資料庫）檢索相關文件的技術。檢索到的內容會被填入提示中作為參考，使模型能產生更準確、更貼近事實的答案，減少幻覺。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼需要請求重寫模組？</span></h3>
+<p>使用者在多輪對話中的提問往往語意不完整，例如只問「經濟學院怎麼樣？」而不包含前文脈絡。請求重寫模組利用 LLM 結合對話歷史，把當前請求改寫成完整清晰的查詢，提高後續檢索的品質。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RETA-LLM 和 LangChain 有什麼不同？</span></h3>
+<p>LangChain 是通用的 LLM 增強工具包，而 RETA-LLM 專注於檢索增強 LLMs，提供更多插件模組（如請求重寫、片段萃取、事實檢查）。RETA-LLM 也把 IR 系統和 LLMs 完全解綁，方便使用者分別自訂搜索引擎和語言模型。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼檢索到文件後還需要片段萃取？</span></h3>
+<p>LLM 的輸入長度有限（通常是 2048 或 4096 個標記），無法直接塞入所有檢索到的文件內容，直接截斷又可能遺失重要資訊。片段萃取利用 LLM 自身以滑動視窗策略從文件中提取與請求相關的片段，串接成精簡的參考文獻。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>事實檢查模組如何減少幻覺？</span></h3>
+<p>即使提供了檢索證據，LLM 仍可能產生幻覺。事實檢查模組把參考文獻和生成的答案一起交給 LLM 判斷一致性，決定輸出答案或回覆「我無法回答這個問題」，避免輸出錯誤資訊。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RAG 中稠密表示和稀疏表示該怎麼選？</span></h3>
+<p>稠密表示（向量嵌入）維度較高、資訊較豐富，適合語意相似度檢索，但計算成本較高；稀疏表示（如 BM25）效率高，但可能遺失細節語意。實務上常依場景混合使用兩者，兼顧效果與效率。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://arxiv.org/pdf/2306.05212v1" target="_blank" rel="noopener noreferrer">RETA-LLM: A Retrieval-Augmented Large Language Model Toolkit（arXiv 論文）</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/retrieval-augmented-generation">檢索增強生成（RAG）如何讓 LLM 回答更準確</a>：同樣聚焦 RAG、檢索增強生成，可接著比較不同情境的做法。</li>
+<li><a href="/post/graph-rag">Graph RAG：圖形式的檢索增強生成完整解析</a>：同樣聚焦 RAG、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/rag-parallel-queries">RAG Parallel Queries 是什麼？並行查詢如何提升 RAG 檢索品質</a>：同樣聚焦 RAG、LLM，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2024-05-01，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-05-01</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular i18n 多語系支援教學：Locale、XLF 翻譯檔與 AOT/JIT 合併方式｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 Angular i18n 多語系支援的實作流程，包含 LOCALE_ID、registerLocaleData、template i18n 標記、XLF 翻譯檔、HTML 屬性翻譯、plural/select 語法，以及 AOT 與 JIT 合併翻譯檔的差異。" />
+<meta name="keywords" content="前端開發, Angular, i18n, 多語系, XLF, LOCALE_ID" />
+<link rel="canonical" href="https://claire-chang.com/post/angular-i18n-multilingual-support/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Angular i18n 多語系支援教學：Locale、XLF 翻譯檔與 AOT/JIT 合併方式｜Claire Chang" />
+<meta property="og:description" content="整理 Angular i18n 多語系支援的實作流程，包含 LOCALE_ID、registerLocaleData、template i18n 標記、XLF 翻譯檔、HTML 屬性翻譯、plural/select 語法，以及 AOT 與 JIT 合併翻譯檔的差異。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/angular-i18n-multilingual-support/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_angular-i18n-multilingual-support-d510a63a.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_angular-i18n-multilingual-support-d510a63a.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Angular i18n 多語系支援教學：Locale、XLF 翻譯檔與 AOT/JIT 合併方式｜Claire Chang" />
+<meta name="twitter:description" content="整理 Angular i18n 多語系支援的實作流程，包含 LOCALE_ID、registerLocaleData、template i18n 標記、XLF 翻譯檔、HTML 屬性翻譯、plural/select 語法，以及 AOT 與 JIT 合併翻譯檔的差異。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_angular-i18n-multilingual-support-d510a63a.jpg" />
+<meta property="article:published_time" content="2018-01-11" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Angular" />
+<meta property="article:tag" content="i18n" />
+<meta property="article:tag" content="多語系" />
+<meta property="article:tag" content="XLF" />
+<meta property="article:tag" content="LOCALE_ID" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Angular i18n 多語系支援教學：Locale、XLF 翻譯檔與 AOT/JIT 合併方式","item":"https://claire-chang.com/post/angular-i18n-multilingual-support/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/angular-i18n-multilingual-support/#article","headline":"Angular i18n 多語系支援教學：Locale、XLF 翻譯檔與 AOT/JIT 合併方式","description":"整理 Angular i18n 多語系支援的實作流程，包含 LOCALE_ID、registerLocaleData、template i18n 標記、XLF 翻譯檔、HTML 屬性翻譯、plural/select 語法，以及 AOT 與 JIT 合併翻譯檔的差異。","image":"https://claire-chang.com/images/tech/hero_angular-i18n-multilingual-support.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-01-11","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/angular-i18n-multilingual-support/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Angular, i18n, 多語系, XLF, LOCALE_ID","about":[{"@type":"Thing","name":"多語系"}],"mentions":[{"@type":"Thing","name":"Angular"},{"@type":"Thing","name":"i18n"},{"@type":"Thing","name":"XLF"},{"@type":"Thing","name":"LOCALE_ID"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/angular-i18n-multilingual-support/#faq","mainEntity":[{"@type":"Question","name":"Angular i18n 適合用在什麼情境？","acceptedAnswer":{"@type":"Answer","text":"Angular i18n 適合需要在建置階段產生不同語言版本的網站，尤其是文案較固定、語系切換不需要即時改變的專案。這種做法讓各語言版本載入速度較快，但翻譯更新後通常需要重新 build。"}},{"@type":"Question","name":"Angular i18n 和 ngx-translate 有什麼差別？","acceptedAnswer":{"@type":"Answer","text":"Angular i18n 是 Angular 官方提供的國際化流程，偏向編譯或建置階段整合翻譯檔。ngx-translate 則常用於執行期切換語言，適合需要在不重新載入頁面的情境下切換語系的應用程式。"}},{"@type":"Question","name":"LOCALE_ID 會自動翻譯畫面文字嗎？","acceptedAnswer":{"@type":"Answer","text":"`LOCALE_ID` 不會自動翻譯 template 裡的文字。`LOCALE_ID` 主要影響日期、數字、百分比與貨幣等格式；畫面文字仍需要透過 `i18n` 標記與翻譯檔處理。"}},{"@type":"Question","name":"為什麼要替 i18n 字串加 description 或 meaning？","acceptedAnswer":{"@type":"Answer","text":"description 可以讓翻譯者理解文案出現的位置和用途，meaning 則能區分表面文字相同但語意不同的字串。當同一句英文在不同 UI 區塊需要不同翻譯時，meaning 特別重要。"}},{"@type":"Question","name":"Angular i18n 的自訂 ID 可以重複嗎？","acceptedAnswer":{"@type":"Answer","text":"Angular i18n 的自訂 ID 不應重複使用在不同意思的文案上。若不同字串共用同一個 `@@id`，Angular 可能把兩處都套用成同一段翻譯，造成畫面文字錯誤。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_angular-i18n-multilingual-support.webp" alt="多語系網站與地區化設定的前端開發示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-01-11">2018-01-11</time></span><span class="post-meta-pill">Angular · i18n · 多語系 · XLF · LOCALE_ID</span></div></div><h1 class="insights-hero-title">Angular i18n 多語系支援教學：Locale、XLF 翻譯檔與 AOT/JIT 合併方式</h1><p class="insights-hero-description">整理 Angular i18n 多語系支援的實作流程，包含 LOCALE_ID、registerLocaleData、template i18n 標記、XLF 翻譯檔、HTML 屬性翻譯、plural/select 語法，以及 AOT 與 JIT 合併翻譯檔的差異。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Angular i18n 可以處理日期、數字、百分比、貨幣格式，也能翻譯 template 文字、HTML 屬性、單複數與條件式字串。這篇整理 Angular 5 時期的官方 i18n 流程：先在 template 加上 <code>i18n</code> 標記，再用 CLI 產生 XLF 翻譯來源檔，最後用 AOT 或 JIT 把翻譯檔合併回應用程式。</p>
+</div><section aria-labelledby="angular-i18n-可以支援哪些多語系需求"><h2 id="angular-i18n-可以支援哪些多語系需求">Angular i18n 可以支援哪些多語系需求？</h2>
+<p>Angular i18n 的核心用途是讓同一個 Angular 專案輸出不同語言版本，並讓日期、貨幣與數字格式符合目標地區。Angular i18n 適合靜態文案較明確、可在建置階段產生語言版本的網站。</p>
+<p>Angular i18n 可以做到的事包括：</p>
+<ul>
+<li>以本地格式顯示日期、數量、百分比和貨幣。</li>
+<li>在 component template 中翻譯文字。</li>
+<li>翻譯單數和複數。</li>
+<li>翻譯 HTML 屬性的替代文字，例如圖片 <code>title</code> 或 <code>alt</code>。</li>
+</ul>
+<p>可以透過 Angular CLI 產生 XLF 檔案，再透過 XLF 檔案設定多語系字串。產生特定語系網站時，可以使用：</p>
+<pre><code class="hljs language-cmd">ng serve --aot --locale zh-Hant
+</code></pre>
+<p>Angular i18n 的實作方式，是讓每個語言獨立產生一個 <code>index.html</code> 版本。優點是網站瀏覽速度較快，缺點是修改翻譯或程式後，需要重新 build 的工程較大。</p>
+</section><section aria-labelledby="angular-locale-與-locale-id-要怎麼設定"><h2 id="angular-locale-與-locale-id-要怎麼設定">Angular locale 與 LOCALE_ID 要怎麼設定？</h2>
+<p>Angular locale 決定日期、數字、百分比與貨幣 pipe 的顯示格式。Angular 預設使用 <code>en-US</code>，如果要改成 <code>zh-Hant</code>、<code>fr</code> 等語系，需要設定 <code>LOCALE_ID</code> 或註冊 locale data。</p>
+<p>如果使用 JIT 方式部署網站，需要在頁面設定 <a href="https://angular.io/api/core/LOCALE_ID" target="_blank" rel="noopener noreferrer"><code>LOCALE_ID</code></a> 的值：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">LOCALE_ID</span>, <span class="hljs-title class_">NgModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">BrowserModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/platform-browser'</span>;
+
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppComponent</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/app/app.component'</span>;
+
+@<span class="hljs-title class_">NgModule</span>({
+  <span class="hljs-attr">imports</span>: [ <span class="hljs-title class_">BrowserModule</span> ],
+  <span class="hljs-attr">declarations</span>: [ <span class="hljs-title class_">AppComponent</span> ],
+  <span class="hljs-attr">providers</span>: [ { <span class="hljs-attr">provide</span>: <span class="hljs-variable constant_">LOCALE_ID</span>, <span class="hljs-attr">useValue</span>: <span class="hljs-string">'zh-Hant'</span> } ],
+  <span class="hljs-attr">bootstrap</span>: [ <span class="hljs-title class_">AppComponent</span> ]
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> { }
+</code></pre>
+<p>Angular 5 的地區設定使用 <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt" target="_blank" rel="noopener noreferrer">BCP 47</a> 語言標籤。Angular 支援的 locale 可參考 <a href="https://github.com/angular/angular/tree/master/packages/common/locales" target="_blank" rel="noopener noreferrer">Angular repository locales</a>。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>LOCALE NAME</th><th>OLD LOCALE ID</th><th>NEW LOCALE ID</th></tr></thead><tbody><tr><td>Indonesian</td><td><code>in</code></td><td><code>id</code></td></tr><tr><td>Hebrew</td><td><code>iw</code></td><td><code>he</code></td></tr><tr><td>Romanian Moldova</td><td><code>mo</code></td><td><code>ro-MD</code></td></tr><tr><td>Norwegian Bokmal</td><td><code>no</code>, <code>no-NO</code></td><td><code>nb</code></td></tr><tr><td>Serbian Latin</td><td><code>sh</code></td><td><code>sr-Latn</code></td></tr><tr><td>Filipino</td><td><code>tl</code></td><td><code>fil</code></td></tr><tr><td>Portuguese Brazil</td><td><code>pt-BR</code></td><td><code>pt</code></td></tr><tr><td>Chinese Simplified</td><td><code>zh-cn</code>, <code>zh-Hans-CN</code></td><td><code>zh-Hans</code></td></tr><tr><td>Chinese Traditional</td><td><code>zh-tw</code>, <code>zh-Hant-TW</code></td><td><code>zh-Hant</code></td></tr><tr><td>Chinese Traditional Hong Kong</td><td><code>zh-hk</code></td><td><code>zh-Hant-HK</code></td></tr></tbody></table></div>
+</section><section aria-labelledby="datepipe-currencypipe-decimalpipe-與-percentpipe-如何套用本地格式"><h2 id="datepipe-currencypipe-decimalpipe-與-percentpipe-如何套用本地格式">DatePipe、CurrencyPipe、DecimalPipe 與 PercentPipe 如何套用本地格式？</h2>
+<p>Angular 的 <code>DatePipe</code>、<code>CurrencyPipe</code>、<code>DecimalPipe</code> 和 <code>PercentPipe</code> 預設都使用 <code>en-US</code> 的語言環境資料。若專案要顯示其他地區格式，需要匯入並註冊該地區的 locale data。</p>
+<p>Angular CLI 的 <code>--locale</code> 會自動處理這部分。若要手動設定，可以使用 <code>registerLocaleData</code>：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">import</span> { registerLocaleData } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/common'</span>;
+<span class="hljs-keyword">import</span> localeFr <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/common/locales/fr'</span>;
+
+<span class="hljs-comment">// the second parameter 'fr' is optional</span>
+<span class="hljs-title function_">registerLocaleData</span>(localeFr, <span class="hljs-string">'fr'</span>);
+</code></pre>
+<p>這個設定會影響 pipe 的輸出格式。例如同一個日期或貨幣值，在 <code>en-US</code>、<code>fr</code>、<code>zh-Hant</code> 下會以不同符號、順序與分隔方式呈現。</p>
+</section><section aria-labelledby="angular-template-文字要怎麼標記成可翻譯"><h2 id="angular-template-文字要怎麼標記成可翻譯">Angular template 文字要怎麼標記成可翻譯？</h2>
+<p>Angular template 的多語系流程，是先用預設語言開發畫面，再替需要翻譯的文字加上 <code>i18n</code> 標記。接著用 Angular CLI 匯出 <code>messages.xlf</code>，交給翻譯流程處理。</p>
+<p>開發時先使用預設語言：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h1</span>></span>Hello i18n!<span class="hljs-tag">&#x3C;/<span class="hljs-name">h1</span>></span>
+</code></pre>
+<p>替文字加上 <code>i18n</code> 標記：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h1</span> <span class="hljs-attr">i18n</span>></span>Hello i18n!<span class="hljs-tag">&#x3C;/<span class="hljs-name">h1</span>></span>
+</code></pre>
+<p>使用 CLI 產生 <code>messages.xlf</code>：</p>
+<pre><code class="hljs language-cmd">ng xi18n
+</code></pre>
+<p>將完成的翻譯文件合併到應用程式中：</p>
+<pre><code class="hljs language-cmd">ng serve --aot --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr
+</code></pre>
+<p>為了讓翻譯者更準確理解文案用途，可以在 <code>i18n</code> 指令裡增加上下文說明：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h1</span> <span class="hljs-attr">i18n</span>=<span class="hljs-string">"An introduction header for this sample"</span>></span>Hello i18n!<span class="hljs-tag">&#x3C;/<span class="hljs-name">h1</span>></span>
+</code></pre>
+<p>如果相同文字在不同位置需要不同翻譯，可以加上 <code>meaning</code>。格式是 <code>meaning|description</code>：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h1</span> <span class="hljs-attr">i18n</span>=<span class="hljs-string">"site header|An introduction header for this sample"</span>></span>Hello i18n!<span class="hljs-tag">&#x3C;/<span class="hljs-name">h1</span>></span>
+</code></pre>
+<p>若翻譯字串相同但 <code>meaning</code> 不同，Angular 會產生不同翻譯。若翻譯字串相同、只有 <code>description</code> 不同，Angular 仍會視為相同翻譯。</p>
+</section><section aria-labelledby="angular-i18n-的自訂-id-要注意什麼"><h2 id="angular-i18n-的自訂-id-要注意什麼">Angular i18n 的自訂 ID 要注意什麼？</h2>
+<p>Angular i18n 可以用 <code>@@id</code> 自訂翻譯字串 ID，讓翻譯檔中的識別碼更穩定。自訂 ID 要保持唯一，否則不同文案可能在翻譯後被套成同一個字串。</p>
+<p>自訂翻譯 ID 的寫法如下：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h1</span> <span class="hljs-attr">i18n</span>=<span class="hljs-string">"@@introductionHeader"</span>></span>Hello i18n!<span class="hljs-tag">&#x3C;/<span class="hljs-name">h1</span>></span>
+</code></pre>
+<p>如果兩個不同的翻譯字串使用相同 ID，就會造成翻譯後出現相同字串：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span> <span class="hljs-attr">i18n</span>=<span class="hljs-string">"@@myId"</span>></span>Hello<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">p</span> <span class="hljs-attr">i18n</span>=<span class="hljs-string">"@@myId"</span>></span>Good bye<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+</code></pre>
+<p>翻譯檔案內容如下：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">trans-unit</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"myId"</span> <span class="hljs-attr">datatype</span>=<span class="hljs-string">"html"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">source</span>></span>Hello<span class="hljs-tag">&#x3C;/<span class="hljs-name">source</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">target</span> <span class="hljs-attr">state</span>=<span class="hljs-string">"new"</span>></span>Bonjour<span class="hljs-tag">&#x3C;/<span class="hljs-name">target</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">trans-unit</span>></span>
+</code></pre>
+<p>生成的 HTML 內容會變成：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span>></span>Bonjour<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Bonjour<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+</code></pre>
+<p>如果只是想翻譯文字，不想輸出額外 HTML tag，可以使用 <code>ng-container</code>：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">ng-container</span> <span class="hljs-attr">i18n</span>></span>I don't output any element<span class="hljs-tag">&#x3C;/<span class="hljs-name">ng-container</span>></span>
+</code></pre>
+</section><section aria-labelledby="html-屬性的替代文字要怎麼做-i18n"><h2 id="html-屬性的替代文字要怎麼做-i18n">HTML 屬性的替代文字要怎麼做 i18n？</h2>
+<p>Angular i18n 可以翻譯任何元素的屬性文字，不限於元素內文。需要翻譯圖片 <code>title</code>、<code>alt</code> 或其他屬性時，可以使用 <code>i18n-title</code>、<code>i18n-alt</code> 這類屬性標記。</p>
+<p>假設圖片有純文字的 <code>title</code>：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> [<span class="hljs-attr">src</span>]=<span class="hljs-string">"logo"</span> <span class="hljs-attr">title</span>=<span class="hljs-string">"Angular logo"</span>></span>
+</code></pre>
+<p>可以改成：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> [<span class="hljs-attr">src</span>]=<span class="hljs-string">"logo"</span> <span class="hljs-attr">i18n-title</span> <span class="hljs-attr">title</span>=<span class="hljs-string">"Angular logo"</span> /></span>
+</code></pre>
+<p>這種技術適用於任何元素的任何屬性。若需要指定 meaning、description 和 ID，可以使用：</p>
+<pre><code class="hljs language-html">i18n-x="<span class="hljs-tag">&#x3C;<span class="hljs-name">meaning</span>></span>|<span class="hljs-tag">&#x3C;<span class="hljs-name">description</span>></span>@@<span class="hljs-tag">&#x3C;<span class="hljs-name">id</span>></span>"
+</code></pre>
+<p>其中 <code>x</code> 是要翻譯的屬性名稱，例如 <code>title</code> 或 <code>alt</code>。</p>
+</section><section aria-labelledby="angular-i18n-如何翻譯單數-複數與條件文字"><h2 id="angular-i18n-如何翻譯單數-複數與條件文字">Angular i18n 如何翻譯單數、複數與條件文字？</h2>
+<p>Angular i18n 使用 ICU Message Format 處理 plural 與 select。plural 適合處理數量造成的文案差異，select 則適合依變數值顯示不同文字。</p>
+<p>在一些語言裡，不同數量會使用不同詞彙。例如時間可以顯示 <code>just now</code>、<code>one minute ago</code> 或 <code>x minutes ago</code>。</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">i18n</span>></span>Updated {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}}<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+</code></pre>
+<p>這段語法中：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>參數</th><th>說明</th></tr></thead><tbody><tr><td><code>minutes</code></td><td>要放入翻譯字串的變數</td></tr><tr><td><code>plural</code></td><td>翻譯類型，可參考 ICU Message Format</td></tr><tr><td><code>=0</code>、<code>=1</code>、<code>other</code></td><td>不同數量條件對應的顯示文字</td></tr></tbody></table></div>
+<p>plural 可設定的選項包括：</p>
+<ul>
+<li><code>=0</code> 或任何指定數字</li>
+<li><code>zero</code></li>
+<li><code>one</code></li>
+<li><code>two</code></li>
+<li><code>few</code></li>
+<li><code>many</code></li>
+<li><code>other</code></li>
+</ul>
+<p>也可以根據變數內容顯示不同翻譯字串：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">i18n</span>></span>The author is {gender, select, m {male} f {female} o {other}}<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+</code></pre>
+</section><section aria-labelledby="如何用-ng-xi18n-產生翻譯來源檔"><h2 id="如何用-ng-xi18n-產生翻譯來源檔">如何用 ng xi18n 產生翻譯來源檔？</h2>
+<p><code>ng xi18n</code> 會從 Angular template 中擷取 i18n 標記，產生預設格式為 XLF 的翻譯來源檔。若翻譯流程使用其他格式，可以透過 <code>--i18nFormat</code> 指定輸出類型。</p>
+<p>產生預設 <code>messages.xlf</code>：</p>
+<pre><code class="hljs language-cmd">ng xi18n
+</code></pre>
+<p>指定輸出格式：</p>
+<pre><code class="hljs language-cmd">ng xi18n --i18nFormat=xlf
+ng xi18n --i18nFormat=xlf2
+ng xi18n --i18nFormat=xmb
+</code></pre>
+<p>接著可以把 <code>messages.xlf</code> 改名為 <code>messages.fr.xlf</code>，假設翻譯目標語言為法文 <code>fr</code>。</p>
+<p>XLF 檔案內容範例如下：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">trans-unit</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"introductionHeader"</span> <span class="hljs-attr">datatype</span>=<span class="hljs-string">"html"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">source</span>></span>Hello i18n!<span class="hljs-tag">&#x3C;/<span class="hljs-name">source</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">target</span>></span>Bonjour i18n !<span class="hljs-tag">&#x3C;/<span class="hljs-name">target</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">note</span> <span class="hljs-attr">priority</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">from</span>=<span class="hljs-string">"description"</span>></span>An introduction header for this sample<span class="hljs-tag">&#x3C;/<span class="hljs-name">note</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">note</span> <span class="hljs-attr">priority</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">from</span>=<span class="hljs-string">"meaning"</span>></span>User welcome<span class="hljs-tag">&#x3C;/<span class="hljs-name">note</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">trans-unit</span>></span>
+</code></pre>
+<p><code>target</code> 裡面要填的，就是目標翻譯語言實際顯示的文字。</p>
+</section><section aria-labelledby="aot-與-jit-要怎麼合併-angular-翻譯檔"><h2 id="aot-與-jit-要怎麼合併-angular-翻譯檔">AOT 與 JIT 要怎麼合併 Angular 翻譯檔？</h2>
+<p>Angular i18n 合併翻譯檔有 AOT 與 JIT 兩種做法。AOT 透過 CLI 參數在建置或 serve 時合併；JIT 則在程式啟動時載入翻譯檔，並提供 <code>TRANSLATIONS</code> 與 <code>TRANSLATIONS_FORMAT</code>。</p>
+<p>AOT 方式需要三個參數：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>參數</th><th>用途</th></tr></thead><tbody><tr><td><code>--i18nFile</code></td><td>翻譯檔案的位置</td></tr><tr><td><code>--i18nFormat</code></td><td>翻譯檔案的格式</td></tr><tr><td><code>--locale</code></td><td>被翻譯的語系名稱</td></tr></tbody></table></div>
+<pre><code class="hljs language-cmd">ng serve --aot --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr
+</code></pre>
+<p>JIT 方式可以在 <code>src/main.ts</code> 裡設定所使用的翻譯檔：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">import</span> { enableProdMode, <span class="hljs-variable constant_">TRANSLATIONS</span>, <span class="hljs-variable constant_">TRANSLATIONS_FORMAT</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { platformBrowserDynamic } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/platform-browser-dynamic'</span>;
+
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./app/app.module'</span>;
+<span class="hljs-keyword">import</span> { environment } <span class="hljs-keyword">from</span> <span class="hljs-string">'./environments/environment'</span>;
+
+<span class="hljs-keyword">if</span> (environment.<span class="hljs-property">production</span>) {
+  <span class="hljs-title function_">enableProdMode</span>();
+}
+
+<span class="hljs-comment">// use the require method provided by webpack</span>
+declare <span class="hljs-keyword">const</span> <span class="hljs-built_in">require</span>;
+<span class="hljs-comment">// we use the webpack raw-loader to return the content as a string</span>
+<span class="hljs-keyword">const</span> translations = <span class="hljs-built_in">require</span>(<span class="hljs-string">`raw-loader!./locale/messages.fr.xlf`</span>);
+
+<span class="hljs-title function_">platformBrowserDynamic</span>().<span class="hljs-title function_">bootstrapModule</span>(<span class="hljs-title class_">AppModule</span>, {
+  <span class="hljs-attr">providers</span>: [
+    {<span class="hljs-attr">provide</span>: <span class="hljs-variable constant_">TRANSLATIONS</span>, <span class="hljs-attr">useValue</span>: translations},
+    {<span class="hljs-attr">provide</span>: <span class="hljs-variable constant_">TRANSLATIONS_FORMAT</span>, <span class="hljs-attr">useValue</span>: <span class="hljs-string">'xlf'</span>}
+  ]
+});
+</code></pre>
+<p>再於 <code>src/app/app.module.ts</code> 加上 <code>LOCALE_ID</code>：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">LOCALE_ID</span>, <span class="hljs-title class_">NgModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">BrowserModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/platform-browser'</span>;
+
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppComponent</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/app/app.component'</span>;
+
+@<span class="hljs-title class_">NgModule</span>({
+  <span class="hljs-attr">imports</span>: [ <span class="hljs-title class_">BrowserModule</span> ],
+  <span class="hljs-attr">declarations</span>: [ <span class="hljs-title class_">AppComponent</span> ],
+  <span class="hljs-attr">providers</span>: [ { <span class="hljs-attr">provide</span>: <span class="hljs-variable constant_">LOCALE_ID</span>, <span class="hljs-attr">useValue</span>: <span class="hljs-string">'fr'</span> } ],
+  <span class="hljs-attr">bootstrap</span>: [ <span class="hljs-title class_">AppComponent</span> ]
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> { }
+</code></pre>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular i18n 適合用在什麼情境？</span></h3>
+<p>Angular i18n 適合需要在建置階段產生不同語言版本的網站，尤其是文案較固定、語系切換不需要即時改變的專案。這種做法讓各語言版本載入速度較快，但翻譯更新後通常需要重新 build。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular i18n 和 ngx-translate 有什麼差別？</span></h3>
+<p>Angular i18n 是 Angular 官方提供的國際化流程，偏向編譯或建置階段整合翻譯檔。ngx-translate 則常用於執行期切換語言，適合需要在不重新載入頁面的情境下切換語系的應用程式。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LOCALE_ID 會自動翻譯畫面文字嗎？</span></h3>
+<p><code>LOCALE_ID</code> 不會自動翻譯 template 裡的文字。<code>LOCALE_ID</code> 主要影響日期、數字、百分比與貨幣等格式；畫面文字仍需要透過 <code>i18n</code> 標記與翻譯檔處理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼要替 i18n 字串加 description 或 meaning？</span></h3>
+<p>description 可以讓翻譯者理解文案出現的位置和用途，meaning 則能區分表面文字相同但語意不同的字串。當同一句英文在不同 UI 區塊需要不同翻譯時，meaning 特別重要。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular i18n 的自訂 ID 可以重複嗎？</span></h3>
+<p>Angular i18n 的自訂 ID 不應重複使用在不同意思的文案上。若不同字串共用同一個 <code>@@id</code>，Angular 可能把兩處都套用成同一段翻譯，造成畫面文字錯誤。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Angular Docs：<a href="https://angular.io/guide/i18n" target="_blank" rel="noopener noreferrer">Internationalization (i18n)</a></li>
+<li>Angular API：<a href="https://angular.io/api/core/LOCALE_ID" target="_blank" rel="noopener noreferrer"><code>LOCALE_ID</code></a></li>
+<li>Angular repository：<a href="https://github.com/angular/angular/tree/master/packages/common/locales" target="_blank" rel="noopener noreferrer">locale data</a></li>
+<li>RFC Editor：<a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt" target="_blank" rel="noopener noreferrer">BCP 47 Tags for Identifying Languages</a></li>
+<li>ICU Documentation：<a href="https://userguide.icu-project.org/formatparse/messages" target="_blank" rel="noopener noreferrer">ICU Message Format</a></li>
+<li>掃文資訊：<a href="https://tw.saowen.com/a/7c3ca8b189e966a53e4f4743d183347c57b6b5cca6c7b1182f57734202a45c1c" target="_blank" rel="noopener noreferrer">angular2 學習筆記 translate, i18n 翻譯</a></li>
+<li>簡書：<a href="https://www.jianshu.com/p/ae412f2105c3" target="_blank" rel="noopener noreferrer">使用 Angular-CLI 发布一个 i18n 国际化应用</a></li>
+<li>點部落：<a href="https://dotblogs.com.tw/blackie1019/2013/10/23/125244" target="_blank" rel="noopener noreferrer">[MAN鐵人賽]Day 14:AngularJS - Localization</a></li>
+<li>shady-xia GitHub Pages：<a href="https://shady-xia.github.io/ng2-i18n/" target="_blank" rel="noopener noreferrer">Angular2 中使用 ngx-translate 进行国际化</a></li>
+<li>KyleAP Blog：<a href="https://kyleap.blogspot.tw/2016/11/angular2.html" target="_blank" rel="noopener noreferrer">[Angular2] 在專案加入多國語系</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/angular-jit-aot-deployment">Angular JIT 與 AOT 佈署介紹：編譯模式、效能差異與撰寫限制</a>：同樣聚焦 Angular，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-cli-new-project-setup">建立一個 Angular 5 的專案</a>：同樣聚焦 Angular，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-create-service-tutorial">Angular Service 建立教學：用 CLI 產生 HeroService 並回傳 Observable</a>：同樣聚焦 Angular，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2018-01-11 首次發布；2026-08-28 依 GEO 結構整理，保留 Angular 5 時期的 i18n 筆記與範例。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-01-11</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular Universal SSR 教學：伺服器端渲染、SEO 與 Express 設定｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 Angular Universal SSR 的用途與 Angular 5 專案設定流程，包含 SEO、第一屏載入、platform-server、AppServerModule、Express server、tsconfig.server.json 與 build:universal 指令。" />
+<meta name="keywords" content="前端開發, Angular, Angular Universal, SSR, SEO, Express" />
+<link rel="canonical" href="https://claire-chang.com/post/angular-universal-ssr/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Angular Universal SSR 教學：伺服器端渲染、SEO 與 Express 設定｜Claire Chang" />
+<meta property="og:description" content="整理 Angular Universal SSR 的用途與 Angular 5 專案設定流程，包含 SEO、第一屏載入、platform-server、AppServerModule、Express server、tsconfig.server.json 與 build:universal 指令。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/angular-universal-ssr/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_angular-universal-ssr-7c628f21.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_angular-universal-ssr-7c628f21.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Angular Universal SSR 教學：伺服器端渲染、SEO 與 Express 設定｜Claire Chang" />
+<meta name="twitter:description" content="整理 Angular Universal SSR 的用途與 Angular 5 專案設定流程，包含 SEO、第一屏載入、platform-server、AppServerModule、Express server、tsconfig.server.json 與 build:universal 指令。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_angular-universal-ssr-7c628f21.jpg" />
+<meta property="article:published_time" content="2018-01-14" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Angular" />
+<meta property="article:tag" content="Angular Universal" />
+<meta property="article:tag" content="SSR" />
+<meta property="article:tag" content="SEO" />
+<meta property="article:tag" content="Express" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Angular Universal SSR 教學：伺服器端渲染、SEO 與 Express 設定","item":"https://claire-chang.com/post/angular-universal-ssr/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/angular-universal-ssr/#article","headline":"Angular Universal SSR 教學：伺服器端渲染、SEO 與 Express 設定","description":"整理 Angular Universal SSR 的用途與 Angular 5 專案設定流程，包含 SEO、第一屏載入、platform-server、AppServerModule、Express server、tsconfig.server.json 與 build:universal 指令。","image":"https://claire-chang.com/images/tech/hero_angular-universal-ssr.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-01-14","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/angular-universal-ssr/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Angular, Angular Universal, SSR, SEO, Express","mentions":[{"@type":"Thing","name":"Angular"},{"@type":"Thing","name":"Angular Universal"},{"@type":"Thing","name":"SSR"},{"@type":"Thing","name":"SEO"},{"@type":"Thing","name":"Express"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/angular-universal-ssr/#faq","mainEntity":[{"@type":"Question","name":"Angular Universal 和一般 Angular SPA 差在哪裡？","acceptedAnswer":{"@type":"Answer","text":"一般 Angular SPA 通常先回傳空的 shell，再由瀏覽器執行 JavaScript 產生畫面。Angular Universal 會先在伺服器端產生完整 HTML，讓使用者、爬蟲與社群預覽工具更早看到內容。"}},{"@type":"Question","name":"Angular Universal 一定能改善 SEO 嗎？","acceptedAnswer":{"@type":"Answer","text":"Angular Universal 能改善爬蟲讀取內容的機會，但 SEO 仍取決於內容品質、網站結構、內部連結、效能與可索引性。Angular Universal 解決的是「內容能不能先被讀到」這一層問題。"}},{"@type":"Question","name":"Angular Universal 可以事先產生靜態頁面嗎？","acceptedAnswer":{"@type":"Answer","text":"Angular Universal 可以依請求在伺服器端即時渲染，也可以搭配預先渲染流程產生靜態 HTML。來源筆記提到的重點是：頁面可以在使用者要求當下產生，也可以事先產生好供未來使用。"}},{"@type":"Question","name":"Angular Universal 專案為什麼需要 Express？","acceptedAnswer":{"@type":"Answer","text":"Express 在這個設定裡負責接收 HTTP request、提供靜態檔案，並把一般頁面路由交給 `ngExpressEngine()` 渲染。Angular Universal 本身處理 Angular 的 server render，Express 則負責 Node.js server 的請求流程。"}},{"@type":"Question","name":"Angular Universal 裡可以直接使用 window 或 document 嗎？","acceptedAnswer":{"@type":"Answer","text":"Angular Universal 會在 Node.js 執行部分程式，所以不能直接假設 `window` 或 `document` 一定存在。需要使用 browser-only API 時，建議先用 `isPlatformBrowser()` 判斷目前是否在瀏覽器端。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_angular-universal-ssr.webp" alt="模組化建築外牆，象徵 Angular Universal 將前端應用預先渲染成可被伺服器輸出的頁面" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-01-14">2018-01-14</time></span><span class="post-meta-pill">Angular · Angular Universal · SSR · SEO · Express</span></div></div><h1 class="insights-hero-title">Angular Universal SSR 教學：伺服器端渲染、SEO 與 Express 設定</h1><p class="insights-hero-description">整理 Angular Universal SSR 的用途與 Angular 5 專案設定流程，包含 SEO、第一屏載入、platform-server、AppServerModule、Express server、tsconfig.server.json 與 build:universal 指令。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Angular Universal 用來讓 Angular 應用程式支援伺服器端渲染（Server-Side Rendering，SSR）。Angular Universal 會在 server side 預先處理網頁模板，把原本需要瀏覽器執行 JavaScript 才能看到的畫面，先輸出成帶有資料的 HTML 頁面，讓搜尋引擎、社群預覽與低效能裝置更容易讀到內容。</p>
+</div><section aria-labelledby="angular-universal-是什麼"><h2 id="angular-universal-是什麼">Angular Universal 是什麼？</h2>
+<p>Angular Universal 是 Angular 的伺服器端渲染方案，可以在伺服器先產生完整 HTML，再交給瀏覽器接手。Angular Universal 適合需要 SEO、社群分享預覽與更快第一屏顯示的 Angular 網站。</p>
+<p>Angular 是一種構建 Web 應用的強大方式，但是長期以來，開發人員都知道 Angular 在 SEO 和可訪問性方面有一些限制。Google 的爬蟲可以執行 JavaScript，但 Google 不是唯一會讀取頁面的爬蟲。</p>
+<p>例如把連結提交給 Slack 之後，Slack 的爬蟲會抓取頁面預覽，但不一定會執行 JavaScript。若 Angular 應用只回傳尚未渲染的 HTML template，預覽內容就可能顯示不完整。Angular Universal 的目的，就是讓伺服器先完成渲染，減少這類問題。</p>
+<p>Angular Universal 可以在使用者要求資料的當下產生 HTML，也可以事先產生靜態檔案供未來使用。</p>
+</section><section aria-labelledby="angular-universal-主要解決哪些問題"><h2 id="angular-universal-主要解決哪些問題">Angular Universal 主要解決哪些問題？</h2>
+<p>Angular Universal 主要解決三件事：讓爬蟲更容易讀取內容、改善低效能裝置體驗、加快第一頁顯示。對內容型網站與公開頁面來說，SSR 通常比純前端渲染更容易被搜尋與分享。</p>
+<p>Angular Universal 的主要目的有三個：</p>
+<ul>
+<li>方便網路爬蟲讀取內容，也就是搜尋引擎優化（Search Engine Optimization，SEO）。</li>
+<li>提高手機裝置和效能較差設備上的性能表現。</li>
+<li>快速顯示第一頁內容。</li>
+</ul>
+<p>Google、Bing、Facebook、Twitter 和其他社交媒體網站都依靠網路爬蟲為網站編索引，或擷取分享預覽。Angular Universal 可以生成 Angular 應用程式的靜態版本，讓每個 URL 回傳一個已經渲染好的頁面；即使不執行 JavaScript，也比較容易搜尋、連結和導覽。</p>
+</section><section aria-labelledby="安裝-angular-universal-需要哪些套件"><h2 id="安裝-angular-universal-需要哪些套件">安裝 Angular Universal 需要哪些套件？</h2>
+<p>Angular 5 專案加入 Angular Universal 時，會用到 <code>@angular/platform-server</code>、<code>@nguniversal/express-engine</code>、<code>@nguniversal/module-map-ngfactory-loader</code> 與 <code>ts-loader</code>。這些套件分別處理伺服器端 Angular、Express 渲染、lazy loading 與 TypeScript 編譯。</p>
+<p>Angular Universal 常用套件如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>套件</th><th>用途</th></tr></thead><tbody><tr><td><code>@angular/platform-server</code></td><td>Angular 通用伺服器端組件</td></tr><tr><td><code>@nguniversal/module-map-ngfactory-loader</code></td><td>在伺服器渲染環境中處理延遲載入</td></tr><tr><td><code>@nguniversal/express-engine</code></td><td>讓 Express 可以渲染 Angular Universal 應用</td></tr><tr><td><code>ts-loader</code></td><td>傳輸與編譯伺服器應用程式</td></tr></tbody></table></div>
+<p>使用下面指令安裝四個 package：</p>
+<pre><code class="hljs language-cmd">npm install --save @angular/platform-server @nguniversal/module-map-ngfactory-loader ts-loader @nguniversal/express-engine
+</code></pre>
+</section><section aria-labelledby="appmodule-要怎麼支援-server-transition"><h2 id="appmodule-要怎麼支援-server-transition">AppModule 要怎麼支援 server transition？</h2>
+<p>Angular Universal 需要讓瀏覽器端 AppModule 知道應用程式曾由伺服器渲染。<code>BrowserModule.withServerTransition()</code> 會設定同一個 <code>appId</code>，讓伺服器輸出的 HTML 與瀏覽器端 Angular 接手時能對應起來。</p>
+<p>修正預設 <code>AppModule</code> 中 <code>BrowserModule</code> 的匯入方式：</p>
+<pre><code class="hljs language-ts"><span class="hljs-title class_">BrowserModule</span>.<span class="hljs-title function_">withServerTransition</span>({ <span class="hljs-attr">appId</span>: <span class="hljs-string">'tour-of-heroes'</span> }),
+</code></pre>
+<p>如果要根據執行環境判斷目前是在 browser 還是 server，可以注入 <code>PLATFORM_ID</code> 與 <code>APP_ID</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">PLATFORM_ID</span>, <span class="hljs-variable constant_">APP_ID</span>, <span class="hljs-title class_">Inject</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { isPlatformBrowser } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/common'</span>;
+
+<span class="hljs-title function_">constructor</span>(<span class="hljs-params">
+  <span class="hljs-meta">@Inject</span>(PLATFORM_ID) <span class="hljs-keyword">private</span> <span class="hljs-attr">platformId</span>: <span class="hljs-title class_">Object</span>,
+  <span class="hljs-meta">@Inject</span>(APP_ID) <span class="hljs-keyword">private</span> <span class="hljs-attr">appId</span>: <span class="hljs-built_in">string</span>,
+</span>) {
+  <span class="hljs-keyword">const</span> platform = <span class="hljs-title function_">isPlatformBrowser</span>(platformId)
+    ? <span class="hljs-string">'in the browser'</span>
+    : <span class="hljs-string">'on the server'</span>;
+
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Running <span class="hljs-subst">${platform}</span> with appId=<span class="hljs-subst">${appId}</span>`</span>);
+}
+</code></pre>
+<p>判斷環境時要留意命名，<code>isPlatformBrowser(platformId)</code> 回傳 <code>true</code> 才代表程式正在瀏覽器端執行。SSR 專案常會把只存在於 browser 的 API，例如 <code>window</code>、<code>document</code>、<code>localStorage</code>，放在這類判斷之後再使用。</p>
+</section><section aria-labelledby="appservermodule-要怎麼寫"><h2 id="appservermodule-要怎麼寫">AppServerModule 要怎麼寫？</h2>
+<p>Angular Universal 需要一個伺服器端 module，通常命名為 <code>AppServerModule</code>。<code>AppServerModule</code> 會匯入原本的 <code>AppModule</code>、<code>ServerModule</code>，以及處理 lazy loading 的 <code>ModuleMapLoaderModule</code>。</p>
+<p><code>src/app/app.server.module.ts</code> 的內容如下：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NgModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ServerModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/platform-server'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ModuleMapLoaderModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nguniversal/module-map-ngfactory-loader'</span>;
+
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./app.module'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppComponent</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./app.component'</span>;
+
+<span class="hljs-meta">@NgModule</span>({
+  <span class="hljs-attr">imports</span>: [
+    <span class="hljs-title class_">AppModule</span>,
+    <span class="hljs-title class_">ServerModule</span>,
+    <span class="hljs-title class_">ModuleMapLoaderModule</span>,
+  ],
+  <span class="hljs-attr">providers</span>: [
+    <span class="hljs-comment">// Add universal-only providers here</span>
+  ],
+  <span class="hljs-attr">bootstrap</span>: [<span class="hljs-title class_">AppComponent</span>],
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppServerModule</span> {}
+</code></pre>
+<p><code>ServerModule</code> 讓 Angular 可以在 Node.js 環境渲染應用程式；<code>ModuleMapLoaderModule</code> 則用來支援 server render 時的 lazy-loaded module。若有只在伺服器端使用的 provider，可以放在 <code>providers</code> 裡。</p>
+</section><section aria-labelledby="express-server-如何輸出-angular-universal-頁面"><h2 id="express-server-如何輸出-angular-universal-頁面">Express server 如何輸出 Angular Universal 頁面？</h2>
+<p>Express server 會用 <code>ngExpressEngine()</code> 接上 Angular Universal 的 server bundle。靜態檔案從 <code>dist/browser</code> 提供，一般路由則交給 Universal engine 渲染 <code>index.html</code>。</p>
+<p>在這邊使用 Express framework 來做 server，並利用 Universal 的 <code>renderModuleFactory</code> 相關能力輸出 HTML。以下是完整 server 範例：</p>
+<pre><code class="hljs language-ts"><span class="hljs-comment">// These are important and needed before anything else</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'zone.js/dist/zone-node'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'reflect-metadata'</span>;
+
+<span class="hljs-keyword">import</span> { enableProdMode } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> express <span class="hljs-keyword">from</span> <span class="hljs-string">'express'</span>;
+<span class="hljs-keyword">import</span> { join } <span class="hljs-keyword">from</span> <span class="hljs-string">'path'</span>;
+
+<span class="hljs-comment">// Faster server renders w/ Prod mode (dev mode never needed)</span>
+<span class="hljs-title function_">enableProdMode</span>();
+
+<span class="hljs-comment">// Express server</span>
+<span class="hljs-keyword">const</span> app = <span class="hljs-title function_">express</span>();
+
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">PORT</span> = process.<span class="hljs-property">env</span>.<span class="hljs-property">PORT</span> || <span class="hljs-number">4000</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">DIST_FOLDER</span> = <span class="hljs-title function_">join</span>(process.<span class="hljs-title function_">cwd</span>(), <span class="hljs-string">'dist'</span>);
+
+<span class="hljs-comment">// * NOTE :: leave this as require() since this file is built Dynamically from webpack</span>
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">AppServerModuleNgFactory</span>, <span class="hljs-variable constant_">LAZY_MODULE_MAP</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./dist/server/main.bundle'</span>);
+
+<span class="hljs-comment">// Express Engine</span>
+<span class="hljs-keyword">import</span> { ngExpressEngine } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nguniversal/express-engine'</span>;
+<span class="hljs-comment">// Import module map for lazy loading</span>
+<span class="hljs-keyword">import</span> { provideModuleMap } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nguniversal/module-map-ngfactory-loader'</span>;
+
+app.<span class="hljs-title function_">engine</span>(<span class="hljs-string">'html'</span>, <span class="hljs-title function_">ngExpressEngine</span>({
+  <span class="hljs-attr">bootstrap</span>: <span class="hljs-title class_">AppServerModuleNgFactory</span>,
+  <span class="hljs-attr">providers</span>: [
+    <span class="hljs-title function_">provideModuleMap</span>(<span class="hljs-variable constant_">LAZY_MODULE_MAP</span>),
+  ],
+}));
+
+app.<span class="hljs-title function_">set</span>(<span class="hljs-string">'view engine'</span>, <span class="hljs-string">'html'</span>);
+app.<span class="hljs-title function_">set</span>(<span class="hljs-string">'views'</span>, <span class="hljs-title function_">join</span>(<span class="hljs-variable constant_">DIST_FOLDER</span>, <span class="hljs-string">'browser'</span>));
+
+<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> implement data requests securely</span>
+app.<span class="hljs-title function_">get</span>(<span class="hljs-string">'/api/*'</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =></span> {
+  res.<span class="hljs-title function_">status</span>(<span class="hljs-number">404</span>).<span class="hljs-title function_">send</span>(<span class="hljs-string">'data requests are not supported'</span>);
+});
+
+<span class="hljs-comment">// Server static files from /browser</span>
+app.<span class="hljs-title function_">get</span>(<span class="hljs-string">'*.*'</span>, express.<span class="hljs-title function_">static</span>(<span class="hljs-title function_">join</span>(<span class="hljs-variable constant_">DIST_FOLDER</span>, <span class="hljs-string">'browser'</span>)));
+
+<span class="hljs-comment">// All regular routes use the Universal engine</span>
+app.<span class="hljs-title function_">get</span>(<span class="hljs-string">'*'</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =></span> {
+  res.<span class="hljs-title function_">render</span>(<span class="hljs-title function_">join</span>(<span class="hljs-variable constant_">DIST_FOLDER</span>, <span class="hljs-string">'browser'</span>, <span class="hljs-string">'index.html'</span>), { req });
+});
+
+<span class="hljs-comment">// Start up the Node server</span>
+app.<span class="hljs-title function_">listen</span>(<span class="hljs-variable constant_">PORT</span>, <span class="hljs-function">() =></span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Node server listening on http://localhost:<span class="hljs-subst">${PORT}</span>`</span>);
+});
+</code></pre>
+<p>如果只看 <code>server.ts</code> 裡最關鍵的段落，會有三件事：</p>
+<pre><code class="hljs language-ts">app.<span class="hljs-title function_">engine</span>(<span class="hljs-string">'html'</span>, <span class="hljs-title function_">ngExpressEngine</span>({
+  <span class="hljs-attr">bootstrap</span>: <span class="hljs-title class_">AppServerModuleNgFactory</span>,
+  <span class="hljs-attr">providers</span>: [
+    <span class="hljs-title function_">provideModuleMap</span>(<span class="hljs-variable constant_">LAZY_MODULE_MAP</span>),
+  ],
+}));
+
+<span class="hljs-comment">// All regular routes use the Universal engine</span>
+app.<span class="hljs-title function_">get</span>(<span class="hljs-string">'*'</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =></span> {
+  res.<span class="hljs-title function_">render</span>(<span class="hljs-title function_">join</span>(<span class="hljs-variable constant_">DIST_FOLDER</span>, <span class="hljs-string">'browser'</span>, <span class="hljs-string">'index.html'</span>), { req });
+});
+
+<span class="hljs-comment">// Server static files from /browser</span>
+app.<span class="hljs-title function_">get</span>(<span class="hljs-string">'*.*'</span>, express.<span class="hljs-title function_">static</span>(<span class="hljs-title function_">join</span>(<span class="hljs-variable constant_">DIST_FOLDER</span>, <span class="hljs-string">'browser'</span>)));
+</code></pre>
+<p>實作時我會特別檢查路由順序：靜態檔案路由應先處理帶副檔名的資源，一般頁面路由再交給 Universal engine。這樣 CSS、JavaScript、圖片等檔案才不會被當成 Angular route 渲染。</p>
+</section><section aria-labelledby="tsconfig-server-json-要怎麼設定"><h2 id="tsconfig-server-json-要怎麼設定">tsconfig.server.json 要怎麼設定？</h2>
+<p><code>tsconfig.server.json</code> 是 Angular Universal 的伺服器端 TypeScript 設定。Angular 5 專案通常會把 <code>module</code> 設為 <code>commonjs</code>，並用 <code>entryModule</code> 指向 <code>AppServerModule</code>。</p>
+<p><code>src/tsconfig.server.json</code> 的內容如下：</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"extends"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"../tsconfig.json"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"compilerOptions"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"outDir"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"../out-tsc/app"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"baseUrl"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"module"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"commonjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"types"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exclude"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">"test.ts"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"**/*.spec.ts"</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"angularCompilerOptions"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"entryModule"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"app/app.server.module#AppServerModule"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>這份設定讓伺服器端程式使用自己的編譯輸出位置與 module 格式。<code>entryModule</code> 則告訴 Angular compiler，server render 的入口 module 是 <code>AppServerModule</code>。</p>
+</section><section aria-labelledby="angular-universal-要怎麼-build"><h2 id="angular-universal-要怎麼-build">Angular Universal 要怎麼 build？</h2>
+<p>Angular Universal 專案通常會準備一個 <code>build:universal</code> script，同時產生 browser bundle 與 server bundle。完成 build 後，Express server 才能從 <code>dist/browser</code> 讀取靜態檔案，並載入 <code>dist/server</code> 的 server bundle。</p>
+<p>BUILD 出檔案時執行：</p>
+<pre><code class="hljs language-cmd">npm run build:universal
+</code></pre>
+<p>若 build 後啟動 server，瀏覽器會連到 Node.js server，例如 <code>http://localhost:4000</code>。一般 Angular route 會先由 server render 成 HTML，再由瀏覽器端 Angular 接手互動行為。</p>
+</section><section aria-labelledby="angular-universal-設定時要注意哪些地方"><h2 id="angular-universal-設定時要注意哪些地方">Angular Universal 設定時要注意哪些地方？</h2>
+<p>Angular Universal 最容易出錯的地方，是 browser-only API、路由順序、lazy loading 與 API 路由。只要程式會在 Node.js 執行，就不能假設 <code>window</code>、<code>document</code>、<code>localStorage</code> 一定存在。</p>
+<p>我整理 Angular Universal 設定時，會先看這幾個檢查點：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查點</th><th>要確認的事</th></tr></thead><tbody><tr><td>Browser API</td><td><code>window</code>、<code>document</code>、<code>localStorage</code> 是否只在 browser 環境使用</td></tr><tr><td>Server transition</td><td><code>BrowserModule.withServerTransition()</code> 的 <code>appId</code> 是否一致</td></tr><tr><td>Lazy loading</td><td>是否加入 <code>ModuleMapLoaderModule</code> 與 <code>provideModuleMap(LAZY_MODULE_MAP)</code></td></tr><tr><td>靜態檔案</td><td><code>app.get('*.*', express.static(...))</code> 是否能正確提供 CSS、JS、圖片</td></tr><tr><td>一般路由</td><td><code>app.get('*', ...)</code> 是否把頁面 route 交給 Universal engine</td></tr><tr><td>API 路由</td><td><code>/api/*</code> 是否另外處理，而不是被頁面渲染吃掉</td></tr></tbody></table></div>
+<p>Angular Universal 的價值不是讓整個前端變成後端，而是先把首屏 HTML 交出來。等瀏覽器載入 bundle 後，Angular 應用還是會回到熟悉的前端互動模式。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular Universal 和一般 Angular SPA 差在哪裡？</span></h3>
+<p>一般 Angular SPA 通常先回傳空的 shell，再由瀏覽器執行 JavaScript 產生畫面。Angular Universal 會先在伺服器端產生完整 HTML，讓使用者、爬蟲與社群預覽工具更早看到內容。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular Universal 一定能改善 SEO 嗎？</span></h3>
+<p>Angular Universal 能改善爬蟲讀取內容的機會，但 SEO 仍取決於內容品質、網站結構、內部連結、效能與可索引性。Angular Universal 解決的是「內容能不能先被讀到」這一層問題。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular Universal 可以事先產生靜態頁面嗎？</span></h3>
+<p>Angular Universal 可以依請求在伺服器端即時渲染，也可以搭配預先渲染流程產生靜態 HTML。來源筆記提到的重點是：頁面可以在使用者要求當下產生，也可以事先產生好供未來使用。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular Universal 專案為什麼需要 Express？</span></h3>
+<p>Express 在這個設定裡負責接收 HTTP request、提供靜態檔案，並把一般頁面路由交給 <code>ngExpressEngine()</code> 渲染。Angular Universal 本身處理 Angular 的 server render，Express 則負責 Node.js server 的請求流程。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular Universal 裡可以直接使用 window 或 document 嗎？</span></h3>
+<p>Angular Universal 會在 Node.js 執行部分程式，所以不能直接假設 <code>window</code> 或 <code>document</code> 一定存在。需要使用 browser-only API 時，建議先用 <code>isPlatformBrowser()</code> 判斷目前是否在瀏覽器端。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://universal.angular.io/" target="_blank" rel="noopener noreferrer">Angular Universal</a></li>
+<li><a href="https://www.jianshu.com/p/81e8472376cc" target="_blank" rel="noopener noreferrer">Angular Universal 統一平台筆記</a></li>
+<li><a href="https://blog.kevinyang.net/2017/08/08/angular-cli-universal/" target="_blank" rel="noopener noreferrer">Angular Server-Side Rendering with Angular CLI 1.3.x 基本設定</a></li>
+<li><a href="https://blog.miniasp.com/post/2017/06/18/How-to-setup-Angular-Universal-in-an-Angular-CLI-project.aspx" target="_blank" rel="noopener noreferrer">如何在 Angular CLI 建立的專案加入 Angular Universal 伺服器渲染功能</a></li>
+<li><a href="https://itw01.com/G3MBE3P.html" target="_blank" rel="noopener noreferrer">Angular Universal 的三種開發模式</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/angular-npm-package-json-setup">Angular NPM 與 package.json 設定教學</a>：同樣聚焦 Angular，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-cli-new-project-setup">建立一個 Angular 5 的專案</a>：同樣聚焦 Angular，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-create-service-tutorial">Angular Service 建立教學：用 CLI 產生 HeroService 並回傳 Observable</a>：同樣聚焦 Angular，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2018-01-14（本文保留 2018-01-14 的 Angular 5 筆記內容，並補上 GEO 結構、Answer Blocks、FAQ 與站內延伸閱讀。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-01-14</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

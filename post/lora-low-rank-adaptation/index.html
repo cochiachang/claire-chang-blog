@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LoRA（Low-Rank Adaptation）是什麼？低參數微調 LLM 的原理與優點解析｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="LoRA（Low-Rank Adaptation）是一種參數高效微調技術，透過低秩矩陣分解凍結大部分 LLM 權重，只訓練少量參數，就能在特定任務上接近 Full Fine-tuning 的表現，同時大幅降低運算與儲存成本。本文解析 LoRA 的運作原理、流程與主要優點。" />
+<meta name="keywords" content="機器學習, LoRA, LLM, Fine-tuning, 機器學習, 參數高效微調" />
+<link rel="canonical" href="https://claire-chang.com/post/lora-low-rank-adaptation/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="LoRA（Low-Rank Adaptation）是什麼？低參數微調 LLM 的原理與優點解析｜Claire Chang" />
+<meta property="og:description" content="LoRA（Low-Rank Adaptation）是一種參數高效微調技術，透過低秩矩陣分解凍結大部分 LLM 權重，只訓練少量參數，就能在特定任務上接近 Full Fine-tuning 的表現，同時大幅降低運算與儲存成本。本文解析 LoRA 的運作原理、流程與主要優點。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/lora-low-rank-adaptation/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_lora-low-rank-adaptation-f1da4d94.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_lora-low-rank-adaptation-f1da4d94.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="LoRA（Low-Rank Adaptation）是什麼？低參數微調 LLM 的原理與優點解析｜Claire Chang" />
+<meta name="twitter:description" content="LoRA（Low-Rank Adaptation）是一種參數高效微調技術，透過低秩矩陣分解凍結大部分 LLM 權重，只訓練少量參數，就能在特定任務上接近 Full Fine-tuning 的表現，同時大幅降低運算與儲存成本。本文解析 LoRA 的運作原理、流程與主要優點。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_lora-low-rank-adaptation-f1da4d94.jpg" />
+<meta property="article:published_time" content="2024-05-03" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="LoRA" />
+<meta property="article:tag" content="LLM" />
+<meta property="article:tag" content="Fine-tuning" />
+<meta property="article:tag" content="機器學習" />
+<meta property="article:tag" content="參數高效微調" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"LoRA（Low-Rank Adaptation）是什麼？低參數微調 LLM 的原理與優點解析","item":"https://claire-chang.com/post/lora-low-rank-adaptation/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/lora-low-rank-adaptation/#article","headline":"LoRA（Low-Rank Adaptation）是什麼？低參數微調 LLM 的原理與優點解析","description":"LoRA（Low-Rank Adaptation）是一種參數高效微調技術，透過低秩矩陣分解凍結大部分 LLM 權重，只訓練少量參數，就能在特定任務上接近 Full Fine-tuning 的表現，同時大幅降低運算與儲存成本。本文解析 LoRA 的運作原理、流程與主要優點。","image":"https://claire-chang.com/images/tech/hero_lora-low-rank-adaptation.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-05-03","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/lora-low-rank-adaptation/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"LoRA, LLM, Fine-tuning, 機器學習, 參數高效微調","about":[{"@type":"Thing","name":"LLM"},{"@type":"Thing","name":"Fine-tuning"},{"@type":"Thing","name":"機器學習"},{"@type":"Thing","name":"參數高效微調"}],"mentions":[{"@type":"Thing","name":"LoRA"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/lora-low-rank-adaptation/#faq","mainEntity":[{"@type":"Question","name":"LoRA 是什麼？","acceptedAnswer":{"@type":"Answer","text":"LoRA（Low-Rank Adaptation）是一種參數高效微調技術，透過低秩矩陣分解，只訓練少量新增參數、凍結原本 LLM 的大部分權重。它能在特定任務上達到接近完整微調的效果，同時大幅降低運算與儲存成本。"}},{"@type":"Question","name":"LoRA 為什麼不會增加推理延遲？","acceptedAnswer":{"@type":"Answer","text":"因為 LoRA 不添加新的網路層，而是為既有參數加入低秩矩陣的值。訓練完成後可以將低秩矩陣合併回原權重，因此推理時的計算路徑不變，不會產生額外延遲。"}},{"@type":"Question","name":"LoRA 的秩（r）該怎麼選？","acceptedAnswer":{"@type":"Answer","text":"r 值越小，訓練越快、成本越低，但表現可能受限；r 值越大，越能處理複雜任務，但訓練時間與成本也隨之增加。實務上建議從較小的 r 值開始實驗，再依任務複雜度逐步調高。"}},{"@type":"Question","name":"LoRA 的效果比傳統 Fine-tuning 好嗎？","acceptedAnswer":{"@type":"Answer","text":"就我整理的比較結果來看，LoRA 多數的成果比 Fine-tuning 更好或相當，但訓練參數量遠小於 Fine-tuning。加上訓練速度快、適合低資源硬體，LoRA 通常是資源受限環境下的首選。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_lora-low-rank-adaptation.webp" alt="LoRA 低秩適應微調大型語言模型的概念示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-05-03">2024-05-03</time></span><span class="post-meta-pill">LoRA · LLM · Fine-tuning · 機器學習 · 參數高效微調</span></div></div><h1 class="insights-hero-title">LoRA（Low-Rank Adaptation）是什麼？低參數微調 LLM 的原理與優點解析</h1><p class="insights-hero-description">LoRA（Low-Rank Adaptation）是一種參數高效微調技術，透過低秩矩陣分解凍結大部分 LLM 權重，只訓練少量參數，就能在特定任務上接近 Full Fine-tuning 的表現，同時大幅降低運算與儲存成本。本文解析 LoRA 的運作原理、流程與主要優點。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>LoRA（Low-Rank Adaptation）是一種參數高效的微調技術，能改善大型語言模型（LLM）在特定任務上的表現，同時具有較低的運算與儲存成本。它透過降低模型參數的秩（rank）來減少模型複雜度，讓我在資源有限的情況下也能客製化自己的 LLM。這篇文章整理 LoRA 的運作原理、微調流程與主要優點。</p>
+</div><section aria-labelledby="為什麼微調-llm-需要用-lora"><h2 id="為什麼微調-llm-需要用-lora">為什麼微調 LLM 需要用 LoRA？</h2>
+<p>傳統的參數微調（Full Fine-tuning）常常會遇到過擬合的問題，特別是當訓練資料較少、或訓練資料與目標任務不符時。LoRA 透過引入一個低秩的參數矩陣，將原始的高維參數矩陣分解成兩個低秩矩陣的乘積，從而降低模型的複雜度。這種降維的方式可以有效減少模型的參數量，減緩過度擬合的情況，並提高模型的泛化能力。</p>
+</section><section aria-labelledby="lora-的主要優點有哪些"><h2 id="lora-的主要優點有哪些">LoRA 的主要優點有哪些？</h2>
+<ul>
+<li><strong>更快的訓練速度</strong>：將原始的高維度參數矩陣分解成低秩矩陣，可以大幅減少模型的參數數量。</li>
+<li><strong>更低的計算成本</strong>：分解低秩矩陣能降低模型的計算與儲存成本。它不是添加層，而是為參數添加值，因此不會導致推理延遲。</li>
+<li><strong>更少的泛化損失</strong>：LoRA 能提高模型的泛化能力，使模型更能適應不同的任務和領域。</li>
+</ul>
+</section><section aria-labelledby="lora-的微調流程是怎麼進行的"><h2 id="lora-的微調流程是怎麼進行的">LoRA 的微調流程是怎麼進行的？</h2>
+<figure class="article-figure"><img src="/images/articles/lora-low-rank-adaptation-1.webp" alt="LoRA 微調流程示意圖" loading="lazy" class="markdown-img"></figure>
+<p>整個流程可以拆成四個步驟：</p>
+<ol>
+<li>使用預訓練的 LLM 權重初始化 A 和 B 矩陣。</li>
+<li>將 LLM 應用於特定任務的訓練資料集。</li>
+<li>在訓練過程中，只有 A 矩陣會針對訓練資料集（輸入資料 X）進行微調。</li>
+<li>訓練完成後，獲得針對特定任務適應的 LLM，也就是 H（輸出）。</li>
+</ol>
+</section><section aria-labelledby="lora-的運作原理是什麼"><h2 id="lora-的運作原理是什麼">LoRA 的運作原理是什麼？</h2>
+<p>在 LoRA 中，一組新參數同時加入了網路 W_A 和 W_B。這些網路利用低秩權重向量，其向量維度表示為 d×r 和 r×d。在這裡，「d」代表原始凍結網路參數向量的維度，而「r」表示所選的低秩或更低維度。</p>
+<p>值得注意的是，「r」的值越小，模型訓練過程就越加速、越簡化。確定適當的「r」值是 LoRA 中的關鍵決策：選擇較低的值會讓訓練更快、更具成本效益，但可能不會產生最佳結果；相反地，選擇較高的「r」值會增加訓練時間和成本，但能增強模型處理更複雜任務的能力。</p>
+<p>LoRA 的運作方式是：首先需要一個預先訓練的 LLM，並凍結其大部分參數；然後將這些凍結的預訓練模型權重與可訓練的秩分解矩陣一起注入到 Transformer 的每一層中。這樣做有助於精細化模型，特別適合在低資源硬體上調整模型。</p>
+<figure class="article-figure"><img src="/images/articles/lora-low-rank-adaptation-2.webp" alt="LoRA 與微調方法的效能比較" loading="lazy" class="markdown-img"></figure>
+<p>從上表可以看出，LoRA 方法的結果與經典的微調方法相當，可以用更少的時間和資源獲得或多或少相同的結果，並且有更快的執行時間和更短的訓練時間。</p>
+</section><section aria-labelledby="lora-與-fine-tuning-比較-結論是什麼"><h2 id="lora-與-fine-tuning-比較-結論是什麼">LoRA 與 Fine-tuning 比較，結論是什麼？</h2>
+<ul>
+<li>LoRA 是一種模型適應技術，可減少 LLM 中的參數數量，同時保持其效能。</li>
+<li>它透過將 LLM 的權重分解為低秩矩陣（共同特徵）和隨機矩陣（特定於任務的變體）來實現這一點。</li>
+<li>低秩矩陣和隨機矩陣相結合，產生一個特定於任務的適配器（adapter），可以根據特定任務自訂 LLM。</li>
+<li>LoRA 在訓練速度、運算效率和模型大小方面具有優勢，使其適合資源受限的環境。</li>
+<li>LoRA 多數的成果比 Fine-tuning 還要好，並且訓練的參數量遠小於 Fine-tuning。</li>
+</ul>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LoRA 是什麼？</span></h3>
+<p>LoRA（Low-Rank Adaptation）是一種參數高效微調技術，透過低秩矩陣分解，只訓練少量新增參數、凍結原本 LLM 的大部分權重。它能在特定任務上達到接近完整微調的效果，同時大幅降低運算與儲存成本。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LoRA 為什麼不會增加推理延遲？</span></h3>
+<p>因為 LoRA 不添加新的網路層，而是為既有參數加入低秩矩陣的值。訓練完成後可以將低秩矩陣合併回原權重，因此推理時的計算路徑不變，不會產生額外延遲。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LoRA 的秩（r）該怎麼選？</span></h3>
+<p>r 值越小，訓練越快、成本越低，但表現可能受限；r 值越大，越能處理複雜任務，但訓練時間與成本也隨之增加。實務上建議從較小的 r 值開始實驗，再依任務複雜度逐步調高。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LoRA 的效果比傳統 Fine-tuning 好嗎？</span></h3>
+<p>就我整理的比較結果來看，LoRA 多數的成果比 Fine-tuning 更好或相當，但訓練參數量遠小於 Fine-tuning。加上訓練速度快、適合低資源硬體，LoRA 通常是資源受限環境下的首選。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>論文 LoRA: Low-Rank Adaptation of Large Language Models：<a href="https://arxiv.org/abs/2106.09685" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/2106.09685</a></li>
+<li>GitHub（Microsoft LoRA）：<a href="https://github.com/microsoft/LoRA" target="_blank" rel="noopener noreferrer">https://github.com/microsoft/LoRA</a></li>
+<li>HuggingFace Parameter-Efficient Fine-Tuning (PEFT)：<a href="https://github.com/huggingface/peft" target="_blank" rel="noopener noreferrer">https://github.com/huggingface/peft</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/openai-model-fine-tuning-process">OpenAI 模型微調（Fine-tuning）完整流程：資料準備到上線實戰</a>：同樣聚焦 Fine-tuning、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/qlora-efficient-finetuning-quantized-llms">QLoRA 量化微調完整解析：用 4-bit 顯存高效微調大型語言模型</a>：同樣聚焦 LoRA、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/qlora-efficient-finetuning-quantized-llms">QLoRA 量化微調完全指南：4-bit NormalFloat、雙量化與分頁優化器如何省下大量 GPU 記憶體</a>：同樣聚焦 LoRA、LLM，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2024-05-03，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-05-03</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

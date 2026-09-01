@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GDC 2013 馬場英雄談遊戲新體驗與故事性設計｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 GDC 2013《時空幻境》製作人馬場英雄的演講筆記：遊戲的主題與信息、Tales 系列線性動作戰鬥系統如何兼顧輕重度玩家，以及故事性如何傳達思想與帶給玩家成長。" />
+<meta name="keywords" content="前端開發, GDC, 遊戲開發, 遊戲設計, 敘事設計, Tales" />
+<link rel="canonical" href="https://claire-chang.com/post/gdc-2013-tales-game-experience-storytelling/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="GDC 2013 馬場英雄談遊戲新體驗與故事性設計｜Claire Chang" />
+<meta property="og:description" content="整理 GDC 2013《時空幻境》製作人馬場英雄的演講筆記：遊戲的主題與信息、Tales 系列線性動作戰鬥系統如何兼顧輕重度玩家，以及故事性如何傳達思想與帶給玩家成長。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/gdc-2013-tales-game-experience-storytelling/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_gdc-2013-tales-game-experience-storytelling-01874dee.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_gdc-2013-tales-game-experience-storytelling-01874dee.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="GDC 2013 馬場英雄談遊戲新體驗與故事性設計｜Claire Chang" />
+<meta name="twitter:description" content="整理 GDC 2013《時空幻境》製作人馬場英雄的演講筆記：遊戲的主題與信息、Tales 系列線性動作戰鬥系統如何兼顧輕重度玩家，以及故事性如何傳達思想與帶給玩家成長。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_gdc-2013-tales-game-experience-storytelling-01874dee.jpg" />
+<meta property="article:published_time" content="2013-12-17" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="GDC" />
+<meta property="article:tag" content="遊戲開發" />
+<meta property="article:tag" content="遊戲設計" />
+<meta property="article:tag" content="敘事設計" />
+<meta property="article:tag" content="Tales" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"GDC 2013 馬場英雄談遊戲新體驗與故事性設計","item":"https://claire-chang.com/post/gdc-2013-tales-game-experience-storytelling/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/gdc-2013-tales-game-experience-storytelling/#article","headline":"GDC 2013 馬場英雄談遊戲新體驗與故事性設計","description":"整理 GDC 2013《時空幻境》製作人馬場英雄的演講筆記：遊戲的主題與信息、Tales 系列線性動作戰鬥系統如何兼顧輕重度玩家，以及故事性如何傳達思想與帶給玩家成長。","image":"https://claire-chang.com/images/tech/hero_gdc-2013-tales-game-experience-storytelling.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2013-12-17","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/gdc-2013-tales-game-experience-storytelling/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"GDC, 遊戲開發, 遊戲設計, 敘事設計, Tales","about":[{"@type":"Thing","name":"遊戲開發"},{"@type":"Thing","name":"遊戲設計"},{"@type":"Thing","name":"敘事設計"}],"mentions":[{"@type":"Thing","name":"GDC"},{"@type":"Thing","name":"Tales"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/gdc-2013-tales-game-experience-storytelling/#faq","mainEntity":[{"@type":"Question","name":"馬場英雄在 GDC 2013 講的核心觀念是什麼？","acceptedAnswer":{"@type":"Answer","text":"他認為遊戲的兩個核心要素是「主題」與「信息」：主題是遊戲要讓使用者獲得什麼（訓練反應、腦力激盪、故事感動），信息是讓玩家在遊玩過程中持續得到樂趣與反饋。遊戲本質上是傳達思想與理念的方式。"}},{"@type":"Question","name":"Tales 系列的線性動作戰鬥系統有什麼特色？","acceptedAnswer":{"@type":"Answer","text":"它在同一個場地讓所有敵人與小組成員以即時反應行動戰鬥，操作簡單就能有一定攻擊水準，但可透過技術加強攻擊力，同時兼顧輕度與重度玩家。角色各有強項，未直接操作的角色由 AI 控制。"}},{"@type":"Question","name":"為什麼遊戲要有故事性？","acceptedAnswer":{"@type":"Answer","text":"故事讓玩家代入角色、融入遊戲世界，並從情節中獲得感動與成長，就像電影或小說一樣。更重要的是透過故事傳達中心思想——例如 Tales 最新作品以【選擇】為主題，讓玩家思考人生是由每個小選擇累積而成。"}},{"@type":"Question","name":"這場演講對遊戲開發者最大的啟發是什麼？","acceptedAnswer":{"@type":"Answer","text":"【回歸最初的感動】：發想遊戲時不要先想如何讓使用者付錢，而是先做一個好玩的、能讓玩家感動並陪伴他成長的遊戲。同時要不斷創造新的體驗，讓玩家不會膩、並在遊戲過程中伴隨成長。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_gdc-2013-tales-game-experience-storytelling.webp" alt="深色環境中的遊戲手把，象徵家用主機遊戲體驗" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2013-12-17">2013-12-17</time></span><span class="post-meta-pill">GDC · 遊戲開發 · 遊戲設計 · 敘事設計 · Tales</span></div></div><h1 class="insights-hero-title">GDC 2013 馬場英雄談遊戲新體驗與故事性設計</h1><p class="insights-hero-description">整理 GDC 2013《時空幻境》製作人馬場英雄的演講筆記：遊戲的主題與信息、Tales 系列線性動作戰鬥系統如何兼顧輕重度玩家，以及故事性如何傳達思想與帶給玩家成長。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>這篇文章整理我在 GDC 大會聽的一場演講：NAMCO BANDAI 總監製、《時空幻境（Tales）》系列製作人馬場英雄，談家用主機遊戲該如何創造新體驗、傳達故事與思想。核心收穫是兩個要素——「主題」與「信息」，以及【回歸最初的感動】：先做會讓玩家感動、陪伴玩家成長的遊戲，而不是先想如何讓使用者付錢。</p>
+</div><section aria-labelledby="這場-gdc-演講的講者是誰-在講什麼"><h2 id="這場-gdc-演講的講者是誰-在講什麼">這場 GDC 演講的講者是誰、在講什麼？</h2>
+<p>講者是馬場英雄，NAMCO BANDAI 總監製，代表作是《時空幻境／傳奇（Tales of）》系列。這場演講是他對家用遊戲開發要旨的整理，我把它拆成三個部分：</p>
+<ul>
+<li>遊戲不可或缺的兩個要素：主題與信息</li>
+<li>Tales 系列的戰鬥系統與角色成長設計</li>
+<li>故事性：樂趣、共存與傳遞思想</li>
+</ul>
+<p>相關資料：</p>
+<ul>
+<li><a href="http://zh.wikipedia.org/wiki/%E5%82%B3%E5%A5%87%E7%B3%BB%E5%88%97" target="_blank" rel="noopener noreferrer">傳奇系列 維基百科</a></li>
+<li><a href="https://www.youtube.com/watch?v=i2oDWmHLUAc" target="_blank" rel="noopener noreferrer">時空幻境：無盡傳奇 宣傳影片（YouTube）</a></li>
+<li><a href="http://gnn.gamer.com.tw/7/89707.html" target="_blank" rel="noopener noreferrer">巴哈姆特 GNN：GDC 台北峰會《時空幻境》製作人馬場英雄 闡述家用遊戲開發要旨</a></li>
+</ul>
+</section><section aria-labelledby="為什麼遊戲一定要有-主題-與-信息"><h2 id="為什麼遊戲一定要有-主題-與-信息">為什麼遊戲一定要有「主題」與「信息」？</h2>
+<p>這場演講算是那兩天 GDC 大會中我很喜歡的一場。這位製作人看待遊戲的出發點，讓我回想起小時候玩遊戲時所獲得的那種感動——在他的想法中，遊戲是一種傳達思想與理念的方式，並期待帶給使用者成長與感動。現在很多人發想遊戲時，總是先思考【如何讓使用者付錢】，而不是想做個好玩的、讓玩家感動、陪伴他成長的遊戲。【回歸最初的感動】是我從這場演講獲得的最大收穫。</p>
+<p>NAMCO 認為遊戲中最重要的兩個要素是：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>要素</th><th>意義</th><th>例子</th></tr></thead><tbody><tr><td>主題</td><td>遊戲一定要有主要想讓使用者獲得的東西</td><td>訓練反應（Diamond Dash）、腦力激盪（Candy Crush）、物理計算（小頑皮、憤怒鳥）</td></tr><tr><td>信息</td><td>讓使用者在進行遊戲的過程中得到樂趣、獲得反饋</td><td>動作遊戲的音效與特效等感官刺激；RPG 的戰鬥系統（因為要練功）</td></tr></tbody></table></div>
+<p>主題也可以是故事性的傳達：像 RPG 可以傳達一個故事，讓使用者感動、或從中體驗到想傳達的東西。例如他們最新一款遊戲想傳達的意念就是【選擇】——人生的現在，是過去眾多的選擇演變而成；而未來，則由現在的每個小選擇決定。</p>
+<p>另外，因為遊戲很容易一玩就玩很久，信息也格外重要。玩家在遊戲過程中得到的反饋，是遊戲裡很重要的要素之一。</p>
+</section><section aria-labelledby="tales-系列的戰鬥系統如何兼顧輕度與重度玩家"><h2 id="tales-系列的戰鬥系統如何兼顧輕度與重度玩家">Tales 系列的戰鬥系統如何兼顧輕度與重度玩家？</h2>
+<p>戰鬥系統的操作，應該要讓輕度玩家和重度玩家同時可以上手，不應只針對重度玩家，要讓所有人都能上手。</p>
+<p>Tales 系列為此開發了線性動作戰鬥系統：同一個場地上的所有敵人、怪物與小組成員，以即時反應行動進行戰鬥。設計重點包括：</p>
+<ul>
+<li>戰鬥時可以前後左右移動並釋出絕招，不需要困難的操作就能有一定攻擊水準，但可以透過技術進一步加強攻擊力</li>
+<li>角色各有特色：有些魔法強、有些速度強；沒有直接操作的角色可以用 AI 指定</li>
+<li>武器也有技巧，例如屬性、風屬性特性等，戰鬥時可以抓住對方弱點行使技巧</li>
+</ul>
+<p>戰鬥系統要不斷創造新的體驗，讓使用者不會膩，自己也要有成長——戰鬥與遊戲的過程要伴隨著成長。<strong>要怎麼創造新的體驗、讓玩家體驗什麼，是非常重要的！</strong></p>
+</section><section aria-labelledby="遊戲要怎麼讓玩家和主角一起成長"><h2 id="遊戲要怎麼讓玩家和主角一起成長">遊戲要怎麼讓玩家和主角一起成長？</h2>
+<p>遊戲應該要有故事性，並且讓玩家把自己代入遊戲角色之中。就像電影或小說，可以從內容與情節裡獲得感動，並隨著遊戲情節獲得成長（傳達具有教育性的思想）。一款好的遊戲，要讓玩家從遊戲裡可以有新的體驗。</p>
+</section><section aria-labelledby="為什麼操作的訊息傳遞非常重要"><h2 id="為什麼操作的訊息傳遞非常重要">為什麼操作的訊息傳遞非常重要？</h2>
+<p>和電影或小說不同，遊戲是透過【操作】讓玩家和遊戲世界互動，所以操作很重要。透過操作可以傳遞多少訊息給使用者、讓使用者融入遊戲世界、隨著角色的境遇而感動或傷心，是成功遊戲不可缺少的要素。怪物和成員角色都應該有各自的個性和特性。</p>
+<p>以 Tales 的戰鬥系統為例，它有以下特色：</p>
+<ol>
+<li>要考量雙方位置後去操作</li>
+<li>速度感、快感、動態</li>
+<li>操作簡單</li>
+<li>有協助的角色</li>
+<li>透過不同角色的合作深化遊戲性（要怎麼提供新的玩法）</li>
+</ol>
+</section><section aria-labelledby="故事性如何讓遊戲更吸引人"><h2 id="故事性如何讓遊戲更吸引人">故事性如何讓遊戲更吸引人？</h2>
+<p>遊戲應該要有故事，而且要透過這個故事傳達一個想法、感受給使用者。每一個 GAME 都有它的故事概念，透過故事可以把主題傳遞給使用者（例：不可動搖的信念、貫徹正義）。可以從三個層面來看：</p>
+<h3>樂趣（融入遊戲世界）</h3>
+<p>要能讓玩家透過操控性演變成主角——像是玩家玩一玩流淚、融入故事當中。因此主題和訊息非常重要，也是遊戲的特色。去創造新玩法體驗時，要傳遞什麼必須先思考。</p>
+<h3>共存（用正反兩面角色體現非單一的價值觀）</h3>
+<p>大家都有不同的想法，有時會衝擊思考，但大家都是共存的，要透過合作達到目標。在說故事時，主角有各種類型，不論主角或敵人都應該有想法，每種想法都有正確的一面，最後若無法讓步，就要透過劍與劍來戰鬥。</p>
+<p>不同的價值觀非常重要，但透過討論可以互相理解對方，Tales 系列非常重視這點，小組成員的設計也是（傳遞訊息）。透過遊戲，玩家可以去思考這些事情，這能提高玩家對遊戲的認知度，帶給玩家正向影響與思考上的鼓勵。透過完成遊戲可以有所成長、去思考——這就是 Tales 系列如此重視【傳遞的訊息】的原因。</p>
+<h3>傳遞思想（遊戲中心思想）</h3>
+<p>最新的 game 以【選擇】為主題：人生因為選擇而讓每個人的未來有所不同，現在是由過去的許多選擇累積而來。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>馬場英雄在 GDC 2013 講的核心觀念是什麼？</span></h3>
+<p>他認為遊戲的兩個核心要素是「主題」與「信息」：主題是遊戲要讓使用者獲得什麼（訓練反應、腦力激盪、故事感動），信息是讓玩家在遊玩過程中持續得到樂趣與反饋。遊戲本質上是傳達思想與理念的方式。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Tales 系列的線性動作戰鬥系統有什麼特色？</span></h3>
+<p>它在同一個場地讓所有敵人與小組成員以即時反應行動戰鬥，操作簡單就能有一定攻擊水準，但可透過技術加強攻擊力，同時兼顧輕度與重度玩家。角色各有強項，未直接操作的角色由 AI 控制。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼遊戲要有故事性？</span></h3>
+<p>故事讓玩家代入角色、融入遊戲世界，並從情節中獲得感動與成長，就像電影或小說一樣。更重要的是透過故事傳達中心思想——例如 Tales 最新作品以【選擇】為主題，讓玩家思考人生是由每個小選擇累積而成。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>這場演講對遊戲開發者最大的啟發是什麼？</span></h3>
+<p>【回歸最初的感動】：發想遊戲時不要先想如何讓使用者付錢，而是先做一個好玩的、能讓玩家感動並陪伴他成長的遊戲。同時要不斷創造新的體驗，讓玩家不會膩、並在遊戲過程中伴隨成長。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="http://zh.wikipedia.org/wiki/%E5%82%B3%E5%A5%87%E7%B3%BB%E5%88%97" target="_blank" rel="noopener noreferrer">傳奇系列 — 維基百科</a></li>
+<li><a href="https://www.youtube.com/watch?v=i2oDWmHLUAc" target="_blank" rel="noopener noreferrer">時空幻境：無盡傳奇 宣傳影片 — YouTube</a></li>
+<li><a href="http://gnn.gamer.com.tw/7/89707.html" target="_blank" rel="noopener noreferrer">GDC 台北峰會《時空幻境》製作人馬場英雄 闡述家用遊戲開發要旨 — 巴哈姆特 GNN</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/gdc-2013-tales-game-experience-storytelling">GDC 2013 筆記：遊戲如何創造新體驗？故事性與信息傳遞為什麼重要？</a>：同樣聚焦 遊戲開發、遊戲設計，可接著比較不同情境的做法。</li>
+<li><a href="/post/gdc-2013-cutscene-storytelling">GDC 2013 過場動畫故事設計筆記</a>：同樣聚焦 GDC、遊戲開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/ggj-2014-opening-video-theme">[GGJ-2014] 開場影片與遊戲發想：主題解析與腦力激盪筆記</a>：同樣聚焦 遊戲設計、遊戲開發，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2013-12-17，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2013-12-17</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Windows 編譯支援 HTTP-FLV 的 FFmpeg：OBS 虛擬鏡頭推流到 SRS｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 Windows 編譯 FFmpeg、確認 HTTP-FLV/RTMP 支援，以及用 OBS 虛擬鏡頭推流到 SRS 的流程。" />
+<meta name="keywords" content="後端開發, FFmpeg, HTTP-FLV, RTMP, OBS, SRS, Windows" />
+<link rel="canonical" href="https://claire-chang.com/post/compile-ffmpeg-http-flv-windows/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Windows 編譯支援 HTTP-FLV 的 FFmpeg：OBS 虛擬鏡頭推流到 SRS｜Claire Chang" />
+<meta property="og:description" content="整理 Windows 編譯 FFmpeg、確認 HTTP-FLV/RTMP 支援，以及用 OBS 虛擬鏡頭推流到 SRS 的流程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/compile-ffmpeg-http-flv-windows/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_ffmpeg-video-filter-compositing-445ca45a.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_ffmpeg-video-filter-compositing-445ca45a.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Windows 編譯支援 HTTP-FLV 的 FFmpeg：OBS 虛擬鏡頭推流到 SRS｜Claire Chang" />
+<meta name="twitter:description" content="整理 Windows 編譯 FFmpeg、確認 HTTP-FLV/RTMP 支援，以及用 OBS 虛擬鏡頭推流到 SRS 的流程。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_ffmpeg-video-filter-compositing-445ca45a.jpg" />
+<meta property="article:published_time" content="2023-04-18" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="FFmpeg" />
+<meta property="article:tag" content="HTTP-FLV" />
+<meta property="article:tag" content="RTMP" />
+<meta property="article:tag" content="OBS" />
+<meta property="article:tag" content="SRS" />
+<meta property="article:tag" content="Windows" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Windows 編譯支援 HTTP-FLV 的 FFmpeg：OBS 虛擬鏡頭推流到 SRS","item":"https://claire-chang.com/post/compile-ffmpeg-http-flv-windows/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/compile-ffmpeg-http-flv-windows/#article","headline":"Windows 編譯支援 HTTP-FLV 的 FFmpeg：OBS 虛擬鏡頭推流到 SRS","description":"整理 Windows 編譯 FFmpeg、確認 HTTP-FLV/RTMP 支援，以及用 OBS 虛擬鏡頭推流到 SRS 的流程。","image":"https://claire-chang.com/images/tech/hero_ffmpeg-video-filter-compositing.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-04-18","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/compile-ffmpeg-http-flv-windows/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"FFmpeg, HTTP-FLV, RTMP, OBS, SRS, Windows","mentions":[{"@type":"Thing","name":"FFmpeg"},{"@type":"Thing","name":"HTTP-FLV"},{"@type":"Thing","name":"RTMP"},{"@type":"Thing","name":"OBS"},{"@type":"Thing","name":"SRS"},{"@type":"Thing","name":"Windows"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/compile-ffmpeg-http-flv-windows/#faq","mainEntity":[{"@type":"Question","name":"Windows 編譯 FFmpeg 支援 HTTP-FLV 需要開哪個選項？","acceptedAnswer":{"@type":"Answer","text":"Windows 編譯 FFmpeg 支援 HTTP-FLV 時，要確認 `http`、`https`、`tcp` protocol 和 `flv` muxer/demuxer 存在。如果要推到 RTMP/SRS，還要確認 `rtmp` protocol；如果要抓 OBS Virtual Camera，還要確認 `dshow` input device。"}},{"@type":"Question","name":"HTTP-FLV 和 RTMP 有什麼差別？","acceptedAnswer":{"@type":"Answer","text":"RTMP 常用在直播製作端推流，HTTP-FLV 常用在播放端透過 HTTP 分發 FLV 串流。這篇流程是用 FFmpeg 推 RTMP 到 SRS，再由 SRS 提供 HTTP-FLV URL 給播放器。"}},{"@type":"Question","name":"OBS Virtual Camera 在 FFmpeg 裡找不到怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"先執行 `ffmpeg -list_devices true -f dshow -i dummy` 看 DirectShow 裝置名稱。OBS Virtual Camera 的實際名稱必須完整放進 `video=\"...\"`，名稱不一致時 FFmpeg 會直接回報找不到裝置。"}},{"@type":"Question","name":"為什麼不用 OBS 直接推 HEVC over RTMP？","acceptedAnswer":{"@type":"Answer","text":"早期 OBS Studio 推 HEVC over RTMP 到 SRS 時，會遇到 RTMP codec id 與舊協定支援問題。現在 Enhanced RTMP 已改善 HEVC/AV1 over RTMP 的路線，但舊環境或瀏覽器 HTTP-FLV 播放端仍要逐段確認支援度。"}},{"@type":"Question","name":"SRT 比 RTMP 更適合 HEVC 嗎？","acceptedAnswer":{"@type":"Answer","text":"SRT 天然比較適合新 codec 與弱網路低延遲傳輸，SRS 文件也把 SRT 定位為取代 RTMP 的廣播協定之一。不過如果使用者端播放器習慣 HTTP-FLV，仍可能需要保留 RTMP ingest 與 HTTP-FLV distribution。"}},{"@type":"Question","name":"FFmpeg 推流到 SRS 後要怎麼播放 HTTP-FLV？","acceptedAnswer":{"@type":"Answer","text":"SRS 預設 HTTP 服務常用 `8080` port。推流到 `rtmp://127.0.0.1/live/livestream` 後，可以用 `http://127.0.0.1:8080/live/livestream.flv` 測試 HTTP-FLV 播放；正式環境要把 host 換成 SRS server 位址。"}},{"@type":"Question","name":"HTTP-FLV 可以承載 HEVC 嗎？","acceptedAnswer":{"@type":"Answer","text":"FLV/RTMP 傳 HEVC 涉及 Enhanced RTMP、server 實作與播放器支援，不能只看副檔名或 container。若目標是一般瀏覽器穩定播放，H.264 + FLV 仍是比較保守的選擇。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_ffmpeg-video-filter-compositing.webp" alt="影片剪輯軟體的時間軸畫面，象徵 FFmpeg 在 Windows 上處理影音串流與合成流程" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-04-18">2023-04-18</time></span><span class="post-meta-pill">FFmpeg · HTTP-FLV · RTMP · OBS · SRS · Windows</span></div></div><h1 class="insights-hero-title">Windows 編譯支援 HTTP-FLV 的 FFmpeg：OBS 虛擬鏡頭推流到 SRS</h1><p class="insights-hero-description">整理 Windows 編譯 FFmpeg、確認 HTTP-FLV/RTMP 支援，以及用 OBS 虛擬鏡頭推流到 SRS 的流程。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>在 Windows 編譯支援 HTTP-FLV 的 FFmpeg，重點不是只打開一個 <code>http-flv</code> 開關，而是同時確認 FFmpeg 具備 <code>http</code>、<code>https</code>、<code>tcp</code>、<code>rtmp</code> protocol、<code>flv</code> muxer/demuxer，以及 Windows 端擷取 OBS Virtual Camera 會用到的 DirectShow input。我的做法是先讓 OBS Studio 輸出成虛擬鏡頭，再用 FFmpeg 從 DirectShow 抓畫面、編碼、封裝成 FLV，最後推到 SRS，由 SRS 提供 HTTP-FLV 播放端。</p>
+</div><section aria-labelledby="為什麼-windows-推-hevc-到-srs-會需要這條繞路"><h2 id="為什麼-windows-推-hevc-到-srs-會需要這條繞路">為什麼 Windows 推 HEVC 到 SRS 會需要這條繞路？</h2>
+<p>Windows 推 HEVC 到 SRS 時，真正卡住的是 RTMP 舊協定、OBS 輸出能力與瀏覽器播放端支援度的交界。FFmpeg 加 OBS Virtual Camera 可以把畫面擷取、編碼與推流控制權拿回來。</p>
+<p>我當時的需求是：在 Windows 上把 OBS Studio 裡的視訊源、素材與畫面合成後，推送到 SRS，再讓網頁端用 HTTP-FLV 播放。OBS Studio 可以做場景合成，但早期 OBS 直接推 HEVC over RTMP 到 SRS 時，RTMP codec id 與播放器相容性會卡住；SRS 維護者也曾提醒，SRT 更適合傳 HEVC，RTMP 則要注意舊協定限制。</p>
+<p>SRS 文件對 HTTP-FLV 的定位也很接近這個情境：RTMP 常用在直播製作端推流，HTTP-FLV 或 HLS 常用在播放端分發，因為播放設備對 HTTP 類傳輸的支援比較普遍（SRS，HTTP-FLV 文件，存取日期：2026-08-28）。所以這條路線拆成兩段：Windows/FFmpeg 負責輸入與推流，SRS 負責把直播流分發給瀏覽器。</p>
+</section><section aria-labelledby="windows-編譯-ffmpeg-前要準備哪些工具"><h2 id="windows-編譯-ffmpeg-前要準備哪些工具">Windows 編譯 FFmpeg 前要準備哪些工具？</h2>
+<p>Windows 原生編譯 FFmpeg 建議使用 MSYS2 的 MinGW-w64 環境。FFmpeg 官方文件也提醒，應使用 <code>mingw64_shell.bat</code> 或 <code>mingw32_shell.bat</code>，不要用一般 MSYS shell 直接編 Windows native binary。</p>
+<p>我會先安裝 MSYS2，開啟 <strong>MinGW-w64 Win64 Shell</strong>，再安裝基本編譯工具與常用影音套件：</p>
+<pre><code class="hljs language-bash">pacman -Syu
+pacman -S --needed git make pkgconf diffutils nasm yasm \
+  mingw-w64-x86_64-gcc \
+  mingw-w64-x86_64-SDL2 \
+  mingw-w64-x86_64-x264 \
+  mingw-w64-x86_64-x265
+</code></pre>
+<p>FFmpeg 官方 Windows 平台文件列出的 MSYS2 基本套件包含 <code>make</code>、<code>pkgconf</code>、<code>diffutils</code>、<code>nasm</code>、<code>gcc</code> 與 SDL2；若要編進 <code>libx264</code> 或 <code>libx265</code>，還要確保對應的 MinGW-w64 套件在同一個 shell 環境裡可被 <code>pkg-config</code> 找到（FFmpeg，Platform Specific Information，存取日期：2026-08-28）。</p>
+<p>這裡最容易踩的坑是 shell 開錯。用 <code>msys2_shell.bat</code> 進去時，路徑和 toolchain 看起來也能動，但最後產出的 binary、library 搜尋路徑或套件偵測結果可能不是我要的 Windows native MinGW build。</p>
+</section><section aria-labelledby="ffmpeg-要怎麼設定-http-flv-rtmp-和-directshow-支援"><h2 id="ffmpeg-要怎麼設定-http-flv-rtmp-和-directshow-支援">FFmpeg 要怎麼設定 HTTP-FLV、RTMP 和 DirectShow 支援？</h2>
+<p>FFmpeg 的 protocol 預設通常全部啟用；只有在使用 <code>--disable-protocols</code> 或 <code>--disable-everything</code> 做精簡編譯時，才需要逐一打開 <code>http</code>、<code>https</code>、<code>tcp</code>、<code>rtmp</code>、<code>flv</code> 與 <code>dshow</code> 相關能力。</p>
+<p>以下是我會保留的編譯方向，適合 Windows 上用 DirectShow 抓 OBS Virtual Camera，並把輸出推到 RTMP/SRS：</p>
+<pre><code class="hljs language-bash">git <span class="hljs-built_in">clone</span> https://git.ffmpeg.org/ffmpeg.git ffmpeg
+<span class="hljs-built_in">cd</span> ffmpeg
+
+./configure \
+  --prefix=/c/apps/ffmpeg-http-flv \
+  --enable-gpl \
+  --enable-version3 \
+  --enable-libx264 \
+  --enable-libx265 \
+  --enable-ffplay \
+  --enable-indev=dshow \
+  --enable-protocol=http \
+  --enable-protocol=https \
+  --enable-protocol=tcp \
+  --enable-protocol=rtmp \
+  --enable-muxer=flv \
+  --enable-demuxer=flv
+
+make -j$(<span class="hljs-built_in">nproc</span>)
+make install
+</code></pre>
+<p>如果沒有先關掉 FFmpeg 的預設元件，<code>--enable-protocol=*</code> 和 <code>--enable-muxer=flv</code> 多半不是必要選項；我仍會把它們寫進編譯紀錄，是因為日後查問題時可以一眼看出這個 build 的目的。FFmpeg protocol 文件也說明，configure 階段可用 <code>--list-protocols</code> 查看可用 protocol，工具執行時則可用 <code>ffmpeg -protocols</code> 列出目前 binary 支援的 protocol（FFmpeg，Protocols Documentation，存取日期：2026-08-28）。</p>
+</section><section aria-labelledby="編譯完要怎麼確認-ffmpeg-真的支援-http-flv"><h2 id="編譯完要怎麼確認-ffmpeg-真的支援-http-flv">編譯完要怎麼確認 FFmpeg 真的支援 HTTP-FLV？</h2>
+<p>確認 FFmpeg 支援 HTTP-FLV，要分開檢查 protocol、format、device 與 encoder。只看到 <code>ffmpeg.exe</code> 可以執行還不夠，推流前一定要確認 <code>http</code>、<code>rtmp</code>、<code>flv</code>、<code>dshow</code> 和編碼器都有出現。</p>
+<p>我會在新的命令提示字元或 PowerShell 裡先把編譯輸出加入 <code>Path</code>：</p>
+<pre><code class="hljs language-bat">set ffmpegBin=C:\apps\ffmpeg-http-flv\bin
+set PATH=%PATH%;%ffmpegBin%
+</code></pre>
+<p>接著逐項確認：</p>
+<pre><code class="hljs language-bash">ffmpeg -version
+ffmpeg -protocols
+ffmpeg -formats
+ffmpeg -devices
+ffmpeg -encoders
+</code></pre>
+<p>檢查重點如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查項目</th><th>需要看到什麼</th><th>用途</th></tr></thead><tbody><tr><td><code>ffmpeg -protocols</code></td><td><code>http</code>、<code>https</code>、<code>tcp</code>、<code>rtmp</code></td><td>讀取 HTTP-FLV 或推 RTMP</td></tr><tr><td><code>ffmpeg -formats</code></td><td><code>flv</code></td><td>讀寫 FLV container</td></tr><tr><td><code>ffmpeg -devices</code></td><td><code>dshow</code></td><td>Windows 擷取 OBS Virtual Camera</td></tr><tr><td><code>ffmpeg -encoders</code></td><td><code>libx264</code>、<code>libx265</code> 或硬體 encoder</td><td>直播推流編碼</td></tr></tbody></table></div>
+<p>如果要確認 Windows 上的攝影機名稱，可以列出 DirectShow 裝置：</p>
+<pre><code class="hljs language-bash">ffmpeg -list_devices <span class="hljs-literal">true</span> -f dshow -i dummy
+</code></pre>
+<p>OBS Virtual Camera 的名稱可能是 <code>OBS Virtual Camera</code>，也可能因版本或外掛顯示成 <code>OBS-Camera</code>。FFmpeg 指令裡的 <code>video="..."</code> 必須和 DirectShow 列出的名稱一致，不然會出現找不到裝置的錯誤。</p>
+</section><section aria-labelledby="如何把-obs-輸出掛成虛擬鏡頭"><h2 id="如何把-obs-輸出掛成虛擬鏡頭">如何把 OBS 輸出掛成虛擬鏡頭？</h2>
+<p>OBS Virtual Camera 會把 OBS Studio 的場景輸出成系統攝影機來源。FFmpeg 可以透過 Windows DirectShow 讀取這個來源，再接續做編碼、濾鏡或推流。</p>
+<p>在 OBS Studio 裡，我會先把輸出影片格式、解析度和幀率設定好。如果目標是測 HEVC，可以先把 OBS 內部素材或錄影輸出設定成 H.265；如果目標是穩定推 RTMP 給瀏覽器播放，實務上仍常回到 H.264 + FLV container。</p>
+<p>接著在 OBS Studio 右下角按 <strong>Start Virtual Camera</strong>：</p>
+<figure class="article-figure"><img src="/images/tech/obs-virtual-camera-start.webp" alt="OBS Studio 控制區中按下 Start Virtual Camera" loading="lazy" class="markdown-img"></figure>
+<p>OBS 官方 Virtual Camera Guide 說明，按下 Controls dock 裡的 Start Virtual Camera 後，OBS Studio 的輸出就可以被 Zoom、Discord、Skype 或其他可讀攝影機的程式使用；設定齒輪可以調整輸出來源（OBS Project，2022-08-31）。</p>
+<p>虛擬相機設定裡常見的輸出選項如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>OBS Virtual Camera 輸出</th><th>適合情境</th></tr></thead><tbody><tr><td>Program Output</td><td>讓 FFmpeg 讀到 OBS 正在正式輸出的畫面</td></tr><tr><td>Preview Output</td><td>Studio Mode 下讀預覽畫面，調場景時也會被看到</td></tr><tr><td>Scene</td><td>固定輸出某一個 Scene，不跟目前 Program 切換</td></tr><tr><td>Source</td><td>固定輸出某一個 Source</td></tr></tbody></table></div>
+<figure class="article-figure"><img src="/images/tech/obs-virtual-camera-settings.webp" alt="OBS Virtual Camera 設定視窗" loading="lazy" class="markdown-img"></figure>
+<p>我通常選 Program Output，因為推流端要看的就是觀眾實際會看到的畫面。如果只是測某個場景或來源，才會改成 Scene 或 Source。</p>
+</section><section aria-labelledby="如何用-ffmpeg-抓-obs-virtual-camera-並推到-srs"><h2 id="如何用-ffmpeg-抓-obs-virtual-camera-並推到-srs">如何用 FFmpeg 抓 OBS Virtual Camera 並推到 SRS？</h2>
+<p>FFmpeg 抓 OBS Virtual Camera 推到 SRS 的核心指令是 <code>-f dshow -i video="OBS Virtual Camera"</code> 加上 <code>-f flv rtmp://...</code>。SRS 收到 RTMP 後，再提供 HTTP-FLV 播放 URL。</p>
+<p>最小可用版本可以先這樣測：</p>
+<pre><code class="hljs language-bash">ffmpeg -f dshow -rtbufsize 200M -i video=<span class="hljs-string">"OBS Virtual Camera"</span> \
+  -pix_fmt yuv420p \
+  -c:v libx264 -profile:v baseline -level:v 3.1 -preset ultrafast \
+  -r 24 -s 800x450 -g 120 \
+  -an \
+  -f flv rtmp://127.0.0.1/live/livestream
+</code></pre>
+<p>若使用 NVIDIA GPU，也可以把 encoder 換成 <code>h264_nvenc</code>：</p>
+<pre><code class="hljs language-bash">ffmpeg -f dshow -rtbufsize 200M -i video=<span class="hljs-string">"OBS Virtual Camera"</span> \
+  -pix_fmt yuv420p \
+  -c:v h264_nvenc -preset p1 -tune ll \
+  -r 24 -s 800x450 -g 120 \
+  -an \
+  -f flv rtmp://127.0.0.1/live/livestream
+</code></pre>
+<p>SRS HTTP-FLV 文件提供的典型推流測試是把 FLV source 推到 <code>rtmp://localhost/live/livestream</code>，再用 <code>http://localhost:8080/live/livestream.flv</code> 播放（SRS，HTTP-FLV 文件，存取日期：2026-08-28）。正式環境把 <code>127.0.0.1</code> 換成 SRS server IP 或網域即可。</p>
+<p>參數拆解如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>參數</th><th>說明</th></tr></thead><tbody><tr><td><code>-f dshow</code></td><td>Windows DirectShow input</td></tr><tr><td><code>-rtbufsize 200M</code></td><td>增加擷取緩衝，降低畫面卡住或掉幀機率</td></tr><tr><td><code>-i video="OBS Virtual Camera"</code></td><td>讀取 OBS 虛擬鏡頭</td></tr><tr><td><code>-pix_fmt yuv420p</code></td><td>使用播放器相容性較高的像素格式</td></tr><tr><td><code>-profile:v baseline -level:v 3.1</code></td><td>較保守的 H.264 串流相容設定</td></tr><tr><td><code>-preset ultrafast</code></td><td>編碼速度優先，適合低延遲測試</td></tr><tr><td><code>-g 120</code></td><td>24fps 時約每 5 秒一個關鍵幀</td></tr><tr><td><code>-an</code></td><td>不帶音訊；需要聲音時要另外指定 audio device</td></tr><tr><td><code>-f flv</code></td><td>以 FLV container 輸出到 RTMP endpoint</td></tr></tbody></table></div>
+</section><section aria-labelledby="這條流程最容易踩到哪些坑"><h2 id="這條流程最容易踩到哪些坑">這條流程最容易踩到哪些坑？</h2>
+<p>Windows 編譯與推流最常出問題的地方，是把 protocol、container、codec、device 名稱和播放端支援混成同一件事。排查時逐層確認，比反覆改同一條 FFmpeg 指令更快。</p>
+<p>我會照這份清單排查：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>問題</th><th>我會先檢查什麼</th></tr></thead><tbody><tr><td>FFmpeg 找不到 OBS Virtual Camera</td><td>用 <code>ffmpeg -list_devices true -f dshow -i dummy</code> 確認裝置名稱</td></tr><tr><td>推流成功但瀏覽器黑畫面</td><td>確認輸出是否為 H.264 + FLV，以及播放端是否支援該 codec</td></tr><tr><td><code>rtmp</code> 或 <code>http</code> 不在 protocol 清單</td><td>回到 configure 選項，確認沒有 <code>--disable-protocols</code> 或精簡掉 protocol</td></tr><tr><td><code>flv</code> 不在 format 清單</td><td>確認 <code>flv</code> muxer/demuxer 沒被移除</td></tr><tr><td>延遲越播越高</td><td>檢查 GOP、encoder preset、播放器 buffer、SRS 分發設定</td></tr><tr><td>CPU 滿載</td><td>改用硬體 encoder，或降低解析度、fps、bitrate</td></tr><tr><td>HEVC 推流後不能播</td><td>分清楚 SRT、Enhanced RTMP、HTTP-FLV 與瀏覽器 codec 支援，不要只看 server 是否收得到流</td></tr></tbody></table></div>
+<p>我的經驗是，HTTP-FLV 播放端若要給一般瀏覽器使用，H.264 仍然是最省心的 baseline。HEVC 可以省頻寬，也適合 SRT 或支援 Enhanced RTMP 的新流程，但播放器、瀏覽器與中間服務每一段都要確認；只要其中一段不支援，最後看到的就是黑畫面或無法解碼。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Windows 編譯 FFmpeg 支援 HTTP-FLV 需要開哪個選項？</span></h3>
+<p>Windows 編譯 FFmpeg 支援 HTTP-FLV 時，要確認 <code>http</code>、<code>https</code>、<code>tcp</code> protocol 和 <code>flv</code> muxer/demuxer 存在。如果要推到 RTMP/SRS，還要確認 <code>rtmp</code> protocol；如果要抓 OBS Virtual Camera，還要確認 <code>dshow</code> input device。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>HTTP-FLV 和 RTMP 有什麼差別？</span></h3>
+<p>RTMP 常用在直播製作端推流，HTTP-FLV 常用在播放端透過 HTTP 分發 FLV 串流。這篇流程是用 FFmpeg 推 RTMP 到 SRS，再由 SRS 提供 HTTP-FLV URL 給播放器。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>OBS Virtual Camera 在 FFmpeg 裡找不到怎麼辦？</span></h3>
+<p>先執行 <code>ffmpeg -list_devices true -f dshow -i dummy</code> 看 DirectShow 裝置名稱。OBS Virtual Camera 的實際名稱必須完整放進 <code>video="..."</code>，名稱不一致時 FFmpeg 會直接回報找不到裝置。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼不用 OBS 直接推 HEVC over RTMP？</span></h3>
+<p>早期 OBS Studio 推 HEVC over RTMP 到 SRS 時，會遇到 RTMP codec id 與舊協定支援問題。現在 Enhanced RTMP 已改善 HEVC/AV1 over RTMP 的路線，但舊環境或瀏覽器 HTTP-FLV 播放端仍要逐段確認支援度。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>SRT 比 RTMP 更適合 HEVC 嗎？</span></h3>
+<p>SRT 天然比較適合新 codec 與弱網路低延遲傳輸，SRS 文件也把 SRT 定位為取代 RTMP 的廣播協定之一。不過如果使用者端播放器習慣 HTTP-FLV，仍可能需要保留 RTMP ingest 與 HTTP-FLV distribution。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>FFmpeg 推流到 SRS 後要怎麼播放 HTTP-FLV？</span></h3>
+<p>SRS 預設 HTTP 服務常用 <code>8080</code> port。推流到 <code>rtmp://127.0.0.1/live/livestream</code> 後，可以用 <code>http://127.0.0.1:8080/live/livestream.flv</code> 測試 HTTP-FLV 播放；正式環境要把 host 換成 SRS server 位址。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>HTTP-FLV 可以承載 HEVC 嗎？</span></h3>
+<p>FLV/RTMP 傳 HEVC 涉及 Enhanced RTMP、server 實作與播放器支援，不能只看副檔名或 container。若目標是一般瀏覽器穩定播放，H.264 + FLV 仍是比較保守的選擇。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>FFmpeg Project, <a href="https://www.ffmpeg.org/platform.html" target="_blank" rel="noopener noreferrer">Platform Specific Information: Windows</a>（存取日期：2026-08-28）</li>
+<li>FFmpeg Project, <a href="https://ffmpeg.org/ffmpeg-protocols.html" target="_blank" rel="noopener noreferrer">Protocols Documentation</a>（存取日期：2026-08-28）</li>
+<li>FFmpeg Project, <a href="https://ffmpeg.org/ffmpeg.html" target="_blank" rel="noopener noreferrer">FFmpeg Documentation</a>（存取日期：2026-08-28）</li>
+<li>OBS Project, <a href="https://obsproject.com/kb/virtual-camera-guide" target="_blank" rel="noopener noreferrer">Virtual Camera Guide</a>（發布日期：2022-08-31，存取日期：2026-08-28）</li>
+<li>SRS, <a href="https://ossrs.io/lts/en-us/docs/v6/doc/flv" target="_blank" rel="noopener noreferrer">HTTP-FLV</a>（存取日期：2026-08-28）</li>
+<li>SRS, <a href="https://www.ossrs.io/lts/en-us/docs/v8/doc/srt" target="_blank" rel="noopener noreferrer">SRT</a>（存取日期：2026-08-28）</li>
+<li>Reddit, <a href="https://www.reddit.com/r/VIDEOENGINEERING/comments/giabu7/secure_reliable_transport_srt_player/" target="_blank" rel="noopener noreferrer">Secure Reliable Transport (SRT) Player</a>（存取日期：2026-08-28）</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/srs6-ffmpeg-http-flv-compile">為 SRS6 編譯支援 HTTP-FLV 的 FFmpeg：H.265 over RTMP 推流實作</a>：同樣聚焦 SRS、FFmpeg，可接著比較不同情境的做法。</li>
+<li><a href="/post/obs-hevc-rtmp-srs-streaming">OBS 推送 HEVC 直播串流到 SRS：Enhanced RTMP 設定教學</a>：同樣聚焦 OBS、RTMP，可接著比較不同情境的做法。</li>
+<li><a href="/post/obs-rtmp-h265-streaming">使用 OBS 推流 H.265：v29 後的 HEVC over RTMP 設定筆記</a>：同樣聚焦 OBS、RTMP，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。這次整理保留 Windows 編譯 FFmpeg、OBS Virtual Camera、SRS、HTTP-FLV/RTMP 推流脈絡，補上 GEO Answer Blocks、FAQ、參考資料與 OBS、PyAV、WebM、AV1、FFmpeg 站內延伸閱讀。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-04-18</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

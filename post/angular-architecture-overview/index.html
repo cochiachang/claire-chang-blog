@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular 架構總覽：Component、Template、Metadata、NgModule、Directive 與 Dependency Injection 入門｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Angular 架構完整介紹：從官網架構圖拆解 Component、Template、Metadata 的關係，說明資料綁定、NgModule 模組化、Directive、Service 與 Dependency Injection 依賴注入的運作方式，幫你建立完整的 Angular 心智模型。" />
+<meta name="keywords" content="前端開發, Angular, TypeScript, frontend, dependency-injection" />
+<link rel="canonical" href="https://claire-chang.com/post/angular-architecture-overview/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Angular 架構總覽：Component、Template、Metadata、NgModule、Directive 與 Dependency Injection 入門｜Claire Chang" />
+<meta property="og:description" content="Angular 架構完整介紹：從官網架構圖拆解 Component、Template、Metadata 的關係，說明資料綁定、NgModule 模組化、Directive、Service 與 Dependency Injection 依賴注入的運作方式，幫你建立完整的 Angular 心智模型。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/angular-architecture-overview/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_angular-architecture-overview-7c628f21.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_angular-architecture-overview-7c628f21.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Angular 架構總覽：Component、Template、Metadata、NgModule、Directive 與 Dependency Injection 入門｜Claire Chang" />
+<meta name="twitter:description" content="Angular 架構完整介紹：從官網架構圖拆解 Component、Template、Metadata 的關係，說明資料綁定、NgModule 模組化、Directive、Service 與 Dependency Injection 依賴注入的運作方式，幫你建立完整的 Angular 心智模型。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_angular-architecture-overview-7c628f21.jpg" />
+<meta property="article:published_time" content="2017-12-27" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Angular" />
+<meta property="article:tag" content="TypeScript" />
+<meta property="article:tag" content="frontend" />
+<meta property="article:tag" content="dependency-injection" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Angular 架構總覽：Component、Template、Metadata、NgModule、Directive 與 Dependency Injection 入門","item":"https://claire-chang.com/post/angular-architecture-overview/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/angular-architecture-overview/#article","headline":"Angular 架構總覽：Component、Template、Metadata、NgModule、Directive 與 Dependency Injection 入門","description":"Angular 架構完整介紹：從官網架構圖拆解 Component、Template、Metadata 的關係，說明資料綁定、NgModule 模組化、Directive、Service 與 Dependency Injection 依賴注入的運作方式，幫你建立完整的 Angular 心智模型。","image":"https://claire-chang.com/images/tech/hero_angular-architecture-overview.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2017-12-27","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/angular-architecture-overview/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Angular, TypeScript, frontend, dependency-injection","mentions":[{"@type":"Thing","name":"Angular"},{"@type":"Thing","name":"TypeScript"},{"@type":"Thing","name":"frontend"},{"@type":"Thing","name":"dependency-injection"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/angular-architecture-overview/#faq","mainEntity":[{"@type":"Question","name":"Angular 的 Component 必備元素有哪些？","acceptedAnswer":{"@type":"Answer","text":"一個 component 必備的三個元素是 template、metadata 與 component class 本身。template 定義畫面、metadata（`@Component` 宣告）定義這個元件怎麼被引用與樣式位置，class 則提供屬性與方法供 template 呼叫。"}},{"@type":"Question","name":"Angular 的資料綁定有哪幾種類型？","acceptedAnswer":{"@type":"Answer","text":"主要有四種：插值綁定 `{{value}}`、property binding `[property]=\"value\"`、event binding `(event)=\"handler()\"`，以及雙向綁定 `[(ngModel)]=\"value\"`。前三種是單向的，雙向綁定則同時結合 property 與 event binding。"}},{"@type":"Question","name":"NgModule 和 JavaScript modules 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"NgModule 是 Angular 自己的模組化系統，用 `@NgModule` decorator 宣告，描述一個模組裡有哪些 components、directives、pipes 與 services；JavaScript modules 則是 ES6 語言層級的 `import`/`export` 機制。兩者是完全不同的東西，實務上會同時使用。"}},{"@type":"Question","name":"什麼是 Dependency Injection？為什麼 Angular 需要它？","acceptedAnswer":{"@type":"Answer","text":"依賴注入是一種設計模式，讓元件不用自己建立服務，而是由 injector 提供現成的 service 實例。只要在 constructor 參數宣告服務型別（如 `constructor(private service: HeroService)`），Angular 就會自動注入，並在模組或元件的 `providers` 中註冊。"}},{"@type":"Question","name":"Component 和 Directive 有什麼關係？","acceptedAnswer":{"@type":"Answer","text":"本質上 component 就是一個有 template 的 directive，directive 則沒有 template，用來擴展 HTML 元素或簡化 DOM 操作。可以視 component 為 directive 的擴展，但因為 component 在 Angular 中非常重要，架構上會將兩者分開介紹。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_angular-architecture-overview.webp" alt="Angular 架構示意，涵蓋元件、模組與依賴注入" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2017-12-27">2017-12-27</time></span><span class="post-meta-pill">Angular · TypeScript · frontend · dependency-injection</span></div></div><h1 class="insights-hero-title">Angular 架構總覽：Component、Template、Metadata、NgModule、Directive 與 Dependency Injection 入門</h1><p class="insights-hero-description">Angular 架構完整介紹：從官網架構圖拆解 Component、Template、Metadata 的關係，說明資料綁定、NgModule 模組化、Directive、Service 與 Dependency Injection 依賴注入的運作方式，幫你建立完整的 Angular 心智模型。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Angular 是一個用來編寫 HTML 應用程式的框架，可以使用 JavaScript 或 TypeScript 開發。這篇文章用官網的架構圖帶你逐塊拆解 Angular 的核心概念：Component、Template、Metadata、NgModule、Directive、Service 與 Dependency Injection，讀完就能建立完整的 Angular 心智模型。</p>
+</div><section aria-labelledby="angular-的核心架構長什麼樣"><h2 id="angular-的核心架構長什麼樣">Angular 的核心架構長什麼樣？</h2>
+<p>下圖是官網上所繪製的 Angular 架構圖：</p>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-1.webp" alt="Angular 官網架構圖" loading="lazy" class="markdown-img"></figure>
+<p>首先先看最中間那一塊，是由 <strong>template、metadata、component</strong> 所構成的，這三個是一個 component 必備的元素。</p>
+<p>所謂的元件可以看我之前創建 hero 那篇文章，我們可以用下面指令創一個元件：</p>
+<pre><code class="hljs language-bash">ng generate component selectSystem
+</code></pre>
+<p>創完一個元件後，可以看見下面這些檔案：</p>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-2.webp" alt="ng generate component 產生的檔案" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="templates-怎麼與-component-溝通"><h2 id="templates-怎麼與-component-溝通">Templates 怎麼與 Component 溝通？</h2>
+<p>裡面的 <code>component.html</code> 檔就是 template，它看起來像是一個 HTML 的檔案，可以在裡面用資料綁定與事件綁定與 controller 裡的物件做繫結。</p>
+<p>下面是一個 template 的範例：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Hero List<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+
+<span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">i</span>></span>Pick a hero from the list<span class="hljs-tag">&#x3C;/<span class="hljs-name">i</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> *<span class="hljs-attr">ngFor</span>=<span class="hljs-string">"let hero of heroes"</span> (<span class="hljs-attr">click</span>)=<span class="hljs-string">"selectHero(hero)"</span>></span>
+    {{hero.name}}
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+
+<span class="hljs-tag">&#x3C;<span class="hljs-name">app-hero-detail</span> *<span class="hljs-attr">ngIf</span>=<span class="hljs-string">"selectedHero"</span> [<span class="hljs-attr">hero</span>]=<span class="hljs-string">"selectedHero"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">app-hero-detail</span>></span>
+</code></pre>
+<p>可以注意到上面有些地方與一般的 HTML 不相同，例如像是 <code>*ngFor</code>、<code>{{hero.name}}</code>、<code>(click)="selectHero(hero)"</code> 等。這就是架構圖畫面上用來連繫 Component 以及 Template 的兩個箭頭：<strong>property binding</strong> 以及 <strong>event binding</strong>。</p>
+<p>例如 click 事件繫結是 <code>(click)='functionName()'</code>，物件繫結可以用 <code>{{data}}</code>。透過這樣的繫結可以讓 template 將使用者操作的事件傳給 component，component 也可以將資料的更動即時地反饋到 template 所顯示的資料上。</p>
+</section><section aria-labelledby="angular-的資料綁定-data-binding-有哪幾種"><h2 id="angular-的資料綁定-data-binding-有哪幾種">Angular 的資料綁定（Data Binding）有哪幾種？</h2>
+<p>下圖是非常清楚的 binding 類型列表：</p>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-3.webp" alt="Angular binding 類型列表" loading="lazy" class="markdown-img"></figure>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>{{hero.name}}<span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">app-hero-detail</span> [<span class="hljs-attr">hero</span>]=<span class="hljs-string">"selectedHero"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">app-hero-detail</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> (<span class="hljs-attr">click</span>)=<span class="hljs-string">"selectHero(hero)"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+</code></pre>
+<ul>
+<li><code>{{hero.name}}</code> 為<strong>值繫結</strong>，可以綁定 component 裡的值。</li>
+<li><code>[hero]="selectedHero"</code> 為 <strong>property binding</strong>，可以將某個元件裡的變數塞進一個 HTML 元素的屬性裡。</li>
+<li><code>(click)="selectHero(hero)"</code> 為 <strong>event binding</strong>，可以呼叫 component 裡的 function。</li>
+</ul>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> [(<span class="hljs-attr">ngModel</span>)]=<span class="hljs-string">"hero.name"</span>></span>
+</code></pre>
+<p>這個則是<strong>雙向數據綁定</strong>：在雙向綁定中，與屬性綁定一樣，數據屬性值將從組件輸入到輸入框中；用戶的更改也會返回到組件，將屬性重置為最新值，就像事件綁定一樣。</p>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-4.webp" alt="雙向數據綁定示意圖" loading="lazy" class="markdown-img"></figure>
+<p>數據綁定在模板及其組件之間的通信中起著重要的作用。</p>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-5.webp" alt="父子組件間的數據綁定" loading="lazy" class="markdown-img"></figure>
+<p>數據綁定對於父組件和子組件之間的通信也很重要。</p>
+</section><section aria-labelledby="component-是什麼"><h2 id="component-是什麼">Component 是什麼？</h2>
+<p>而 <code>component.ts</code> 檔則是 component 內容，裡面會有一些屬性或方法來供 template 呼叫，下面是一個 Component 的簡單範例：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HeroListComponent</span> implements <span class="hljs-title class_">OnInit</span> {
+  <span class="hljs-attr">heroes</span>: <span class="hljs-title class_">Hero</span>[];
+  <span class="hljs-attr">selectedHero</span>: <span class="hljs-title class_">Hero</span>;
+
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">private service: HeroService</span>) { }
+
+  <span class="hljs-title function_">ngOnInit</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroes</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">service</span>.<span class="hljs-title function_">getHeroes</span>();
+  }
+
+  <span class="hljs-title function_">selectHero</span>(<span class="hljs-params">hero: Hero</span>) { <span class="hljs-variable language_">this</span>.<span class="hljs-property">selectedHero</span> = hero; }
+}
+</code></pre>
+<p>當用戶在應用程序中切換畫面時，Angular 會創建、更新和銷毀組件。你的應用程序可以通過可選的 lifecycle hooks 參與這個生命週期的每個時刻，像 <code>ngOnInit()</code>。</p>
+</section><section aria-labelledby="metadata-告訴-angular-怎麼處理一個-class"><h2 id="metadata-告訴-angular-怎麼處理一個-class">Metadata：告訴 Angular 怎麼處理一個 Class</h2>
+<p>metadata 則是在 <code>component.ts</code> 裡由 <code>@Component</code> 開頭的區塊來宣告，裡面會定義這個 Component 要如何在別的元件的 template 裡被引用；<code>templateUrl</code> 定義自己這個元件要顯示的 html 模版位置，<code>styleUrls</code> 則是 css 檔案位置。</p>
+<p>例如下面這個 metadata 宣告：</p>
+<pre><code class="hljs language-typescript"><span class="hljs-meta">@Component</span>({
+  <span class="hljs-attr">selector</span>: <span class="hljs-string">'app-heroes'</span>,
+  <span class="hljs-attr">templateUrl</span>: <span class="hljs-string">'./heroes.component.html'</span>,
+  <span class="hljs-attr">styleUrls</span>: [<span class="hljs-string">'./heroes.component.css'</span>]
+})
+</code></pre>
+<p>就可以用下面的方式來顯示這個元件：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">app-heroes</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">app-heroes</span>></span>
+</code></pre>
+</section><section aria-labelledby="ngmodule-angular-的模組化系統"><h2 id="ngmodule-angular-的模組化系統">NgModule：Angular 的模組化系統</h2>
+<p>接著來介紹左上方的區塊：</p>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-6.webp" alt="NgModule 區塊示意" loading="lazy" class="markdown-img"></figure>
+<p>Angular 應用程序是模組化的，Angular 稱自己為 NgModules 的模組化系統。NgModules 是一個很大的議題，我後面會有另一篇文章專門介紹 ngModules。</p>
+<p>一個小的 application 至少會有一個模組，稱為 root module。雖然有些小的專案可能就只有一個模組，但大多大的專案都會有多個模組，稱為 feature modules——一個模組內會是相同工作範疇的一組元件，它們在工作流程或功能上緊密相關，彼此協同運作。</p>
+<p>當我們執行了這樣的指令來創建一個新的專案時：</p>
+<pre><code class="hljs language-bash">ng new my-app
+</code></pre>
+<p>可以看到 <code>src/app</code> 資料夾內有 <code>app.module.ts</code> 這個檔案，這個檔案就是 Angular 預設的根模組，其內容如下：</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NgModule</span> }      <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">BrowserModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/platform-browser'</span>;
+
+<span class="hljs-meta">@NgModule</span>({
+  <span class="hljs-attr">imports</span>:      [ <span class="hljs-title class_">BrowserModule</span> ],
+  <span class="hljs-attr">providers</span>:    [ <span class="hljs-title class_">Logger</span> ],
+  <span class="hljs-attr">declarations</span>: [ <span class="hljs-title class_">AppComponent</span> ],
+  <span class="hljs-attr">exports</span>:      [ <span class="hljs-title class_">AppComponent</span> ],
+  <span class="hljs-attr">bootstrap</span>:    [ <span class="hljs-title class_">AppComponent</span> ]
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> { }
+</code></pre>
+<p>一個 NgModule，無論是 root module 還是 feature modules，該 class 裡一定會有 <code>@NgModule</code> 的宣告區域。在 Angular 裡會有許多 <code>@</code> 開頭的宣告，這樣的宣告稱為 <strong>decorator</strong>，可以在元件或模組裡設定許多 metadata。關於 ngModule 更多說明可以看 <a href="https://angular.io/api/core/NgModule" target="_blank" rel="noopener noreferrer">@NgModule 的說明</a>；關於 decorators 更多的說明則可以看<a href="https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841#.x5c2ndtx0" target="_blank" rel="noopener noreferrer">這邊</a>，這兩項之後我都會有專門的文章來介紹。</p>
+<h3>NgModule 最重要的五個屬性</h3>
+<p>NgModule 是一個用來描述這個模組裡有哪些 component 的 metadata，是一個 decorator function。在 ngModule 裡最重要的屬性有下面這五點：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>屬性</th><th>作用</th></tr></thead><tbody><tr><td><code>declarations</code></td><td>屬於這個模組的成員。Angular 有三種成員：components、directives 以及 pipes。</td></tr><tr><td><code>exports</code></td><td>將 declarations 宣告的成員公開，讓其他模組引用此模組時可以存取該成員的 public function。</td></tr><tr><td><code>imports</code></td><td>需引用的模組，所有在這個模組內的元件要引用的模組都要在此宣告。</td></tr><tr><td><code>providers</code></td><td>要引用的 Service 需在此宣告。</td></tr><tr><td><code>bootstrap</code></td><td>只有根模組需要設定，在此設定一開始要顯示的 application view。</td></tr></tbody></table></div>
+<p>註：上面的範例中，因為有設定 <code>bootstrap</code> 代表其為一個根組件，而根組件是不需要 exports 出去的，因為不會有任何其他 modules 需要用到它。</p>
+<p>而要啟動整個應用程序可以在 <code>main.ts</code> 中加上這段：</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { enableProdMode } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { platformBrowserDynamic } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/platform-browser-dynamic'</span>;
+
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./app/app.module'</span>;
+<span class="hljs-keyword">import</span> { environment } <span class="hljs-keyword">from</span> <span class="hljs-string">'./environments/environment'</span>;
+
+<span class="hljs-keyword">if</span> (environment.<span class="hljs-property">production</span>) {
+  <span class="hljs-title function_">enableProdMode</span>();
+}
+
+<span class="hljs-title function_">platformBrowserDynamic</span>().<span class="hljs-title function_">bootstrapModule</span>(<span class="hljs-title class_">AppModule</span>); <span class="hljs-comment">// 用這個指令來啟動 root modules</span>
+</code></pre>
+<p>在 js 裡我們透過 <code>export</code> 一個 class 來供其他 modules 使用，並在其他 js 檔案利用 <code>import</code> 來將這個 class 引入：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> { }
+</code></pre>
+<pre><code class="hljs language-js"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NgModule</span> }     <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppComponent</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./app.component'</span>;
+</code></pre>
+</section><section aria-labelledby="angular-libraries-內建的-angular-模組"><h2 id="angular-libraries-內建的-angular-模組">Angular Libraries：內建的 @angular 模組</h2>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-7.webp" alt="Angular libraries 示意" loading="lazy" class="markdown-img"></figure>
+<p>Angular 內建了許多可供應用的模組，我們稱為 library module。所有的 library module 都以 <code>@angular</code> 為前綴開頭，可以使用 npm 來安裝管理它們。</p>
+<p>例如要使用 Component 功能要引用 <code>@angular/core</code> 的 Component：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+</code></pre>
+<p>或是使用 BrowserModule：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">BrowserModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/platform-browser'</span>;
+</code></pre>
+</section><section aria-labelledby="directives-擴展-html-的能力"><h2 id="directives-擴展-html-的能力">Directives：擴展 HTML 的能力</h2>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-8.webp" alt="Directives 示意" loading="lazy" class="markdown-img"></figure>
+<p>在架構圖中的 template 右邊，可以看到有一個 directive 指向 template。directive 是透過 Angular 使用內建或自訂 directive，用來自己定義 HTML 元素並簡化 DOM 操作的功能，可以讓 template 裡去使用。</p>
+<p>一個 directive 會由 <code>@Directive</code> 來宣告。其實 directive 與 component 的本質是相同的，只是 component 是一個有 template 的 directive，而 directive 沒有。我們可以視 component 為 directive 的擴展，擴展了 template 的功能。不過因為 component 在 Angular 中非常重要，和 directive 有不同的意義，因此會將 component 以及 directive 在架構上分開來。</p>
+<p>directives 分為<strong>架構型</strong>和<strong>屬性型</strong>。下面是兩個內建架構型的 directive 範例：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> *<span class="hljs-attr">ngFor</span>=<span class="hljs-string">"let hero of heroes"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">app-hero-detail</span> *<span class="hljs-attr">ngIf</span>=<span class="hljs-string">"selectedHero"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">app-hero-detail</span>></span>
+</code></pre>
+<ul>
+<li><code>*ngFor</code> 會讓 Angular 重覆寫許多的 <code>&#x3C;li></code>，將 heroes 裡的資料跑過一圈。</li>
+<li><code>*ngIf</code> 則會讓 Angular 只有在 selectedHero 的值為 true 時才會顯示 app-hero-detail 元件。</li>
+</ul>
+<p>而屬性型的 directive 則例如像是做雙向繫結的 ngModel，下面的片段程式會將 hero.name 的值塞入 input 的 value 屬性內，並且監聽使用者修改 input 的值的事件，將修改傳回至 hero.name：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> [(<span class="hljs-attr">ngModel</span>)]=<span class="hljs-string">"hero.name"</span>></span>
+</code></pre>
+</section><section aria-labelledby="services-目的明確的功能單位"><h2 id="services-目的明確的功能單位">Services：目的明確的功能單位</h2>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-9.webp" alt="Services 示意" loading="lazy" class="markdown-img"></figure>
+<p>架構圖的左下區是很多的 Service 注入至 Component 裡。幾乎所有功能都可以是 service，但是它應該是<strong>目的明確且狹義</strong>的功能。例如：記錄服務、數據服務、消息服務、稅計算器、應用程序配置等。</p>
+<p>以下是一個範例。在這個例子中可以看到我們可以利用 <code>getHeroes()</code> 和 service 取得 Hero 列表，而 Service 則負責與 Backend 溝通，由 API 取得資料並且回傳給 component：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HeroService</span> {
+  private <span class="hljs-attr">heroes</span>: <span class="hljs-title class_">Hero</span>[] = [];
+
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">
+    private backend: BackendService,
+    private logger: Logger</span>) { }
+
+  <span class="hljs-title function_">getHeroes</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">backend</span>.<span class="hljs-title function_">getAll</span>(<span class="hljs-title class_">Hero</span>).<span class="hljs-title function_">then</span>( <span class="hljs-function">(<span class="hljs-params">heroes: Hero[]</span>) =></span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">logger</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Fetched <span class="hljs-subst">${heroes.length}</span> heroes.`</span>);
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroes</span>.<span class="hljs-title function_">push</span>(...heroes); <span class="hljs-comment">// fill cache</span>
+    });
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroes</span>;
+  }
+}
+</code></pre>
+</section><section aria-labelledby="dependency-injection-元件怎麼取得-service"><h2 id="dependency-injection-元件怎麼取得-service">Dependency Injection：元件怎麼取得 Service？</h2>
+<p>HeroService 依賴注入的過程看起來像這樣：</p>
+<figure class="article-figure"><img src="/images/articles/angular-architecture-overview-10.webp" alt="Injector 注入 Service 的過程" loading="lazy" class="markdown-img"></figure>
+<p>injector 會有一個所有 Service 的集合。如果所需要的 Service 不在這個集合中，那麼 injector 將創建一個 Service 並加進 Service 集合裡。當 component 所需要的 Service 都已經取得後，只要在 constructor 設定該服務在此元件內的名稱，就可以在元件裡自由的使用服務了。</p>
+<p>下面是一個依賴注入的範例：</p>
+<pre><code class="hljs language-js"><span class="hljs-title function_">constructor</span>(<span class="hljs-params">private service: HeroService</span>) { }
+</code></pre>
+<p>例如上面的程式碼就會讓該 component 裡的程式碼可以使用 <code>service.getHeroes()</code> 來取得英雄列表。</p>
+<p>那麼在上圖中，上面要被 injector 選擇的那些 service 是怎麼來的呢？我們可在根模組或者自己所在的模組裡去提供所有需用到的服務，這樣在這個模組內的所有元件都可以使用這個服務，如下：</p>
+<p><code>src/app/app.module.ts</code></p>
+<pre><code class="hljs language-js"><span class="hljs-attr">providers</span>: [
+  <span class="hljs-title class_">BackendService</span>,
+  <span class="hljs-title class_">HeroService</span>,
+  <span class="hljs-title class_">Logger</span>
+],
+</code></pre>
+<p>或者也可以在該元件的 metadata 裡用 providers 來設定這個元件要使用這個服務，如下：</p>
+<pre><code class="hljs language-js">@<span class="hljs-title class_">Component</span>({
+  <span class="hljs-attr">selector</span>:    <span class="hljs-string">'app-hero-list'</span>,
+  <span class="hljs-attr">templateUrl</span>: <span class="hljs-string">'./hero-list.component.html'</span>,
+  <span class="hljs-attr">providers</span>:  [ <span class="hljs-title class_">HeroService</span> ]
+})
+</code></pre>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular 的 Component 必備元素有哪些？</span></h3>
+<p>一個 component 必備的三個元素是 template、metadata 與 component class 本身。template 定義畫面、metadata（<code>@Component</code> 宣告）定義這個元件怎麼被引用與樣式位置，class 則提供屬性與方法供 template 呼叫。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular 的資料綁定有哪幾種類型？</span></h3>
+<p>主要有四種：插值綁定 <code>{{value}}</code>、property binding <code>[property]="value"</code>、event binding <code>(event)="handler()"</code>，以及雙向綁定 <code>[(ngModel)]="value"</code>。前三種是單向的，雙向綁定則同時結合 property 與 event binding。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>NgModule 和 JavaScript modules 有什麼不同？</span></h3>
+<p>NgModule 是 Angular 自己的模組化系統，用 <code>@NgModule</code> decorator 宣告，描述一個模組裡有哪些 components、directives、pipes 與 services；JavaScript modules 則是 ES6 語言層級的 <code>import</code>/<code>export</code> 機制。兩者是完全不同的東西，實務上會同時使用。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼是 Dependency Injection？為什麼 Angular 需要它？</span></h3>
+<p>依賴注入是一種設計模式，讓元件不用自己建立服務，而是由 injector 提供現成的 service 實例。只要在 constructor 參數宣告服務型別（如 <code>constructor(private service: HeroService)</code>），Angular 就會自動注入，並在模組或元件的 <code>providers</code> 中註冊。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Component 和 Directive 有什麼關係？</span></h3>
+<p>本質上 component 就是一個有 template 的 directive，directive 則沒有 template，用來擴展 HTML 元素或簡化 DOM 操作。可以視 component 為 directive 的擴展，但因為 component 在 Angular 中非常重要，架構上會將兩者分開介紹。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10186561" target="_blank" rel="noopener noreferrer">當個好的建築師之 Angular 2 架構</a></li>
+<li><a href="https://angular.io/guide/architecture" target="_blank" rel="noopener noreferrer">Architecture Overview（Angular 官網）</a></li>
+<li><a href="https://kknews.cc/zh-tw/tech/mpybn2.html" target="_blank" rel="noopener noreferrer">Angular2 學習筆記——NgModule</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/angular-master-detail-component">Angular 主從元件開發教學：用 @Input 拆出 HeroDetailComponent</a>：同樣聚焦 angular、frontend，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-pipes-guide">Angular Pipes 完整介紹：內建管道用法與自訂 Pipe 教學</a>：同樣聚焦 angular、typescript，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-template-binding-syntax">Angular Template Binding Syntax 教學：資料繫結的模版語法</a>：同屬「前端開發」主題，可延伸理解相近問題的判斷方式。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2017-12-27，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2017-12-27</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

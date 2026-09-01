@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>開源RAG網頁套件研究：Open WebUI、LibreChat 等 6 款自託管 LLM 介面比較｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 Open WebUI、Hollama、LoLLMs、BionicGPT、LibreChat、LLMStack 等 6 款開源 RAG 網頁套件的核心功能、本地部署與企業級特性，幫你快速選出適合的自託管 LLM WebUI。" />
+<meta name="keywords" content="生成式AI, RAG, Open WebUI, LibreChat, LLM, 開源工具" />
+<link rel="canonical" href="https://claire-chang.com/post/open-source-rag-web-ui-research/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="開源RAG網頁套件研究：Open WebUI、LibreChat 等 6 款自託管 LLM 介面比較｜Claire Chang" />
+<meta property="og:description" content="整理 Open WebUI、Hollama、LoLLMs、BionicGPT、LibreChat、LLMStack 等 6 款開源 RAG 網頁套件的核心功能、本地部署與企業級特性，幫你快速選出適合的自託管 LLM WebUI。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/open-source-rag-web-ui-research/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_open-source-rag-web-ui-research-35a80871.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_open-source-rag-web-ui-research-35a80871.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="開源RAG網頁套件研究：Open WebUI、LibreChat 等 6 款自託管 LLM 介面比較｜Claire Chang" />
+<meta name="twitter:description" content="整理 Open WebUI、Hollama、LoLLMs、BionicGPT、LibreChat、LLMStack 等 6 款開源 RAG 網頁套件的核心功能、本地部署與企業級特性，幫你快速選出適合的自託管 LLM WebUI。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_open-source-rag-web-ui-research-35a80871.jpg" />
+<meta property="article:published_time" content="2024-07-24" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="RAG" />
+<meta property="article:tag" content="Open WebUI" />
+<meta property="article:tag" content="LibreChat" />
+<meta property="article:tag" content="LLM" />
+<meta property="article:tag" content="開源工具" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"開源RAG網頁套件研究：Open WebUI、LibreChat 等 6 款自託管 LLM 介面比較","item":"https://claire-chang.com/post/open-source-rag-web-ui-research/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/open-source-rag-web-ui-research/#article","headline":"開源RAG網頁套件研究：Open WebUI、LibreChat 等 6 款自託管 LLM 介面比較","description":"整理 Open WebUI、Hollama、LoLLMs、BionicGPT、LibreChat、LLMStack 等 6 款開源 RAG 網頁套件的核心功能、本地部署與企業級特性，幫你快速選出適合的自託管 LLM WebUI。","image":"https://claire-chang.com/images/tech/hero_open-source-rag-web-ui-research.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-07-24","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/open-source-rag-web-ui-research/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"RAG, Open WebUI, LibreChat, LLM, 開源工具","about":[{"@type":"Thing","name":"RAG"},{"@type":"Thing","name":"LLM"},{"@type":"Thing","name":"開源工具"}],"mentions":[{"@type":"Thing","name":"Open WebUI"},{"@type":"Thing","name":"LibreChat"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/open-source-rag-web-ui-research/#faq","mainEntity":[{"@type":"Question","name":"什麼是 RAG 網頁套件？","acceptedAnswer":{"@type":"Answer","text":"RAG 網頁套件是提供聊天網頁介面並內建檢索增強生成（Retrieval-Augmented Generation）能力的自託管工具，讓你可以把本地文件餵給 LLM，在對話中直接查詢文件內容，而不需要把資料交給外部雲端服務。"}},{"@type":"Question","name":"自託管 LLM WebUI 可以完全離線運行嗎？","acceptedAnswer":{"@type":"Answer","text":"可以。像 Open WebUI 這類工具設計上就支援完全離線運行，搭配 Ollama 等本地 LLM 運行器，模型推論、文件檢索都在自己的機器上完成，適合對資料隱私有要求的場景。"}},{"@type":"Question","name":"個人使用與企業使用應該怎麼選？","acceptedAnswer":{"@type":"Answer","text":"個人使用建議從 Open WebUI 或 Hollama 開始，安裝簡單、功能足夠；企業導入則優先考慮 BionicGPT 或 LibreChat，它們具備團隊管理、SSO、RBAC、審計日誌與資料隔離等企業級功能。"}},{"@type":"Question","name":"BionicGPT 和一般聊天 WebUI 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"BionicGPT 專注在企業級需求：數據機密性、行級別安全、SIEM 集成、GuardRails 資料治理，以及能把 AI 助手一鍵轉成相容 OpenAI 的 API，適合要正式部署給團隊使用的組織。"}},{"@type":"Question","name":"LLMStack 真的不用寫程式嗎？","acceptedAnswer":{"@type":"Answer","text":"是的。LLMStack 提供無代碼構建器，用拖放方式把多個 LLM 連結成 AI 鏈，並可連接內外部工具、導入各種格式的文件做向量化，構建完成的應用還能透過 HTTP API 或 Slack/Discord 觸發。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_open-source-rag-web-ui-research.webp" alt="筆記型電腦上顯示聊天介面的開源 AI 工具畫面" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-07-24">2024-07-24</time></span><span class="post-meta-pill">RAG · Open WebUI · LibreChat · LLM · 開源工具</span></div></div><h1 class="insights-hero-title">開源RAG網頁套件研究：Open WebUI、LibreChat 等 6 款自託管 LLM 介面比較</h1><p class="insights-hero-description">整理 Open WebUI、Hollama、LoLLMs、BionicGPT、LibreChat、LLMStack 等 6 款開源 RAG 網頁套件的核心功能、本地部署與企業級特性，幫你快速選出適合的自託管 LLM WebUI。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>想把本地 LLM 接上一個好用的網頁介面，並加入 RAG（檢索增強生成）能力，其實有很多開源選項。這篇整理我研究過的 6 款開源 RAG 網頁套件：Open WebUI、Hollama、LoLLMs Webui、BionicGPT、LibreChat 和 LLMStack，從個人用的輕量 WebUI 到企業級的資料隱私方案都有，給正在選型的人一個快速比較的切入點。</p>
+</div><section aria-labelledby="哪一款開源-webui-功能最完整-open-webui-是什麼"><h2 id="哪一款開源-webui-功能最完整-open-webui-是什麼">哪一款開源 WebUI 功能最完整？Open WebUI 是什麼？</h2>
+<p>Github位置: <a href="https://github.com/open-webui/open-webui" target="_blank" rel="noopener noreferrer">https://github.com/open-webui/open-webui</a></p>
+<p>Open WebUI 是一種可擴展、功能豐富且使用者友好的自託管 WebUI，旨在完全離線運行。它支援各種 LLM 運行器，包括 Ollama 和 OpenAI 相容的 API。有關更多資訊，請查看：<a href="https://docs.openwebui.com/" target="_blank" rel="noopener noreferrer">https://docs.openwebui.com/</a></p>
+<figure class="article-figure"><img src="/images/articles/open-source-rag-web-ui-research-1.webp" alt="Open WebUI 介面示範" loading="lazy" class="markdown-img"></figure>
+<p>Open WebUI 的主要功能：</p>
+<ul>
+<li>Ollama/OpenAI API 集成：毫不費力地集成與 OpenAI 相容的 API，以實現與 Ollama 模型一起進行的多功能對話。自定義 OpenAI API URL 以連結到 LMStudio、GroqCloud、Mistral、OpenRouter 等。</li>
+<li>Pipelines、Open WebUI 外掛程式支援：使用 Pipelines 外掛程式框架將自定義邏輯和 Python 庫無縫集成到 Open WebUI 中。啟動您的 Pipelines 實例，將 OpenAI URL 設置為 Pipelines URL，並探索無限的可能性。示例包括函數調用、用於控制訪問的用戶速率限制、使用 Langfuse 等工具進行使用監控、使用 LibreTranslate 進行即時翻譯以實現多語言支援、有毒消息過濾等等。</li>
+<li>網頁，支援 PWA、回應式設計：在台式電腦、筆記型電腦和行動裝置上享受無縫體驗。</li>
+<li>免提語音/視頻通話：通過集成的免提語音和視頻通話功能體驗無縫通信，從而實現更加動態和互動的聊天環境。</li>
+<li>模型生成器：通過 Web UI 輕鬆創建 Ollama 模型。通過 Open WebUI 社區集成，輕鬆創建和添加自定義角色/代理、自定義聊天元素和導入模型。</li>
+<li>本機 Python 函數調用工具：通過工具工作區中的內置代碼編輯器支援來增強您的 LLMs 功能。只需添加純 Python 函數，即可自帶函數（BYOF），從而實現與 LLMs 的無縫集成。</li>
+<li>本地 RAG 整合：通過突破性的檢索增強生成（RAG）支援，深入瞭解聊天交互的未來。此功能將文檔交互無縫集成到您的聊天體驗中。您可以將文件直接載入到聊天中或將檔案添加到文件庫中，在查詢之前使用 <code>#</code> 命令輕鬆訪問它們。</li>
+<li>RAG 的 Web 搜尋：使用 SearXNG、Google PSE、Brave Search、serpstack、serper、Serply、DuckDuckGo 和 TavilySearch 等提供程式執行 Web 搜尋，並將結果直接注入到您的聊天體驗中。</li>
+<li>Web 瀏覽功能：使用後跟 URL 的命令將網站無縫集成到您的聊天體驗中。此功能允許您將 Web 內容直接合併到您的對話中，從而增強交互的豐富性和深度。</li>
+<li>圖像生成集成：使用 AUTOMATIC1111 API 或 ComfyUI（本地）和 OpenAI 的 DALL-E（外部）等選項無縫整合圖像生成功能，通過動態視覺內容豐富您的聊天體驗。</li>
+<li>多種模型對話：毫不費力地同時與各種模型互動，利用它們的獨特優勢獲得最佳回應。通過並行利用一組不同的模型來增強您的體驗。</li>
+<li>基於角色的訪問控制（RBAC）：確保具有受限許可權的安全訪問；只有經過授權的個人才能訪問您的 Ollama，並且為管理員保留了獨佔的模型創建/拉取許可權。</li>
+</ul>
+</section><section aria-labelledby="需要極簡介面跟-ollama-聊天-hollama-適合你嗎"><h2 id="需要極簡介面跟-ollama-聊天-hollama-適合你嗎">需要極簡介面跟 Ollama 聊天？Hollama 適合你嗎？</h2>
+<p>Github位置：<a href="https://github.com/fmaclen/hollama" target="_blank" rel="noopener noreferrer">https://github.com/fmaclen/hollama</a></p>
+<p>線上 DEMO: <a href="https://hollama.fernando.is" target="_blank" rel="noopener noreferrer">https://hollama.fernando.is</a></p>
+<p>用於與 Ollama 伺服器通訊的最小 Web UI。</p>
+<figure class="article-figure"><img src="/images/articles/open-source-rag-web-ui-research-2.webp" alt="Hollama 的 session 畫面" loading="lazy" class="markdown-img"></figure>
+<p>Hollama 的主要功能：</p>
+<ul>
+<li>具有代碼編輯器功能的大型 prompt 輸入框</li>
+<li>Markdown 解析，帶語法高亮顯示</li>
+<li>輕鬆將 Markdown 複製為原始文字</li>
+<li>可自定義的系統提示</li>
+<li>保存瀏覽器上 <code>localStorage</code> 的所有更改</li>
+<li>桌面和移動友好的佈局</li>
+<li>淺色和深色主題</li>
+<li>支援重新產出答案以及流式輸出</li>
+</ul>
+</section><section aria-labelledby="lollms-webui-能做哪些事"><h2 id="lollms-webui-能做哪些事">LoLLMs Webui 能做哪些事？</h2>
+<p>LoLLMs Webui 是一個基於 Web 的用戶介面，用來運行和管理大型語言模型（Large Language Models，簡稱 LLMs）。它提供了一個友好的界面，讓使用者能夠輕鬆地與各種大型語言模型互動，進行文本生成、對話、翻譯等操作。這個 Webui 通常用於研究和開發人員，需要處理自然語言處理任務的專業人員，或任何對語言模型有興趣的人。</p>
+<p>lollms v6 支持文本生成，例如自動寫詩，並允許用戶在「遊樂場」應用中測試不同的文本完成任務。此外，用戶可以進行討論和創建自定義預設以應對特定任務。</p>
+<figure class="article-figure"><img src="/images/articles/open-source-rag-web-ui-research-3.webp" alt="LoLLMs Webui 介面" loading="lazy" class="markdown-img"></figure>
+<p>LoLLMs Webui 的主要功能：</p>
+<ol>
+<li><strong>模型選擇</strong>：允許使用者選擇和切換不同的語言模型。</li>
+<li><strong>文本生成</strong>：根據用戶輸入的提示生成文本。</li>
+<li><strong>對話系統</strong>：進行類似於聊天機器人的對話。</li>
+<li><strong>多語言支持</strong>：支持多種語言的文本生成和翻譯。</li>
+<li><strong>性能監控</strong>：提供模型運行的性能數據和使用統計。</li>
+<li><strong>擴展和自定義</strong>：允許用戶添加自定義模型和擴展功能。</li>
+</ol>
+</section><section aria-labelledby="企業導入自託管-llm-首選-bionicgpt-有什麼企業級功能"><h2 id="企業導入自託管-llm-首選-bionicgpt-有什麼企業級功能">企業導入自託管 LLM 首選？BionicGPT 有什麼企業級功能？</h2>
+<p>Github頁面: <a href="https://github.com/bionic-gpt/bionic-gpt" target="_blank" rel="noopener noreferrer">https://github.com/bionic-gpt/bionic-gpt</a></p>
+<p>BionicGPT 是 ChatGPT 的本地替代品，提供生成式 AI 的優勢，同時保持嚴格的數據機密性。BionicGPT 可以在您的筆記型電腦上運行或擴展到數據中心。</p>
+<figure class="article-figure"><img src="/images/articles/open-source-rag-web-ui-research-4.webp" alt="BionicGPT 的 GitHub Readme 畫面" loading="lazy" class="markdown-img"></figure>
+<p>BionicGPT 的主要功能：</p>
+<ul>
+<li>在幾秒鐘內本地運行 Gen AI：嘗試 Docker Compose 安裝，適合本地運行 AI 和小型試點項目。</li>
+<li>熟悉的聊天體驗：聊天介面借鑒了 ChatGPT，確保使用者友好的體驗。仿生主題完全可定製，提供快速回應的性能，並支援聊天記錄管理。</li>
+<li>AI 助手（檢索增強產生）：用戶可以創建使用自己的數據來增強 AI 的助手，並在團隊中無縫共享。助手是企業級 RAG 管道，支援多種格式文件，並可通過 UI 進行無代碼配置。</li>
+<li>團隊功能：利用團隊設置最大化效果，支持邀請和管理團隊成員。用戶可以在團隊之間切換，保持數據隔離，並使用 SSO 系統配置訪問權限。</li>
+<li>縱深防禦安全：CI/CD 管道運行 SAST 測試，並在 Postgres 中使用行級別安全性。內容安全策略處於最高級別，容器構建和運行具備安全保障，並支持 SIEM 集成和機密管理。</li>
+<li>可觀察性和報告：與 Prometheus 相容的可觀測性 API，使用 Grafana 創建儀錶板，所有問題和回復都記錄在 Postgres 資料庫中。</li>
+<li>令牌使用限制和控制：設置令牌使用限制，保護模型不過載，通過反向代理和角色基於限制確保公平使用。</li>
+<li>將 AI 助手轉變為 API：任何助手都可以轉換為相容 OpenAI 的 API，並支持 API 金鑰管理和限制。</li>
+<li>使用 GuardRails 管理數據治理：將規則應用於批量和流式數據管道，抵禦提示注入攻擊等多種威脅。</li>
+<li>本地或遠端大型語言模型：支援在本地或數據中心運行的開源模型，支持多模型管理和無縫切換。</li>
+<li>基於角色的訪問控制：根據 IAM 系統中的角色授予或限制功能訪問權限，確保數據安全。</li>
+<li>數據集成：通過 Airbyte 集成，批量上傳數據，並支援手動上傳和即時數據捕獲，確保數據不洩露。</li>
+<li>部署到裸機或雲端：使用 Kubernetes 無縫安裝，定期更新和引入新功能以改進 Bionic。</li>
+</ul>
+</section><section aria-labelledby="librechat-有哪些特色功能"><h2 id="librechat-有哪些特色功能">LibreChat 有哪些特色功能？</h2>
+<p>LibreChat 將助理 AI 的未來與 OpenAI 的 ChatGPT 的革命性技術相結合。相容遠端和本地 AI 服務：groq、Ollama、Cohere、Mistral AI、Apple MLX、koboldcpp、OpenRouter、together.ai、Perplexity、ShuttleAI 等。</p>
+<p><strong>RAG API:</strong> <a href="https://github.com/danny-avila/rag_api" target="_blank" rel="noopener noreferrer">github.com/danny-avila/rag_api</a></p>
+<figure class="article-figure"><img src="/images/articles/open-source-rag-web-ui-research-5.webp" alt="LibreChat 介面畫面" loading="lazy" class="markdown-img"></figure>
+<p>LibreChat 的主要功能：</p>
+<ol>
+<li><strong>語音轉文字和文字轉語音功能</strong>：用戶可以透過語音與系統互動，系統能夠識別語音並回應，也能將文字信息轉換為語音輸出。</li>
+<li><strong>共享連結功能</strong>：允許用戶創建訊息的共享連結，並將共享訊息在創建時固定，確保即使後來有新訊息添加，共享的內容也不會變更。更新共享訊息只需重新生成連結。</li>
+<li><strong>電子郵件驗證和密碼重設</strong>：增加註冊和登入的安全性，用戶可以通過驗證電子郵件地址來保護帳戶安全，並支持通過電子郵件重設密碼。</li>
+<li><strong>搜索功能增強</strong>：改進了搜索功能，使用戶更容易在聊天記錄中找到特定的信息。</li>
+<li><strong>初步支持 OpenAI 助理 V2</strong>：包括支持 GPT-4.0，原生圖像視覺支持，以及由 LibreChat 支持的圖像和代碼解釋功能。</li>
+<li><strong>增強的隱私保護</strong>：用戶可以設定只顯示自己創建或沒有作者的助理，這在使用共享 API 密鑰的環境中尤為重要，以防止用戶間的信息洩露。</li>
+<li><strong>LDAP 支持</strong>：支持輕量級目錄訪問協議（LDAP）服務器認證，方便組織管理對 LibreChat 的訪問。</li>
+<li>可以從 LibreChat、ChatGPT、Chatbot UI 導入對話</li>
+</ol>
+</section><section aria-labelledby="不寫程式也能打造-ai-代理-llmstack-怎麼做到的"><h2 id="不寫程式也能打造-ai-代理-llmstack-怎麼做到的">不寫程式也能打造 AI 代理？LLMStack 怎麼做到的？</h2>
+<p>LLMStack 是一個強大的生成式 AI 平台，旨在簡化 AI 應用的構建和部署。無需編寫任何代碼，您就可以構建多種 AI 代理，並將它們連接到您的內部或外部工具，進行網頁搜索或互聯網瀏覽。這是一個專為現代業務需求設計的全面解決方案。</p>
+<figure class="article-figure"><img src="/images/articles/open-source-rag-web-ui-research-6.webp" alt="LLMStack 平台畫面" loading="lazy" class="markdown-img"></figure>
+<p>LLMStack 的主要功能：</p>
+<ul>
+<li><strong>代理</strong>：構建生成式 AI 代理，如 AI SDR、研究分析師、RPA 自動化等，無需編寫任何代碼。將代理連接到您的內部或外部工具，搜索 Web 或與代理一起瀏覽互聯網。</li>
+<li><strong>連結多個模型</strong>：LLMStack 允許您將多個 LLMs 模型連結在一起，以構建複雜的生成式 AI 應用程式。</li>
+<li><strong>對您的數據使用生成式 AI</strong>：將您的數據導入帳戶，並在 AI 鏈中使用它。LLMStack 支援從各種來源（如 gdrive、notion、網站、直接上傳等）導入多種類型的數據（如 CSV、TXT、PDF、DOCX、PPTX 等）。平台將自動進行預處理和向量化，並將數據存儲在開箱即用的向量資料庫中。</li>
+<li><strong>無代碼構建器</strong>：LLMStack 帶有一個無代碼構建器，允許您在沒有任何編碼經驗的情況下構建 AI 鏈。您可以將多個 LLMs 連結在一起，並將它們連接到您的數據和業務流程。</li>
+<li><strong>部署到雲端或本地</strong>：LLMStack 可以部署到雲端或本地。您可以將其部署到您自己的基礎架構中，或使用雲產品 Promptly。</li>
+<li><strong>API 訪問</strong>：使用 LLMStack 構建的應用程式或聊天機器人可以通過 HTTP API 訪問。您還可以從 Slack 或 Discord 觸發您的 AI 鏈。</li>
+<li><strong>多租戶</strong>：LLMStack 是多租戶的。您可以建立多個組織並向其中添加使用者。使用者只能訪問屬於其組織的數據和 AI 鏈。</li>
+</ul>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼是 RAG 網頁套件？</span></h3>
+<p>RAG 網頁套件是提供聊天網頁介面並內建檢索增強生成（Retrieval-Augmented Generation）能力的自託管工具，讓你可以把本地文件餵給 LLM，在對話中直接查詢文件內容，而不需要把資料交給外部雲端服務。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>自託管 LLM WebUI 可以完全離線運行嗎？</span></h3>
+<p>可以。像 Open WebUI 這類工具設計上就支援完全離線運行，搭配 Ollama 等本地 LLM 運行器，模型推論、文件檢索都在自己的機器上完成，適合對資料隱私有要求的場景。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>個人使用與企業使用應該怎麼選？</span></h3>
+<p>個人使用建議從 Open WebUI 或 Hollama 開始，安裝簡單、功能足夠；企業導入則優先考慮 BionicGPT 或 LibreChat，它們具備團隊管理、SSO、RBAC、審計日誌與資料隔離等企業級功能。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>BionicGPT 和一般聊天 WebUI 有什麼不同？</span></h3>
+<p>BionicGPT 專注在企業級需求：數據機密性、行級別安全、SIEM 集成、GuardRails 資料治理，以及能把 AI 助手一鍵轉成相容 OpenAI 的 API，適合要正式部署給團隊使用的組織。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LLMStack 真的不用寫程式嗎？</span></h3>
+<p>是的。LLMStack 提供無代碼構建器，用拖放方式把多個 LLM 連結成 AI 鏈，並可連接內外部工具、導入各種格式的文件做向量化，構建完成的應用還能透過 HTTP API 或 Slack/Discord 觸發。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://github.com/open-webui/open-webui" target="_blank" rel="noopener noreferrer">Open WebUI GitHub</a></li>
+<li><a href="https://docs.openwebui.com/" target="_blank" rel="noopener noreferrer">Open WebUI 官方文件</a></li>
+<li><a href="https://github.com/fmaclen/hollama" target="_blank" rel="noopener noreferrer">Hollama GitHub</a></li>
+<li><a href="https://github.com/bionic-gpt/bionic-gpt" target="_blank" rel="noopener noreferrer">BionicGPT GitHub</a></li>
+<li><a href="https://github.com/danny-avila/rag_api" target="_blank" rel="noopener noreferrer">LibreChat RAG API</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/open-source-rag-web-ui-research">開源 RAG 網頁套件研究：Open WebUI、Hollama、BionicGPT 等 6 款自託管 LLM 介面比較</a>：同樣聚焦 RAG、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/retrieval-augmented-generation">檢索增強生成（RAG）如何讓 LLM 回答更準確</a>：同樣聚焦 RAG、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/raptor-tree-structured-rag-method">RAPTOR 是什麼？基於樹狀結構的 RAG 方法</a>：同樣聚焦 RAG、LLM，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026年8月28日（原文發布於 2024-07-24，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-07-24</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

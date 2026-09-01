@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>連連看演算法介紹：時間複雜度、圖形資料結構與 BFS/DFS 搜尋｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="從連連看遊戲設計角度介紹演算法、時間複雜度、空間複雜度、圖形資料結構，整理 BFS、DFS 如何用在兩點消除、最短路徑、兩次轉彎限制與僵局判斷，並把棋盤儲存、合法路徑與重新洗牌拆成可實作的後端邏輯，適合作為完整的遊戲搜尋演算法入門技術筆記。" />
+<meta name="keywords" content="後端開發, 演算法, 資料結構, 圖論, BFS, DFS" />
+<link rel="canonical" href="https://claire-chang.com/post/link-game-algorithm-introduction/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="連連看演算法介紹：時間複雜度、圖形資料結構與 BFS/DFS 搜尋｜Claire Chang" />
+<meta property="og:description" content="從連連看遊戲設計角度介紹演算法、時間複雜度、空間複雜度、圖形資料結構，整理 BFS、DFS 如何用在兩點消除、最短路徑、兩次轉彎限制與僵局判斷，並把棋盤儲存、合法路徑與重新洗牌拆成可實作的後端邏輯，適合作為完整的遊戲搜尋演算法入門技術筆記。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/link-game-algorithm-introduction/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_link-game-algorithm-introduction-fc404241.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_link-game-algorithm-introduction-fc404241.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="連連看演算法介紹：時間複雜度、圖形資料結構與 BFS/DFS 搜尋｜Claire Chang" />
+<meta name="twitter:description" content="從連連看遊戲設計角度介紹演算法、時間複雜度、空間複雜度、圖形資料結構，整理 BFS、DFS 如何用在兩點消除、最短路徑、兩次轉彎限制與僵局判斷，並把棋盤儲存、合法路徑與重新洗牌拆成可實作的後端邏輯，適合作為完整的遊戲搜尋演算法入門技術筆記。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_link-game-algorithm-introduction-fc404241.jpg" />
+<meta property="article:published_time" content="2018-10-17" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="演算法" />
+<meta property="article:tag" content="資料結構" />
+<meta property="article:tag" content="圖論" />
+<meta property="article:tag" content="BFS" />
+<meta property="article:tag" content="DFS" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"連連看演算法介紹：時間複雜度、圖形資料結構與 BFS/DFS 搜尋","item":"https://claire-chang.com/post/link-game-algorithm-introduction/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/link-game-algorithm-introduction/#article","headline":"連連看演算法介紹：時間複雜度、圖形資料結構與 BFS/DFS 搜尋","description":"從連連看遊戲設計角度介紹演算法、時間複雜度、空間複雜度、圖形資料結構，整理 BFS、DFS 如何用在兩點消除、最短路徑、兩次轉彎限制與僵局判斷，並把棋盤儲存、合法路徑與重新洗牌拆成可實作的後端邏輯，適合作為完整的遊戲搜尋演算法入門技術筆記。","image":"https://claire-chang.com/images/tech/hero_link-game-algorithm-introduction.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-10-17","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/link-game-algorithm-introduction/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"演算法, 資料結構, 圖論, BFS, DFS","about":[{"@type":"Thing","name":"演算法"},{"@type":"Thing","name":"資料結構"},{"@type":"Thing","name":"圖論"}],"mentions":[{"@type":"Thing","name":"BFS"},{"@type":"Thing","name":"DFS"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/link-game-algorithm-introduction/#faq","mainEntity":[{"@type":"Question","name":"演算法和資料結構有什麼關係？","acceptedAnswer":{"@type":"Answer","text":"演算法是解決問題的步驟，資料結構是資料在程式裡的存放方式。連連看若用二維陣列存棋盤，路徑搜尋就能直接利用列與行的索引判斷直線是否可通過。"}},{"@type":"Question","name":"連連看為什麼需要圖形演算法？","acceptedAnswer":{"@type":"Answer","text":"連連看棋盤上的格子可以視為頂點，格子之間可通過的直線可以視為邊。判斷兩個圖塊能否消除，其實就是判斷兩個頂點之間是否存在符合轉彎限制的路徑。"}},{"@type":"Question","name":"連連看消除一定要用 BFS 嗎？","acceptedAnswer":{"@type":"Answer","text":"連連看消除不一定只能用 BFS。BFS 適合拿來思考最短路徑與逐層擴張，但實作時也可以針對直線、一次轉折、兩次轉折分別寫判斷函式。"}},{"@type":"Question","name":"DFS 和 BFS 在連連看裡差在哪？","acceptedAnswer":{"@type":"Answer","text":"DFS 會沿著一條可能路徑一路深入，適合完整遍歷或回溯搜尋。BFS 會先檢查距離較近或層級較淺的候選路徑，比較貼近「先找最少轉彎數」的需求。"}},{"@type":"Question","name":"連連看的僵局要怎麼判斷？","acceptedAnswer":{"@type":"Answer","text":"連連看的僵局可以用全盤搜尋判斷：掃過目前棋盤上的圖塊，找出每一對相同圖形，逐一檢查是否存在合法路徑。若沒有任何一組可以消除，就代表進入僵局，可以重新洗牌打亂盤面。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_link-game-algorithm-introduction.webp" alt="連連看棋盤上的兩點連線路徑，象徵演算法搜尋與消除判斷" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-10-17">2018-10-17</time></span><span class="post-meta-pill">演算法 · 資料結構 · 圖論 · BFS · DFS</span></div></div><h1 class="insights-hero-title">連連看演算法介紹：時間複雜度、圖形資料結構與 BFS/DFS 搜尋</h1><p class="insights-hero-description">從連連看遊戲設計角度介紹演算法、時間複雜度、空間複雜度、圖形資料結構，整理 BFS、DFS 如何用在兩點消除、最短路徑、兩次轉彎限制與僵局判斷，並把棋盤儲存、合法路徑與重新洗牌拆成可實作的後端邏輯，適合作為完整的遊戲搜尋演算法入門技術筆記。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>連連看演算法要解決的問題，是把棋盤上的圖塊轉成電腦可以搜尋的資料結構，再判斷兩個相同圖形能不能在兩次轉彎以內連線消除。這篇筆記從演算法的基本定義開始，整理時間複雜度、空間複雜度、圖形資料結構、深度優先搜尋（Depth-first Search，DFS）與廣度優先搜尋（Breadth-first Search，BFS），最後回到連連看遊戲的路徑設計方向。</p>
+</div><section aria-labelledby="演算法是什麼"><h2 id="演算法是什麼">演算法是什麼？</h2>
+<p>演算法可以先理解成「輸入 + 處理規則 = 輸出」。在遊戲或後端邏輯裡，演算法的價值不只在算出答案，也在於答案是否能用可預期的時間與記憶體算出來。</p>
+<p>演算法的簡單定義：</p>
+<blockquote>
+<p>輸入 + 演算法 = 輸出</p>
+</blockquote>
+<p>一般判斷演算法的好壞，會使用「時間複雜度」和「空間複雜度」評估。時間複雜度關心運算步驟會怎麼隨輸入變大，空間複雜度則關心程式完全執行時需要多少記憶體。</p>
+<p>若想先看更完整的入門說明，可以參考 AppWorks School 的〈<a href="https://medium.com/appworks-school/%E5%88%9D%E5%AD%B8%E8%80%85%E5%AD%B8%E6%BC%94%E7%AE%97%E6%B3%95-%E8%AB%87%E4%BB%80%E9%BA%BC%E6%98%AF%E6%BC%94%E7%AE%97%E6%B3%95%E5%92%8C%E6%99%82%E9%96%93%E8%A4%87%E9%9B%9C%E5%BA%A6-b1f6908e4b80" target="_blank" rel="noopener noreferrer">初學者學演算法：談什麼是演算法和時間複雜度</a>〉。</p>
+</section><section aria-labelledby="時間複雜度怎麼判斷"><h2 id="時間複雜度怎麼判斷">時間複雜度怎麼判斷？</h2>
+<p>時間複雜度不是拿碼表量實際秒數，而是估算演算法會執行多少步驟。輸入資料越大，步驟增加越快的演算法，通常越需要小心效能。</p>
+<p>所謂時間複雜度，指的是執行一段演算法、跑完整個運算邏輯所要花的時間。雖然這個複雜度名為「時間複雜度」，但真正衡量某個演算法時，通常是以步驟次數來看。</p>
+<p>如果一個演算法執行的步驟是固定的，不會因為輸入值而改變，可以記成 <code>O(1)</code>：</p>
+<pre><code class="hljs language-text">function(int n) {
+    print(n);
+}
+</code></pre>
+<p>如果演算法會依照輸入 <code>n</code> 的數量跑 <code>n</code> 次，時間複雜度就是 <code>O(n)</code>：</p>
+<pre><code class="hljs language-text">function(int n) {
+    for (i = 0; i &#x3C; n; i++) {
+        print(i);
+    }
+}
+</code></pre>
+<p>有時候跑的次數不是單純的 <code>n</code>。例如下面這個例子會跑 <code>n * (n - 1) = n^2 - n</code> 次，但 Big O 表示法會保留最高次方，並拿掉係數與較低次方，所以記成 <code>O(n^2)</code>：</p>
+<pre><code class="hljs language-text">function(int n) {
+    for (i = 0; i &#x3C; n; i++) {
+        for (j = 0; j &#x3C; n - 1; j++) {
+            print(i * j);
+        }
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>常見記法</th><th>步驟成長方式</th><th>直覺例子</th></tr></thead><tbody><tr><td><code>O(1)</code></td><td>固定次數</td><td>印出一個值</td></tr><tr><td><code>O(n)</code></td><td>隨輸入線性增加</td><td>掃過一排資料</td></tr><tr><td><code>O(n^2)</code></td><td>雙層迴圈式增加</td><td>比對每一組資料</td></tr></tbody></table></div>
+</section><section aria-labelledby="空間複雜度怎麼判斷"><h2 id="空間複雜度怎麼判斷">空間複雜度怎麼判斷？</h2>
+<p>空間複雜度衡量程式執行時需要的記憶體量。判斷空間複雜度時，要看變數、陣列、遞迴呼叫堆疊是否會隨輸入規模變大。</p>
+<p>一個程式的空間複雜度，是指完整執行程式所需的記憶體量。例如下面這個函式，不管程式跑了幾遍，都不會影響使用的變數數量，所以空間複雜度記做 <code>O(1)</code>：</p>
+<pre><code class="hljs language-text">function(int n) {
+    for (int i = 0; i &#x3C; n; i++) {
+        print(i);
+    }
+}
+</code></pre>
+<p>但下面這個函式會隨著丟進去的數字而影響變數的量，因為 <code>c[n]</code> 需要跟著 <code>n</code> 變大，所以空間複雜度是 <code>O(n)</code>：</p>
+<pre><code class="hljs language-text">function(int n) {
+    int c[n];
+    for (int i = 0; i &#x3C; n; i++) {
+        c[i] = i;
+    }
+}
+</code></pre>
+<p>遞迴的空間複雜度一般與最深的呼叫深度成正比。若遞迴中還有局部變數或參數，所需的空間複雜度會更高。</p>
+</section><section aria-labelledby="哪些問題是經典的演算法例子"><h2 id="哪些問題是經典的演算法例子">哪些問題是經典的演算法例子？</h2>
+<p>旅行推銷員問題與一筆畫問題都是經典演算法議題。兩個問題都能讓人看到：演算法不只是寫程式，而是先把真實問題抽象成資料、限制條件與搜尋目標。</p>
+<p>人工智慧也是演算法的一種。著名的旅行推銷員問題（Travelling Salesman Problem，TSP）假定已知每個城市間的距離，要求在不重複訪問同一個城市的情況下，找出最快速的行程組合。旅行推銷員問題是電腦科學中著名的難解問題。</p>
+<figure class="article-figure"><img src="/images/articles/link-game-algorithm-introduction-01-nearest-neighbor.webp" alt="旅行推銷員問題的 nearest neighbor 路徑示意" loading="lazy" class="markdown-img"></figure>
+<p>Source：Saurabh.harsh，引用自 TechNews〈<a href="https://finance.technews.tw/2017/08/26/digital-revolution-from-the-algorithm-to-the-artificial-wisdom-the-real-power-of-the-computer/" target="_blank" rel="noopener noreferrer">從演算法到人工智慧，淺談計算機的真正威力</a>〉。</p>
+<p><a href="https://zh.wikipedia.org/wiki/%E4%B8%80%E7%AC%94%E7%94%BB%E9%97%AE%E9%A2%98" target="_blank" rel="noopener noreferrer">一筆畫問題</a>也是很經典的演算法議題。一筆畫問題是柯尼斯堡七橋問題經抽象化後的推廣，也是圖遍歷問題的一種。</p>
+<figure class="article-figure"><img src="/images/articles/link-game-algorithm-introduction-02-seven-bridges.webp" alt="柯尼斯堡七橋問題的圖形抽象示意" loading="lazy" class="markdown-img"></figure>
+<p>Source：維基百科〈<a href="https://zh.wikipedia.org/wiki/%E6%9F%AF%E5%B0%BC%E6%96%AF%E5%A0%A1%E4%B8%83%E6%A1%A5%E9%97%AE%E9%A2%98" target="_blank" rel="noopener noreferrer">柯尼斯堡七橋問題</a>〉。</p>
+<p>在柯尼斯堡問題中，如果將橋所連接的地區視為點，將每座橋視為一條邊，問題會變成：對於一個有四個頂點和七條邊的連通圖 <code>G(S, E)</code>，能否找到一條恰好包含所有邊、且沒有重複的路徑？</p>
+<p>歐拉將柯尼斯堡七橋問題推廣成：對於一個給定的圖，怎樣判斷是否存在一條恰好包含所有邊、且沒有重複的路徑？一筆畫問題的解答是：如果一個圖能一筆畫成，奇頂點的數目必須是 <code>0</code> 或 <code>2</code>。</p>
+</section><section aria-labelledby="連連看遊戲需要解決哪些演算法問題"><h2 id="連連看遊戲需要解決哪些演算法問題">連連看遊戲需要解決哪些演算法問題？</h2>
+<p>連連看遊戲至少要處理初始盤面、可消除判斷、最短路徑搜尋與僵局解除。這些問題背後都能轉成圖形資料結構與搜尋演算法。</p>
+<p>《程式之美：微軟技術面試心得》裡給了許多經典演算法題目，例如構造數獨遊戲、一疊蔥油餅的排序、一排石頭的遊戲、俄羅斯方塊遊戲、踩地雷遊戲的機率、連連看遊戲。因為我小時候很喜歡玩 kawai 連連看，所以選擇連連看作為這次鐵人賽的題目。</p>
+<p>若要設計一個連連看遊戲的演算法，可以從這幾個問題開始：</p>
+<ul>
+<li>如何用簡單的電腦模型描述連連看盤面？</li>
+<li>如何判斷兩個圖形能否相消？</li>
+<li>如何求出兩個相同圖形間的最短路徑，也就是轉彎數最少、路徑經過的格子數目最少？</li>
+<li>如何確定目前處於僵局狀態，並設計演算法解除僵局？</li>
+</ul>
+<p>在經典最短路徑問題中，目標通常是求出經過格子數目最少的路徑。連連看還多了一個限制：為了確保轉彎次數最少，需要把最短路徑問題的目標函數改成「轉彎數優先」。雖然目標函數修改了，演算法框架仍然可以保持不變；廣度優先搜尋就是解決經典最短路徑問題的一個思考方向。</p>
+</section><section aria-labelledby="連連看的消除條件怎麼拆成程式邏輯"><h2 id="連連看的消除條件怎麼拆成程式邏輯">連連看的消除條件怎麼拆成程式邏輯？</h2>
+<p>連連看的消除條件可以拆成三件事：圖形相同、路徑沒有被阻擋、轉彎次數少於三次。只要其中一項不成立，兩個圖塊就不能消除。</p>
+<p>根據上面的說明，若想要做一個連連看遊戲，需要先處理下列問題：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>問題</th><th>程式設計方向</th></tr></thead><tbody><tr><td>產生遊戲初始局面</td><td>用電腦資料格式儲存每一格圖形資料</td></tr><tr><td>判斷是否可相消</td><td>使用者選擇兩個圖形後，確認兩個圖形相同，且兩者之間存在少於三個轉彎的路徑</td></tr><tr><td>判斷僵局</td><td>搜尋全部現有圖案，判斷是否還有任何可消除組合</td></tr><tr><td>解除僵局</td><td>當玩家無法再消除任意兩個圖像時，隨機打亂局面</td></tr></tbody></table></div>
+<p>因此，連連看至少會需要用到圖形（Graph）演算法，以及搜尋演算法，包含深度優先搜尋與廣度優先搜尋。</p>
+</section><section aria-labelledby="graph-資料結構可以怎麼表示"><h2 id="graph-資料結構可以怎麼表示">Graph 資料結構可以怎麼表示？</h2>
+<p>圖形資料結構由頂點與邊組成。程式實作時，常見表示法包含相鄰矩陣、相鄰串列與邊集合；選擇哪一種表示法，會影響記憶體使用量與搜尋效率。</p>
+<p>一張圖由數個點（vertex）以及數條邊（edge）構成。點與點之間可以用邊連接，表示這兩點有關聯。若要用程式語言表示一張圖，常見方法如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>表示法</th><th>儲存方式</th><th>優點</th><th>注意事項</th></tr></thead><tbody><tr><td>相鄰矩陣（Adjacency Matrix）</td><td>將節點當作矩陣的行和列索引；若頂點間有連接，<code>array[i][j] = 1</code>，反之為 <code>0</code></td><td>查詢兩點是否相連很直觀</td><td>遇到稀疏圖會浪費空間，頂點數量改變時較不彈性</td></tr><tr><td>相鄰串列（Adjacency List）</td><td>每個點後方串連所有相鄰點</td><td>比相鄰矩陣節省空間</td><td>查詢任兩點是否相連時，需要掃描串列</td></tr><tr><td>邊集合（Edge List）</td><td>用陣列記錄所有點與點之間的邊</td><td>直觀且節省空間</td><td>不適合頻繁查詢相鄰點</td></tr></tbody></table></div>
+<figure class="article-figure"><img src="/images/articles/link-game-algorithm-introduction-03-adjacency-matrix.webp" alt="相鄰矩陣示意圖" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/articles/link-game-algorithm-introduction-04-adjacency-list.webp" alt="相鄰串列示意圖" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/articles/link-game-algorithm-introduction-05-edge-list.webp" alt="邊集合示意圖" loading="lazy" class="markdown-img"></figure>
+<p>上面幾種圖形表示法整理自〈<a href="https://www.csie.ntnu.edu.tw/~u91029/Graph.html#2" target="_blank" rel="noopener noreferrer">演算法筆記：Graph</a>〉。</p>
+</section><section aria-labelledby="搜尋演算法在圖裡扮演什麼角色"><h2 id="搜尋演算法在圖裡扮演什麼角色">搜尋演算法在圖裡扮演什麼角色？</h2>
+<p>搜尋演算法負責決定圖要從哪裡開始讀、依照什麼順序讀、讀到哪裡停止。連連看要找兩個圖塊之間是否存在合法路徑，本質上就是在棋盤圖裡做搜尋。</p>
+<p>圖的遍歷，就是通盤讀取圖的資訊：決定好從哪裡開始讀，依照什麼順序讀，要讀到哪裡為止。流程設計得好，在解決圖的問題時，還可以一邊讀取圖的資訊，一邊順手解決問題。</p>
+<p>利用最簡單的資料結構 <code>queue</code> 和 <code>stack</code>，就能製造不同的遍歷順序，得到兩種遍歷演算法：</p>
+<ul>
+<li>Breadth-first Search（廣度優先搜尋，BFS）：通常用 <code>queue</code> 處理，先走訪同一層的節點，再往下一層。</li>
+<li>Depth-first Search（深度優先搜尋，DFS）：通常用 <code>stack</code> 或遞迴處理，沿著一條路盡量往深處走，再回溯找其他路。</li>
+</ul>
+</section><section aria-labelledby="深度優先搜尋-dfs-怎麼運作"><h2 id="深度優先搜尋-dfs-怎麼運作">深度優先搜尋 DFS 怎麼運作？</h2>
+<p>深度優先搜尋會從起點一路往尚未拜訪的節點深入，直到不能再前進才回溯。深度優先搜尋適合遍歷整張圖，也常用遞迴或堆疊實作。</p>
+<p>深度優先搜尋法是一種用來遍尋樹（tree）或圖（graph）的演算法。搜尋從樹的根，或圖中的某一點開始，先探尋邊上尚未搜尋的節點，並盡可能往深處搜尋；直到該節點的所有邊上節點都已探尋，就回溯到前一個節點，重複探尋尚未搜尋的節點，直到找到目的節點或遍尋全部節點。</p>
+<p>深度優先搜尋屬於盲目搜索（uninformed search），常用堆疊（Stack）處理，也常以遞迴呈現。假設起始點為 <code>A</code>，且每一節點由左至右搜尋下個節點，結果會是：<code>A, B, E, F, D, C, G</code>。</p>
+<figure class="article-figure"><img src="/images/articles/link-game-algorithm-introduction-06-dfs.webp" alt="DFS 深度優先搜尋走訪順序示意" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="廣度優先搜尋-bfs-怎麼運作"><h2 id="廣度優先搜尋-bfs-怎麼運作">廣度優先搜尋 BFS 怎麼運作？</h2>
+<p>廣度優先搜尋會先走訪起點周圍所有相鄰節點，再一層一層往外擴張。當每條邊權重相同時，廣度優先搜尋常用來找最短路徑。</p>
+<p>廣度優先搜尋法是一種圖形（graph）搜索演算法。搜尋從圖的某一節點開始，接著走訪此節點所有相鄰且未拜訪過的節點，再由走訪過的節點繼續進行先廣後深的搜尋。以樹（tree）來說，就是先把同一深度（level）的節點走訪完，再繼續向下一個深度搜尋，直到找到目的節點或遍尋全部節點。</p>
+<p>廣度優先搜尋屬於盲目搜索，常用佇列（Queue）處理，也常以迴圈呈現。假設起始點為 <code>A</code>，且每一節點由左至右搜尋下個節點，結果會是：<code>A, B, C, D, E, F, G</code>。</p>
+<figure class="article-figure"><img src="/images/articles/link-game-algorithm-introduction-07-bfs.webp" alt="BFS 廣度優先搜尋走訪順序示意" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="連連看棋盤要怎麼儲存"><h2 id="連連看棋盤要怎麼儲存">連連看棋盤要怎麼儲存？</h2>
+<p>連連看棋盤可以用二維陣列儲存，每個索引位置代表一個格子。這種表示法容易判斷兩個點是否在同一列或同一行，也方便後續搜尋可連線路徑。</p>
+<p>以連連看來說，因為棋盤裡任意兩個同一排或同一列的點都可以做直線相連，若用二維陣列直接儲存棋盤內容，就可以用該陣列第一個索引值或第二個索引值是否相同，判斷兩點是否在同一條線上。</p>
+<p>若圖形為 <code>10 x 10</code> 的棋盤，陣列可以設計如下：</p>
+<figure class="article-figure"><img src="/images/articles/link-game-algorithm-introduction-08-board-array.webp" alt="10 x 10 連連看棋盤的二維陣列表示" loading="lazy" class="markdown-img"></figure>
+<p>使用這樣的陣列儲存方式時，要注意上圖的 <code>x</code>、<code>y</code> 軸位置，和一般做遊戲時的 <code>x</code>、<code>y</code> 軸方向剛好相反。計算點與點之間的位置時，如果座標方向沒先統一，很容易在路徑判斷時出錯。</p>
+<p>路徑則可以使用圖演算法中的關聯矩陣概念記錄。例如 <code>[[0, 0], [-1, 0], [-1, 8], [0, 8]]</code> 表示一條由多個轉折點構成的路徑。在連連看遊戲裡，每一個合法路徑都應由四個或以內的點組成，且每兩個相鄰點之間必定要有相同的 <code>x</code> 或相同的 <code>y</code>。</p>
+</section><section aria-labelledby="連連看路線搜尋為什麼適合用-bfs-思考"><h2 id="連連看路線搜尋為什麼適合用-bfs-思考">連連看路線搜尋為什麼適合用 BFS 思考？</h2>
+<p>連連看路線搜尋適合用 BFS 思考，因為 BFS 會由近到遠擴張路徑。只要把搜尋成本改成「轉彎數優先，再看格子數」，就能貼近連連看的消除規則。</p>
+<p>在一般最短路徑搜尋中，常會以廣度優先搜尋為主。連連看的特殊限制是：連線的線條不可大於兩個轉彎處。兩個轉彎處代表連接兩個圖塊的線，最多只能由三條直線組成。</p>
+<figure class="article-figure"><img src="/images/articles/link-game-algorithm-introduction-09-link-path.webp" alt="連連看兩點連線與轉彎限制示意" loading="lazy" class="markdown-img"></figure>
+<p>可以把直線當成搜尋單元，先搜尋 <code>A</code> 點上、下、左、右最遠能到達的點，再對比 <code>B</code> 點上、下、左、右最遠可以到達的點，判斷是否有可能形成一條連線。若有可能，再繼續尋找中間是否存在可能的第二條線。</p>
+<p>這裡的實作判斷可以濃縮成三層：</p>
+<ol>
+<li>先判斷 <code>A</code> 到 <code>B</code> 是否能直線相連。</li>
+<li>若不能直線相連，判斷是否存在一個轉折點，讓 <code>A</code> 到轉折點、轉折點到 <code>B</code> 都可直線通過。</li>
+<li>若一次轉折也不成立，再判斷是否存在兩個轉折點，讓路徑由三段直線組成。</li>
+</ol>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>演算法和資料結構有什麼關係？</span></h3>
+<p>演算法是解決問題的步驟，資料結構是資料在程式裡的存放方式。連連看若用二維陣列存棋盤，路徑搜尋就能直接利用列與行的索引判斷直線是否可通過。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>連連看為什麼需要圖形演算法？</span></h3>
+<p>連連看棋盤上的格子可以視為頂點，格子之間可通過的直線可以視為邊。判斷兩個圖塊能否消除，其實就是判斷兩個頂點之間是否存在符合轉彎限制的路徑。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>連連看消除一定要用 BFS 嗎？</span></h3>
+<p>連連看消除不一定只能用 BFS。BFS 適合拿來思考最短路徑與逐層擴張，但實作時也可以針對直線、一次轉折、兩次轉折分別寫判斷函式。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>DFS 和 BFS 在連連看裡差在哪？</span></h3>
+<p>DFS 會沿著一條可能路徑一路深入，適合完整遍歷或回溯搜尋。BFS 會先檢查距離較近或層級較淺的候選路徑，比較貼近「先找最少轉彎數」的需求。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>連連看的僵局要怎麼判斷？</span></h3>
+<p>連連看的僵局可以用全盤搜尋判斷：掃過目前棋盤上的圖塊，找出每一對相同圖形，逐一檢查是否存在合法路徑。若沒有任何一組可以消除，就代表進入僵局，可以重新洗牌打亂盤面。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>AppWorks School，〈<a href="https://medium.com/appworks-school/%E5%88%9D%E5%AD%B8%E8%80%85%E5%AD%B8%E6%BC%94%E7%AE%97%E6%B3%95-%E8%AB%87%E4%BB%80%E9%BA%BC%E6%98%AF%E6%BC%94%E7%AE%97%E6%B3%95%E5%92%8C%E6%99%82%E9%96%93%E8%A4%87%E9%9B%9C%E5%BA%A6-b1f6908e4b80" target="_blank" rel="noopener noreferrer">初學者學演算法：談什麼是演算法和時間複雜度</a>〉。</li>
+<li>維基百科，〈<a href="https://zh.wikipedia.org/wiki/%E4%B8%80%E7%AC%94%E7%94%BB%E9%97%AE%E9%A2%98" target="_blank" rel="noopener noreferrer">一筆畫問題</a>〉。</li>
+<li>維基百科，〈<a href="https://zh.wikipedia.org/wiki/%E6%9F%AF%E5%B0%BC%E6%96%AF%E5%A0%A1%E4%B8%83%E6%A1%A5%E9%97%AE%E9%A2%98" target="_blank" rel="noopener noreferrer">柯尼斯堡七橋問題</a>〉。</li>
+<li>TechNews，〈<a href="https://finance.technews.tw/2017/08/26/digital-revolution-from-the-algorithm-to-the-artificial-wisdom-the-real-power-of-the-computer/" target="_blank" rel="noopener noreferrer">從演算法到人工智慧，淺談計算機的真正威力</a>〉。</li>
+<li>Noob's Space，〈<a href="https://noob.tw/data-structure/" target="_blank" rel="noopener noreferrer">資料結構筆記：演算法、時間複雜度、空間複雜度</a>〉。</li>
+<li>演算法筆記，〈<a href="https://www.csie.ntnu.edu.tw/~u91029/Graph.html#2" target="_blank" rel="noopener noreferrer">Graph</a>〉。</li>
+<li>Simon Says，〈<a href="https://simonsays-tw.com/web/DFS-BFS/DepthFirstSearch.html" target="_blank" rel="noopener noreferrer">深度優先搜尋</a>〉。</li>
+<li>Simon Says，〈<a href="https://simonsays-tw.com/web/DFS-BFS/BreadthFirstSearch.html" target="_blank" rel="noopener noreferrer">廣度優先搜尋法</a>〉。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/leetcode-maximum-value-k-coins-from-piles">LeetCode 2218 Maximum Value of K Coins From Piles 解題筆記</a>：同樣聚焦 演算法，可接著比較不同情境的做法。</li>
+<li><a href="/post/leetcode-coin-change">LeetCode Coin Change：用動態規劃找出最少硬幣組合</a>：同樣聚焦 演算法，可接著比較不同情境的做法。</li>
+<li><a href="/post/leetcode-coin-change-2">LeetCode Coin Change 2：動態規劃求硬幣組合數完整解析</a>：同樣聚焦 演算法，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2018-10-17（本文保留 2018 年連連看演算法筆記內容，並補上 GEO 結構、FAQ 與站內延伸閱讀。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-10-17</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

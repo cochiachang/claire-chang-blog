@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>初探OSMF的Plug-in開發｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理OSMF官方Plugin開發指南重點：PluginInfo建立方式、靜態與動態載入、三種Plug-in類型的差異" />
+<meta name="keywords" content="前端開發, ActionScript, OSMF, Flash, 影音播放器" />
+<link rel="canonical" href="https://claire-chang.com/post/osmf-plugin-development-guide/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="初探OSMF的Plug-in開發｜Claire Chang" />
+<meta property="og:description" content="整理OSMF官方Plugin開發指南重點：PluginInfo建立方式、靜態與動態載入、三種Plug-in類型的差異" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/osmf-plugin-development-guide/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_osmf-plugin-development-guide-6a0ecab2.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_osmf-plugin-development-guide-6a0ecab2.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="初探OSMF的Plug-in開發｜Claire Chang" />
+<meta name="twitter:description" content="整理OSMF官方Plugin開發指南重點：PluginInfo建立方式、靜態與動態載入、三種Plug-in類型的差異" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_osmf-plugin-development-guide-6a0ecab2.jpg" />
+<meta property="article:published_time" content="2013-03-05" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="ActionScript" />
+<meta property="article:tag" content="OSMF" />
+<meta property="article:tag" content="Flash" />
+<meta property="article:tag" content="影音播放器" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"初探OSMF的Plug-in開發","item":"https://claire-chang.com/post/osmf-plugin-development-guide/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/osmf-plugin-development-guide/#article","headline":"初探OSMF的Plug-in開發","description":"整理OSMF官方Plugin開發指南重點：PluginInfo建立方式、靜態與動態載入、三種Plug-in類型的差異","image":"https://claire-chang.com/images/tech/hero_osmf-plugin-development-guide.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2013-03-05","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/osmf-plugin-development-guide/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"ActionScript, OSMF, Flash, 影音播放器","about":[{"@type":"Thing","name":"影音播放器"}],"mentions":[{"@type":"Thing","name":"ActionScript"},{"@type":"Thing","name":"OSMF"},{"@type":"Thing","name":"Flash"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/osmf-plugin-development-guide/#faq","mainEntity":[{"@type":"Question","name":"Q：Plugin要用靜態載入還是動態載入？","acceptedAnswer":{"@type":"Answer","text":"看更新頻率決定：如果Plugin跟主程式一起發版就用靜態載入，寫法簡單、沒有額外的網路請求；如果Plugin需要獨立更新（例如廣告SDK、第三方追蹤模組），就用動態載入的swf檔方式，換取彈性但要自己處理載入失敗的容錯。"}},{"@type":"Question","name":"Q：什麼時候該用Proxy Plug-in而不是直接改MediaElement？","acceptedAnswer":{"@type":"Answer","text":"當你不想動到既有MediaElement或播放器主程式的程式碼，只想在外面加一層行為修改（例如關掉某個功能、加一層權限檢查）時，Proxy Plug-in是比較乾淨的做法，因為呼叫端完全不需要知道背後多了代理層。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_osmf-plugin-development-guide.webp" alt="紅色播放鍵圖示，象徵OSMF影音播放框架的Plug-in架構" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2013-03-05">2013-03-05</time></span><span class="post-meta-pill">ActionScript · OSMF · Flash · 影音播放器</span></div></div><h1 class="insights-hero-title">初探OSMF的Plug-in開發</h1><p class="insights-hero-description">整理OSMF官方Plugin開發指南重點：PluginInfo建立方式、靜態與動態載入、三種Plug-in類型的差異</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>這篇是我讀完OSMF官方Plugin開發指南（官方PDF已下架）之後整理的心得。OSMF（Open Source Media Framework）是Adobe釋出的Flash影音播放框架，Plug-in機制讓開發者可以在不改動播放器核心程式的前提下，擴充或替換播放行為。</p>
+</div><section aria-labelledby="建立一個osmf-plug-in要做哪些事"><h2 id="建立一個osmf-plug-in要做哪些事">建立一個OSMF Plug-in要做哪些事？</h2>
+<p>建立OSMF Plug-in分兩步：先建一個<code>PluginInfo</code>物件並提供讓框架取得它的存取點，再建立實際的Plugin類別去繼承<code>PluginInfo</code>並註冊要處理的媒體項目。</p>
+<p>第一步，寫一個getter讓OSMF能拿到<code>PluginInfo</code>物件：</p>
+<pre><code class="hljs language-java"><span class="hljs-keyword">public</span> function get <span class="hljs-title function_">pluginInfo</span><span class="hljs-params">()</span>:PluginInfo
+{
+	<span class="hljs-keyword">return</span> _pluginInfo;
+}
+</code></pre>
+<p>第二步，建立一個類別繼承<code>PluginInfo</code>，在建構子裡組出一個<code>Vector.&#x3C;MediaFactoryItem></code>，塞進要註冊的項目後呼叫<code>super(items)</code>：</p>
+<pre><code class="hljs language-java"><span class="hljs-keyword">public</span> function <span class="hljs-title function_">HelloWorldPluginInfo</span><span class="hljs-params">()</span>
+{
+	<span class="hljs-keyword">var</span> items:Vector.&#x3C;MediaFactoryItem> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vector</span>.&#x3C;MediaFactoryItem>();
+	<span class="hljs-comment">// Create the MediaFactoryItem and add to our list of items.</span>
+	<span class="hljs-keyword">var</span> item:MediaFactoryItem = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MediaFactoryItem</span>
+	(<span class="hljs-string">"com.example.helloworld"</span>, canHandleResourceFunction, mediaElementCreationFunction);
+	items.push(item);
+	<span class="hljs-comment">// Pass the list to the base class.</span>
+	<span class="hljs-built_in">super</span>(items);
+}
+</code></pre>
+</section><section aria-labelledby="mediafactoryitem的三個參數各自負責什麼"><h2 id="mediafactoryitem的三個參數各自負責什麼">MediaFactoryItem的三個參數各自負責什麼？</h2>
+<p><code>MediaFactoryItem</code>建構子吃三個參數，分別負責識別、判斷、建立這三件事：</p>
+<ol>
+<li><strong>id字串</strong>——這個MediaFactoryItem的識別名稱，例如上面範例的<code>"com.example.helloworld"</code>。</li>
+<li><strong>判斷函數</strong>——當有資源被指定給<code>MediaFactory.createMediaElement</code>時會被呼叫，傳入該資源，回傳布林值決定要不要接著呼叫第三個參數的函數：
+<pre><code class="hljs language-java"><span class="hljs-keyword">private</span> function <span class="hljs-title function_">canHandleResourceFunction</span><span class="hljs-params">(resource:MediaResourceBase)</span>:Boolean
+</code></pre>
+</li>
+<li><strong>建立函數</strong>——當判斷函數回傳<code>true</code>時才會被呼叫，不吃參數，直接回傳一個<code>MediaElement</code>：
+<pre><code class="hljs language-java"><span class="hljs-keyword">private</span> function <span class="hljs-title function_">mediaElementCreationFunction</span><span class="hljs-params">()</span>:MediaElement
+</code></pre>
+</li>
+</ol>
+</section><section aria-labelledby="靜態載入和動態載入plug-in有什麼差別"><h2 id="靜態載入和動態載入plug-in有什麼差別">靜態載入和動態載入Plug-in有什麼差別？</h2>
+<p>差別在Plugin程式碼是編譯期就打包進主程式，還是執行期才從外部下載進來——這決定了更新Plugin需不需要重新發布整個播放器。</p>
+<p>靜態建立是把Plugin用<code>includes</code>加進原始碼或編進lib庫裡直接呼叫：</p>
+<pre><code class="hljs language-java">mediaFactory.loadPlugin(<span class="hljs-keyword">new</span> <span class="hljs-title class_">PluginInfoResource</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">HelloWorldPluginInfo</span>()));
+</code></pre>
+<p>動態建立則是把Plugin編成獨立的swf檔，執行期用URL去載入：</p>
+<pre><code class="hljs language-java">mediaFactory.loadPlugin(<span class="hljs-keyword">new</span> <span class="hljs-title class_">URLResource</span>(<span class="hljs-string">"http://example.com/HelloWorldPlugin.swf"</span>));
+</code></pre>
+<p>動態載入的好處是Plugin可以獨立更新、不用重新發布整個播放器；缺點是多一次網路請求，也要自己處理載入失敗的情況。OSMF下載包裡的sample資料夾有不少現成的Plugin範例，兩種載入方式都能在裡面找到對照著讀。</p>
+</section><section aria-labelledby="osmf的三種plug-in類型怎麼選"><h2 id="osmf的三種plug-in類型怎麼選">OSMF的三種Plug-in類型怎麼選？</h2>
+<p>OSMF把Plugin分成Standard、Proxy、Reference三種，差異在於它們跟<code>MediaElement</code>之間的關係——是直接產生一個、包一層代理、還是單純參考既有的。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>類型</th><th>用途</th><th>常見場景</th></tr></thead><tbody><tr><td>Standard Plug-in</td><td>建立並回傳單一<code>MediaElement</code>，需指定<code>MediaFactoryItemType.STANDARD</code></td><td>支援新的媒體格式或來源，分客製化與OSMF內建兩種子類型</td></tr><tr><td>Proxy Plug-in</td><td>回傳空的<code>ProxyElement</code>（或其子類），代理既有的<code>MediaElement</code>，需指定<code>MediaFactoryItemType.PROXY</code></td><td>在不動播放器程式碼的前提下改變既有MediaElement的行為，例如關閉某個VideoElement的Seeking功能</td></tr><tr><td>Reference Plug-in</td><td>取得一或多個<code>MediaElement</code>的參考進行操作，通常也會自己產生一個MediaElement</td><td>把SWF疊加層蓋在VideoElement上並控制它，或監聽VideoElement送出追蹤報告</td></tr></tbody></table></div>
+<p><strong>Standard Plug-in</strong>是最基本的類型：它負責建立與回傳單一<code>MediaElement</code>，有客製化與OSMF內建兩種子類型。</p>
+<p><strong>Proxy Plug-in</strong>回傳一個空的<code>ProxyElement</code>，讓MediaFactory在真正的<code>MediaElement</code>回傳之前把它注入到這個ProxyElement裡。因為<code>ProxyElement</code>跟<code>MediaElement</code>介面相同，播放器程式可以像操作一般MediaElement一樣跟它互動，完全不用知道背後多了一層代理——所有方法與屬性呼叫預設都會轉發給被代理的MediaElement，除非Proxy Plug-in主動想修改行為。</p>
+<p><strong>Reference Plug-in</strong>取得一或多個MediaElement的參考來操作，多數情況下也會產生自己的MediaElement。典型用法是把SWF疊加層蓋在VideoElement上、取得該參考後用SWF去控制VideoElement；或是封裝某種追蹤邏輯，監聽VideoElement並回報數據。建立Reference Plug-in時必須提供<code>PluginInfo.mediaElementCreationNotificationFunction</code>方法，每次MediaFactory建立MediaElement都會呼叫它。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Q：Plugin要用靜態載入還是動態載入？</span></h3>
+<p>看更新頻率決定：如果Plugin跟主程式一起發版就用靜態載入，寫法簡單、沒有額外的網路請求；如果Plugin需要獨立更新（例如廣告SDK、第三方追蹤模組），就用動態載入的swf檔方式，換取彈性但要自己處理載入失敗的容錯。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Q：什麼時候該用Proxy Plug-in而不是直接改MediaElement？</span></h3>
+<p>當你不想動到既有MediaElement或播放器主程式的程式碼，只想在外面加一層行為修改（例如關掉某個功能、加一層權限檢查）時，Proxy Plug-in是比較乾淨的做法，因為呼叫端完全不需要知道背後多了代理層。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ol>
+<li>Adobe Systems，<code>PluginInfo</code> API Reference（AS3 OSMF），存取日期：2026-08-27。<a href="https://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/org/osmf/media/PluginInfo.html" target="_blank" rel="noopener noreferrer">https://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/org/osmf/media/PluginInfo.html</a></li>
+<li>OSMF 2.0 Release 官方封存（含 Plug-in Developer's Guide、ASDocs），存取日期：2026-08-27。<a href="https://sourceforge.net/projects/osmf.adobe/files/OSMF%202.0%20Release%20(final%20source,%20ASDocs,%20pdf%20guides%20and%20release%20notes)/" target="_blank" rel="noopener noreferrer">https://sourceforge.net/projects/osmf.adobe/files/OSMF%202.0%20Release%20(final%20source,%20ASDocs,%20pdf%20guides%20and%20release%20notes)/</a></li>
+</ol>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/osmf-related-resources">OSMF相關資源整理</a>：同樣聚焦 OSMF、Flash，可接著比較不同情境的做法。</li>
+<li><a href="/post/osmf-related-resources">OSMF 學習資源整理：入門教學、官方文件與簡報清單</a>：同樣聚焦 OSMF、Flash，可接著比較不同情境的做法。</li>
+<li><a href="/post/osmf-introduction">OSMF 簡介：用開源框架建置多媒體播放器</a>：同樣聚焦 OSMF，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2013-03-05</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

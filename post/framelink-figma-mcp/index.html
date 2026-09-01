@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Framelink Figma MCP 完整教學：讓 AI 直接讀取 Figma 設計稿生成程式碼｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Framelink Figma MCP 伺服器能讓 Cursor 等 AI 程式碼工具直接存取 Figma 設計檔，把設計元數據轉譯成程式碼。本文整理功能介紹、Figma Access Token 申請、MCP 設定範例（macOS/Linux 與 Windows）、實際操作流程，以及設計檔命名與提示詞的最佳實踐。" />
+<meta name="keywords" content="生成式AI, Figma MCP, MCP, Cursor, AI 程式設計, Figma" />
+<link rel="canonical" href="https://claire-chang.com/post/framelink-figma-mcp/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Framelink Figma MCP 完整教學：讓 AI 直接讀取 Figma 設計稿生成程式碼｜Claire Chang" />
+<meta property="og:description" content="Framelink Figma MCP 伺服器能讓 Cursor 等 AI 程式碼工具直接存取 Figma 設計檔，把設計元數據轉譯成程式碼。本文整理功能介紹、Figma Access Token 申請、MCP 設定範例（macOS/Linux 與 Windows）、實際操作流程，以及設計檔命名與提示詞的最佳實踐。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/framelink-figma-mcp/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_framelink-figma-mcp-2cac56f5.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_framelink-figma-mcp-2cac56f5.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Framelink Figma MCP 完整教學：讓 AI 直接讀取 Figma 設計稿生成程式碼｜Claire Chang" />
+<meta name="twitter:description" content="Framelink Figma MCP 伺服器能讓 Cursor 等 AI 程式碼工具直接存取 Figma 設計檔，把設計元數據轉譯成程式碼。本文整理功能介紹、Figma Access Token 申請、MCP 設定範例（macOS/Linux 與 Windows）、實際操作流程，以及設計檔命名與提示詞的最佳實踐。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_framelink-figma-mcp-2cac56f5.jpg" />
+<meta property="article:published_time" content="2025-07-24" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Figma MCP" />
+<meta property="article:tag" content="MCP" />
+<meta property="article:tag" content="Cursor" />
+<meta property="article:tag" content="AI 程式設計" />
+<meta property="article:tag" content="Figma" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Framelink Figma MCP 完整教學：讓 AI 直接讀取 Figma 設計稿生成程式碼","item":"https://claire-chang.com/post/framelink-figma-mcp/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/framelink-figma-mcp/#article","headline":"Framelink Figma MCP 完整教學：讓 AI 直接讀取 Figma 設計稿生成程式碼","description":"Framelink Figma MCP 伺服器能讓 Cursor 等 AI 程式碼工具直接存取 Figma 設計檔，把設計元數據轉譯成程式碼。本文整理功能介紹、Figma Access Token 申請、MCP 設定範例（macOS/Linux 與 Windows）、實際操作流程，以及設計檔命名與提示詞的最佳實踐。","image":"https://claire-chang.com/images/tech/hero_framelink-figma-mcp.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2025-07-24","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/framelink-figma-mcp/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"Figma MCP, MCP, Cursor, AI 程式設計, Figma","about":[{"@type":"Thing","name":"AI 程式設計"}],"mentions":[{"@type":"Thing","name":"Figma MCP"},{"@type":"Thing","name":"MCP"},{"@type":"Thing","name":"Cursor"},{"@type":"Thing","name":"Figma"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/framelink-figma-mcp/#faq","mainEntity":[{"@type":"Question","name":"Framelink Figma MCP 是什麼？","acceptedAnswer":{"@type":"Answer","text":"它是一個開源（MIT 授權）的 MCP 伺服器，專為 Cursor 等 AI 程式碼工具設計，讓 AI 代理直接透過 Figma API 讀取設計檔的簡化元數據，而不是靠截圖猜測版面，藉此生成更準確的程式碼。"}},{"@type":"Question","name":"為什麼用 MCP 讀 Figma 比貼截圖更準？","acceptedAnswer":{"@type":"Answer","text":"截圖會丟失圖層結構、間距與元件命名等語意資訊；MCP 取得的是結構化的設計元數據（並自動壓縮約 90%），AI 能直接對應到版面配置與樣式，生成結果的準確度與關聯性都更好。"}},{"@type":"Question","name":"Figma Access Token 需要開哪些權限？","acceptedAnswer":{"@type":"Answer","text":"至少要啟用「File content」與「Dev resources」的讀取權限，MCP 伺服器才有辦法透過 Figma API 讀取設計檔內容。權杖產生後請妥善保存。"}},{"@type":"Question","name":"一次該實作多大的設計範圍？","acceptedAnswer":{"@type":"Answer","text":"建議一次只貼一個 Frame 或 Group 的連結，而不是整份 Figma 檔案。即使 MCP 已自動壓縮約 90% 的資料量，範圍越小，AI 越不容易被無關細節干擾，輸出品質越穩定。"}},{"@type":"Question","name":"設計檔要怎麼準備才能讓 AI 生成更好的程式碼？","acceptedAnswer":{"@type":"Answer","text":"優先使用 Auto Layout 排版（MCP 對浮動與絕對定位支援有限），並為 Frame 與 Group 取有意義的名稱，避免 `group-456` 這類預設命名。Figma 內建的 AI 命名工具可以加速這件事。"}},{"@type":"Question","name":"提示詞有哪些提升品質的技巧？","acceptedAnswer":{"@type":"Answer","text":"明確說明技術堆疊（React、Vue、Tailwind CSS 等）、引用既有元件檔案作為風格參考，並在 Figma 連結之外補上功能與互動的文字描述。上下文越具體，生成結果越貼近需求。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_framelink-figma-mcp.webp" alt="筆電螢幕上的 UI 按鈕樣式設計特寫，象徵從 Figma 設計稿生成程式碼" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2025-07-24">2025-07-24</time></span><span class="post-meta-pill">Figma MCP · MCP · Cursor · AI 程式設計 · Figma</span></div></div><h1 class="insights-hero-title">Framelink Figma MCP 完整教學：讓 AI 直接讀取 Figma 設計稿生成程式碼</h1><p class="insights-hero-description">Framelink Figma MCP 伺服器能讓 Cursor 等 AI 程式碼工具直接存取 Figma 設計檔，把設計元數據轉譯成程式碼。本文整理功能介紹、Figma Access Token 申請、MCP 設定範例（macOS/Linux 與 Windows）、實際操作流程，以及設計檔命名與提示詞的最佳實踐。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Framelink Figma MCP 伺服器是一個專為 AI 程式碼工具（例如 Cursor）設計的橋接工具，它讓代理（agent）能夠直接存取 Figma 設計檔案，並將其轉譯為程式碼。比起單純貼上螢幕截圖給 AI 看，這條路徑更準確、更高效。這篇筆記整理我在設定與實際使用 Framelink Figma MCP 時的完整流程與最佳實踐。</p>
+</div><section aria-labelledby="什麼是-framelink-figma-mcp-為什麼比貼截圖更好"><h2 id="什麼是-framelink-figma-mcp-為什麼比貼截圖更好">什麼是 Framelink Figma MCP？為什麼比貼截圖更好？</h2>
+<p>透過 MCP（Model Context Protocol）伺服器，Cursor 能從 Figma 取得簡化後的設計元數據，例如版面配置與樣式，並生成對應的程式碼。這不僅大幅提升 AI 模型的準確度，也提升了回應的關聯性與品質——截圖會丟失圖層結構、間距數值與元件命名，而 MCP 拿到的是結構化的設計資料。</p>
+<p>它的主要特色包括：</p>
+<ul>
+<li><strong>一次性完成設計實作</strong>：可直接在任意框架中生成可用 UI 元件。</li>
+<li><strong>無需手動轉譯設計</strong>：省去工程師對設計稿「讀圖寫碼」的時間。</li>
+<li><strong>多語言支援</strong>：支援 English、韓文、日文、簡體中文等語系。</li>
+<li><strong>MIT 授權</strong>：自由使用與修改。</li>
+<li><strong>社群支援</strong>：可加入 Discord 討論、追蹤 Twitter。</li>
+</ul>
+</section><section aria-labelledby="如何取得-figma-存取權杖-access-token"><h2 id="如何取得-figma-存取權杖-access-token">如何取得 Figma 存取權杖（Access Token）？</h2>
+<p>在開始使用 MCP 前，需要先產生一組 Figma API 權杖：</p>
+<ol>
+<li>開啟 <a href="https://www.figma.com/" target="_blank" rel="noopener noreferrer">Figma 首頁</a>，點選左上角個人頭像，選擇「Settings」。</li>
+<li>點選「Security」分頁。</li>
+<li>捲動到「Personal access tokens」區塊，點選「Generate new token」。</li>
+<li>為此權杖命名，<strong>並確保啟用「File content」與「Dev resources」的讀取權限</strong>。</li>
+<li>點選「Generate token」，將出現的 token 儲存下來。</li>
+</ol>
+<p>詳細教學可參考 <a href="https://www.figma.com/developers/api#access-tokens" target="_blank" rel="noopener noreferrer">Figma Access Token 說明</a>。</p>
+</section><section aria-labelledby="如何在-ide-中設定-framelink-figma-mcp"><h2 id="如何在-ide-中設定-framelink-figma-mcp">如何在 IDE 中設定 Framelink Figma MCP？</h2>
+<p>大多數現代 IDE 都支援以 JSON 格式設定 MCP 伺服器。以下提供適用於 macOS/Linux 與 Windows 的設定範例。</p>
+<p>macOS / Linux：</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"mcpServers"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"Framelink Figma MCP"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"command"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"npx"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"args"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-string">"-y"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"figma-developer-mcp"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"--figma-api-key=YOUR-KEY"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"--stdio"</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>Windows：</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"mcpServers"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"Framelink Figma MCP"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"command"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"cmd"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"args"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-string">"/c"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"npx"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"-y"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"figma-developer-mcp"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"--figma-api-key=YOUR-KEY"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"--stdio"</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>記得將 <code>"YOUR-KEY"</code> 替換為剛才產生的 Figma API token。</p>
+</section><section aria-labelledby="如何用-figma-連結實作第一個設計"><h2 id="如何用-figma-連結實作第一個設計">如何用 Figma 連結實作第一個設計？</h2>
+<h3>複製 Figma 框架或群組的連結</h3>
+<p>由於 Figma 設計檔案的資料量龐大，MCP 伺服器會自動壓縮資料，減少約 90%。即便如此，建議一次實作「一個區塊」，確保輸出品質最佳。</p>
+<p>在 Figma 中：</p>
+<ol>
+<li>右鍵點選要實作的 Frame 或 Group。</li>
+<li>選擇「Copy/Paste as → Copy link to selection」。</li>
+</ol>
+<h3>在 IDE 中貼上連結並發送請求</h3>
+<p>將上述連結貼到 IDE 的對話介面中（如 Cursor 的 Agent 模式），輸入簡單請求：</p>
+<pre><code class="hljs language-text">實作這個 Figma frame。
+</code></pre>
+<p>系統會呼叫 MCP 的 <code>get_figma_data</code> 函式，取得設計資料並自動產出對應的程式碼。</p>
+<blockquote>
+<p>補充上下文說明（如：使用目的、期望技術堆疊等）有助於提升輸出品質。</p>
+</blockquote>
+</section><section aria-labelledby="figma-設計檔要怎麼整理-ai-才看得懂"><h2 id="figma-設計檔要怎麼整理-ai-才看得懂">Figma 設計檔要怎麼整理，AI 才看得懂？</h2>
+<p>雖然 MCP 伺服器能大幅簡化從設計到程式碼的轉換流程，但 Figma 的檔案結構與命名方式仍會直接影響 AI 的理解效果。建議遵循以下設計原則：</p>
+<ul>
+<li><strong>使用 Auto Layout（自動排版）</strong>：MCP 尚未完全支援浮動（floating）或絕對定位（absolute positioning）元素，使用 Auto Layout 可讓排版更清楚易讀。</li>
+<li><strong>為 Frame 與 Group 命名</strong>：有意義的命名可幫助 AI 建立語意上的對應，避免出現一堆 <code>div-123</code> 或 <code>group-456</code> 的結構。</li>
+<li><strong>專業小技巧</strong>：Figma 內建 AI 命名工具可快速為元件自動命名，請善加利用！</li>
+</ul>
+</section><section aria-labelledby="提示詞要怎麼寫-生成品質才會好"><h2 id="提示詞要怎麼寫-生成品質才會好">提示詞要怎麼寫，生成品質才會好？</h2>
+<p>即使 MCP 幫你處理了設計資料的轉換，仍需提供足夠的上下文，才能讓 AI 模型生成最符合需求的程式碼。編輯器端的提示最佳化方式：</p>
+<ul>
+<li><strong>說明你在使用什麼技術堆疊</strong>：讓 AI 知道是否要使用 Tailwind CSS、React、Vue 等。</li>
+<li><strong>引用程式碼中的關鍵檔案</strong>：例如「請依照 <code>Button.tsx</code> 的風格來實作這個 UI」，有助於維持一致性。</li>
+<li><strong>除了貼 Figma 連結，也加上文字描述</strong>：描述這個區塊的功能、使用者互動方式、期望行為等，可提升準確性。</li>
+<li><strong>管理上下文大小</strong>：與其貼整份 Figma 檔案，<strong>建議只貼 Frame 或 Group 的連結</strong>，避免 AI 過載無關資訊。</li>
+</ul>
+</section><section aria-labelledby="最佳實踐總結"><h2 id="最佳實踐總結">最佳實踐總結</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>類別</th><th>建議做法</th><th>原因</th></tr></thead><tbody><tr><td>Figma 設計</td><td>使用 Auto Layout</td><td>讓排版結構有邏輯、便於解析</td></tr><tr><td>Figma 元件命名</td><td>命名清楚，語意明確</td><td>提升生成程式碼的可讀性與一致性</td></tr><tr><td>AI 提示語境</td><td>指定技術環境</td><td>讓 AI 採用正確框架與語法</td></tr><tr><td>程式碼參考</td><td>引用現有元件</td><td>保持風格一致</td></tr><tr><td>資訊控制</td><td>精簡設計範圍</td><td>避免模型被多餘細節干擾</td></tr></tbody></table></div>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Framelink Figma MCP 是什麼？</span></h3>
+<p>它是一個開源（MIT 授權）的 MCP 伺服器，專為 Cursor 等 AI 程式碼工具設計，讓 AI 代理直接透過 Figma API 讀取設計檔的簡化元數據，而不是靠截圖猜測版面，藉此生成更準確的程式碼。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼用 MCP 讀 Figma 比貼截圖更準？</span></h3>
+<p>截圖會丟失圖層結構、間距與元件命名等語意資訊；MCP 取得的是結構化的設計元數據（並自動壓縮約 90%），AI 能直接對應到版面配置與樣式，生成結果的準確度與關聯性都更好。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Figma Access Token 需要開哪些權限？</span></h3>
+<p>至少要啟用「File content」與「Dev resources」的讀取權限，MCP 伺服器才有辦法透過 Figma API 讀取設計檔內容。權杖產生後請妥善保存。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>一次該實作多大的設計範圍？</span></h3>
+<p>建議一次只貼一個 Frame 或 Group 的連結，而不是整份 Figma 檔案。即使 MCP 已自動壓縮約 90% 的資料量，範圍越小，AI 越不容易被無關細節干擾，輸出品質越穩定。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>設計檔要怎麼準備才能讓 AI 生成更好的程式碼？</span></h3>
+<p>優先使用 Auto Layout 排版（MCP 對浮動與絕對定位支援有限），並為 Frame 與 Group 取有意義的名稱，避免 <code>group-456</code> 這類預設命名。Figma 內建的 AI 命名工具可以加速這件事。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>提示詞有哪些提升品質的技巧？</span></h3>
+<p>明確說明技術堆疊（React、Vue、Tailwind CSS 等）、引用既有元件檔案作為風格參考，並在 Figma 連結之外補上功能與互動的文字描述。上下文越具體，生成結果越貼近需求。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://github.com/GLips/Figma-Context-MCP" target="_blank" rel="noopener noreferrer">Framelink Figma MCP Server（GitHub）</a></li>
+<li><a href="https://www.figma.com/developers/api#access-tokens" target="_blank" rel="noopener noreferrer">Figma Access Token 官方說明</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/claude-code-mcp-setup">Claude Code 使用 MCP 功能設定教學</a>：同樣聚焦 MCP，可接著比較不同情境的做法。</li>
+<li><a href="/post/claude-code-mcp-scopes">Claude Code MCP scope 如何選擇 Local、Project 與 User</a>：同樣聚焦 MCP，可接著比較不同情境的做法。</li>
+<li><a href="/post/simple-mcp-server-implementation">自己撰寫一個簡單的 MCP：Model Context Protocol 入門實作</a>：同樣聚焦 MCP，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2025-07-24，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2025-07-24</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>網路概念模型：OSI 七層與 TCP/IP 四層完整對照｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="網路概念模型介紹：從 OSI 七層與 TCP/IP 四層模型入手，說明各層負責的協定（HTTP、TCP、UDP、IP 等）與資料如何層層封裝傳遞到對端再拆解，建立排查網路連線與除錯問題時的分層思考框架，是後端與維運工程的基礎知識。" />
+<meta name="keywords" content="後端開發, OSI 模型, TCP/IP, 網路基礎, HTTP, 網路層" />
+<link rel="canonical" href="https://claire-chang.com/post/network-concept-model/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="網路概念模型：OSI 七層與 TCP/IP 四層完整對照｜Claire Chang" />
+<meta property="og:description" content="網路概念模型介紹：從 OSI 七層與 TCP/IP 四層模型入手，說明各層負責的協定（HTTP、TCP、UDP、IP 等）與資料如何層層封裝傳遞到對端再拆解，建立排查網路連線與除錯問題時的分層思考框架，是後端與維運工程的基礎知識。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/network-concept-model/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_network-concept-model-c2cda0f1.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_network-concept-model-c2cda0f1.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="網路概念模型：OSI 七層與 TCP/IP 四層完整對照｜Claire Chang" />
+<meta name="twitter:description" content="網路概念模型介紹：從 OSI 七層與 TCP/IP 四層模型入手，說明各層負責的協定（HTTP、TCP、UDP、IP 等）與資料如何層層封裝傳遞到對端再拆解，建立排查網路連線與除錯問題時的分層思考框架，是後端與維運工程的基礎知識。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_network-concept-model-c2cda0f1.jpg" />
+<meta property="article:published_time" content="2022-08-01" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="OSI 模型" />
+<meta property="article:tag" content="TCP/IP" />
+<meta property="article:tag" content="網路基礎" />
+<meta property="article:tag" content="HTTP" />
+<meta property="article:tag" content="網路層" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"網路概念模型：OSI 七層與 TCP/IP 四層完整對照","item":"https://claire-chang.com/post/network-concept-model/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/network-concept-model/#article","headline":"網路概念模型：OSI 七層與 TCP/IP 四層完整對照","description":"網路概念模型介紹：從 OSI 七層與 TCP/IP 四層模型入手，說明各層負責的協定（HTTP、TCP、UDP、IP 等）與資料如何層層封裝傳遞到對端再拆解，建立排查網路連線與除錯問題時的分層思考框架，是後端與維運工程的基礎知識。","image":"https://claire-chang.com/images/tech/hero_network-concept-model.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2022-08-01","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/network-concept-model/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"OSI 模型, TCP/IP, 網路基礎, HTTP, 網路層","about":[{"@type":"Thing","name":"OSI 模型"},{"@type":"Thing","name":"網路基礎"},{"@type":"Thing","name":"網路層"}],"mentions":[{"@type":"Thing","name":"TCP/IP"},{"@type":"Thing","name":"HTTP"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/network-concept-model/#faq","mainEntity":[{"@type":"Question","name":"OSI 模型和 TCP/IP 模型有什麼差別？","acceptedAnswer":{"@type":"Answer","text":"OSI 模型把通訊分成七層，是理想化、通用的參考框架；TCP/IP 模型則分成四層，更簡單，也更直接反映實際網際網路協議的設計與實現。兩者層級大致對應，但 TCP/IP 應用層涵蓋了 OSI 的第 4 到 7 層。"}},{"@type":"Question","name":"OSI 的會議層和表示層在現代協議中還存在嗎？","acceptedAnswer":{"@type":"Answer","text":"功能仍然存在，但位置不固定。例如 HTTP 會在應用層管理會話的建立與中止，編碼、壓縮、加密也可能在應用層或跨層實現。OSI 是理想化框架，現代協議不一定逐層遵循。"}},{"@type":"Question","name":"IPv4 和 IPv6 都運作在哪一層？","acceptedAnswer":{"@type":"Answer","text":"兩者都在網路層（OSI 第三層）運作，負責資料包的封裝、路由與傳輸。主要差異在地址長度與格式：IPv6 的地址空間遠大於 IPv4，能為更多設備分配唯一地址。"}},{"@type":"Question","name":"為什麼說 PPP 是資料連接層的協議？","acceptedAnswer":{"@type":"Answer","text":"因為 PPP 的核心功能在於建立、管理和終止連接，進行錯誤檢測和修正，以及將資料封裝為幀——這些都是資料連接層的職責。即使它支援上層網路協定（如 IP），仍屬於第二層。"}},{"@type":"Question","name":"一個 HTTP 請求的封包傳送流程是什麼？","acceptedAnswer":{"@type":"Answer","text":"瀏覽器建立 HTTP 請求後，由 TCP 分段、IP 負責路由，資料連接層封裝成幀並經由 NIC 發送，穿越本地網路與網際網路到達伺服器；伺服器逐層解封裝後處理請求，再沿相同路徑反向回傳，由瀏覽器解析渲染。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_network-concept-model.webp" alt="OSI 七層模型與 TCP/IP 四層模型對照示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2022-08-01">2022-08-01</time></span><span class="post-meta-pill">OSI 模型 · TCP/IP · 網路基礎 · HTTP · 網路層</span></div></div><h1 class="insights-hero-title">網路概念模型：OSI 七層與 TCP/IP 四層完整對照</h1><p class="insights-hero-description">網路概念模型介紹：從 OSI 七層與 TCP/IP 四層模型入手，說明各層負責的協定（HTTP、TCP、UDP、IP 等）與資料如何層層封裝傳遞到對端再拆解，建立排查網路連線與除錯問題時的分層思考框架，是後端與維運工程的基礎知識。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>網際網路協議模型（網路模型）和開放系統互連（OSI）模型都是描述電腦網路通訊的框架，它們把通訊過程分解為不同的層級，每個層級都有特定的功能和協議。這篇文章整理 OSI 七層各自負責什麼、TCP/IP 四層與 OSI 的對照關係，以及一個 HTTP 請求從用戶端到伺服器的完整封包傳送流程。</p>
+</div><section aria-labelledby="osi-七層模型是什麼"><h2 id="osi-七層模型是什麼">OSI 七層模型是什麼？</h2>
+<p>OSI 七層模型把網路通訊分成七個層級，每層的職責如下：</p>
+<figure class="article-figure"><img src="/images/articles/network-concept-model-1.webp" alt="OSI 七層模型分層示意圖" loading="lazy" class="markdown-img"></figure>
+<ol>
+<li><strong>實體層（Physical Layer）</strong>：負責管理電腦通信設備和網路媒介之間的互動，處理二進制位元組在通訊媒介（如電纜、無線電波）上的傳輸。</li>
+<li><strong>資料連接層（Data Link Layer）</strong>：主要負責將網路層傳來的資料封裝成幀（Frame），在兩個網路節點之間傳輸這些幀，並處理錯誤的檢測和修正（詳見下方整理）。</li>
+<li><strong>網路層（Network Layer）</strong>：負責將網路地址（如 IP 地址）分配給裝置，並決定資料的傳輸路徑，把資料從來源位置轉移到目的地。</li>
+<li><strong>傳輸層（Transport Layer）</strong>：提供端到端（source-to-destination）的通訊服務。TCP 和 UDP 都在這一層，負責將資料切割為小的資料包，並確保資料包能在目的地正確重組。</li>
+<li><strong>會議層（Session Layer）</strong>：負責在資料傳輸過程中建立、管理和終止會話。</li>
+<li><strong>表示層（Presentation Layer）</strong>：對資料進行編碼和轉換，確保資料能被接收端系統理解，也可以實現資料的壓縮和加密。</li>
+<li><strong>應用層（Application Layer）</strong>：最接近用戶的一層，負責處理特定的應用程式細節，包括 HTTP、SMTP、FTP、DNS 等協議。</li>
+</ol>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>資料連接層有哪些知名協議？</span></h3>
+<ul>
+<li><strong>乙太網路（Ethernet）</strong>：最廣泛使用的網路技術之一，使用 MAC 地址來識別網路中的節點，並提供在本地網路範圍內傳輸資料的方法。</li>
+<li><strong>點對點協議（PPP）</strong>：被認為是在第二層運作，因為它的核心功能在於建立、管理和終止連接、進行錯誤檢測和修正，以及將資料封裝為幀。PPP 主要用於在兩個直接連接的網路節點之間建立網路層連接（例如透過撥號網路、數據機或專用線路直接連接的系統），定義了如何建立、配置和測試連接的方法。即使 PPP 提供對上層網路協定（如 IP）的支援，其核心功能仍屬於資料連接層。</li>
+<li><strong>無線區域網路（Wi-Fi）</strong>：為無線網路提供傳輸資料的方法。</li>
+<li><strong>媒體存取控制（MAC）</strong>：控制多個裝置如何在共享媒體（例如乙太網）上存取資料。「碰撞」指半雙工通信系統中多個設備同時發送資料造成干擾；MAC 協議（例如乙太網中的 CSMA/CD）協調設備的傳輸以減少碰撞。</li>
+<li><strong>邏輯鏈路控制（LLC）</strong>：為網路應用程式提供統一介面，讓它們無需關心下層的具體硬體細節（如乙太網路、無線區域網路等）。</li>
+</ul>
+<h3>網路層協議：IPv4 與 IPv6</h3>
+<p>IPv4 和 IPv6 都在 OSI 模型的第三層（網路層）運作，處理資料包的路由和傳輸、網路連接管理等操作。網路層協議會對資料包進行封裝並確定其在網路中的路徑——需要經過哪些路由器才能到達目標。兩者的主要差異在於地址的長度和格式：IPv6 提供的地址空間遠大於 IPv4，能對更多設備進行唯一地址的分配。</p>
+<h3>會議層和 HTTP 的關係</h3>
+<p>在 HTTP/1.1 及其更高版本中，是由應用層（即 HTTP 協議）來管理和控制會話的建立和中止。這是因為 OSI 模型是在許多現代協議之前設計的，而且 OSI 模型是一種理想化的框架，並非所有實際網路協議都會完全符合它。理解 OSI 模型可以幫助我們理解網路通信的一般原理，但研究具體協議時，也要考慮它們可能有自己的設計和行為方式。</p>
+<h3>表示層的編碼與轉換操作</h3>
+<ul>
+<li><strong>字符編碼轉換</strong>：例如從 ASCII 轉換為 UTF-8，或從一種語言編碼轉換為另一種（如 Unicode）。</li>
+<li><strong>資料格式轉換</strong>：例如將 XML 轉換為 JSON、CSV 轉換為 EXCEL；資料的結構和語義保持不變，但格式和表示方式可能變化。</li>
+<li><strong>資料壓縮和解壓縮</strong>：例如使用 ZIP、RAR、GZIP 等壓縮演算法，減少資料體積、提高傳輸效率。</li>
+<li><strong>資料加密和解密</strong>：例如使用 AES、RSA 等加密演算法，確保資料在網路傳輸中的安全性。</li>
+</ul>
+</section><section aria-labelledby="osi-模型在實務上怎麼應用"><h2 id="osi-模型在實務上怎麼應用">OSI 模型在實務上怎麼應用？</h2>
+<p>在實際的網路協議和應用中，<strong>一個應用功能可能會跨越多個層次進行操作</strong>。例如一個 Web 應用可能在應用層處理字符編碼和資料格式轉換，並在傳輸層或網路層實現資料加密。這就是為什麼我們說 OSI 模型的層次劃分並不是絕對的。</p>
+<p>儘管層次劃分在實際應用中可能不絕對，OSI 模型仍然是理解和描述網路系統的重要工具——它的主要目的是提供一種通用的、理論性的框架，讓我們更好地理解網路系統中不同部分的工作原理和互動方式。</p>
+<p>具體來說，可以把七層分成兩大塊來理解：</p>
+<ul>
+<li><strong>第 1 層（實體層）到第 3 層（網路層）</strong>：主要處理硬體與網路傳輸相關的問題，包括資料的實際傳輸、網路交換、路由等，通常由硬體設備（網路卡、交換機、路由器等）和相關驅動程式來實現。</li>
+<li><strong>第 4 層（傳輸層）到第 7 層（應用層）</strong>：主要關心如何在傳輸網路上建立有效的通訊，包括確保資料可靠地從源點到達目的地（如 TCP）、提供給應用程式使用的通訊服務（如 HTTP）、資料的格式轉換和加密等，這些層的實現主要在軟體中完成。</li>
+</ul>
+<p>因此，功能豐富的軟體或應用程式可能會跨越多層提供服務。例如一個網頁伺服器需要處理從 TCP 連接的管理（傳輸層）到 HTTP 請求的解析（應用層），甚至包括加密（表示層）。由於這些層都在軟體中實現，開發者有更大的靈活性來實現跨層功能。而硬體層（1–3 層）的功能則較固定，因為它們直接與網路傳輸的物理現象打交道，通常不會在應用程式中操作或修改，而是由硬體設備和驅動程式來管理。</p>
+</section><section aria-labelledby="網際網路協議模型-tcp-ip-四層-是什麼"><h2 id="網際網路協議模型-tcp-ip-四層-是什麼">網際網路協議模型（TCP/IP 四層）是什麼？</h2>
+<p>網際網路協議模型（Internet Protocol Suite）通常被稱為 TCP/IP 模型，它是一個分層的網路架構，包括四個層次：</p>
+<ol>
+<li><strong>應用層（Application Layer）</strong>：處理與應用程式的通信和資料傳輸，例如 HTTP、FTP、SMTP 等。</li>
+<li><strong>傳輸層（Transport Layer）</strong>：主要負責端對端的通信，例如 TCP 和 UDP。</li>
+<li><strong>網際網路層（Internet Layer）</strong>：主要負責封包的路由和傳遞，例如 IP 協議。</li>
+<li><strong>網路存取層（Network Access Layer）</strong>：處理與實體網路的通信，包括資料鏈路層和物理層的功能，例如以太網和 Wi-Fi。</li>
+</ol>
+<p>這個模型與 OSI 模型有些相似，但更簡單，並且更直接反映了實際的網際網路協議的設計和實現。</p>
+<figure class="article-figure"><img src="/images/articles/network-concept-model-2.webp" alt="TCP/IP 四層模型示意圖" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="兩個模型的層級怎麼對應"><h2 id="兩個模型的層級怎麼對應">兩個模型的層級怎麼對應？</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>TCP/IP 模型</th><th>對應 OSI 模型</th></tr></thead><tbody><tr><td>應用層（Application Layer）</td><td>第 4 層（傳輸層）到第 7 層（應用層）</td></tr><tr><td>傳輸層（Transport Layer）</td><td>第 4 層（傳輸層）</td></tr><tr><td>網際網路層（Internet Layer）</td><td>第 3 層（網路層）</td></tr><tr><td>網路存取層（Network Access Layer）</td><td>第 1 層（物理層）和第 2 層（資料連接層）</td></tr></tbody></table></div>
+<p>這些對應關係是大致的，因為兩個模型在設計和目的上有差異：TCP/IP 模型更側重於實際的網際網路協議結構，而 OSI 模型則是一個理想化的、更通用的網路架構參考模型。</p>
+</section><section aria-labelledby="一個封包是怎麼從用戶送到伺服器的"><h2 id="一個封包是怎麼從用戶送到伺服器的">一個封包是怎麼從用戶送到伺服器的？</h2>
+<p>以一個用戶從他的電腦訪問某個網站為例，描繪整個過程：</p>
+<ol>
+<li><strong>應用層開始動作</strong>：用戶打開瀏覽器，輸入想訪問的網站的 URL。瀏覽器解析 URL 並建立一個 HTTP 請求。</li>
+<li><strong>傳輸層協同作戰</strong>：作業系統的 TCP 協議堆疊接收到 HTTP 請求後，將其分割成合適大小的段，每一個段包含了目的地的 IP 地址和連接埠號。</li>
+<li><strong>網際網路層導航</strong>：這些段被打包成資料包，並由 IP 協議處理。IP 協議會查找目的地的路由，並將資料包指向該方向。</li>
+<li><strong>資料連接層的傳輸</strong>：資料包到達資料連接層，被封裝成幀，包括 MAC 地址等資訊，透過網路介面卡（NIC）發送出去。</li>
+<li><strong>穿越本地網路</strong>：封包穿越用戶的本地網路，可能經過交換機和路由器等設備。</li>
+<li><strong>經過網際網路</strong>：封包繼續透過各種路由器和交換機，穿越網際網路，可能經歷多次轉發和路由選擇。</li>
+<li><strong>到達目的地伺服器</strong>：最終，封包到達目標伺服器的網路，經過其防火牆、負載平衡器等，到達伺服器的 NIC。</li>
+<li><strong>資料包的解封裝</strong>：封包在目標伺服器的 OS 中被解封裝，首先在資料連接層解讀 MAC 地址，然後在網際網路層解析 IP，再到傳輸層解析 TCP 資訊，最終到達應用層。</li>
+<li><strong>伺服器處理請求</strong>：伺服器的網路應用（例如 Web 伺服器軟體）處理 HTTP 請求，讀取相應的網頁內容。</li>
+<li><strong>回應的路程</strong>：伺服器建立 HTTP 回應，沿著相同的路徑但方向相反，將資料回傳到用戶的電腦。</li>
+<li><strong>在用戶端解析回應</strong>：用戶的作業系統和瀏覽器解析回應，渲染網頁，最終展示給用戶。</li>
+</ol>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>OSI 模型和 TCP/IP 模型有什麼差別？</span></h3>
+<p>OSI 模型把通訊分成七層，是理想化、通用的參考框架；TCP/IP 模型則分成四層，更簡單，也更直接反映實際網際網路協議的設計與實現。兩者層級大致對應，但 TCP/IP 應用層涵蓋了 OSI 的第 4 到 7 層。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>OSI 的會議層和表示層在現代協議中還存在嗎？</span></h3>
+<p>功能仍然存在，但位置不固定。例如 HTTP 會在應用層管理會話的建立與中止，編碼、壓縮、加密也可能在應用層或跨層實現。OSI 是理想化框架，現代協議不一定逐層遵循。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>IPv4 和 IPv6 都運作在哪一層？</span></h3>
+<p>兩者都在網路層（OSI 第三層）運作，負責資料包的封裝、路由與傳輸。主要差異在地址長度與格式：IPv6 的地址空間遠大於 IPv4，能為更多設備分配唯一地址。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼說 PPP 是資料連接層的協議？</span></h3>
+<p>因為 PPP 的核心功能在於建立、管理和終止連接，進行錯誤檢測和修正，以及將資料封裝為幀——這些都是資料連接層的職責。即使它支援上層網路協定（如 IP），仍屬於第二層。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>一個 HTTP 請求的封包傳送流程是什麼？</span></h3>
+<p>瀏覽器建立 HTTP 請求後，由 TCP 分段、IP 負責路由，資料連接層封裝成幀並經由 NIC 發送，穿越本地網路與網際網路到達伺服器；伺服器逐層解封裝後處理請求，再沿相同路徑反向回傳，由瀏覽器解析渲染。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>本文整理自個人實作筆記。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/network-concept-model">網路概念模型介紹：OSI 七層與 TCP/IP 四層差異、應用與封包傳送流程</a>：同樣聚焦 OSI 模型、TCP/IP，可接著比較不同情境的做法。</li>
+<li><a href="/post/tcp-connection-stages-time-wait">TCP連線階段與TIME_WAIT意義</a>：同樣聚焦 網路基礎，可接著比較不同情境的做法。</li>
+<li><a href="/post/streaming-network-concepts">串流的網路概念：FFmpeg、WebRTC 與 SRT 在 OSI 模型中的定位</a>：同屬「後端開發」主題，可延伸理解相近問題的判斷方式。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2022-08-01，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2022-08-01</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

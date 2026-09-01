@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>docker pull failed to register layer 錯誤怎麼解？｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 docker pull 出現 failed to register layer、directory not empty 時的原因與處理順序，保留 Docker 1.10 與 Docker Machine 0.6 的錯誤範例，並補上清理 image、重啟 Docker 引擎與刪除工作目錄前的注意事項。" />
+<meta name="keywords" content="DevOps, Docker, docker pull, Docker layer, DevOps" />
+<link rel="canonical" href="https://claire-chang.com/post/docker-pull-failed-to-register-layer/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="docker pull failed to register layer 錯誤怎麼解？｜Claire Chang" />
+<meta property="og:description" content="整理 docker pull 出現 failed to register layer、directory not empty 時的原因與處理順序，保留 Docker 1.10 與 Docker Machine 0.6 的錯誤範例，並補上清理 image、重啟 Docker 引擎與刪除工作目錄前的注意事項。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/docker-pull-failed-to-register-layer/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_docker-pull-failed-to-register-layer-d21533b4.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_docker-pull-failed-to-register-layer-d21533b4.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="docker pull failed to register layer 錯誤怎麼解？｜Claire Chang" />
+<meta name="twitter:description" content="整理 docker pull 出現 failed to register layer、directory not empty 時的原因與處理順序，保留 Docker 1.10 與 Docker Machine 0.6 的錯誤範例，並補上清理 image、重啟 Docker 引擎與刪除工作目錄前的注意事項。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_docker-pull-failed-to-register-layer-d21533b4.jpg" />
+<meta property="article:published_time" content="2020-11-26" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Docker" />
+<meta property="article:tag" content="docker pull" />
+<meta property="article:tag" content="Docker layer" />
+<meta property="article:tag" content="DevOps" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"docker pull failed to register layer 錯誤怎麼解？","item":"https://claire-chang.com/post/docker-pull-failed-to-register-layer/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/docker-pull-failed-to-register-layer/#article","headline":"docker pull failed to register layer 錯誤怎麼解？","description":"整理 docker pull 出現 failed to register layer、directory not empty 時的原因與處理順序，保留 Docker 1.10 與 Docker Machine 0.6 的錯誤範例，並補上清理 image、重啟 Docker 引擎與刪除工作目錄前的注意事項。","image":"https://claire-chang.com/images/tech/hero_docker-pull-failed-to-register-layer.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2020-11-26","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/docker-pull-failed-to-register-layer/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"DevOps","keywords":"Docker, docker pull, Docker layer, DevOps","mentions":[{"@type":"Thing","name":"Docker"},{"@type":"Thing","name":"docker pull"},{"@type":"Thing","name":"Docker layer"},{"@type":"Thing","name":"DevOps"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/docker-pull-failed-to-register-layer/#faq","mainEntity":[{"@type":"Question","name":"docker pull failed to register layer 要先重拉 image 嗎？","acceptedAnswer":{"@type":"Answer","text":"`docker pull failed to register layer` 可以先刪除相關 image 後重拉，但建議先確認是否有 container 正在使用該 image。若 container 還在，先停止並移除相關 container，再重新 pull image。"}},{"@type":"Question","name":"failed to register layer 是 Docker Hub 壞掉嗎？","acceptedAnswer":{"@type":"Answer","text":"`failed to register layer` 不一定是 Docker Hub 或 registry 壞掉。錯誤訊息若指向 `/var/lib/docker/image/.../layerdb/` 並出現 `directory not empty`，通常要先排查本機 Docker daemon 與 layer metadata。"}},{"@type":"Question","name":"可以直接刪除 /var/lib/docker 嗎？","acceptedAnswer":{"@type":"Answer","text":"不建議直接刪除 `/var/lib/docker`。刪除 Docker 工作目錄可能移除本機 images、containers 與 volume 相關狀態，正式環境要先備份需要保留的資料，並把這一步視為最後手段。"}},{"@type":"Question","name":"docker image prune 可以解決 failed to register layer 嗎？","acceptedAnswer":{"@type":"Answer","text":"`docker image prune` 有機會解決 dangling image 或殘留 image metadata 造成的問題，但不保證修復所有 layerdb 錯誤。若清理 image 後仍失敗，可以再重啟 Docker daemon。"}},{"@type":"Question","name":"Docker Machine 環境要怎麼重啟 Docker？","acceptedAnswer":{"@type":"Answer","text":"Docker Machine 環境可以用 `docker-machine restart \u003cmachine_name>` 重啟 VM 與其中的 Docker daemon。重啟後再執行 `docker pull`，確認 layer 註冊是否恢復正常。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_docker-pull-failed-to-register-layer.webp" alt="Docker pull 與 Linux 檔案系統 layer 清理示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=DevOps" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ DevOps</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2020-11-26">2020-11-26</time></span><span class="post-meta-pill">Docker · docker pull · Docker layer · DevOps</span></div></div><h1 class="insights-hero-title">docker pull failed to register layer 錯誤怎麼解？</h1><p class="insights-hero-description">整理 docker pull 出現 failed to register layer、directory not empty 時的原因與處理順序，保留 Docker 1.10 與 Docker Machine 0.6 的錯誤範例，並補上清理 image、重啟 Docker 引擎與刪除工作目錄前的注意事項。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p><code>docker pull</code> 出現 <code>failed to register layer</code>，常見原因是 Docker 本機工作目錄裡的 image layer metadata 狀態混亂，導致新的 layer 下載完後無法註冊。處理時不要一開始就刪整個 Docker 目錄；我會先停止相關容器、刪除有問題的 image，再重拉一次，必要時才重啟 Docker 引擎或清掉 Docker 工作目錄。</p>
+</div><section aria-labelledby="docker-pull-failed-to-register-layer-是什麼錯誤"><h2 id="docker-pull-failed-to-register-layer-是什麼錯誤">docker pull failed to register layer 是什麼錯誤？</h2>
+<p><code>docker pull failed to register layer</code> 代表 image layer 已下載或解壓到一半，但 Docker daemon 無法把 layer 正常登錄到本機 layer database。錯誤訊息若包含 <code>directory not empty</code>，多半是本機 layer metadata 目錄已有殘留狀態。</p>
+<p>當時遇到的環境是 Docker 1.10.0 與 Docker Machine 0.6.0，在 pull <code>java:8</code> 時失敗。錯誤發生在 <code>/mnt/sda1/var/lib/docker/image/aufs/layerdb/</code>，也就是 Docker Machine VM 裡 Docker daemon 使用的 AUFS layer metadata 位置。</p>
+<pre><code class="hljs language-cmd">> docker -v
+Docker version 1.10.0, build 590d5108
+> docker-machine -v
+docker-machine version 0.6.0, build e27fb87
+> docker pull java:8
+8: Pulling from library/java
+03e1855d4f31: Extracting [==================================================>] 51.36 MB/51.36 MB
+a3ed95caeb02: Download complete
+9269ba3950bb: Download complete
+6ecee6444751: Download complete
+5b865d39f77d: Download complete
+e7e5c0273866: Download complete
+6a4effbc4451: Download complete
+4b6cb08bb4bc: Download complete
+7b07ad270e2c: Download complete
+failed to register layer: rename /mnt/sda1/var/lib/docker/image/aufs/layerdb/tmp/layer-273420626 /mnt/sda1/var/lib/docker/image/aufs/layerdb/sha256/78dbfa5b7cbc2bd94ccbdba52e71be39b359ed7eac43972891b136334f5ce181: directory not empty
+</code></pre>
+</section><section aria-labelledby="為什麼-docker-會出現-directory-not-empty"><h2 id="為什麼-docker-會出現-directory-not-empty">為什麼 Docker 會出現 directory not empty？</h2>
+<p>Docker 出現 <code>directory not empty</code>，通常是 Docker 工作空間裡已有同名或殘留的 layerdb 目錄，讓 rename 動作無法完成。這不一定是 registry 端問題，也不一定是 <code>java:8</code> image 本身壞掉。</p>
+<p>這類錯誤常見於 pull 或 build 過程被中斷、Docker daemon 狀態不一致、舊版 storage driver 留下暫存目錄，或 Docker Machine VM 的檔案系統狀態異常。當 Docker 想把 <code>tmp/layer-*</code> 搬到正式的 <code>sha256/&#x3C;digest></code> 目錄時，如果目標目錄不是空的，就會停在 <code>failed to register layer</code>。</p>
+<p>可以先把錯誤拆成三個線索看：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>錯誤片段</th><th>代表意思</th><th>排查方向</th></tr></thead><tbody><tr><td><code>failed to register layer</code></td><td>Docker 無法登錄本機 image layer</td><td>看本機 Docker daemon 與 image layer 狀態</td></tr><tr><td><code>rename ... tmp/layer-* ... sha256/*</code></td><td>Docker 正在搬移暫存 layer metadata</td><td>代表下載已進到本機寫入階段</td></tr><tr><td><code>directory not empty</code></td><td>目標 layerdb 目錄已有內容</td><td>清掉相關 image、重啟 daemon，最後才清工作目錄</td></tr></tbody></table></div>
+</section><section aria-labelledby="第一個解法-先停止容器並刪除相關-image"><h2 id="第一個解法-先停止容器並刪除相關-image">第一個解法：先停止容器並刪除相關 image</h2>
+<p>第一個解法是停止所有使用相關 image 的 container，刪除這些 container，再刪除有問題的 image，最後重新執行 <code>docker pull</code>。這是破壞範圍最小的處理方式。</p>
+<p>以這篇筆記裡的 <code>java:8</code> 為例，可以先確認是否有 container 使用 Java image：</p>
+<pre><code class="hljs language-bash">docker ps -a
+docker images
+</code></pre>
+<p>接著停止並移除相關 container，再刪除 Java image 或有問題的 image：</p>
+<pre><code class="hljs language-bash">docker stop &#x3C;container_id>
+docker <span class="hljs-built_in">rm</span> &#x3C;container_id>
+docker rmi java:8
+docker pull java:8
+</code></pre>
+<p>如果不確定是哪個 image 卡住，可以先清掉 dangling images。Docker 官方文件說明，<code>docker image prune</code> 預設只清理 dangling images；加上 <code>-a</code> 才會清理所有沒有被 container 參照的 images（Docker Docs，存取日期：2026-08-28）。</p>
+<pre><code class="hljs language-bash">docker image prune
+</code></pre>
+</section><section aria-labelledby="第二個解法-重啟-docker-引擎"><h2 id="第二個解法-重啟-docker-引擎">第二個解法：重啟 Docker 引擎</h2>
+<p>第二個解法是重啟 Docker 引擎，讓 Docker daemon 重新整理本機狀態。若 layer metadata 只是 daemon 暫時卡住，重啟通常比手動刪目錄安全。</p>
+<p>在 Docker Machine 環境，可以重啟 machine：</p>
+<pre><code class="hljs language-bash">docker-machine restart &#x3C;machine_name>
+</code></pre>
+<p>在 Linux systemd 環境，可以重啟 Docker 服務：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> systemctl restart docker
+</code></pre>
+<p>重啟後再重新執行：</p>
+<pre><code class="hljs language-bash">docker pull java:8
+</code></pre>
+<p>以我的經驗，這一步常常可以解掉類似的 <code>failed to register layer</code> 問題。若重啟後仍失敗，再進入下一個清理層級。</p>
+</section><section aria-labelledby="第三個解法-最後才刪除-docker-工作目錄"><h2 id="第三個解法-最後才刪除-docker-工作目錄">第三個解法：最後才刪除 Docker 工作目錄</h2>
+<p>刪除 Docker 工作目錄是最後手段，因為這會移除本機 images、containers、volumes 或 storage driver 狀態。正式環境操作前要先備份需要保留的資料，尤其是 volume。</p>
+<p>當時筆記裡的做法是：停止 Docker 引擎，刪除 Docker 工作目錄，重新啟動 Docker 引擎。這能清掉混亂的 layerdb，但代價是本機 Docker 狀態會被重建。</p>
+<p>Docker 工作目錄常見位置是：</p>
+<pre><code class="hljs language-bash">/var/lib/docker
+</code></pre>
+<p>在 Docker Machine 的 boot2docker VM 裡，錯誤訊息顯示的路徑是：</p>
+<pre><code class="hljs language-bash">/mnt/sda1/var/lib/docker
+</code></pre>
+<p>建議先用 Docker 內建清理指令處理不用的資源，再考慮刪整個工作目錄。Docker 官方文件說明，<code>docker system prune</code> 會清理 stopped containers、未使用 networks、dangling images 與 unused build cache；預設不會清 volume，除非加上 <code>--volumes</code>（Docker Docs，存取日期：2026-08-28）。</p>
+<pre><code class="hljs language-bash">docker system prune
+</code></pre>
+</section><section aria-labelledby="處理順序怎麼選比較安全"><h2 id="處理順序怎麼選比較安全">處理順序怎麼選比較安全？</h2>
+<p>安全處理順序是先做小範圍清理，再做 daemon 重啟，最後才碰 Docker 工作目錄。<code>failed to register layer</code> 看起來像底層錯誤，但多數情況不需要一開始就刪 <code>/var/lib/docker</code>。</p>
+<p>我會照這個順序排查：</p>
+<ol>
+<li>確認錯誤是否固定出現在同一個 image。</li>
+<li>停止並移除相關 container。</li>
+<li>刪除相關 image，重新 <code>docker pull</code>。</li>
+<li>執行 <code>docker image prune</code> 清理 dangling images。</li>
+<li>重啟 Docker daemon 或 Docker Machine。</li>
+<li>仍失敗時，備份需要保留的資料後，再考慮清 Docker 工作目錄。</li>
+</ol>
+<p>這篇的資訊增益是風險排序：不要把「刪 Docker 工作目錄」當成第一步。<code>/var/lib/docker</code> 裡可能有仍要使用的 image、container 狀態與 volume metadata，清掉之前要確認這台機器不是 production 狀態，或至少確認資料已備份。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>docker pull failed to register layer 要先重拉 image 嗎？</span></h3>
+<p><code>docker pull failed to register layer</code> 可以先刪除相關 image 後重拉，但建議先確認是否有 container 正在使用該 image。若 container 還在，先停止並移除相關 container，再重新 pull image。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>failed to register layer 是 Docker Hub 壞掉嗎？</span></h3>
+<p><code>failed to register layer</code> 不一定是 Docker Hub 或 registry 壞掉。錯誤訊息若指向 <code>/var/lib/docker/image/.../layerdb/</code> 並出現 <code>directory not empty</code>，通常要先排查本機 Docker daemon 與 layer metadata。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>可以直接刪除 /var/lib/docker 嗎？</span></h3>
+<p>不建議直接刪除 <code>/var/lib/docker</code>。刪除 Docker 工作目錄可能移除本機 images、containers 與 volume 相關狀態，正式環境要先備份需要保留的資料，並把這一步視為最後手段。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>docker image prune 可以解決 failed to register layer 嗎？</span></h3>
+<p><code>docker image prune</code> 有機會解決 dangling image 或殘留 image metadata 造成的問題，但不保證修復所有 layerdb 錯誤。若清理 image 後仍失敗，可以再重啟 Docker daemon。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Docker Machine 環境要怎麼重啟 Docker？</span></h3>
+<p>Docker Machine 環境可以用 <code>docker-machine restart &#x3C;machine_name></code> 重啟 VM 與其中的 Docker daemon。重啟後再執行 <code>docker pull</code>，確認 layer 註冊是否恢復正常。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Stack Overflow：<a href="https://stackoverflow.com/questions/35325103/docker-error-when-pulling-java-8-image-failed-to-register-layer" target="_blank" rel="noopener noreferrer">Docker error when pulling Java 8 image - “failed to register layer”</a>（筆記參考討論，存取日期：2026-08-28）</li>
+<li>Docker Docs：<a href="https://docs.docker.com/reference/cli/docker/image/prune/" target="_blank" rel="noopener noreferrer">docker image prune</a>（存取日期：2026-08-28）</li>
+<li>Docker Docs：<a href="https://docs.docker.com/engine/manage-resources/pruning/" target="_blank" rel="noopener noreferrer">Prune unused Docker objects</a>（存取日期：2026-08-28）</li>
+<li>Docker Docs：<a href="https://docs.docker.com/reference/cli/docker/system/prune/" target="_blank" rel="noopener noreferrer">docker system prune</a>（存取日期：2026-08-28）</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/docker-remove-none-tag-images">Docker 刪除所有 tag 為 None 的 image：清理 dangling images 指令</a>：同樣聚焦 Docker、DevOps，可接著比較不同情境的做法。</li>
+<li><a href="/post/dockerfile-simple-example">Dockerfile 簡單範例：從零打造你的第一個 Docker Image</a>：同樣聚焦 Docker、DevOps，可接著比較不同情境的做法。</li>
+<li><a href="/post/docker-introduction-basics">Docker 初探：安裝、常用指令與容器管理入門筆記</a>：同樣聚焦 Docker、DevOps，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28。本文初次發布於 2020-11-26，這次保留當時的 Docker 1.10.0、Docker Machine 0.6.0 錯誤紀錄，並補上 GEO 結構、清理順序與現代 Docker prune 指令的注意事項。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2020-11-26</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

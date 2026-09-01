@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>行動裝置使用者介面設計：從使用者研究到視覺流程的讀書筆記｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理《UI進化論》行動裝置使用者介面設計重點，包含產品層級、使用者分析、MP3 播放器流程範例與視覺設計原則。" />
+<meta name="keywords" content="前端開發, UI 設計, UX, 行動裝置, 產品設計" />
+<link rel="canonical" href="https://claire-chang.com/post/mobile-ui-design-evolution/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="行動裝置使用者介面設計：從使用者研究到視覺流程的讀書筆記｜Claire Chang" />
+<meta property="og:description" content="整理《UI進化論》行動裝置使用者介面設計重點，包含產品層級、使用者分析、MP3 播放器流程範例與視覺設計原則。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/mobile-ui-design-evolution/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/mobile-ui-design-evolution-qualified-product-8ca27199.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/mobile-ui-design-evolution-qualified-product-8ca27199.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="行動裝置使用者介面設計：從使用者研究到視覺流程的讀書筆記｜Claire Chang" />
+<meta name="twitter:description" content="整理《UI進化論》行動裝置使用者介面設計重點，包含產品層級、使用者分析、MP3 播放器流程範例與視覺設計原則。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/mobile-ui-design-evolution-qualified-product-8ca27199.jpg" />
+<meta property="article:published_time" content="2014-03-02" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="UI 設計" />
+<meta property="article:tag" content="UX" />
+<meta property="article:tag" content="行動裝置" />
+<meta property="article:tag" content="產品設計" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"行動裝置使用者介面設計：從使用者研究到視覺流程的讀書筆記","item":"https://claire-chang.com/post/mobile-ui-design-evolution/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/mobile-ui-design-evolution/#article","headline":"行動裝置使用者介面設計：從使用者研究到視覺流程的讀書筆記","description":"整理《UI進化論》行動裝置使用者介面設計重點，包含產品層級、使用者分析、MP3 播放器流程範例與視覺設計原則。","image":"https://claire-chang.com/images/tech/mobile-ui-design-evolution-qualified-product.png","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2014-03-02","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/mobile-ui-design-evolution/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"UI 設計, UX, 行動裝置, 產品設計","about":[{"@type":"Thing","name":"UI 設計"},{"@type":"Thing","name":"UX"},{"@type":"Thing","name":"行動裝置"},{"@type":"Thing","name":"產品設計"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/mobile-ui-design-evolution/#faq","mainEntity":[{"@type":"Question","name":"行動裝置 UI 設計第一步應該先做什麼？","acceptedAnswer":{"@type":"Answer","text":"行動裝置 UI 設計第一步應該先釐清使用者任務，而不是先畫畫面。先確認 App 要解決什麼問題、使用者在哪些情境操作、哪一步最容易卡住，再進入流程圖與原型設計。"}},{"@type":"Question","name":"工程師需要讀 UI 設計書嗎？","acceptedAnswer":{"@type":"Answer","text":"工程師不一定要把 UI 設計書當成設計師訓練，但需要理解使用者研究與互動流程。當工程師知道設計決策背後的任務與情境，實作時比較能判斷哪些細節不能省。"}},{"@type":"Question","name":"任務分析法適合用在哪些 App？","acceptedAnswer":{"@type":"Answer","text":"任務分析法適合用在有明確操作流程的 App，例如播放器、購物流程、表單填寫、預約系統或遊戲教學。任務分析法會把一個功能拆成多個步驟，幫助團隊找出可以合併、刪除或提示的地方。"}},{"@type":"Question","name":"行動 UI 為什麼要考慮使用情境？","acceptedAnswer":{"@type":"Answer","text":"行動裝置常在零碎時間與不同環境中被使用，同一個功能在會議中、通勤中或家裡會有不同需求。使用情境會影響靜音、單手操作、提示強度、資訊密度與錯誤恢復方式。"}},{"@type":"Question","name":"UI 視覺設計可以只看好不好看嗎？","acceptedAnswer":{"@type":"Answer","text":"UI 視覺設計不能只看好不好看，還要看使用者是否看得懂、記得住、操作得順。清楚的視覺線索、一致的元件位置與有限的色彩系統，通常比複雜裝飾更能改善行動介面的可用性。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/mobile-ui-design-evolution-qualified-product.png" alt="行動裝置產品從合格產品到優秀產品的介面層級示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2014-03-02">2014-03-02</time></span><span class="post-meta-pill">UI 設計 · UX · 行動裝置 · 產品設計</span></div></div><h1 class="insights-hero-title">行動裝置使用者介面設計：從使用者研究到視覺流程的讀書筆記</h1><p class="insights-hero-description">整理《UI進化論》行動裝置使用者介面設計重點，包含產品層級、使用者分析、MP3 播放器流程範例與視覺設計原則。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>行動裝置使用者介面設計不能只靠美術畫面與色彩配置，還要先理解使用者任務、使用情境、產品目標與互動流程。讀《UI進化論：行動裝置使用者介面設計》時，我最有收穫的是它把設計工作拆成產品定位、使用者研究、流程圖、原型與視覺設計，這些步驟對工程師規劃 App 介面也很有幫助。</p>
+<p>這本書比較像寫給專業產品設計師的工作手冊，內容會談設計團隊管理、設計流程、設計師頭銜、藝術感訓練，也補了一些掌上型行動設備的基礎知識。從程式師角度讀，有些偏設計管理的章節不一定每段都用得上，但若目標是理解「怎麼把一個行動產品從想法推到可操作介面」，書中的方法仍然值得整理。</p>
+<p>書籍資訊可參考博客來頁面：<a href="https://www.books.com.tw/products/0010471021" target="_blank" rel="noopener noreferrer">UI進化論：行動裝置使用者介面設計</a>。</p>
+</div><section aria-labelledby="行動裝置-ui-設計的核心是什麼"><h2 id="行動裝置-ui-設計的核心是什麼">行動裝置 UI 設計的核心是什麼？</h2>
+<p>行動裝置 UI 設計的核心，是把使用者想完成的任務轉成清楚、可操作、符合情境的流程。介面不是先畫漂亮畫面，而是先確認產品要解決什麼問題。</p>
+<p>這本書主要從設計師角度討論：如何成為能推動產品的人，並把產品從想法發展到設計流程。對工程師來說，最值得帶走的不是單一畫面技巧，而是「設計前要先拆任務」這件事。</p>
+<p>如果只看視覺，很容易把 UI 設計誤解成配色、圖示或版面。但行動裝置的使用環境很碎，使用者可能在會議中、通勤中、家裡或等待時操作同一個 App。不同情境會直接影響按鈕位置、資訊密度、回饋方式與容錯設計。</p>
+</section><section aria-labelledby="使用者會如何看待一個產品"><h2 id="使用者會如何看待一個產品">使用者會如何看待一個產品？</h2>
+<p>使用者通常不是用功能清單評價產品，而是用「能不能順利達成目的」來判斷產品好不好。合格、優秀、卓越三個層級，差別在體驗是否超出基本可用。</p>
+<p>書中用三種產品層級說明使用者感受。合格的產品能完成任務，但不一定讓人留下印象；優秀的產品不只可用，也更順手；卓越的產品會讓功能、情緒與品牌印象連在一起。</p>
+<figure class="article-figure"><img src="/images/tech/mobile-ui-design-evolution-qualified-product.png" alt="合格產品示意圖，重點在功能是否能完成基本任務" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/tech/mobile-ui-design-evolution-good-product.png" alt="優秀產品示意圖，重點在產品是否更符合使用者期待" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/tech/mobile-ui-design-evolution-excellent-product.png" alt="卓越產品示意圖，重點在體驗與品牌感是否能被使用者記住" loading="lazy" class="markdown-img"></figure>
+<p>從這個角度看，工程師在實作前也可以先問三個問題：</p>
+<ol>
+<li>使用者打開這個 App 時，第一個想完成的任務是什麼？</li>
+<li>使用者完成任務時，哪一步最容易卡住？</li>
+<li>產品除了「能用」，還要留下什麼感覺？</li>
+</ol>
+</section><section aria-labelledby="怎麼把設計變成可商品化的產品"><h2 id="怎麼把設計變成可商品化的產品">怎麼把設計變成可商品化的產品？</h2>
+<p>設計商品化要先觀察市場需求，再做使用者研究，最後理解目標市場的文化脈絡。行動產品不是把功能做出來就結束，還要讓使用者相信產品符合當下目的。</p>
+<p>書中整理的設計商品化流程，可以拆成三個方向。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>方向</th><th>要觀察什麼</th><th>對 UI 設計的影響</th></tr></thead><tbody><tr><td>市場需求觀察</td><td>人口特徵、使用行為、利潤潛力、價值觀、動機、購買因素、使用場合、地理位置</td><td>決定產品定位、功能優先順序與畫面資訊密度</td></tr><tr><td>使用者研究</td><td>目標族群身份、使用場合、使用者覺得「好商品」的條件、產品與使用者的情感連結</td><td>決定流程、互動回饋與是否需要情緒化設計</td></tr><tr><td>文化脈絡</td><td>不同地域、文化背景、社會環境中的介面風格與期待</td><td>影響文案語氣、圖示語意、色彩選擇與品牌表現</td></tr></tbody></table></div>
+<p>我覺得其中最容易被工程團隊低估的是「使用者買這個 App 的目的」。功能寫得再完整，如果不符合使用者想像中的目的，產品還是會被當成不好用。</p>
+</section><section aria-labelledby="使用者分析可以用哪些方法"><h2 id="使用者分析可以用哪些方法">使用者分析可以用哪些方法？</h2>
+<p>行動介面設計可以用任務分析法、情境設定法與社會性研究法來拆解。這三種方法分別處理操作步驟、使用場景與外部文化因素，能幫助團隊少靠直覺猜測。</p>
+<p>我最喜歡的是使用者分析與研究這一段，因為它提供了規劃行動介面動線的方法。當團隊想做一個行動介面的產品設計圖，除了美術畫面和色彩設計，對使用者的分析也同樣重要。</p>
+<ol>
+<li><strong>任務分析法</strong>：把特定任務分成多個階段。先想清楚 App 要提供哪些功能，再把每個功能拆成步驟。書中用穿襯衫舉例：雙手抓住襯衫領子、把襯衫披在肩上、右手穿進袖子、左手穿進袖子、把後襟拉平、把左右門襟對齊。這種拆法可以讓介面流程更接近使用者實際動作。</li>
+<li><strong>情境設定法</strong>：設定角色、地點與劇情。使用者在哪裡、發生什麼事、什麼狀況下會操作系統，都會影響設計。例如會議中需要靜音模式，在家裡則可能更重視輕鬆與方便。</li>
+<li><strong>社會性研究法</strong>：研究社會事件、使用心得、銷售狀況與文化背景如何影響產品。不同地域與文化環境下，使用者對介面風格的理解可能不同。</li>
+</ol>
+<p>書中也列出一些心智模型工具，例如物理符號系統、諾爾曼模型、流程認知模型、SOAR 模型、心智的社會模型、動力振盪理論模型與大腦協調學。這些名詞不一定每個專案都會用到，但提醒了同一件事：行動 UI 的流程不是畫面接畫面而已，背後其實有使用者如何理解任務的問題。</p>
+</section><section aria-labelledby="mp3-播放器範例怎麼拆互動流程"><h2 id="mp3-播放器範例怎麼拆互動流程">MP3 播放器範例怎麼拆互動流程？</h2>
+<p>MP3 播放器範例可以先定義產品功能，再畫互動設計流程圖，接著做介面原型與視覺設計。這個順序能避免一開始就陷入按鈕樣式與色彩細節。</p>
+<p>書中用 MP3 播放器示範設計流程，我覺得這個例子很適合工程師理解 UI 文件應該怎麼落地。它不是先畫漂亮畫面，而是先把功能和流程拆清楚。</p>
+<figure class="article-figure"><img src="/images/tech/mobile-ui-design-evolution-mp3-features.png" alt="MP3 播放器功能定義示意圖，先列出播放、停止、切歌等產品功能" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/tech/mobile-ui-design-evolution-interaction-flow.png" alt="MP3 播放器互動設計流程圖，整理使用者從入口到各功能的操作路徑" loading="lazy" class="markdown-img"></figure>
+<p>MP3 播放器的流程可以整理成四步：</p>
+<ol>
+<li><strong>定義產品功能</strong>：明確列出產品需要哪些功能。</li>
+<li><strong>繪製互動設計流程圖</strong>：把使用者如何進入、切換與完成操作畫出來。</li>
+<li><strong>繪製介面原型</strong>：先做最簡單的版面元件位置配置。</li>
+<li><strong>做視覺設計</strong>：先決定 App 主要使用哪些色彩，再繪製介面細節。</li>
+</ol>
+<p>這個順序也很像工程開發。先定義需求，再拆流程，再做原型，最後才處理精緻化。若流程還沒清楚就開始調色，常常只是把不確定性往後延。</p>
+</section><section aria-labelledby="圖形介面要怎麼做得更有創意"><h2 id="圖形介面要怎麼做得更有創意">圖形介面要怎麼做得更有創意？</h2>
+<p>圖形介面的創意不只來自新奇造型，也來自人性化、情感因素、互動特效與臨場體驗。產品、體驗與品牌最好被使用者感覺成同一件事。</p>
+<p>書中提到，介面設計不能只停在美學本能或功能主義。比較好的做法，是營造一種感覺，讓使用者把產品和品牌連在一起。</p>
+<p>我會把這段理解成五個提醒：</p>
+<ol>
+<li>介面要更人性化，讓操作方式接近使用者的直覺。</li>
+<li>情感化因素不能忽視，尤其是品牌想留下記憶點時。</li>
+<li>互動特效可以引入，但要服務操作理解，而不是只為了炫技。</li>
+<li>產品、體驗與品牌其實會互相塑造。</li>
+<li>使用者的臨場體驗會影響購買意願。</li>
+</ol>
+<p>對前端或 App 開發來說，互動特效最容易失控。好的特效會讓使用者理解狀態變化；不好的特效只是讓畫面變慢。這個界線在行動裝置上尤其明顯，因為螢幕小、注意力短，任何多餘等待都會被放大。</p>
+</section><section aria-labelledby="視覺設計有哪些基本原則"><h2 id="視覺設計有哪些基本原則">視覺設計有哪些基本原則？</h2>
+<p>行動 UI 的視覺設計原則是清楚、減少記憶負擔、提供線索、保持一致，並控制色彩數量。這些原則看起來基礎，卻會直接影響使用者能不能快速完成任務。</p>
+<p>書中整理的視覺設計原則很樸素，但都很實用。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>原則</th><th>說明</th></tr></thead><tbody><tr><td>介面清楚明瞭</td><td>使用者一眼要看得懂主要操作</td></tr><tr><td>減少短期記憶負擔</td><td>讓機器幫助記憶，不要要求使用者記住太多前一步資訊</td></tr><tr><td>依賴認知而非記憶</td><td>例如列印圖示、播放圖示等常見符號，要讓使用者能辨識</td></tr><tr><td>提供視覺線索</td><td>透過位置、大小、顏色與狀態提示引導操作</td></tr><tr><td>完善視覺清晰度</td><td>文字、圖示與背景需要有足夠辨識度</td></tr><tr><td>介面協調一致</td><td>按鈕位置、確認與取消、內容擺放要保持規律</td></tr><tr><td>色彩與內容對應</td><td>整體設計不要超過五個色系，相近色系表示相似意義</td></tr></tbody></table></div>
+<p>這些原則其實也能轉成工程檢查項。例如元件狀態是否一致、主要動作是否固定位置、錯誤訊息是否出現在使用者看得到的地方、顏色是否只靠色彩傳達含義。設計原則一旦能變成檢查項，就比較容易落進開發流程。</p>
+</section><section aria-labelledby="設計流程應該怎麼制定"><h2 id="設計流程應該怎麼制定">設計流程應該怎麼制定？</h2>
+<p>設計流程的價值，是讓多個設計師或多個產品維持一致產出。流程不是限制創意，而是讓創意可以被討論、檢查、展示與實作。</p>
+<p>書的最後幾章很強調設計流程的重要性。從工程師角度看，這有點像程式開發中的流程圖與 code review：不是為了讓人照表操課，而是確保產出能被理解、比較和維護。</p>
+<p>書中整理的流程大致包含十步：</p>
+<ol>
+<li>制定流程。</li>
+<li>確定工作內容。</li>
+<li>討論圖示風格，第一次會議用 brainstorming，先讓點子越多越好，不急著評斷優劣。</li>
+<li>做首次檢查，由主導者引導討論設計方向，讓設計師說明概念，再決定主要圖示方向。</li>
+<li>定義介面風格，包含色彩、解析度、關鍵介面數量、介面元素與通用性。</li>
+<li>定義互動特效，並同時考慮互動模型、視覺呈現與最終實作難度。</li>
+<li>讓設計師分別完成介面設計。</li>
+<li>準備演練展示。</li>
+<li>製作互動模型，例如用 Flash 做 demo。</li>
+<li>進行最終提案，決定採用哪一個介面。</li>
+</ol>
+<p>其中 brainstorming 的段落讓我想到自己以前寫過的遊戲開發心得：第一次討論先不要急著收斂，讓所有人把想到的風格與 idea 都提出來；第二次討論再反過來，由主導者判斷各個點子的優劣。這種一放一收的節奏，比一開始就批評點子更容易產生可用方向。</p>
+</section><section aria-labelledby="工程師讀行動-ui-設計書可以帶走什麼"><h2 id="工程師讀行動-ui-設計書可以帶走什麼">工程師讀行動 UI 設計書可以帶走什麼？</h2>
+<p>工程師讀行動 UI 設計書，不一定是為了變成設計師，而是為了更早理解產品決策。懂得任務、情境與流程後，工程實作比較不容易只剩下照稿切版。</p>
+<p>這本書有些內容偏設計師職涯與團隊管理，對程式師而言不是每段都立刻派上用場。不過只要正在做 App、遊戲或行動 Web，使用者研究、互動流程圖、介面原型與視覺一致性都會回到工程現場。</p>
+<p>我自己的讀後結論是：工程師至少要看得懂設計流程中的「為什麼」。當設計稿要求某個按鈕固定在某個位置、某段流程少一步、某個互動要更明顯時，如果只把它當成美術要求，很容易錯過背後的使用情境。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>行動裝置 UI 設計第一步應該先做什麼？</span></h3>
+<p>行動裝置 UI 設計第一步應該先釐清使用者任務，而不是先畫畫面。先確認 App 要解決什麼問題、使用者在哪些情境操作、哪一步最容易卡住，再進入流程圖與原型設計。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>工程師需要讀 UI 設計書嗎？</span></h3>
+<p>工程師不一定要把 UI 設計書當成設計師訓練，但需要理解使用者研究與互動流程。當工程師知道設計決策背後的任務與情境，實作時比較能判斷哪些細節不能省。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>任務分析法適合用在哪些 App？</span></h3>
+<p>任務分析法適合用在有明確操作流程的 App，例如播放器、購物流程、表單填寫、預約系統或遊戲教學。任務分析法會把一個功能拆成多個步驟，幫助團隊找出可以合併、刪除或提示的地方。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>行動 UI 為什麼要考慮使用情境？</span></h3>
+<p>行動裝置常在零碎時間與不同環境中被使用，同一個功能在會議中、通勤中或家裡會有不同需求。使用情境會影響靜音、單手操作、提示強度、資訊密度與錯誤恢復方式。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>UI 視覺設計可以只看好不好看嗎？</span></h3>
+<p>UI 視覺設計不能只看好不好看，還要看使用者是否看得懂、記得住、操作得順。清楚的視覺線索、一致的元件位置與有限的色彩系統，通常比複雜裝飾更能改善行動介面的可用性。</p>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/product-experience-design-concepts">產品體驗設計概念介紹</a>：同樣聚焦 UX、UI設計，可接著比較不同情境的做法。</li>
+<li><a href="/post/iphone-hig-human-interface-guidelines">iPhone 人機界面指南（HIG）重點筆記：應用程式類型、開發限制與介面準則</a>：同樣聚焦 UI設計、UX，可接著比較不同情境的做法。</li>
+<li><a href="/post/marty-cagan-product-discovery-lessons">Marty Cagan 談產品系列影片心得</a>：同樣聚焦 UX，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2014-03-02</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>準備數據集資料的方針：機器學習訓練資料品質、數量與篩選原則｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="準備機器學習數據集的完整方針：高品質資料的三大條件、訓練圖像要幾張才夠、要不要去背留白、如何篩選具代表性的資料集，附資料集數量估算方法與常見錯誤。" />
+<meta name="keywords" content="機器學習, 機器學習, 數據集, 資料前處理, 訓練資料, 過擬合" />
+<link rel="canonical" href="https://claire-chang.com/post/dataset-preparation-guidelines/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="準備數據集資料的方針：機器學習訓練資料品質、數量與篩選原則｜Claire Chang" />
+<meta property="og:description" content="準備機器學習數據集的完整方針：高品質資料的三大條件、訓練圖像要幾張才夠、要不要去背留白、如何篩選具代表性的資料集，附資料集數量估算方法與常見錯誤。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/dataset-preparation-guidelines/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_dataset-preparation-guidelines-57c2eb88.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_dataset-preparation-guidelines-57c2eb88.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="準備數據集資料的方針：機器學習訓練資料品質、數量與篩選原則｜Claire Chang" />
+<meta name="twitter:description" content="準備機器學習數據集的完整方針：高品質資料的三大條件、訓練圖像要幾張才夠、要不要去背留白、如何篩選具代表性的資料集，附資料集數量估算方法與常見錯誤。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_dataset-preparation-guidelines-57c2eb88.jpg" />
+<meta property="article:published_time" content="2022-12-22" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="機器學習" />
+<meta property="article:tag" content="數據集" />
+<meta property="article:tag" content="資料前處理" />
+<meta property="article:tag" content="訓練資料" />
+<meta property="article:tag" content="過擬合" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"準備數據集資料的方針：機器學習訓練資料品質、數量與篩選原則","item":"https://claire-chang.com/post/dataset-preparation-guidelines/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/dataset-preparation-guidelines/#article","headline":"準備數據集資料的方針：機器學習訓練資料品質、數量與篩選原則","description":"準備機器學習數據集的完整方針：高品質資料的三大條件、訓練圖像要幾張才夠、要不要去背留白、如何篩選具代表性的資料集，附資料集數量估算方法與常見錯誤。","image":"https://claire-chang.com/images/tech/hero_dataset-preparation-guidelines.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2022-12-22","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/dataset-preparation-guidelines/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"機器學習, 數據集, 資料前處理, 訓練資料, 過擬合","about":[{"@type":"Thing","name":"機器學習"},{"@type":"Thing","name":"數據集"},{"@type":"Thing","name":"資料前處理"},{"@type":"Thing","name":"訓練資料"},{"@type":"Thing","name":"過擬合"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/dataset-preparation-guidelines/#faq","mainEntity":[{"@type":"Question","name":"機器學習數據集要準備多少張圖片才夠？","acceptedAnswer":{"@type":"Answer","text":"沒有硬性準則，但可參考：測試階段 100–200 張、正式訓練 1,000–5,000 張、大型數據集 10,000 張以上。建議先用小量數據集確定模型結構與超參數，再逐步增加資料量。"}},{"@type":"Question","name":"訓練圖像需要先去背再訓練嗎？","acceptedAnswer":{"@type":"Answer","text":"不需要。將非目標部分留白對模型訓練沒有明顯幫助，提供背景完整的原始資料反而能讓模型學到更豐富的特徵。當資料量與品質足夠時，模型會自動忽略與目標無關的資訊。"}},{"@type":"Question","name":"資料集越大模型表現一定越好嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定。過多的訓練數據可能導致過擬合，且若資料品質差（標記錯誤、圖像模糊），再大的數據集也救不了模型表現。重點是品質、數量與模型複雜度之間的平衡。"}},{"@type":"Question","name":"什麼是「有代表性的數據」？","acceptedAnswer":{"@type":"Answer","text":"數據集中的資料能涵蓋所有可能的輸入情況，例如不同的拍攝角度、光線條件、物體尺寸等。若資料只代表一小部分可能的輸入，模型遇到沒見過的情況時表現就會變差。"}},{"@type":"Question","name":"類別數量不平衡的資料集該怎麼處理？","acceptedAnswer":{"@type":"Answer","text":"可以刪除數量較多類別的部分圖片，讓各類別的數據量趨於平衡。類別不平衡會讓模型偏向多數類別，影響訓練準確度。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_dataset-preparation-guidelines.webp" alt="筆記型電腦螢幕上顯示資料分析圖表，象徵機器學習數據集的準備與分析" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2022-12-22">2022-12-22</time></span><span class="post-meta-pill">機器學習 · 數據集 · 資料前處理 · 訓練資料 · 過擬合</span></div></div><h1 class="insights-hero-title">準備數據集資料的方針：機器學習訓練資料品質、數量與篩選原則</h1><p class="insights-hero-description">準備機器學習數據集的完整方針：高品質資料的三大條件、訓練圖像要幾張才夠、要不要去背留白、如何篩選具代表性的資料集，附資料集數量估算方法與常見錯誤。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>機器學習模型的表現，往往不是輸在模型結構，而是輸在數據集。這篇文章整理我準備訓練資料時的方針：什麼樣的資料算高品質、訓練圖像要多少張才夠、要不要先用修圖軟體去背，以及如何篩選出具代表性的資料集。這些方針來自 2022 年累積的實務經驗。</p>
+</div><section aria-labelledby="什麼樣的數據集才算是高品質資料"><h2 id="什麼樣的數據集才算是高品質資料">什麼樣的數據集才算是高品質資料？</h2>
+<p>使用品質高的資料，應該滿足以下條件：</p>
+<ul>
+<li><strong>清晰的圖像</strong>：圖像清晰且無模糊或雜訊。</li>
+<li><strong>正確的標記</strong>：圖像被正確地標記為相應的類別。</li>
+<li><strong>代表性的數據</strong>：數據集中的數據能夠代表所有可能的輸入圖像，例如不同的角度、光線、尺寸等。</li>
+</ul>
+<p>反之，要避免以下狀況：</p>
+<ul>
+<li><strong>模糊或不清晰的圖像</strong>：圖像中有大量的模糊或雜訊。</li>
+<li><strong>錯誤的標記</strong>：圖像被錯誤地標記為其他類別。</li>
+<li><strong>不具代表性的數據</strong>：數據集中的數據只代表一小部分可能的輸入圖像。</li>
+</ul>
+</section><section aria-labelledby="數據集要多少張圖片才足夠"><h2 id="數據集要多少張圖片才足夠">數據集要多少張圖片才足夠？</h2>
+<p>所需的圖片張數會視實際情況而有所不同。以撲克牌辨識為例，若數據集中只有每種牌的一種花色，或是每種牌有多種花色，隨著分類數量的增加，所需要的數據集規模也會隨之增加。因此，在建立模型之前，需要先了解所要建構的數據集的結構，以確保使用的模型能夠正確地處理數據。</p>
+<p>決定數據集大小的因素很多，無法給出一個硬性準則。不過通常而言，越多的訓練數據可以訓練出表現越好的模型。然而，過多的訓練數據也可能導致過擬合（overfitting）——模型對訓練數據表現良好，但對新數據表現不佳。因此建立模型時，還需要考慮模型複雜度與訓練數據集大小之間的平衡。</p>
+<p>資料集的品質同樣重要。如果數據集中有大量標記錯誤或不清晰的圖像，即使數據集很大，模型的表現也可能不佳。建議嘗試不同的數據集大小並觀察模型的表現，以找出最佳平衡。</p>
+<h3>實務建議：先小後大</h3>
+<p>若只是在測試模型階段，可以先使用少量的數據集來訓練模型，快速驗證準備數據集的想法並大致了解模型的表現。等確定了模型的結構和超參數後，再考慮增加數據集的大小以提高準確度。</p>
+<p>所謂少量，在測試階段只需要幾百張圖像就足以確定模型結構和超參數。要注意的是，模型表現會受數據集品質影響——即使數據集很小，只要圖像品質很高，模型的表現也可能很好。</p>
+<p>可以參考以下的圖像數量級距：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>數據集規模</th><th>圖像數量</th><th>適用階段</th></tr></thead><tbody><tr><td>少量數據集</td><td>100–200 張</td><td>測試模型結構與超參數</td></tr><tr><td>中等數據集</td><td>1,000–5,000 張</td><td>正式訓練</td></tr><tr><td>大型數據集</td><td>10,000 張以上</td><td>追求更高準確度</td></tr></tbody></table></div>
+<h3>數據集數量的估算算法</h3>
+<p>如果要使用 52 張圖像，並且對每張圖像進行 5 種不同的變化，則數據集大小就是 <code>52 * 5 = 260</code> 張圖像。</p>
+</section><section aria-labelledby="準備圖像資料集時-要不要先去背留白"><h2 id="準備圖像資料集時-要不要先去背留白">準備圖像資料集時，要不要先去背留白？</h2>
+<p>在準備圖像資料時，常會思考一個問題：若先用修圖軟體去背，把要辨識的目標以外的東西都留白，是否有助於訓練模型？</p>
+<p>在實際運用上，<strong>將資料集中非目標部分留白並不會對模型的訓練有明顯的幫助</strong>。訓練模型時，最好提供所有可能的資料，讓模型在訓練過程中學習到的特徵越豐富越好。同時我們也希望模型能學習到那些與目標無關的資訊，因為這些資訊可能會在模型於測試時遇到類似情況時派上用場。</p>
+<p>有些人會擔心，資料集中包含與目標無關的資訊，會不會干擾訓練？實際上，當訓練資料足夠多且品質足夠高時，這種情況很少發生——模型會自動學習到與目標相關的特徵，並忽略與目標無關的資訊。</p>
+</section><section aria-labelledby="訓練資料的數量需求該怎麼判斷"><h2 id="訓練資料的數量需求該怎麼判斷">訓練資料的數量需求該怎麼判斷？</h2>
+<p>訓練資料數量的要求取決於許多因素，例如模型的複雜度、資料的品質、資料的分布等。一般情況下，越複雜的模型、資料品質越高、資料分布越不均勻，需要的訓練資料就越多。</p>
+<p>要確切知道訓練資料的數量是否足夠，通常需要透過不斷地實驗和驗證來確定：對模型進行訓練並觀察效果，根據表現是否達到滿意程度，判斷是否需要增加訓練資料的數量。</p>
+<p>另外，訓練資料的數量往往不是決定模型表現的唯一因素。訓練模型時還要考慮模型複雜度、訓練技巧（例如正則化、數據增強等）、訓練超參數的設定等因素。綜合考慮所有這些因素，才能得到最好的模型表現。</p>
+</section><section aria-labelledby="如何篩選出具代表性的資料集"><h2 id="如何篩選出具代表性的資料集">如何篩選出具代表性的資料集？</h2>
+<figure class="article-figure"><img src="/images/articles/dataset-preparation-guidelines-1.webp" alt="梗圖分享：資料集篩選的取捨" loading="lazy" class="markdown-img"></figure>
+<ul>
+<li><strong>基於數據品質篩選</strong>：解析度很低、或圖中物體模糊不清的圖片，對訓練準確度幫助不大，可以考慮刪除。</li>
+<li><strong>基於訓練目標篩選</strong>：例如訓練目標是辨識不同種類的動物，就保留足夠多的各種動物圖片，刪除與訓練目標無關的圖片（例如建築物、景觀等）。</li>
+<li><strong>基於數據平衡篩選</strong>：若某些類別的圖片數量遠大於其他類別，可能影響訓練準確度，可以考慮刪除數量較多類別的部分圖片以平衡數據。</li>
+</ul>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>機器學習數據集要準備多少張圖片才夠？</span></h3>
+<p>沒有硬性準則，但可參考：測試階段 100–200 張、正式訓練 1,000–5,000 張、大型數據集 10,000 張以上。建議先用小量數據集確定模型結構與超參數，再逐步增加資料量。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>訓練圖像需要先去背再訓練嗎？</span></h3>
+<p>不需要。將非目標部分留白對模型訓練沒有明顯幫助，提供背景完整的原始資料反而能讓模型學到更豐富的特徵。當資料量與品質足夠時，模型會自動忽略與目標無關的資訊。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>資料集越大模型表現一定越好嗎？</span></h3>
+<p>不一定。過多的訓練數據可能導致過擬合，且若資料品質差（標記錯誤、圖像模糊），再大的數據集也救不了模型表現。重點是品質、數量與模型複雜度之間的平衡。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼是「有代表性的數據」？</span></h3>
+<p>數據集中的資料能涵蓋所有可能的輸入情況，例如不同的拍攝角度、光線條件、物體尺寸等。若資料只代表一小部分可能的輸入，模型遇到沒見過的情況時表現就會變差。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>類別數量不平衡的資料集該怎麼處理？</span></h3>
+<p>可以刪除數量較多類別的部分圖片，讓各類別的數據量趨於平衡。類別不平衡會讓模型偏向多數類別，影響訓練準確度。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>本文為我 2022 年的機器學習實務筆記整理，無外部引用來源。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/how-to-read-training-results">如何判讀機器學習訓練結果：loss、accuracy、val_loss、val_accuracy 完整解讀</a>：同樣聚焦 機器學習、過擬合，可接著比較不同情境的做法。</li>
+<li><a href="/post/train-validation-test-data-split">如何切分訓練、驗證與測試資料：train_test_split 與 K-Fold 範例</a>：同樣聚焦 機器學習，可接著比較不同情境的做法。</li>
+<li><a href="/post/prepare-finetuning-dataset">準備微調用資料集：NLP 資料清理、標註與切分流程</a>：同樣聚焦 資料前處理，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2022-12-22，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2022-12-22</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

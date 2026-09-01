@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixiJS 按鈕 Tween 動態：用 GSAP 做縮放回彈效果｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 PixiJS 按鈕如何搭配 GSAP Tween 與 Timeline 製作按下、放開與滑出時的互動動畫。" />
+<meta name="keywords" content="前端開發, PixiJS, GSAP, Tween, TypeScript" />
+<link rel="canonical" href="https://claire-chang.com/post/pixijs-button-tween-gsap/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="PixiJS 按鈕 Tween 動態：用 GSAP 做縮放回彈效果｜Claire Chang" />
+<meta property="og:description" content="說明 PixiJS 按鈕如何搭配 GSAP Tween 與 Timeline 製作按下、放開與滑出時的互動動畫。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/pixijs-button-tween-gsap/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_pixijs-button-tween-gsap-1e8af419.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_pixijs-button-tween-gsap-1e8af419.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PixiJS 按鈕 Tween 動態：用 GSAP 做縮放回彈效果｜Claire Chang" />
+<meta name="twitter:description" content="說明 PixiJS 按鈕如何搭配 GSAP Tween 與 Timeline 製作按下、放開與滑出時的互動動畫。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_pixijs-button-tween-gsap-1e8af419.jpg" />
+<meta property="article:published_time" content="2018-11-06" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="PixiJS" />
+<meta property="article:tag" content="GSAP" />
+<meta property="article:tag" content="Tween" />
+<meta property="article:tag" content="TypeScript" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"PixiJS 按鈕 Tween 動態：用 GSAP 做縮放回彈效果","item":"https://claire-chang.com/post/pixijs-button-tween-gsap/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/pixijs-button-tween-gsap/#article","headline":"PixiJS 按鈕 Tween 動態：用 GSAP 做縮放回彈效果","description":"說明 PixiJS 按鈕如何搭配 GSAP Tween 與 Timeline 製作按下、放開與滑出時的互動動畫。","image":"https://claire-chang.com/images/tech/hero_pixijs-button-tween-gsap.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-11-06","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/pixijs-button-tween-gsap/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"PixiJS, GSAP, Tween, TypeScript","mentions":[{"@type":"Thing","name":"PixiJS"},{"@type":"Thing","name":"GSAP"},{"@type":"Thing","name":"Tween"},{"@type":"Thing","name":"TypeScript"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/pixijs-button-tween-gsap/#faq","mainEntity":[{"@type":"Question","name":"PixiJS 可以直接用 GSAP 嗎？","acceptedAnswer":{"@type":"Answer","text":"PixiJS 可以直接用 GSAP。只要目標是 JavaScript 物件上的可寫數值，例如 `x`、`y`、`alpha`、`scale.x`，GSAP 就能補間。"}},{"@type":"Question","name":"TweenLite 和 GSAP 3 的寫法一樣嗎？","acceptedAnswer":{"@type":"Answer","text":"TweenLite 是舊版 GSAP 常見 API。GSAP 3 通常使用 `gsap.to()` 與 `gsap.timeline()`，維護舊專案時要先確認版本。"}},{"@type":"Question","name":"按鈕縮放時為什麼要設定 anchor？","acceptedAnswer":{"@type":"Answer","text":"按鈕縮放若沒有設定 anchor，縮放中心可能在左上角。`anchor.set(0.5)` 可以讓按鈕以中心點縮放，互動效果比較自然。"}},{"@type":"Question","name":"為什麼按鈕會卡在縮小狀態？","acceptedAnswer":{"@type":"Answer","text":"按鈕卡住通常是因為 mouseup 或 touchend 沒有被觸發，例如游標移出按鈕。應處理 `mouseout` 或 `touchcancel`，並在事件中重設 scale。"}},{"@type":"Question","name":"disabled 按鈕還要播放 Tween 嗎？","acceptedAnswer":{"@type":"Answer","text":"disabled 按鈕通常不應播放按下動畫，也不應觸發功能。可在 `enable` setter 裡同步設定 `interactive`、`buttonMode` 與 alpha。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_pixijs-button-tween-gsap.webp" alt="網頁遊戲按鈕在互動時產生縮放動畫" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-11-06">2018-11-06</time></span><span class="post-meta-pill">PixiJS · GSAP · Tween · TypeScript</span></div></div><h1 class="insights-hero-title">PixiJS 按鈕 Tween 動態：用 GSAP 做縮放回彈效果</h1><p class="insights-hero-description">說明 PixiJS 按鈕如何搭配 GSAP Tween 與 Timeline 製作按下、放開與滑出時的互動動畫。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>PixiJS 按鈕可以透過 GSAP 改變 <code>scale.x</code>、<code>scale.y</code>、alpha 或位置，做出按下縮小、放開回彈的互動效果。Tween 動畫應封裝在按鈕基底類別，避免每個按鈕重複撰寫事件邏輯。</p>
+</div><section aria-labelledby="gsap-在-pixijs-專案中負責什麼"><h2 id="gsap-在-pixijs-專案中負責什麼">GSAP 在 PixiJS 專案中負責什麼？</h2>
+<p>GSAP 是 JavaScript 動畫函式庫，可以 tween 任何 JavaScript 可控制的數值。PixiJS 顯示物件的 scale、position、rotation 與 alpha 都能交給 GSAP 做時間軸動畫。</p>
+<p>GSAP 適合處理：</p>
+<ul>
+<li>按鈕按下縮放。</li>
+<li>UI 面板滑入滑出。</li>
+<li>道具或角色提示動畫。</li>
+<li>多段連續動畫時間軸。</li>
+<li>easing 與 repeat 動畫。</li>
+</ul>
+<p>PixiJS 負責渲染畫面，GSAP 負責補間數值。兩者分工清楚時，互動動畫會比手寫 ticker 狀態更容易維護。</p>
+</section><section aria-labelledby="tween-和-timeline-差在哪裡"><h2 id="tween-和-timeline-差在哪裡">Tween 和 Timeline 差在哪裡？</h2>
+<p>Tween 適合單一屬性的單段變化，Timeline 適合多段動畫按順序執行。按鈕回彈通常會先放大再回到原尺寸，因此 Timeline 比單一 Tween 更好管理。</p>
+<p>舊版 GSAP 範例：</p>
+<pre><code class="hljs language-js"><span class="hljs-title class_">TweenLite</span>.<span class="hljs-title function_">to</span>(<span class="hljs-string">".grey"</span>, <span class="hljs-number">1</span>, { <span class="hljs-attr">x</span>: <span class="hljs-number">700</span>, <span class="hljs-attr">rotation</span>: <span class="hljs-number">360</span>, <span class="hljs-attr">delay</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">id</span>: <span class="hljs-string">"grey"</span> });
+</code></pre>
+<p>多段動畫範例：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> tl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TimelineMax</span>({ <span class="hljs-attr">repeat</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">repeatDelay</span>: <span class="hljs-number">1</span> });
+tl.<span class="hljs-title function_">add</span>(<span class="hljs-title class_">TweenLite</span>.<span class="hljs-title function_">to</span>(element, <span class="hljs-number">1</span>, { <span class="hljs-attr">scale</span>: <span class="hljs-number">0.9</span> }));
+tl.<span class="hljs-title function_">add</span>(<span class="hljs-title class_">TweenLite</span>.<span class="hljs-title function_">to</span>(element, <span class="hljs-number">1</span>, { <span class="hljs-attr">scale</span>: <span class="hljs-number">1.1</span> }));
+tl.<span class="hljs-title function_">add</span>(<span class="hljs-title class_">TweenLite</span>.<span class="hljs-title function_">to</span>(element, <span class="hljs-number">1</span>, { <span class="hljs-attr">scale</span>: <span class="hljs-number">1</span> }));
+</code></pre>
+<p>現代 GSAP 專案常使用 <code>gsap.to()</code> 與 <code>gsap.timeline()</code>。維護舊程式碼時看到 <code>TweenLite</code>、<code>TweenMax</code>、<code>TimelineLite</code>、<code>TimelineMax</code>，要先確認 GSAP 版本。</p>
+</section><section aria-labelledby="pixijs-按鈕要監聽哪些事件"><h2 id="pixijs-按鈕要監聽哪些事件">PixiJS 按鈕要監聽哪些事件？</h2>
+<p>PixiJS 按鈕通常要同時處理滑鼠與觸控事件。按下時縮小，放開時回彈，滑出時重設比例，可以避免按鈕卡在縮小狀態。</p>
+<p>事件設計：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>事件</th><th>動作</th></tr></thead><tbody><tr><td><code>mousedown</code> / <code>touchstart</code></td><td>按鈕縮小</td></tr><tr><td><code>mouseup</code> / <code>touchend</code></td><td>按鈕放大後回到 1</td></tr><tr><td><code>mouseout</code></td><td>重設縮放</td></tr><tr><td><code>mouseup</code> / <code>touchend</code></td><td>觸發按鈕功能</td></tr></tbody></table></div>
+<p>互動動畫要短。按鈕回饋若超過 0.2 到 0.3 秒，玩家會感覺介面反應變慢。</p>
+</section><section aria-labelledby="如何封裝-buttonbase"><h2 id="如何封裝-buttonbase">如何封裝 ButtonBase？</h2>
+<p>ButtonBase 可以統一設定 texture、interactive、buttonMode、anchor 與動畫事件。每個具體按鈕只要繼承 ButtonBase 並覆寫 <code>trigger()</code>。</p>
+<p>原稿範例整理如下：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Sprite</span> = <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">Sprite</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Loader</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"../core/Loader"</span>;
+
+<span class="hljs-keyword">declare</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">TweenLite</span>: <span class="hljs-built_in">any</span>;
+<span class="hljs-keyword">declare</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">TimelineMax</span>: <span class="hljs-built_in">any</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ButtonBase</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Sprite</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">textureID</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">x</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">y</span>: <span class="hljs-built_in">number</span></span>) {
+    <span class="hljs-variable language_">super</span>();
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">texture</span> = <span class="hljs-title class_">Loader</span>.<span class="hljs-property">resources</span>[id].<span class="hljs-property">textures</span>[textureID];
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">interactive</span> = <span class="hljs-literal">true</span>;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">buttonMode</span> = <span class="hljs-literal">true</span>;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">x</span> = x;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">y</span> = y;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">anchor</span>.<span class="hljs-title function_">set</span>(<span class="hljs-number">0.5</span>);
+
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"mousedown"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseDownEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"mouseup"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseUpEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"mouseout"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseOutEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"touchstart"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseDownEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"touchend"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">mouseUpEffect</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"mouseup"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">trigger</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">"touchend"</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">trigger</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+  }
+
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">trigger</span>(<span class="hljs-params"></span>) {}
+
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">set</span> <span class="hljs-title function_">enable</span>(<span class="hljs-params"><span class="hljs-attr">value</span>: <span class="hljs-built_in">boolean</span></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">interactive</span> = value;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">buttonMode</span> = value;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">alpha</span> = value ? <span class="hljs-number">1</span> : <span class="hljs-number">0.5</span>;
+  }
+
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">mouseDownEffect</span>(): <span class="hljs-built_in">void</span> {
+    <span class="hljs-keyword">let</span> timeline = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TimelineMax</span>();
+    timeline.<span class="hljs-title function_">add</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TweenLite</span>(<span class="hljs-variable language_">this</span>, <span class="hljs-number">0.2</span>, {
+      <span class="hljs-attr">scaleX</span>: <span class="hljs-number">0.9</span>,
+      <span class="hljs-attr">scaleY</span>: <span class="hljs-number">0.9</span>,
+    }));
+    timeline.<span class="hljs-title function_">play</span>();
+  }
+
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">mouseUpEffect</span>(): <span class="hljs-built_in">void</span> {
+    <span class="hljs-keyword">let</span> timeline = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TimelineMax</span>();
+    timeline.<span class="hljs-title function_">add</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TweenLite</span>(<span class="hljs-variable language_">this</span>, <span class="hljs-number">0.1</span>, {
+      <span class="hljs-attr">scaleX</span>: <span class="hljs-number">1.1</span>,
+      <span class="hljs-attr">scaleY</span>: <span class="hljs-number">1.1</span>,
+    }));
+    timeline.<span class="hljs-title function_">add</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TweenLite</span>(<span class="hljs-variable language_">this</span>, <span class="hljs-number">0.1</span>, {
+      <span class="hljs-attr">scaleX</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">scaleY</span>: <span class="hljs-number">1</span>,
+    }));
+    timeline.<span class="hljs-title function_">play</span>();
+  }
+
+  <span class="hljs-keyword">set</span> <span class="hljs-title function_">scaleX</span>(<span class="hljs-params"><span class="hljs-attr">value</span>: <span class="hljs-built_in">number</span></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">scale</span>.<span class="hljs-property">x</span> = value;
+  }
+
+  <span class="hljs-keyword">set</span> <span class="hljs-title function_">scaleY</span>(<span class="hljs-params"><span class="hljs-attr">value</span>: <span class="hljs-built_in">number</span></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">scale</span>.<span class="hljs-property">y</span> = value;
+  }
+
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">mouseOutEffect</span>(): <span class="hljs-built_in">void</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">scale</span>.<span class="hljs-title function_">set</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+  }
+}
+</code></pre>
+</section><section aria-labelledby="按鈕-tween-實作要注意哪些問題"><h2 id="按鈕-tween-實作要注意哪些問題">按鈕 Tween 實作要注意哪些問題？</h2>
+<p>按鈕 Tween 最常見問題是重複觸發導致動畫堆疊。使用者快速連點時，舊 tween 還沒結束，新 tween 又開始，按鈕可能比例異常或觸發多次行為。</p>
+<p>建議補強：</p>
+<ol>
+<li>新 tween 開始前先 kill 既有 tween。</li>
+<li>disabled 狀態不要綁定或觸發 click 行為。</li>
+<li><code>mouseout</code>、<code>touchcancel</code> 要重設狀態。</li>
+<li>觸控裝置不要只監聽 mouse event。</li>
+<li>動畫與業務邏輯分離，<code>trigger()</code> 只負責功能。</li>
+</ol>
+<p>資訊增益建議：ButtonBase 不只是一個動畫類別，也是一個互動狀態邊界。把 enable、動畫、事件與觸發點集中管理，後續加音效、冷卻時間或防連點都會容易很多。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS 可以直接用 GSAP 嗎？</span></h3>
+<p>PixiJS 可以直接用 GSAP。只要目標是 JavaScript 物件上的可寫數值，例如 <code>x</code>、<code>y</code>、<code>alpha</code>、<code>scale.x</code>，GSAP 就能補間。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>TweenLite 和 GSAP 3 的寫法一樣嗎？</span></h3>
+<p>TweenLite 是舊版 GSAP 常見 API。GSAP 3 通常使用 <code>gsap.to()</code> 與 <code>gsap.timeline()</code>，維護舊專案時要先確認版本。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>按鈕縮放時為什麼要設定 anchor？</span></h3>
+<p>按鈕縮放若沒有設定 anchor，縮放中心可能在左上角。<code>anchor.set(0.5)</code> 可以讓按鈕以中心點縮放，互動效果比較自然。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼按鈕會卡在縮小狀態？</span></h3>
+<p>按鈕卡住通常是因為 mouseup 或 touchend 沒有被觸發，例如游標移出按鈕。應處理 <code>mouseout</code> 或 <code>touchcancel</code>，並在事件中重設 scale。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>disabled 按鈕還要播放 Tween 嗎？</span></h3>
+<p>disabled 按鈕通常不應播放按下動畫，也不應觸發功能。可在 <code>enable</code> setter 裡同步設定 <code>interactive</code>、<code>buttonMode</code> 與 alpha。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>GSAP 官方網站：<a href="https://gsap.com/" target="_blank" rel="noopener noreferrer">https://gsap.com/</a></li>
+<li>GSAP 安裝文件：<a href="https://gsap.com/docs/v3/Installation/" target="_blank" rel="noopener noreferrer">https://gsap.com/docs/v3/Installation/</a></li>
+<li>PixiJS 官方網站：<a href="https://pixijs.com/" target="_blank" rel="noopener noreferrer">https://pixijs.com/</a></li>
+<li>PixiJS Events 文件：<a href="https://pixijs.download/release/docs/events.html" target="_blank" rel="noopener noreferrer">https://pixijs.download/release/docs/events.html</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/pixijs-button-basics">PixiJS 按鈕製作基礎：Sprite 互動、ButtonBase 與靜音切換</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-frame-animation-link-game-character">PixiJS 逐格動畫教學：連連看公仔角色動畫實作</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-scene-setup">PixiJS 場景設定教學：Application、Canvas 與自動縮放</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-11-06</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

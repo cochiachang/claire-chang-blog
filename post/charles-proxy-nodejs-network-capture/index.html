@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用 Charles Proxy 抓取 Node.js 網路請求：Reverse Proxy 設定教學｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明如何用 Charles Proxy Reverse Proxy 抓取 Node.js HTTP 與 HTTPS 請求。" />
+<meta name="keywords" content="後端開發, Charles Proxy, Node.js, Reverse Proxy, HTTPS, 網路除錯" />
+<link rel="canonical" href="https://claire-chang.com/post/charles-proxy-nodejs-network-capture/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="使用 Charles Proxy 抓取 Node.js 網路請求：Reverse Proxy 設定教學｜Claire Chang" />
+<meta property="og:description" content="說明如何用 Charles Proxy Reverse Proxy 抓取 Node.js HTTP 與 HTTPS 請求。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/charles-proxy-nodejs-network-capture/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/charles-proxy-reverse-proxy-settings-65f2fa85.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/charles-proxy-reverse-proxy-settings-65f2fa85.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="使用 Charles Proxy 抓取 Node.js 網路請求：Reverse Proxy 設定教學｜Claire Chang" />
+<meta name="twitter:description" content="說明如何用 Charles Proxy Reverse Proxy 抓取 Node.js HTTP 與 HTTPS 請求。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/charles-proxy-reverse-proxy-settings-65f2fa85.jpg" />
+<meta property="article:published_time" content="2020-02-27" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Charles Proxy" />
+<meta property="article:tag" content="Node.js" />
+<meta property="article:tag" content="Reverse Proxy" />
+<meta property="article:tag" content="HTTPS" />
+<meta property="article:tag" content="網路除錯" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"使用 Charles Proxy 抓取 Node.js 網路請求：Reverse Proxy 設定教學","item":"https://claire-chang.com/post/charles-proxy-nodejs-network-capture/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/charles-proxy-nodejs-network-capture/#article","headline":"使用 Charles Proxy 抓取 Node.js 網路請求：Reverse Proxy 設定教學","description":"說明如何用 Charles Proxy Reverse Proxy 抓取 Node.js HTTP 與 HTTPS 請求。","image":"https://claire-chang.com/images/tech/charles-proxy-reverse-proxy-settings.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2020-02-27","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/charles-proxy-nodejs-network-capture/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"Charles Proxy, Node.js, Reverse Proxy, HTTPS, 網路除錯","about":[{"@type":"Thing","name":"網路除錯"}],"mentions":[{"@type":"Thing","name":"Charles Proxy"},{"@type":"Thing","name":"Node.js"},{"@type":"Thing","name":"Reverse Proxy"},{"@type":"Thing","name":"HTTPS"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/charles-proxy-nodejs-network-capture/#faq","mainEntity":[{"@type":"Question","name":"Charles Proxy 可以直接抓 Node.js 的所有網路請求嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定。Node.js 程式不一定會自動使用系統代理，所以我通常改用 Charles Proxy Reverse Proxy，把 Node.js 要連的 host 與 port 暫時改到 `localhost:\u003cLocal Port>`。這樣 Charles Proxy 才能穩定看到該段 request。"}},{"@type":"Question","name":"Local Port 一定要用 60103 嗎？","acceptedAnswer":{"@type":"Answer","text":"不用。`60103` 只是範例，Local Port 可以換成任何未被佔用的本機 port。重點是 Charles Proxy Reverse Proxy 設定的 Local Port，要和 Node.js 程式改連的 port 完全一致。"}},{"@type":"Question","name":"Remote Host 要不要加 `http://` 或 `https://`？","acceptedAnswer":{"@type":"Answer","text":"不要。Charles Proxy Reverse Proxy 的 Remote Host 填主機名稱即可，例如 `claire-chang.com`。通訊協定主要由 Remote Port 與 client 連入本機時使用 HTTP 或 HTTPS 來決定。"}},{"@type":"Question","name":"Node.js HTTPS 請求一直出現憑證錯誤怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"先確認 Charles Proxy 的 HTTPS reverse proxy 是用 `https://localhost:\u003cLocal Port>/` 連入。若只是本機短暫除錯，可以用 `process.env.NODE_TLS_REJECT_UNAUTHORIZED = \"0\"` 排除憑證問題，但這個設定會停用 TLS 憑證驗證，不應放到正式環境。"}},{"@type":"Question","name":"Charles Proxy 有看到 request，但 response 不是預期內容怎麼查？","acceptedAnswer":{"@type":"Answer","text":"先看 Charles Proxy session 裡的 host、port、path 是否和目標 API 一致。若 host 與 port 正確，再檢查 Node.js 是否保留原本的 path、query string、method、header 與 body。Reverse Proxy 只負責轉送，API 參數仍然由 Node.js 程式決定。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/charles-proxy-reverse-proxy-settings.webp" alt="Charles Proxy Reverse Proxy 設定視窗，包含本機 port 與遠端 host 設定" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2020-02-27">2020-02-27</time></span><span class="post-meta-pill">Charles Proxy · Node.js · Reverse Proxy · HTTPS · 網路除錯</span></div></div><h1 class="insights-hero-title">使用 Charles Proxy 抓取 Node.js 網路請求：Reverse Proxy 設定教學</h1><p class="insights-hero-description">說明如何用 Charles Proxy Reverse Proxy 抓取 Node.js HTTP 與 HTTPS 請求。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>使用 Charles Proxy 抓取 Node.js 網路請求時，我最常用的方法是開 Charles Proxy 的 Reverse Proxy，讓 Node.js 原本要連到遠端主機的 request 改連 <code>localhost</code> 的指定 port。Charles Proxy 再把流量轉送到真正的遠端主機，這樣就能在 Charles Proxy 裡看到 request 與 response。</p>
+</div><section aria-labelledby="為什麼-node-js-請求適合用-charles-proxy-reverse-proxy-抓"><h2 id="為什麼-node-js-請求適合用-charles-proxy-reverse-proxy-抓">為什麼 Node.js 請求適合用 Charles Proxy Reverse Proxy 抓？</h2>
+<p>Charles Proxy Reverse Proxy 適合用在 client application 不方便設定 HTTP proxy 的情境。Node.js 服務只要能改 host 與 port，就能把流量導進 Charles Proxy，再由 Charles Proxy 轉送到遠端伺服器。</p>
+<p>Charles Proxy 的官方文件說明，Reverse Proxy 會在本機 port 建立一個 web server，透明地把請求代理到遠端 web server，並讓 Charles Proxy 記錄所有 request 與 response（Charles Proxy Documentation，Reverse Proxy，存取日期 2026-08-28）。這個特性很適合後端除錯，因為 Node.js 程式通常不像瀏覽器一樣會自動套用系統代理設定。</p>
+<p>我通常在這幾種情境使用 Charles Proxy Reverse Proxy：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>情境</th><th>為什麼適合</th></tr></thead><tbody><tr><td>Node.js 服務呼叫外部 API</td><td>可以看到實際送出的 path、header、body 與 response</td></tr><tr><td>SDK 或第三方套件內部發 request</td><td>不必改 SDK，只要把 endpoint 指到本機 port</td></tr><tr><td>本機除錯 HTTP 或 HTTPS 問題</td><td>可以快速確認 request 是否真的送出、參數是否符合預期</td></tr><tr><td>client 不支援 proxy 設定</td><td>用本機 port 包一層，比找 proxy hook 更直接</td></tr></tbody></table></div>
+</section><section aria-labelledby="charles-proxy-要怎麼設定-http-reverse-proxy"><h2 id="charles-proxy-要怎麼設定-http-reverse-proxy">Charles Proxy 要怎麼設定 HTTP Reverse Proxy？</h2>
+<p>Charles Proxy HTTP Reverse Proxy 的設定重點是指定一個未使用的 Local Port，再填入真正的 Remote Host 與 Remote Port。Node.js 之後只連 Local Port，Charles Proxy 負責轉送。</p>
+<p>先在 Charles Proxy 裡開啟 Reverse Proxies：</p>
+<ol>
+<li>打開 Charles Proxy。</li>
+<li>點選選單 <code>Proxy</code> -> <code>Reverse Proxies...</code>。</li>
+<li>勾選 <code>Enable Reverse Proxies</code>。</li>
+<li>新增一筆 reverse proxy 設定。</li>
+</ol>
+<figure class="article-figure"><img src="/images/tech/charles-proxy-reverse-proxies-menu.webp" alt="Charles Proxy 的 Proxy 選單中可以找到 Reverse Proxies 設定" loading="lazy" class="markdown-img"></figure>
+<p>以 <code>claire-chang.com</code> 為例，我會這樣填：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>欄位</th><th>設定值</th><th>說明</th></tr></thead><tbody><tr><td>Local Port</td><td><code>60103</code></td><td>任意未被佔用的本機 port</td></tr><tr><td>Remote Host</td><td><code>claire-chang.com</code></td><td>Node.js 原本要連線的目標主機</td></tr><tr><td>Remote Port</td><td><code>80</code></td><td>HTTP 通常使用 <code>80</code></td></tr></tbody></table></div>
+<figure class="article-figure"><img src="/images/tech/charles-proxy-reverse-proxy-settings.webp" alt="Charles Proxy Reverse Proxy 設定本機 port 60103 並轉送到 claire-chang.com:80" loading="lazy" class="markdown-img"></figure>
+<p>Charles Proxy 官方文件也提到，HTTP 目的地通常使用 port <code>80</code>，HTTPS 目的地通常使用 port <code>443</code>；若建立 HTTPS reverse proxy，client 也要用 HTTPS 連到本機位置（Charles Proxy Documentation，Reverse Proxy，存取日期 2026-08-28）。</p>
+</section><section aria-labelledby="node-js-程式要怎麼改連-charles-proxy"><h2 id="node-js-程式要怎麼改連-charles-proxy">Node.js 程式要怎麼改連 Charles Proxy？</h2>
+<p>Node.js 程式要改連 Charles Proxy 時，把原本的遠端 host 改成 <code>localhost</code>，port 改成 Charles Proxy Reverse Proxy 的 Local Port。path、method、header 與 body 可以照原本 API 呼叫邏輯保留。</p>
+<p>如果原本 Node.js 連線目標是：</p>
+<pre><code class="hljs language-text">http://claire-chang.com/api/example
+</code></pre>
+<p>設定 Charles Proxy Reverse Proxy 後，Node.js 端改成：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">const</span> options = {
+  <span class="hljs-attr">host</span>: <span class="hljs-string">"localhost"</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">60103</span>,
+  <span class="hljs-attr">path</span>: <span class="hljs-string">"/api/example"</span>,
+  <span class="hljs-attr">method</span>: <span class="hljs-string">"GET"</span>,
+};
+</code></pre>
+<p>重點不是把 API path 改掉，而是把主機與 port 換成 Charles Proxy 開在本機的入口。Charles Proxy 收到 <code>localhost:60103</code> 的請求後，會把同一個 request 轉送到 <code>claire-chang.com:80</code>。</p>
+<p>我的檢查順序通常是：</p>
+<ol>
+<li>先確認 Charles Proxy 的 recording 有開。</li>
+<li>確認 Node.js 連的是 <code>localhost</code> 與 Local Port。</li>
+<li>確認 Charles Proxy session 裡有出現新的 request。</li>
+<li>若沒有 request，先檢查 port 是否被其他程式佔用。</li>
+<li>若有 request 但 response 異常，再看 Remote Host、Remote Port、path 是否一致。</li>
+</ol>
+</section><section aria-labelledby="https-請求要注意什麼"><h2 id="https-請求要注意什麼">HTTPS 請求要注意什麼？</h2>
+<p>Charles Proxy 抓 Node.js HTTPS 請求時，常見問題是憑證驗證。<code>NODE_TLS_REJECT_UNAUTHORIZED=0</code> 可以讓 Node.js 不驗證 TLS 憑證，但這只適合本機除錯，不應放進正式環境。</p>
+<p>如果目標是 HTTPS，Reverse Proxy 的 Remote Port 通常要改成 <code>443</code>，Node.js 連本機時也要使用 HTTPS URL。Charles Proxy 文件明確說明，HTTPS reverse proxy 要用 <code>https://localhost:&#x3C;port>/</code> 連入（Charles Proxy Documentation，Reverse Proxy，存取日期 2026-08-28）。</p>
+<p>本機快速測試時，我曾經用這行讓 Node.js 接受不明憑證：</p>
+<pre><code class="hljs language-js">process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_TLS_REJECT_UNAUTHORIZED</span> = <span class="hljs-string">"0"</span>;
+</code></pre>
+<p>Node.js 官方文件說明，當 <code>NODE_TLS_REJECT_UNAUTHORIZED</code> 設為 <code>0</code> 時，TLS 連線會停用憑證驗證，這會讓 TLS 與 HTTPS 變得不安全，因此官方強烈不建議使用這個環境變數（Node.js Documentation，Command-line API，存取日期 2026-08-28）。</p>
+<p>比較安全的做法是只在本機除錯期間短暫使用，並避免把這段設定 commit 到專案。若團隊需要長期除錯 HTTPS，應改用信任 Charles Proxy 憑證或用 <code>NODE_EXTRA_CA_CERTS</code> 指向受信任的 CA 憑證檔。</p>
+</section><section aria-labelledby="我會怎麼判斷設定是否成功"><h2 id="我會怎麼判斷設定是否成功">我會怎麼判斷設定是否成功？</h2>
+<p>Charles Proxy Reverse Proxy 設定成功時，Node.js request 會出現在 Charles Proxy session list 裡，而且目標 path、header、query string 與 response body 都能被檢查。若只看到連線錯誤，通常是 host、port 或 HTTPS 憑證問題。</p>
+<p>我會用這張表快速排查：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>現象</th><th>優先檢查</th></tr></thead><tbody><tr><td>Charles Proxy 完全沒有出現 request</td><td>Node.js 是否真的改連 <code>localhost</code> 與 Local Port</td></tr><tr><td>Node.js 回報 <code>ECONNREFUSED</code></td><td>Local Port 是否填錯，或 Charles Proxy Reverse Proxy 是否未啟用</td></tr><tr><td>Charles Proxy 有 request 但遠端連不上</td><td>Remote Host、Remote Port 是否填對</td></tr><tr><td>HTTP 可以，HTTPS 失敗</td><td>Node.js 是否用 HTTPS 連本機，以及 TLS 憑證是否被信任</td></tr><tr><td>request path 不符合預期</td><td>Node.js 程式是否同時改到了 path 或 base URL</td></tr></tbody></table></div>
+<p>這個方法的好處是改動很小：只要把 Node.js endpoint 暫時改成 <code>localhost:&#x3C;Local Port></code>，除錯結束後再切回原本設定。對於只想確認 request 內容的情境，Charles Proxy Reverse Proxy 比在程式碼裡到處加 log 乾淨很多。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<p>Charles Proxy 抓 Node.js 網路請求的常見問題，多半集中在 Reverse Proxy 與 TLS 憑證。先把 HTTP 流程跑通，再處理 HTTPS，會比一開始就同時排查所有問題穩定。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Charles Proxy 可以直接抓 Node.js 的所有網路請求嗎？</span></h3>
+<p>不一定。Node.js 程式不一定會自動使用系統代理，所以我通常改用 Charles Proxy Reverse Proxy，把 Node.js 要連的 host 與 port 暫時改到 <code>localhost:&#x3C;Local Port></code>。這樣 Charles Proxy 才能穩定看到該段 request。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Local Port 一定要用 60103 嗎？</span></h3>
+<p>不用。<code>60103</code> 只是範例，Local Port 可以換成任何未被佔用的本機 port。重點是 Charles Proxy Reverse Proxy 設定的 Local Port，要和 Node.js 程式改連的 port 完全一致。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Remote Host 要不要加 <code>http://</code> 或 <code>https://</code>？</span></h3>
+<p>不要。Charles Proxy Reverse Proxy 的 Remote Host 填主機名稱即可，例如 <code>claire-chang.com</code>。通訊協定主要由 Remote Port 與 client 連入本機時使用 HTTP 或 HTTPS 來決定。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Node.js HTTPS 請求一直出現憑證錯誤怎麼辦？</span></h3>
+<p>先確認 Charles Proxy 的 HTTPS reverse proxy 是用 <code>https://localhost:&#x3C;Local Port>/</code> 連入。若只是本機短暫除錯，可以用 <code>process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"</code> 排除憑證問題，但這個設定會停用 TLS 憑證驗證，不應放到正式環境。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Charles Proxy 有看到 request，但 response 不是預期內容怎麼查？</span></h3>
+<p>先看 Charles Proxy session 裡的 host、port、path 是否和目標 API 一致。若 host 與 port 正確，再檢查 Node.js 是否保留原本的 path、query string、method、header 與 body。Reverse Proxy 只負責轉送，API 參數仍然由 Node.js 程式決定。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<p>本文的外部參考以官方文件為主。Charles Proxy Reverse Proxy 流程依 Charles Proxy 文件核對，Node.js TLS 環境變數風險依 Node.js 官方文件補充。</p>
+<ul>
+<li>Charles Proxy Documentation. <a href="https://www.charlesproxy.com/documentation/proxying/reverse-proxy/" target="_blank" rel="noopener noreferrer">Reverse Proxy</a>. 存取日期：2026-08-28。</li>
+<li>Node.js Documentation. <a href="https://nodejs.org/api/cli.html#node_tls_reject_unauthorizedvalue" target="_blank" rel="noopener noreferrer">Command-line API：<code>NODE_TLS_REJECT_UNAUTHORIZED=value</code></a>. 存取日期：2026-08-28。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/charles-proxy-mobile-traffic-capture">使用 Charles抓取手機網路使用</a>：同樣聚焦 網路除錯，可接著比較不同情境的做法。</li>
+<li><a href="/post/charles-proxy-introduction">Charles 介紹 – 好用的封包抓取工具</a>：同樣聚焦 網路除錯，可接著比較不同情境的做法。</li>
+<li><a href="/post/charles-proxy-packet-capture">Charles 介紹 - 好用的封包抓取工具</a>：同樣聚焦 HTTPS，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28：補上 Charles Proxy Reverse Proxy 的操作說明、Node.js HTTPS 憑證風險提醒、FAQ、參考資料與延伸閱讀。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2020-02-27</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

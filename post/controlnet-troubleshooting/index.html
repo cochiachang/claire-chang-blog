@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ControlNet 常見錯誤如何排解｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 Stable Diffusion WebUI 使用 ControlNet 時的 C++ Build Tools、模型版本不相容與 tensor 尺寸錯誤。" />
+<meta name="keywords" content="生成式AI, ControlNet, Stable Diffusion, SDXL, 錯誤排解" />
+<link rel="canonical" href="https://claire-chang.com/post/controlnet-troubleshooting/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="ControlNet 常見錯誤如何排解｜Claire Chang" />
+<meta property="og:description" content="整理 Stable Diffusion WebUI 使用 ControlNet 時的 C++ Build Tools、模型版本不相容與 tensor 尺寸錯誤。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/controlnet-troubleshooting/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_controlnet-troubleshooting-a4827c49.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_controlnet-troubleshooting-a4827c49.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ControlNet 常見錯誤如何排解｜Claire Chang" />
+<meta name="twitter:description" content="整理 Stable Diffusion WebUI 使用 ControlNet 時的 C++ Build Tools、模型版本不相容與 tensor 尺寸錯誤。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_controlnet-troubleshooting-a4827c49.jpg" />
+<meta property="article:published_time" content="2024-08-18" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="ControlNet" />
+<meta property="article:tag" content="Stable Diffusion" />
+<meta property="article:tag" content="SDXL" />
+<meta property="article:tag" content="錯誤排解" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"ControlNet 常見錯誤如何排解","item":"https://claire-chang.com/post/controlnet-troubleshooting/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/controlnet-troubleshooting/#article","headline":"ControlNet 常見錯誤如何排解","description":"整理 Stable Diffusion WebUI 使用 ControlNet 時的 C++ Build Tools、模型版本不相容與 tensor 尺寸錯誤。","image":"https://claire-chang.com/images/tech/hero_controlnet-troubleshooting.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-08-18","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/controlnet-troubleshooting/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"ControlNet, Stable Diffusion, SDXL, 錯誤排解","about":[{"@type":"Thing","name":"錯誤排解"}],"mentions":[{"@type":"Thing","name":"ControlNet"},{"@type":"Thing","name":"Stable Diffusion"},{"@type":"Thing","name":"SDXL"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/controlnet-troubleshooting/#faq","mainEntity":[{"@type":"Question","name":"ControlNet 顯示 Microsoft Visual C++ 14.0 required 是什麼意思？","acceptedAnswer":{"@type":"Answer","text":"這代表某個 Python 或 PyTorch extension 需要編譯 C++ 模組，但 Windows 找不到 MSVC 編譯工具。安裝 Microsoft C++ Build Tools 後通常可解決。"}},{"@type":"Question","name":"SD1.5 的 ControlNet 可以搭配 SDXL 嗎？","acceptedAnswer":{"@type":"Answer","text":"SD1.5 的 ControlNet 不應直接搭配 SDXL。兩者模型架構與權重尺寸不同，容易出現 incompatible 或 tensor size mismatch。"}},{"@type":"Question","name":"Tensor size 1024 和 768 錯誤是圖片尺寸太大嗎？","acceptedAnswer":{"@type":"Answer","text":"通常不是圖片尺寸問題，而是模型系列不一致。1024 與 768 的錯誤常見於 SDXL 與 SD1.x 權重混用。"}},{"@type":"Question","name":"Control Type 選了但 Model 是空的怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"先確認 ControlNet 模型是否放在正確資料夾，並確認模型版本符合目前 Stable Diffusion 主模型。必要時重新整理模型清單或重啟 WebUI。"}},{"@type":"Question","name":"ControlNet 模型要去哪裡下載？","acceptedAnswer":{"@type":"Answer","text":"ControlNet 模型可從 Hugging Face 或模型作者頁面下載。下載前要確認模型是 SD1.x、SD2.x 還是 SDXL 版本。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_controlnet-troubleshooting.webp" alt="AI 圖像生成控制流程示意" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-08-18">2024-08-18</time></span><span class="post-meta-pill">ControlNet · Stable Diffusion · SDXL · 錯誤排解</span></div></div><h1 class="insights-hero-title">ControlNet 常見錯誤如何排解</h1><p class="insights-hero-description">整理 Stable Diffusion WebUI 使用 ControlNet 時的 C++ Build Tools、模型版本不相容與 tensor 尺寸錯誤。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>ControlNet 常見錯誤多半來自三類問題：Windows 缺少 C++ 編譯工具、ControlNet 模型與 Stable Diffusion 基底模型版本不相容、或 SD1.x 與 SDXL 權重尺寸不匹配。排查時應先看錯誤訊息中的模型名稱與版本。</p>
+</div><section aria-labelledby="controlnet-為什麼會載入失敗"><h2 id="controlnet-為什麼會載入失敗">ControlNet 為什麼會載入失敗？</h2>
+<p>ControlNet 載入失敗不一定是 ControlNet 本身壞掉。Stable Diffusion WebUI extension、Python 套件、PyTorch extension 與 Windows 編譯環境都可能造成啟動錯誤。</p>
+<p>我遇到的錯誤訊息重點如下：</p>
+<pre><code class="hljs language-text">distutils.errors.DistutilsPlatformError:
+Microsoft Visual C++ 14.0 or greater is required.
+Get it with "Microsoft C++ Build Tools":
+https://visualstudio.microsoft.com/visual-cpp-build-tools/
+</code></pre>
+<p>這個錯誤發生在 <code>face_manipulation_extras.py</code> 載入時，底層需要編譯 C++ extension，但 Windows 環境找不到 Visual C++ Build Tools。</p>
+</section><section aria-labelledby="缺少-microsoft-c-build-tools-怎麼處理"><h2 id="缺少-microsoft-c-build-tools-怎麼處理">缺少 Microsoft C++ Build Tools 怎麼處理？</h2>
+<p>缺少 Microsoft C++ Build Tools 時，需要安裝 Visual Studio Build Tools 並確保 Python extension 能找到 MSVC 編譯環境。重新啟動終端機通常是必要步驟。</p>
+<p>建議處理順序：</p>
+<ol>
+<li>前往 Microsoft 官方網站下載 Visual Studio Build Tools。</li>
+<li>安裝 C++ build tools 與 Windows SDK。</li>
+<li>重新啟動 terminal 或電腦。</li>
+<li>重新啟動 Stable Diffusion WebUI。</li>
+<li>若仍失敗，確認 Python venv 是否使用正確環境。</li>
+</ol>
+<p>這類錯誤通常不是模型檔問題，因此不要一開始就重新下載 ControlNet 模型。</p>
+</section><section aria-labelledby="controlnet-模型版本不相容怎麼判斷"><h2 id="controlnet-模型版本不相容怎麼判斷">ControlNet 模型版本不相容怎麼判斷？</h2>
+<p>ControlNet 模型版本不相容時，錯誤訊息通常會明確指出 ControlNet model 與 sd model 的版本不一致。SD1.x ControlNet 不能直接搭配 SDXL 基底模型使用。</p>
+<p>錯誤訊息重點如下：</p>
+<pre><code class="hljs language-text">Exception: ControlNet model control_v11p_sd15_inpaint
+is not compatible with sd model(StableDiffusionVersion.SDXL)
+</code></pre>
+<p>這代表目前選到的 ControlNet 模型是 Stable Diffusion 1.5 系列，但主模型是 SDXL。解法是改用對應 SDXL 的 ControlNet 模型，或把主模型切回 SD1.5。</p>
+</section><section aria-labelledby="tensor-size-1024-和-768-不一致代表什麼"><h2 id="tensor-size-1024-和-768-不一致代表什麼">Tensor size 1024 和 768 不一致代表什麼？</h2>
+<p>Tensor size 1024 和 768 不一致通常代表 SDXL 與 SD1.x 權重混用。SDXL 與 SD1.x 的架構尺寸不同，ControlNet 權重不能任意交叉搭配。</p>
+<p>我遇到的錯誤：</p>
+<pre><code class="hljs language-text">RuntimeError: The size of tensor a (1024) must match
+the size of tensor b (768) at non-singleton dimension 1
+</code></pre>
+<p>這類錯誤不是調整輸出圖片尺寸就能解決。真正要檢查的是：</p>
+<ul>
+<li>Stable Diffusion 主模型是 SD1.5、SD2.x 還是 SDXL。</li>
+<li>ControlNet 模型是否對應同一個系列。</li>
+<li>WebUI 的 Control Type 是否能自動選到相容模型。</li>
+<li>模型檔是否放在 extension 或 WebUI 預期的資料夾。</li>
+</ul>
+</section><section aria-labelledby="controlnet-模型應該放在哪裡"><h2 id="controlnet-模型應該放在哪裡">ControlNet 模型應該放在哪裡？</h2>
+<p>ControlNet 模型應放在 Stable Diffusion WebUI 或 ControlNet extension 能掃描到的位置。模型放錯資料夾時，WebUI 可能在 Model 下拉選單找不到對應項目。</p>
+<p>提醒：按下 Control Type 後，Model 理論上會自動跳到相對應模型。如果 Control Type 已選，但 Model 仍是空的，很可能是模型版本不一致、檔案名稱不符合 extension 規則，或模型放置位置錯誤。</p>
+<p>可依使用環境檢查：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>基底模型</th><th>ControlNet 模型方向</th></tr></thead><tbody><tr><td>Stable Diffusion 1.5</td><td>使用 SD1.x ControlNet 模型</td></tr><tr><td>Stable Diffusion 2.x</td><td>使用 SD2.x ControlNet 模型</td></tr><tr><td>SDXL</td><td>使用 SDXL ControlNet 模型</td></tr></tbody></table></div>
+</section><section aria-labelledby="controlnet-排錯順序應該怎麼排"><h2 id="controlnet-排錯順序應該怎麼排">ControlNet 排錯順序應該怎麼排？</h2>
+<p>ControlNet 排錯應先看環境，再看模型版本，最後才看參數。先調 prompt 或圖片尺寸通常無法解決 extension 載入與權重不相容問題。</p>
+<p>建議順序：</p>
+<ol>
+<li>WebUI 是否正常啟動。</li>
+<li>extension 是否載入成功。</li>
+<li>Python 與 PyTorch 是否在正確 venv。</li>
+<li>Windows 是否具備 C++ Build Tools。</li>
+<li>主模型版本與 ControlNet 模型版本是否一致。</li>
+<li>ControlNet model dropdown 是否能找到模型。</li>
+<li>再調整 preprocessor、control weight、resize mode 與圖片尺寸。</li>
+</ol>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ControlNet 顯示 Microsoft Visual C++ 14.0 required 是什麼意思？</span></h3>
+<p>這代表某個 Python 或 PyTorch extension 需要編譯 C++ 模組，但 Windows 找不到 MSVC 編譯工具。安裝 Microsoft C++ Build Tools 後通常可解決。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>SD1.5 的 ControlNet 可以搭配 SDXL 嗎？</span></h3>
+<p>SD1.5 的 ControlNet 不應直接搭配 SDXL。兩者模型架構與權重尺寸不同，容易出現 incompatible 或 tensor size mismatch。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Tensor size 1024 和 768 錯誤是圖片尺寸太大嗎？</span></h3>
+<p>通常不是圖片尺寸問題，而是模型系列不一致。1024 與 768 的錯誤常見於 SDXL 與 SD1.x 權重混用。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Control Type 選了但 Model 是空的怎麼辦？</span></h3>
+<p>先確認 ControlNet 模型是否放在正確資料夾，並確認模型版本符合目前 Stable Diffusion 主模型。必要時重新整理模型清單或重啟 WebUI。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ControlNet 模型要去哪裡下載？</span></h3>
+<p>ControlNet 模型可從 Hugging Face 或模型作者頁面下載。下載前要確認模型是 SD1.x、SD2.x 還是 SDXL 版本。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Microsoft C++ Build Tools: <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/" target="_blank" rel="noopener noreferrer">https://visualstudio.microsoft.com/visual-cpp-build-tools/</a></li>
+<li>ControlNet v1.1 models for SD1.x: <a href="https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/tree/main" target="_blank" rel="noopener noreferrer">https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/tree/main</a></li>
+<li>ControlNet models for SD2.1: <a href="https://huggingface.co/thibaud/controlnet-sd21/tree/main" target="_blank" rel="noopener noreferrer">https://huggingface.co/thibaud/controlnet-sd21/tree/main</a></li>
+<li>Stable Diffusion WebUI ControlNet extension: <a href="https://github.com/Mikubill/sd-webui-controlnet" target="_blank" rel="noopener noreferrer">https://github.com/Mikubill/sd-webui-controlnet</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/controlnet-image-control-introduction">ControlNet 圖像控制入門：姿勢、線稿、深度圖與 Stable Diffusion 應用</a>：同樣聚焦 ControlNet、Stable Diffusion，可接著比較不同情境的做法。</li>
+<li><a href="/post/stable-diffusion-features-applications">Stable Diffusion 主要功能與應用全解析：從圖像生成到科學研究</a>：同樣聚焦 Stable Diffusion、SDXL，可接著比較不同情境的做法。</li>
+<li><a href="/post/stable-diffusion-interfaces-easydiffusion-comfyui-webui">Stable Diffusion 常用操作介面比較：Easy Diffusion、ComfyUI 與 Stable Diffusion web UI</a>：同樣聚焦 Stable Diffusion，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28，依原始 ControlNet 錯誤訊息整理為可發布的 GEO 技術文章。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-08-18</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

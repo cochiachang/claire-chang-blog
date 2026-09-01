@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>如何用 PromQL 查詢某個 Pod 內所有的指標值？｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="一條 Prometheus 查詢語句 sum by(__name__) 搭配 label selector，快速列出 Kubernetes 中特定 namespace 下某個 Pod 內所有的指標值，並用 ServiceMonitor 設定正確監控。" />
+<meta name="keywords" content="DevOps, Prometheus, PromQL, Kubernetes, ServiceMonitor, 監控" />
+<link rel="canonical" href="https://claire-chang.com/post/prometheus-query-pod-metrics/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="如何用 PromQL 查詢某個 Pod 內所有的指標值？｜Claire Chang" />
+<meta property="og:description" content="一條 Prometheus 查詢語句 sum by(__name__) 搭配 label selector，快速列出 Kubernetes 中特定 namespace 下某個 Pod 內所有的指標值，並用 ServiceMonitor 設定正確監控。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/prometheus-query-pod-metrics/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_prometheus-query-pod-metrics-f619db05.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_prometheus-query-pod-metrics-f619db05.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="如何用 PromQL 查詢某個 Pod 內所有的指標值？｜Claire Chang" />
+<meta name="twitter:description" content="一條 Prometheus 查詢語句 sum by(__name__) 搭配 label selector，快速列出 Kubernetes 中特定 namespace 下某個 Pod 內所有的指標值，並用 ServiceMonitor 設定正確監控。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_prometheus-query-pod-metrics-f619db05.jpg" />
+<meta property="article:published_time" content="2023-04-14" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Prometheus" />
+<meta property="article:tag" content="PromQL" />
+<meta property="article:tag" content="Kubernetes" />
+<meta property="article:tag" content="ServiceMonitor" />
+<meta property="article:tag" content="監控" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"如何用 PromQL 查詢某個 Pod 內所有的指標值？","item":"https://claire-chang.com/post/prometheus-query-pod-metrics/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/prometheus-query-pod-metrics/#article","headline":"如何用 PromQL 查詢某個 Pod 內所有的指標值？","description":"一條 Prometheus 查詢語句 sum by(__name__) 搭配 label selector，快速列出 Kubernetes 中特定 namespace 下某個 Pod 內所有的指標值，並用 ServiceMonitor 設定正確監控。","image":"https://claire-chang.com/images/tech/hero_prometheus-query-pod-metrics.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-04-14","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/prometheus-query-pod-metrics/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"DevOps","keywords":"Prometheus, PromQL, Kubernetes, ServiceMonitor, 監控","about":[{"@type":"Thing","name":"監控"}],"mentions":[{"@type":"Thing","name":"Prometheus"},{"@type":"Thing","name":"PromQL"},{"@type":"Thing","name":"Kubernetes"},{"@type":"Thing","name":"ServiceMonitor"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/prometheus-query-pod-metrics/#faq","mainEntity":[{"@type":"Question","name":"為什麼要用 sum by(__name__) 而不是直接查指標？","acceptedAnswer":{"@type":"Answer","text":"因為一開始可能不知道這個 Pod 到底有哪些指標，用 `__name__=~\".*\"` 匹配所有指標名稱並依 `__name__` 分組，就能一次列出全部的指標與其值。"}},{"@type":"Question","name":"`__name__` 是什麼？","acceptedAnswer":{"@type":"Answer","text":"`__name__` 是 Prometheus 的特殊標籤，代表指標本身的名稱。在 `sum by` 中把它當作分組欄位，查詢結果就會依指標名稱一行行列出。"}},{"@type":"Question","name":"ServiceMonitor 的作用是什麼？","acceptedAnswer":{"@type":"Answer","text":"ServiceMonitor 是 Prometheus Operator 的 CRD，用來告訴 Prometheus 要抓取哪些 Service 的哪些 endpoint，包含抓取路徑、port、間隔等設定，不用手動改 Prometheus 設定檔。"}},{"@type":"Question","name":"namespace 和 pod 的 label 要怎麼填？","acceptedAnswer":{"@type":"Answer","text":"把 `namespace` 填成 Pod 所在的命名空間，`pod` 填成實際的 Pod 名稱（或正則匹配），即可縮小查詢範圍到該 Pod。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_prometheus-query-pod-metrics.webp" alt="筆記型電腦螢幕上顯示效能分析的圖表" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=DevOps" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ DevOps</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-04-14">2023-04-14</time></span><span class="post-meta-pill">Prometheus · PromQL · Kubernetes · ServiceMonitor · 監控</span></div></div><h1 class="insights-hero-title">如何用 PromQL 查詢某個 Pod 內所有的指標值？</h1><p class="insights-hero-description">一條 Prometheus 查詢語句 sum by(__name__) 搭配 label selector，快速列出 Kubernetes 中特定 namespace 下某個 Pod 內所有的指標值，並用 ServiceMonitor 設定正確監控。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>想確認 Prometheus 到底抓到了某個 Pod 的哪些指標嗎？本文用一條 <code>sum by(__name__)</code> 的 PromQL 查詢，搭配 namespace 與 pod 的 label selector，一次列出該 Pod 內所有的指標值，再進一步用它驗證 ServiceMonitor 的設定是否正確。</p>
+</div><section aria-labelledby="用什麼指令可以一次列出-pod-內所有的值"><h2 id="用什麼指令可以一次列出-pod-內所有的值">用什麼指令可以一次列出 Pod 內所有的值？</h2>
+<p>使用的指令如下：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sum</span> by(__name__)({namespace=<span class="hljs-string">"default"</span>,pod=<span class="hljs-string">"pod_name"</span>, __name__=~<span class="hljs-string">".*"</span>})
+</code></pre>
+</section><section aria-labelledby="這條-promql-查詢語句的各部分是什麼意思"><h2 id="這條-promql-查詢語句的各部分是什麼意思">這條 PromQL 查詢語句的各部分是什麼意思？</h2>
+<ul>
+<li><code>sum by(__name__)</code> 是一個 Prometheus 查詢語句，用於計算符合指定條件的指標值之和，並根據指標名稱進行分組。</li>
+<li><code>{namespace="default",pod="pod_name"}</code> 是一個標籤選擇器（label selector），用來選擇符合條件的 POD。其中 <code>namespace</code> 表示命名空間（namespace），<code>pod</code> 表示 POD 名稱。</li>
+<li><code>__name__=~".*"</code> 是一個正則表達式選擇器（regular expression selector），用於選擇符合特定模式的指標名稱。我們使用 <code>~</code> 運算符將正則表達式用於指標名稱，<code>.*</code> 的意思是匹配所有指標名稱。也可以換成例如 <code>"MEERIC.*"</code>，表示以 <code>MEERIC</code> 開頭的所有指標名稱。</li>
+<li><code>__name__</code> 是一個特殊的標籤（label），代表指標名稱。使用 <code>sum by</code> 子句時，我們將其作為分組條件之一，以根據指標名稱對指標值進行分組。</li>
+</ul>
+</section><section aria-labelledby="查到所有指標後-如何用-servicemonitor-讓-prometheus-監控正確的對象"><h2 id="查到所有指標後-如何用-servicemonitor-讓-prometheus-監控正確的對象">查到所有指標後，如何用 ServiceMonitor 讓 Prometheus 監控正確的對象？</h2>
+<p>在可以看到所有的值之後，就可以確認你的 ServiceMonitor 是否正確，接著來設定 ServiceMonitor 讓普羅米修斯監控正確的對象。</p>
+<p>以下為一個簡單的範例：</p>
+<pre><code class="hljs language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">monitoring.coreos.com/v1</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">ServiceMonitor</span>
+<span class="hljs-attr">metadata:</span>
+  <span class="hljs-attr">labels:</span>
+    <span class="hljs-attr">app.kubernetes.io/instance:</span> <span class="hljs-string">srs-json-exporter</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">json-exporter</span>
+  <span class="hljs-attr">namespace:</span> <span class="hljs-string">stu-dashboard</span>
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-attr">endpoints:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">interval:</span> <span class="hljs-string">30s</span>
+    <span class="hljs-attr">params:</span>
+      <span class="hljs-attr">module:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">default</span>
+      <span class="hljs-attr">target:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">http://127.0.0.1:1985/api/v1/streams/</span>
+    <span class="hljs-attr">path:</span> <span class="hljs-string">probe</span>
+    <span class="hljs-attr">port:</span> <span class="hljs-string">json-exporter</span>
+  <span class="hljs-attr">jobLabel:</span> <span class="hljs-string">jobLabel</span>
+  <span class="hljs-attr">namespaceSelector:</span>
+    <span class="hljs-attr">matchNames:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">stu-srs</span>
+  <span class="hljs-attr">selector:</span>
+    <span class="hljs-attr">matchLabels:</span>
+      <span class="hljs-attr">app:</span> <span class="hljs-string">json-exporter</span>
+</code></pre>
+<p>更多關於 ServiceMonitor 可用的設定值請見 <a href="https://docs.openshift.com/container-platform/4.9/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html" target="_blank" rel="noopener noreferrer">OpenShift 的 ServiceMonitor API 文件</a>。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼要用 sum by(<strong>name</strong>) 而不是直接查指標？</span></h3>
+<p>因為一開始可能不知道這個 Pod 到底有哪些指標，用 <code>__name__=~".*"</code> 匹配所有指標名稱並依 <code>__name__</code> 分組，就能一次列出全部的指標與其值。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>__name__</code> 是什麼？</span></h3>
+<p><code>__name__</code> 是 Prometheus 的特殊標籤，代表指標本身的名稱。在 <code>sum by</code> 中把它當作分組欄位，查詢結果就會依指標名稱一行行列出。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ServiceMonitor 的作用是什麼？</span></h3>
+<p>ServiceMonitor 是 Prometheus Operator 的 CRD，用來告訴 Prometheus 要抓取哪些 Service 的哪些 endpoint，包含抓取路徑、port、間隔等設定，不用手動改 Prometheus 設定檔。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>namespace 和 pod 的 label 要怎麼填？</span></h3>
+<p>把 <code>namespace</code> 填成 Pod 所在的命名空間，<code>pod</code> 填成實際的 Pod 名稱（或正則匹配），即可縮小查詢範圍到該 Pod。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://docs.openshift.com/container-platform/4.9/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html" target="_blank" rel="noopener noreferrer">OpenShift Container Platform 4.9 — ServiceMonitor API 文件</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/prometheus-query-pod-values">如何查詢 Prometheus 某個 POD 內所有的指標值？</a>：同樣聚焦 Prometheus、Kubernetes，可接著比較不同情境的做法。</li>
+<li><a href="/post/setup-prometheus-operator-kubernetes">Prometheus Operator 設定教學：在 Kubernetes 建立 ServiceMonitor</a>：同樣聚焦 Kubernetes、ServiceMonitor，可接著比較不同情境的做法。</li>
+<li><a href="/post/prometheus-operator">Prometheus Operator 是什麼？Kubernetes 監控的自動化利器</a>：同樣聚焦 Prometheus、Kubernetes，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2023-04-14，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-04-14</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

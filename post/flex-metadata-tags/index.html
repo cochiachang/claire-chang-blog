@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex 元數據標籤（Metadata Tags）完整指南——告訴編譯器如何編譯｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="Flex 元數據標籤完整指南：從最常用的 [Bindable] 到 [Embed]、[Event]、[RemoteClass] 等 12 個標籤的定義與用法範例，搞懂這些告訴編譯器如何編譯 SWF 的特殊標籤，就知道該在何時何處使用它們。" />
+<meta name="keywords" content="前端開發, Flex, ActionScript, MXML, 編譯器" />
+<link rel="canonical" href="https://claire-chang.com/post/flex-metadata-tags/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Flex 元數據標籤（Metadata Tags）完整指南——告訴編譯器如何編譯｜Claire Chang" />
+<meta property="og:description" content="Flex 元數據標籤完整指南：從最常用的 [Bindable] 到 [Embed]、[Event]、[RemoteClass] 等 12 個標籤的定義與用法範例，搞懂這些告訴編譯器如何編譯 SWF 的特殊標籤，就知道該在何時何處使用它們。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/flex-metadata-tags/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_flex-metadata-tags-2cc62519.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_flex-metadata-tags-2cc62519.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Flex 元數據標籤（Metadata Tags）完整指南——告訴編譯器如何編譯｜Claire Chang" />
+<meta name="twitter:description" content="Flex 元數據標籤完整指南：從最常用的 [Bindable] 到 [Embed]、[Event]、[RemoteClass] 等 12 個標籤的定義與用法範例，搞懂這些告訴編譯器如何編譯 SWF 的特殊標籤，就知道該在何時何處使用它們。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_flex-metadata-tags-2cc62519.jpg" />
+<meta property="article:published_time" content="2009-11-13" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Flex" />
+<meta property="article:tag" content="ActionScript" />
+<meta property="article:tag" content="MXML" />
+<meta property="article:tag" content="編譯器" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Flex 元數據標籤（Metadata Tags）完整指南——告訴編譯器如何編譯","item":"https://claire-chang.com/post/flex-metadata-tags/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/flex-metadata-tags/#article","headline":"Flex 元數據標籤（Metadata Tags）完整指南——告訴編譯器如何編譯","description":"Flex 元數據標籤完整指南：從最常用的 [Bindable] 到 [Embed]、[Event]、[RemoteClass] 等 12 個標籤的定義與用法範例，搞懂這些告訴編譯器如何編譯 SWF 的特殊標籤，就知道該在何時何處使用它們。","image":"https://claire-chang.com/images/tech/hero_flex-metadata-tags.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2009-11-13","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/flex-metadata-tags/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Flex, ActionScript, MXML, 編譯器","about":[{"@type":"Thing","name":"編譯器"}],"mentions":[{"@type":"Thing","name":"Flex"},{"@type":"Thing","name":"ActionScript"},{"@type":"Thing","name":"MXML"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/flex-metadata-tags/#faq","mainEntity":[{"@type":"Question","name":"什麼是 Flex 元數據標籤？","acceptedAnswer":{"@type":"Answer","text":"元數據標籤是一種特殊的標籤，作用是向編譯器提供如何編譯程式的資訊。它們不會被編譯到最終的 SWF 檔案中，而是影響編譯器生成 SWF 的方式，例如資料綁定、資源嵌入、事件宣告等。"}},{"@type":"Question","name":"[Bindable] 標籤的作用是什麼？","acceptedAnswer":{"@type":"Answer","text":"`[Bindable]` 讓程式組件之間的資料同步變得容易，可用於綁定簡單資料型別、類別、複雜資料型別與函式，也可以搭配 getter/setter 綁定到自訂事件，在資料變更時自動更新綁定的組件。"}},{"@type":"Question","name":"[Embed] 和 [IconFile] 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"`[Embed]` 可以嵌入圖片、SWF、音樂、視訊等各種資源，並指派給變數或組件屬性；`[IconFile]` 則只用來指定作為自訂類別圖示的 jpg/gif/png 檔名，用途單一。"}},{"@type":"Question","name":"[RemoteClass] 解決什麼問題？","acceptedAnswer":{"@type":"Answer","text":"`[RemoteClass]` 用來把 ActionScript 類別對應到 Java 類別或 ColdFusion CFC，透過 `alias` 指定遠端類別全名，讓兩端之間的資料型別自動轉換，省去手動序列化。"}},{"@type":"Question","name":"元數據標籤會增加 SWF 大小嗎？","acceptedAnswer":{"@type":"Answer","text":"標籤本身不會被編譯進 SWF，但它觸發編譯器生成的程式碼（例如 `[Bindable]` 產生的事件分派邏輯）會包含在 SWF 中。整體而言這些生成程式碼非常精簡，幾行程式碼就能完成原本要手寫很多的工作。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_flex-metadata-tags.webp" alt="程式碼編輯器中的標籤與編譯概念示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2009-11-13">2009-11-13</time></span><span class="post-meta-pill">Flex · ActionScript · MXML · 編譯器</span></div></div><h1 class="insights-hero-title">Flex 元數據標籤（Metadata Tags）完整指南——告訴編譯器如何編譯</h1><p class="insights-hero-description">Flex 元數據標籤完整指南：從最常用的 [Bindable] 到 [Embed]、[Event]、[RemoteClass] 等 12 個標籤的定義與用法範例，搞懂這些告訴編譯器如何編譯 SWF 的特殊標籤，就知道該在何時何處使用它們。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>雖然多數 Flex 開發者都用過 <code>[Bindable]</code> 標籤，但很多人其實不知道這個標籤的作用，甚至不知道它為何物。<code>[Bindable]</code> 就是所謂的元數據標籤（metadata tag）——一種特殊的標籤，它在程式碼中的作用是向編譯器提供如何編譯程式的資訊。實際上，這些標籤並不會被編譯到生成的 SWF 檔案中，而只是告訴編譯器如何生成 SWF。文件中列出的元數據標籤共有 12 個，本文將逐一講解它們的定義並給出使用範例，看完之後你就會明白該在何時何處於 Flex 應用程式中使用元數據標籤了。</p>
+</div><section aria-labelledby="什麼是元數據標籤-它和一般程式碼有什麼不同"><h2 id="什麼是元數據標籤-它和一般程式碼有什麼不同">什麼是元數據標籤？它和一般程式碼有什麼不同？</h2>
+<p>元數據標籤是一種「寫給編譯器看」的特殊標籤。它不會出現在最終生成的 SWF 中，也不佔執行期的邏輯，而是影響編譯器如何生成 SWF——例如綁定資料、嵌入資源、宣告事件等。最常見的例子就是 <code>[Bindable]</code>：多數人都用過，但它背後的機制（編譯器為你生成事件分派與綁定程式碼）往往被忽略。以下按照用途整理 12 個標籤。</p>
+</section><section aria-labelledby="arrayelementtype-如何限制陣列元素的資料型別"><h2 id="arrayelementtype-如何限制陣列元素的資料型別">[ArrayElementType]：如何限制陣列元素的資料型別？</h2>
+<p>定義一個陣列通常來說是一件很平常的事情，因為陣列中的元素可以是任何型別。不過，使用 <code>[ArrayElementType]</code> 元數據標籤可以讓你定義陣列元素的資料型別：</p>
+<pre><code class="hljs language-actionscript">[ArrayElementType("String")]
+public var arrayOfStrings:Array;
+
+[ArrayElementType("Number")]
+public var arrayOfNumbers:Array;
+
+[ArrayElementType("mx.core.UIComponent")]
+public var arrayOfUIComponents:Array;
+</code></pre>
+</section><section aria-labelledby="bindable-最常用的資料綁定標籤怎麼用"><h2 id="bindable-最常用的資料綁定標籤怎麼用">[Bindable]：最常用的資料綁定標籤怎麼用？</h2>
+<p><code>[Bindable]</code> 是最常用到的一個元數據標籤，因為它讓程式組件之間的資料同步變得很容易。Bindable 可以用來綁定簡單資料型別、類別、複雜資料型別以及函式。綁定資料的時候，你必須先使用元數據標籤定義資料。</p>
+<p>Bindable 也可以用來綁定到事件。你可以使用 getter 和 setter 函式將一個屬性綁定到一個事件上。例如有一個叫做 <code>phoneNumber</code> 的私有變數，還有一個公有的 setter 和 getter 函式。使用 <code>[Bindable]</code> 標籤將這個 getter 方法綁定到一個叫做 <code>phoneNumberChanged</code> 的事件上，只要資料發生改變，setter 方法就會分派 <code>phoneNumberChanged</code> 事件。</p>
+<p>透過使用 setter 方法，可以在資料賦予私有變數之前對其進行操作——例如只有在長度大於等於 10 的時候才進行格式化。當 <code>phoneNumberChanged</code> 事件被分派時，第二個 TextInput 組件會被更新，因為它的 <code>text</code> 屬性綁定到了 <code>phoneNumber</code> 變數上。</p>
+</section><section aria-labelledby="defaultproperty-如何省略屬性名稱直接設定預設屬性"><h2 id="defaultproperty-如何省略屬性名稱直接設定預設屬性">[DefaultProperty]：如何省略屬性名稱直接設定預設屬性？</h2>
+<p><code>[DefaultProperty]</code> 元數據標籤用來將一個單一屬性設定為某個類別的預設屬性。它允許在一個容器標籤內設定屬性，而不用定義屬性的名字。一個簡單的例子就是自訂 Button 類別：將 <code>label</code> 屬性設定為 DefaultProperty 之後，<code>label</code> 屬性就可以在自訂 Button 標籤中直接以字串定義。</p>
+</section><section aria-labelledby="embed-如何把圖片等資源嵌入程式"><h2 id="embed-如何把圖片等資源嵌入程式">[Embed]：如何把圖片等資源嵌入程式？</h2>
+<p><code>[Embed]</code> 元數據標籤用來匯入圖片到程式。可以透過兩種方式使用 Embed：你可以將圖片嵌入到 ActionScript 中並將其指派給一個變數，或者你也可以將圖片直接指派給組件的屬性。</p>
+<p>例 1（嵌入為 Class 變數）：</p>
+<pre><code class="hljs language-actionscript">[Embed(source="myIcon.gif")]
+[Bindable]
+public var myIcon:Class;
+</code></pre>
+<pre><code class="hljs language-xml"><span class="hljs-tag">&#x3C;<span class="hljs-name">mx:Button</span> <span class="hljs-attr">label</span>=<span class="hljs-string">"Icon Button 1"</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">"{myIcon}"</span>/></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">mx:Button</span> <span class="hljs-attr">label</span>=<span class="hljs-string">"Icon Button 2"</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">"{myIcon}"</span>/></span>
+</code></pre>
+<p>例 2（直接在屬性上使用 @Embed）：</p>
+<pre><code class="hljs language-xml"><span class="hljs-tag">&#x3C;<span class="hljs-name">mx:Button</span> <span class="hljs-attr">label</span>=<span class="hljs-string">"Icon Button 1"</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">"@Embed(source='myIcon.gif')"</span>/></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">mx:Button</span> <span class="hljs-attr">label</span>=<span class="hljs-string">"Icon Button 2"</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">"@Embed(source='myIcon.gif')"</span>/></span>
+</code></pre>
+<p>上面這兩個例子產生的結果是一樣的。建立 <code>myIcon</code> 類別的好處是，它在一個類別中只定義一次，就可以綁定到程式中的多個組件。</p>
+</section><section aria-labelledby="event-與-effect-如何宣告自訂事件與效果"><h2 id="event-與-effect-如何宣告自訂事件與效果">[Event] 與 [Effect]：如何宣告自訂事件與效果？</h2>
+<p><code>[Event]</code> 元數據標籤用來宣告那些被自訂類別分派的事件。將這個元數據標籤加入類別定義之後，你就可以在 MXML 標籤中加入事件處理函式來初始化該自訂類別。例如建立一個自訂 Button 類別，每當它的 <code>label</code> 屬性改變時就會分派一個事件；主程式檔案初始化這個自訂 Button 並建立事件處理函式，該函式將新的 label 屬性值賦給一個 TextArea 組件以顯示當前發生的更改。</p>
+<p><code>[Effect]</code> 元數據標籤用來定義一個自訂效果，當某個事件發生的時候該效果會被分派。這個示例可以基於前面 Event 的例子來建立，只要簡單地更改 ButtonLabel 類別中的一行程式碼，就定義了一個效果，該效果可以在 MXML 標籤中直接使用。</p>
+</section><section aria-labelledby="iconfile-自訂類別的圖標用哪個標籤"><h2 id="iconfile-自訂類別的圖標用哪個標籤">[IconFile]：自訂類別的圖標用哪個標籤？</h2>
+<p><code>[IconFile]</code> 用來定義一個 jpg、gif 或 png 檔案的檔名，它在你的自訂類別中作為圖標使用。<code>[Embed]</code> 可以用來嵌入圖片、SWF 檔案、音樂檔案以及視訊檔案等，而 IconFile 則只是用來嵌入作為自訂類別圖標的檔案：</p>
+<pre><code class="hljs language-actionscript">[IconFile("icon.png")]
+public class CustomButton extends Button {}
+</code></pre>
+</section><section aria-labelledby="inspectable-如何讓屬性出現在程式碼提示與屬性檢查器"><h2 id="inspectable-如何讓屬性出現在程式碼提示與屬性檢查器">[Inspectable]：如何讓屬性出現在程式碼提示與屬性檢查器？</h2>
+<p>在使用 Flex Builder 的時候，你可能會希望某些自訂組件的屬性在程式碼提示和屬性檢查器（property inspector）中顯示，<code>[Inspectable]</code> 元數據標籤就是用來定義那些屬性的。例如定義一個 inspectable 的 <code>ccType</code> 變數，指定 Visa 為預設值、Credit Card 為類別，並將取值範圍定義為包含 Visa、Mastercard、Discover 和 American Express 的枚舉。切到設計視圖時，就能在屬性檢查器中看到 <code>ccType</code> 的類別為 Credit Card，所有可選的值都在下拉列表中。</p>
+</section><section aria-labelledby="instancetype-模板物件的型別怎麼宣告"><h2 id="instancetype-模板物件的型別怎麼宣告">[InstanceType]：模板物件的型別怎麼宣告？</h2>
+<p>當在一個模板物件中宣告一個像 <code>IDeferredInstance</code> 這樣的變數時，<code>[InstanceType]</code> 元數據標籤就用來宣告物件的型別：</p>
+<pre><code class="hljs language-actionscript">[InstanceType("package.className")]
+</code></pre>
+</section><section aria-labelledby="noncommittingchangeevent-如何避免中途變更觸發綁定"><h2 id="noncommittingchangeevent-如何避免中途變更觸發綁定">[NonCommittingChangeEvent]：如何避免中途變更觸發綁定？</h2>
+<p><code>[NonCommittingChangeEvent]</code> 元數據標籤可以在某個特定事件發生時，防止變數在事件發生的過程中被更改。實際例子：一個名為 <code>s</code> 的字串型私有變數被綁定到 id 為 <code>ti2</code> 的 TextInput 組件上；另一個 id 為 <code>ti1</code> 的 TextInput 組件在它的 <code>text</code> 發生更改時，會把 <code>s</code> 的值設為它的 <code>text</code> 屬性值。另外，當 <code>triggerBinding</code> 事件被分派時，附加在 <code>s</code> 變數上的 Binding 元數據標籤才會進行綁定——只有在 Enter 鍵在 <code>ti1</code> TextInput 組件中被按下時才會分派 <code>triggerBinding</code> 事件。</p>
+</section><section aria-labelledby="remoteclass-actionscript-如何對應-java-coldfusion-類別"><h2 id="remoteclass-actionscript-如何對應-java-coldfusion-類別">[RemoteClass]：ActionScript 如何對應 Java / ColdFusion 類別？</h2>
+<p><code>[RemoteClass]</code> 可以用來將一個 ActionScript 類別綁定到一個 Java 類別或一個 ColdFusion CFC，這樣做可以自動轉換資料型別。下面的例子將套件 com.mydomain 中名為 MyClass 的 ActionScript 類別綁定到同一個套件中名為 MyClass 的 Java 類別：</p>
+<pre><code class="hljs language-actionscript">package com.mydomain {
+    [Bindable]
+    [RemoteClass(alias="com.mydomain.MyClass")]
+    public class MyClass {
+        public var id:int;
+        public var myText:String;
+    }
+}
+</code></pre>
+</section><section aria-labelledby="style-如何為組件定義自訂樣式屬性"><h2 id="style-如何為組件定義自訂樣式屬性">[Style]：如何為組件定義自訂樣式屬性？</h2>
+<p><code>[Style]</code> 元數據標籤用來為組件定義自訂樣式屬性。只需要簡單地將 Style 元數據標籤加入類別的定義，之後就可以使用 <code>getStyle</code> 方法取得它的值。例如定義 <code>borderColor</code> 和 <code>fillColor</code> 兩個樣式，它們的資料型別都是 uint。當類別初始化時這兩個樣式就會在標籤中被設定；程式碼中覆寫 <code>updateDisplayList</code> 函式，用自訂的樣式畫出一個圓形邊框並將其填充。</p>
+</section><section aria-labelledby="什麼時候該用這些元數據標籤"><h2 id="什麼時候該用這些元數據標籤">什麼時候該用這些元數據標籤？</h2>
+<p>看完這些標籤，你應該會有這樣的感覺：「喔，現在我知道在哪裡可以使用它們了」或者「嗯，我想我會在新專案中嘗試使用這些元數據標籤」。如果沒有，那麼你可能需要回過頭再看一遍。Adobe Flex 小組提供給我們的元數據標籤不只是非常強大，可以讓我們擴展或自訂要做的東西，而且還非常易於使用——透過使用它們，僅僅幾行程式碼就可以完成一大堆事情。如果不使用這些標籤，你會發現在 Flex 中實現某些功能是很辛苦的。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>什麼是 Flex 元數據標籤？</span></h3>
+<p>元數據標籤是一種特殊的標籤，作用是向編譯器提供如何編譯程式的資訊。它們不會被編譯到最終的 SWF 檔案中，而是影響編譯器生成 SWF 的方式，例如資料綁定、資源嵌入、事件宣告等。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>[Bindable] 標籤的作用是什麼？</span></h3>
+<p><code>[Bindable]</code> 讓程式組件之間的資料同步變得容易，可用於綁定簡單資料型別、類別、複雜資料型別與函式，也可以搭配 getter/setter 綁定到自訂事件，在資料變更時自動更新綁定的組件。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>[Embed] 和 [IconFile] 有什麼不同？</span></h3>
+<p><code>[Embed]</code> 可以嵌入圖片、SWF、音樂、視訊等各種資源，並指派給變數或組件屬性；<code>[IconFile]</code> 則只用來指定作為自訂類別圖示的 jpg/gif/png 檔名，用途單一。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>[RemoteClass] 解決什麼問題？</span></h3>
+<p><code>[RemoteClass]</code> 用來把 ActionScript 類別對應到 Java 類別或 ColdFusion CFC，透過 <code>alias</code> 指定遠端類別全名，讓兩端之間的資料型別自動轉換，省去手動序列化。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>元數據標籤會增加 SWF 大小嗎？</span></h3>
+<p>標籤本身不會被編譯進 SWF，但它觸發編譯器生成的程式碼（例如 <code>[Bindable]</code> 產生的事件分派邏輯）會包含在 SWF 中。整體而言這些生成程式碼非常精簡，幾行程式碼就能完成原本要手寫很多的工作。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Adobe Flex 說明文件：Metadata tags（官方文件中列出的 12 個元數據標籤清單）</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/flex-metadata-tags">Flex 元數據標籤——告訴編譯器如何編譯</a>：同樣聚焦 Flex、ActionScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/integrate-flex-sdk-4-into-flex-builder-3">把 Flex SDK 4 整合進 Flex Builder 3</a>：同樣聚焦 Flex、ActionScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/flex-builder-auto-format-code">Flex Builder 怎麼裝自動格式化外掛？</a>：同樣聚焦 Flex、ActionScript，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2009-11-13，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2009-11-13</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

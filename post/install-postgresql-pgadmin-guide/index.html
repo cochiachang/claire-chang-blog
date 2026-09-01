@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PostgreSQL 和 pgAdmin 安裝教學：Linux 指令、連線設定與常見錯誤｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 PostgreSQL 13 與 pgAdmin 的安裝流程、建庫指令、遠端連線設定，以及 _sqlite3、5050 連接埠與 SELinux 常見問題。" />
+<meta name="keywords" content="後端開發, PostgreSQL, pgAdmin, Linux, 資料庫, 後端開發" />
+<link rel="canonical" href="https://claire-chang.com/post/install-postgresql-pgadmin-guide/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="PostgreSQL 和 pgAdmin 安裝教學：Linux 指令、連線設定與常見錯誤｜Claire Chang" />
+<meta property="og:description" content="整理 PostgreSQL 13 與 pgAdmin 的安裝流程、建庫指令、遠端連線設定，以及 _sqlite3、5050 連接埠與 SELinux 常見問題。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/install-postgresql-pgadmin-guide/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_install-postgresql-pgadmin-guide-c047b9a9.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_install-postgresql-pgadmin-guide-c047b9a9.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PostgreSQL 和 pgAdmin 安裝教學：Linux 指令、連線設定與常見錯誤｜Claire Chang" />
+<meta name="twitter:description" content="整理 PostgreSQL 13 與 pgAdmin 的安裝流程、建庫指令、遠端連線設定，以及 _sqlite3、5050 連接埠與 SELinux 常見問題。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_install-postgresql-pgadmin-guide-c047b9a9.jpg" />
+<meta property="article:published_time" content="2024-06-09" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="PostgreSQL" />
+<meta property="article:tag" content="pgAdmin" />
+<meta property="article:tag" content="Linux" />
+<meta property="article:tag" content="資料庫" />
+<meta property="article:tag" content="後端開發" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"PostgreSQL 和 pgAdmin 安裝教學：Linux 指令、連線設定與常見錯誤","item":"https://claire-chang.com/post/install-postgresql-pgadmin-guide/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/install-postgresql-pgadmin-guide/#article","headline":"PostgreSQL 和 pgAdmin 安裝教學：Linux 指令、連線設定與常見錯誤","description":"整理 PostgreSQL 13 與 pgAdmin 的安裝流程、建庫指令、遠端連線設定，以及 _sqlite3、5050 連接埠與 SELinux 常見問題。","image":"https://claire-chang.com/images/tech/hero_install-postgresql-pgadmin-guide.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-06-09","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/install-postgresql-pgadmin-guide/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"PostgreSQL, pgAdmin, Linux, 資料庫, 後端開發","about":[{"@type":"Thing","name":"資料庫"},{"@type":"Thing","name":"後端開發"}],"mentions":[{"@type":"Thing","name":"PostgreSQL"},{"@type":"Thing","name":"pgAdmin"},{"@type":"Thing","name":"Linux"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/install-postgresql-pgadmin-guide/#faq","mainEntity":[{"@type":"Question","name":"PostgreSQL 13 現在還適合新專案使用嗎？","acceptedAnswer":{"@type":"Answer","text":"PostgreSQL 13 不適合新正式專案使用。PostgreSQL 官方版本政策顯示 PostgreSQL 13 已在 2025-11-13 結束支援；如果只是重現舊環境，可以保留 PostgreSQL 13 指令，新專案建議改用仍受支援的大版本。"}},{"@type":"Question","name":"pgAdmin 一定要用 Python 虛擬環境安裝嗎？","acceptedAnswer":{"@type":"Answer","text":"pgAdmin 不一定只能用 Python 虛擬環境安裝，但我建議這樣做。pgAdmin 牽涉的 Python package 不少，虛擬環境可以避免和系統 Python 或其他專案的套件版本互相影響。"}},{"@type":"Question","name":"pgAdmin 預設網址為什麼是 127.0.0.1:5050？","acceptedAnswer":{"@type":"Answer","text":"pgAdmin Python package 啟動後預設監聽本機位址 `127.0.0.1` 與 port `5050`。這樣比較適合本機測試；若要讓其他機器連入，需要調整 `DEFAULT_SERVER`、防火牆與 SELinux。"}},{"@type":"Question","name":"把 DEFAULT_SERVER 改成 0.0.0.0 安全嗎？","acceptedAnswer":{"@type":"Answer","text":"`DEFAULT_SERVER = '0.0.0.0'` 適合測試環境或受控內網，不適合直接裸露在正式環境。pgAdmin 官方文件也提醒 production 應使用 WSGI application 搭配 web server 或反向代理。"}},{"@type":"Question","name":"No module named '_sqlite3' 是 PostgreSQL 的問題嗎？","acceptedAnswer":{"@type":"Answer","text":"`No module named '_sqlite3'` 不是 PostgreSQL 的問題，而是 pgAdmin 使用的 Python 缺少 SQLite 模組支援。補上 SQLite 開發套件並使用支援 `_sqlite3` 的 Python 後，pgAdmin 才能建立自己的設定資料庫。"}},{"@type":"Question","name":"開了 firewalld 5050 port 還是連不到 pgAdmin，要查哪裡？","acceptedAnswer":{"@type":"Answer","text":"先確認 pgAdmin 是否真的在 `0.0.0.0:5050` 監聽，再檢查 firewalld 是否列出 `5050/tcp`。如果系統啟用 SELinux，還要確認 5050 是否被加入 `http_port_t` 類型。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_install-postgresql-pgadmin-guide.webp" alt="pgAdmin 建立 PostgreSQL 資料表欄位的操作畫面" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-06-09">2024-06-09</time></span><span class="post-meta-pill">PostgreSQL · pgAdmin · Linux · 資料庫 · 後端開發</span></div></div><h1 class="insights-hero-title">PostgreSQL 和 pgAdmin 安裝教學：Linux 指令、連線設定與常見錯誤</h1><p class="insights-hero-description">整理 PostgreSQL 13 與 pgAdmin 的安裝流程、建庫指令、遠端連線設定，以及 _sqlite3、5050 連接埠與 SELinux 常見問題。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>PostgreSQL 和 pgAdmin 的基本安裝流程，是先在 Linux 上加入 PostgreSQL 官方 Yum Repository，安裝並初始化 PostgreSQL 服務，再用 Python 虛擬環境安裝 pgAdmin。這份記錄保留我當時使用 PostgreSQL 13 與 pgAdmin 的完整指令，也補上遠端連線、5050 連接埠與 <code>_sqlite3</code> 錯誤的處理方式。</p>
+<p>截至 2026-08-28，PostgreSQL 官方版本政策已將 PostgreSQL 13 標示為不再支援，最後版本是 13.23，最終發布日為 2025-11-13（PostgreSQL Global Development Group，<a href="https://www.postgresql.org/support/versioning/" target="_blank" rel="noopener noreferrer">Versioning Policy</a>，存取日期：2026-08-28）。下面指令適合還原我當時的安裝環境；新機器若要上正式環境，建議把 <code>13</code> 換成仍受支援的 PostgreSQL 大版本。</p>
+</div><section aria-labelledby="postgresql-13-在-linux-上怎麼安裝"><h2 id="postgresql-13-在-linux-上怎麼安裝">PostgreSQL 13 在 Linux 上怎麼安裝？</h2>
+<p>PostgreSQL 13 在 Red Hat 系列 Linux 上，可先安裝 PostgreSQL 官方 Yum Repository，再安裝 server 與 client 套件。資料庫叢集初始化只需要做一次。</p>
+<p>我當時使用的指令如下：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-$(rpm -E %rhel)-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+<span class="hljs-built_in">sudo</span> yum -qy module <span class="hljs-built_in">disable</span> postgresql
+<span class="hljs-built_in">sudo</span> yum install -y postgresql13-server postgresql13
+<span class="hljs-built_in">sudo</span> /usr/pgsql-13/bin/postgresql-13-setup initdb
+<span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> postgresql-13
+<span class="hljs-built_in">sudo</span> systemctl start postgresql-13
+<span class="hljs-built_in">sudo</span> -i -u postgres
+psql
+</code></pre>
+<p>PostgreSQL 官方文件說明，Red Hat、Rocky Linux、AlmaLinux 與 Fedora 可透過 PostgreSQL Yum Repository 取得不同 PostgreSQL 版本；Red Hat 系列的安裝後步驟通常需要手動初始化資料庫並啟動 systemd 服務（PostgreSQL Global Development Group，<a href="https://www.postgresql.org/download/linux/redhat/" target="_blank" rel="noopener noreferrer">Linux downloads - Red Hat family</a>，存取日期：2026-08-28）。</p>
+<p>這段指令裡最容易忽略的是 <code>initdb</code>。<code>initdb</code> 會建立新的 PostgreSQL database cluster，也就是由同一個 PostgreSQL server instance 管理的一組資料庫（PostgreSQL Global Development Group，<a href="https://www.postgresql.org/docs/13/app-initdb.html" target="_blank" rel="noopener noreferrer">initdb</a>，存取日期：2026-08-28）。如果這台機器已經有既有資料庫，不要直接重跑初始化指令，應先確認資料目錄與服務狀態。</p>
+</section><section aria-labelledby="postgresql-安裝後如何建立使用者和資料庫"><h2 id="postgresql-安裝後如何建立使用者和資料庫">PostgreSQL 安裝後如何建立使用者和資料庫？</h2>
+<p>PostgreSQL 服務啟動後，可以切換成 <code>postgres</code> 系統使用者進入 <code>psql</code>，再建立應用程式使用者與資料庫。測試環境可照做，正式環境要改掉帳號、密碼與授權範圍。</p>
+<p>進入 <code>psql</code> 後，我建立使用者與資料庫的 SQL 如下：</p>
+<pre><code class="hljs language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> myuser <span class="hljs-keyword">WITH</span> PASSWORD <span class="hljs-string">'mypassword'</span>;
+<span class="hljs-keyword">CREATE</span> DATABASE mydb;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> DATABASE mydb <span class="hljs-keyword">TO</span> myuser;
+</code></pre>
+<p>PostgreSQL 的 <code>CREATE USER</code> 是 <code>CREATE ROLE</code> 的別名，差異在於 <code>CREATE USER</code> 預設包含 <code>LOGIN</code> 權限（PostgreSQL Global Development Group，<a href="https://www.postgresql.org/docs/current/sql-createuser.html" target="_blank" rel="noopener noreferrer">CREATE USER</a>，存取日期：2026-08-28）。我習慣在測試環境先用最短路徑確認資料庫能連，之後再回頭收斂權限；正式環境則不建議直接給應用帳號全部權限。</p>
+<p>完成後離開 <code>psql</code> 和 <code>postgres</code> 使用者：</p>
+<pre><code class="hljs language-bash">\q
+<span class="hljs-built_in">exit</span>
+</code></pre>
+</section><section aria-labelledby="pgadmin-如何用-python-虛擬環境安裝"><h2 id="pgadmin-如何用-python-虛擬環境安裝">pgAdmin 如何用 Python 虛擬環境安裝？</h2>
+<p>pgAdmin 可以透過 PyPI 安裝成 Python web application。使用 Python 虛擬環境能把 pgAdmin 相關套件隔離起來，降低與系統 Python 套件互相衝突的機率。</p>
+<p>我當時使用這組指令安裝與啟動 pgAdmin：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">mkdir</span> /var/lib/pgadmin
+<span class="hljs-built_in">sudo</span> <span class="hljs-built_in">mkdir</span> /var/log/pgadmin
+<span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chown</span> <span class="hljs-variable">$USER</span> /var/lib/pgadmin
+<span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chown</span> <span class="hljs-variable">$USER</span> /var/log/pgadmin
+python3 -m venv pgadmin4
+<span class="hljs-built_in">source</span> pgadmin4/bin/activate
+pip install pgadmin4
+pgadmin4
+</code></pre>
+<p>第一次啟動 pgAdmin 時，終端機會要求設定初始帳號：</p>
+<pre><code class="hljs language-text">NOTE: Configuring authentication for SERVER mode.
+
+Enter the email address and password to use for the initial pgAdmin user account:
+
+Email address: user@domain.com
+Password:
+Retype password:
+Starting pgAdmin 4. Please navigate to http://127.0.0.1:5050 in your browser.
+ * Serving Flask app "pgadmin" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+</code></pre>
+<p>pgAdmin 官方 Python 套件頁也建議先建立 <code>/var/lib/pgadmin</code>、<code>/var/log/pgadmin</code>，再用 <code>python3 -m venv pgadmin4</code> 建立虛擬環境並透過 <code>pip install pgadmin4</code> 安裝；官方同時提醒 Python package 不包含 Desktop Runtime，執行時會以 server mode 啟動（pgAdmin Development Team，<a href="https://www.pgadmin.org/download/pgadmin-4-python/" target="_blank" rel="noopener noreferrer">pgAdmin 4 Python Download</a>，存取日期：2026-08-28）。</p>
+</section><section aria-labelledby="pgadmin-安裝後如何再次啟動"><h2 id="pgadmin-安裝後如何再次啟動">pgAdmin 安裝後如何再次啟動？</h2>
+<p>pgAdmin 已安裝完成後，不需要每次重建資料夾或重新安裝套件。回到同一個 Python 虛擬環境，啟動 <code>pgadmin4</code> 指令即可。</p>
+<p>我後續啟動 pgAdmin 時，只跑下面兩行：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">source</span> pgadmin4/bin/activate
+pgadmin4
+</code></pre>
+<p>啟動後瀏覽器預設連到 <code>http://127.0.0.1:5050</code>。如果只在伺服器本機操作，這個預設值就夠用；如果要從其他電腦連進來，還需要調整 pgAdmin 監聽位址、防火牆與 SELinux。</p>
+</section><section aria-labelledby="pgadmin-出現-no-module-named-sqlite3-怎麼辦"><h2 id="pgadmin-出現-no-module-named-sqlite3-怎麼辦">pgAdmin 出現 No module named '_sqlite3' 怎麼辦？</h2>
+<p><code>No module named '_sqlite3'</code> 通常表示目前使用的 Python 缺少 SQLite 模組支援。先安裝 SQLite 開發套件，再重新編譯或更換包含 <code>_sqlite3</code> 的 Python。</p>
+<p>我遇到的錯誤訊息是：</p>
+<pre><code class="hljs language-text">No module named '_sqlite3'
+</code></pre>
+<p>當時的處理方式，是先補上 SQLite 開發套件：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> apt update
+<span class="hljs-built_in">sudo</span> apt install libsqlite3-dev
+</code></pre>
+<p>接著找到 Python 原始碼目錄，重新編譯 Python。下面的 <code>/path/to/python/source</code> 要換成實際的 Python source 根目錄：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">cd</span> /path/to/python/source
+<span class="hljs-built_in">sudo</span> ./configure --enable-optimizations
+<span class="hljs-built_in">sudo</span> make
+<span class="hljs-built_in">sudo</span> make altinstall
+</code></pre>
+<p>這個問題的重點不是 pgAdmin 本身，而是 pgAdmin server mode 會使用 SQLite 儲存設定資料。pgAdmin 官方 server deployment 文件也列出 <code>SQLITE_PATH</code>、<code>SESSION_DB_PATH</code>、<code>STORAGE_DIR</code> 等設定路徑，這些目錄需要能被執行 pgAdmin 的使用者寫入（pgAdmin Development Team，<a href="https://www.pgadmin.org/docs/pgadmin4/latest/server_deployment.html" target="_blank" rel="noopener noreferrer">Server Deployment</a>，存取日期：2026-08-28）。</p>
+</section><section aria-labelledby="pgadmin-只能從-127-0-0-1-連線時怎麼設定"><h2 id="pgadmin-只能從-127-0-0-1-連線時怎麼設定">pgAdmin 只能從 127.0.0.1 連線時怎麼設定？</h2>
+<p>pgAdmin 預設只監聽本機位址，外部電腦無法直接連到 <code>127.0.0.1:5050</code>。測試環境可把 <code>DEFAULT_SERVER</code> 改成 <code>0.0.0.0</code>，正式環境建議放在反向代理後面。</p>
+<p>先用下面指令找到 pgAdmin 套件位置：</p>
+<pre><code class="hljs language-bash">pip show pgadmin4 | grep Location
+</code></pre>
+<p>我當時找到的設定檔位置在 Python 虛擬環境的 <code>site-packages/pgadmin4/</code> 裡，畫面上可以看到 <code>config.py</code>：</p>
+<figure class="article-figure"><img src="/images/tech/postgresql-pgadmin-config-py.webp" alt="pgAdmin Python 套件目錄中 config.py 的位置，紅框標示設定檔" loading="lazy" class="markdown-img"></figure>
+<p>在 <code>config.py</code> 裡找到 <code>DEFAULT_SERVER</code>，把預設本機位址改成可對外監聽：</p>
+<pre><code class="hljs language-python">DEFAULT_SERVER = <span class="hljs-string">'0.0.0.0'</span>
+</code></pre>
+<p>pgAdmin 官方 <code>config.py</code> 文件說明，<code>DEFAULT_SERVER = '127.0.0.1'</code> 是預設值；若要讓 pgAdmin 在 LAN 中被其他機器連線，可以設定成 <code>0.0.0.0</code> 或指定網卡位址，但官方也明確提醒這不建議用在 production，正式部署應使用 WSGI application 搭配 Apache HTTPD 等 web server（pgAdmin Development Team，<a href="https://www.pgadmin.org/docs/pgadmin4/latest/config_py.html" target="_blank" rel="noopener noreferrer">The config.py File</a>，存取日期：2026-08-28）。</p>
+</section><section aria-labelledby="pgadmin-5050-連接埠和-selinux-要怎麼開"><h2 id="pgadmin-5050-連接埠和-selinux-要怎麼開">pgAdmin 5050 連接埠和 SELinux 要怎麼開？</h2>
+<p>pgAdmin 改成對外監聽後，Linux 防火牆也要允許 TCP 5050。若系統啟用 SELinux，還需要把 5050 加到允許的 HTTP port 類型。</p>
+<p>firewalld 的設定指令如下：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> systemctl start firewalld
+<span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> firewalld
+<span class="hljs-built_in">sudo</span> firewall-cmd --zone=public --add-port=5050/tcp --permanent
+<span class="hljs-built_in">sudo</span> firewall-cmd --reload
+<span class="hljs-built_in">sudo</span> firewall-cmd --zone=public --list-ports
+</code></pre>
+<p>最後一行用來檢查 <code>5050/tcp</code> 是否已出現在開放清單。接著處理 SELinux port：</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> semanage port -a -t http_port_t -p tcp 5050
+</code></pre>
+<p>如果 <code>semanage</code> 指令不存在，通常要先安裝 SELinux 管理工具套件；套件名稱會依 Linux 發行版而不同。完成後重新啟動 pgAdmin，再用瀏覽器連到伺服器 IP 的 <code>5050</code> port。</p>
+<p>連線成功後，我在 pgAdmin 裡可以看到 PostgreSQL server、database、schema，也能建立資料表欄位：</p>
+<figure class="article-figure"><img src="/images/tech/postgresql-pgadmin-table-created.webp" alt="pgAdmin 連線 PostgreSQL 後建立資料表欄位的畫面" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="postgresql-與-pgadmin-安裝時我會先檢查什麼"><h2 id="postgresql-與-pgadmin-安裝時我會先檢查什麼">PostgreSQL 與 pgAdmin 安裝時我會先檢查什麼？</h2>
+<p>PostgreSQL 和 pgAdmin 的安裝問題通常卡在版本、權限、監聽位址與連接埠。先把這四件事拆開看，比反覆重裝更快找到問題。</p>
+<p>我會照這個順序檢查：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查項目</th><th>檢查指令或位置</th><th>判斷重點</th></tr></thead><tbody><tr><td>PostgreSQL 服務</td><td><code>systemctl status postgresql-13</code></td><td>服務是否 active，是否已執行過 <code>initdb</code></td></tr><tr><td>PostgreSQL 登入</td><td><code>sudo -i -u postgres</code>、<code>psql</code></td><td><code>postgres</code> 使用者是否能進入資料庫</td></tr><tr><td>pgAdmin 啟動</td><td><code>source pgadmin4/bin/activate</code>、<code>pgadmin4</code></td><td>是否在正確的 Python 虛擬環境</td></tr><tr><td>SQLite 支援</td><td>Python <code>_sqlite3</code> 模組</td><td>pgAdmin 設定資料庫是否能初始化</td></tr><tr><td>監聽位址</td><td><code>DEFAULT_SERVER</code></td><td>本機使用維持 <code>127.0.0.1</code>，測試外部連線才改 <code>0.0.0.0</code></td></tr><tr><td>防火牆</td><td><code>firewall-cmd --zone=public --list-ports</code></td><td>是否包含 <code>5050/tcp</code></td></tr><tr><td>SELinux</td><td><code>semanage port</code></td><td>5050 是否被允許作為 HTTP port</td></tr></tbody></table></div>
+<p>這份檢查表是我後來整理安裝紀錄時補上的。因為 PostgreSQL 啟不來、pgAdmin 啟不來、瀏覽器連不到，三者看起來都像「資料庫不能用」，但真正的故障點完全不同。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PostgreSQL 13 現在還適合新專案使用嗎？</span></h3>
+<p>PostgreSQL 13 不適合新正式專案使用。PostgreSQL 官方版本政策顯示 PostgreSQL 13 已在 2025-11-13 結束支援；如果只是重現舊環境，可以保留 PostgreSQL 13 指令，新專案建議改用仍受支援的大版本。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>pgAdmin 一定要用 Python 虛擬環境安裝嗎？</span></h3>
+<p>pgAdmin 不一定只能用 Python 虛擬環境安裝，但我建議這樣做。pgAdmin 牽涉的 Python package 不少，虛擬環境可以避免和系統 Python 或其他專案的套件版本互相影響。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>pgAdmin 預設網址為什麼是 127.0.0.1:5050？</span></h3>
+<p>pgAdmin Python package 啟動後預設監聽本機位址 <code>127.0.0.1</code> 與 port <code>5050</code>。這樣比較適合本機測試；若要讓其他機器連入，需要調整 <code>DEFAULT_SERVER</code>、防火牆與 SELinux。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>把 DEFAULT_SERVER 改成 0.0.0.0 安全嗎？</span></h3>
+<p><code>DEFAULT_SERVER = '0.0.0.0'</code> 適合測試環境或受控內網，不適合直接裸露在正式環境。pgAdmin 官方文件也提醒 production 應使用 WSGI application 搭配 web server 或反向代理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>No module named '_sqlite3' 是 PostgreSQL 的問題嗎？</span></h3>
+<p><code>No module named '_sqlite3'</code> 不是 PostgreSQL 的問題，而是 pgAdmin 使用的 Python 缺少 SQLite 模組支援。補上 SQLite 開發套件並使用支援 <code>_sqlite3</code> 的 Python 後，pgAdmin 才能建立自己的設定資料庫。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>開了 firewalld 5050 port 還是連不到 pgAdmin，要查哪裡？</span></h3>
+<p>先確認 pgAdmin 是否真的在 <code>0.0.0.0:5050</code> 監聽，再檢查 firewalld 是否列出 <code>5050/tcp</code>。如果系統啟用 SELinux，還要確認 5050 是否被加入 <code>http_port_t</code> 類型。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>PostgreSQL Global Development Group，<a href="https://www.postgresql.org/download/linux/redhat/" target="_blank" rel="noopener noreferrer">Linux downloads - Red Hat family</a>，存取日期：2026-08-28。</li>
+<li>PostgreSQL Global Development Group，<a href="https://www.postgresql.org/docs/13/app-initdb.html" target="_blank" rel="noopener noreferrer">initdb</a>，存取日期：2026-08-28。</li>
+<li>PostgreSQL Global Development Group，<a href="https://www.postgresql.org/docs/current/sql-createuser.html" target="_blank" rel="noopener noreferrer">CREATE USER</a>，存取日期：2026-08-28。</li>
+<li>PostgreSQL Global Development Group，<a href="https://www.postgresql.org/support/versioning/" target="_blank" rel="noopener noreferrer">Versioning Policy</a>，存取日期：2026-08-28。</li>
+<li>pgAdmin Development Team，<a href="https://www.pgadmin.org/download/pgadmin-4-python/" target="_blank" rel="noopener noreferrer">pgAdmin 4 Python Download</a>，存取日期：2026-08-28。</li>
+<li>pgAdmin Development Team，<a href="https://www.pgadmin.org/docs/pgadmin4/latest/server_deployment.html" target="_blank" rel="noopener noreferrer">Server Deployment</a>，存取日期：2026-08-28。</li>
+<li>pgAdmin Development Team，<a href="https://www.pgadmin.org/docs/pgadmin4/latest/config_py.html" target="_blank" rel="noopener noreferrer">The config.py File</a>，存取日期：2026-08-28。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/postgresql-setup-and-operation">PostgreSQL 設定與操作教學：CentOS 服務檢查、遠端連線、psql 與 pgAdmin</a>：同樣聚焦 PostgreSQL、pgAdmin，可接著比較不同情境的做法。</li>
+<li><a href="/post/pgvector-postgresql-similarity-search">使用 pgvector 讓 PostgreSQL 支援向量相似度搜尋</a>：同樣聚焦 PostgreSQL，可接著比較不同情境的做法。</li>
+<li><a href="/post/vector-database-comparison">向量搜尋資料庫比較：RAG 系統該如何選擇 Vector Database</a>：同樣聚焦 資料庫，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-06-09</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

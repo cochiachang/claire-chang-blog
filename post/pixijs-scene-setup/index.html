@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixiJS 場景設定教學：Application、Canvas 與自動縮放｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 PixiJS 場景設定流程，從載入 PixiJS、SystemJS、jQuery，到建立 PIXI.Application、掛載 canvas、設定 options，並讓遊戲畫面依螢幕尺寸置中縮放。" />
+<meta name="keywords" content="前端開發, PixiJS, TypeScript, WebGL, 遊戲開發" />
+<link rel="canonical" href="https://claire-chang.com/post/pixijs-scene-setup/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="PixiJS 場景設定教學：Application、Canvas 與自動縮放｜Claire Chang" />
+<meta property="og:description" content="說明 PixiJS 場景設定流程，從載入 PixiJS、SystemJS、jQuery，到建立 PIXI.Application、掛載 canvas、設定 options，並讓遊戲畫面依螢幕尺寸置中縮放。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/pixijs-scene-setup/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_pixijs-scene-setup-82b18b91.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_pixijs-scene-setup-82b18b91.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PixiJS 場景設定教學：Application、Canvas 與自動縮放｜Claire Chang" />
+<meta name="twitter:description" content="說明 PixiJS 場景設定流程，從載入 PixiJS、SystemJS、jQuery，到建立 PIXI.Application、掛載 canvas、設定 options，並讓遊戲畫面依螢幕尺寸置中縮放。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_pixijs-scene-setup-82b18b91.jpg" />
+<meta property="article:published_time" content="2018-10-29" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="PixiJS" />
+<meta property="article:tag" content="TypeScript" />
+<meta property="article:tag" content="WebGL" />
+<meta property="article:tag" content="遊戲開發" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"PixiJS 場景設定教學：Application、Canvas 與自動縮放","item":"https://claire-chang.com/post/pixijs-scene-setup/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/pixijs-scene-setup/#article","headline":"PixiJS 場景設定教學：Application、Canvas 與自動縮放","description":"說明 PixiJS 場景設定流程，從載入 PixiJS、SystemJS、jQuery，到建立 PIXI.Application、掛載 canvas、設定 options，並讓遊戲畫面依螢幕尺寸置中縮放。","image":"https://claire-chang.com/images/tech/hero_pixijs-scene-setup.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-10-29","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/pixijs-scene-setup/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"PixiJS, TypeScript, WebGL, 遊戲開發","about":[{"@type":"Thing","name":"遊戲開發"}],"mentions":[{"@type":"Thing","name":"PixiJS"},{"@type":"Thing","name":"TypeScript"},{"@type":"Thing","name":"WebGL"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/pixijs-scene-setup/#faq","mainEntity":[{"@type":"Question","name":"PixiJS 場景一定要自己建立 canvas 嗎？","acceptedAnswer":{"@type":"Answer","text":"PixiJS 場景不一定要自己建立 canvas。未指定 `view` 時，`PIXI.Application` 會建立新的 canvas；如果想用 HTML 與 CSS 控制位置，建議先在頁面建立 canvas，再透過 `view` 傳給 `PIXI.Application`。"}},{"@type":"Question","name":"PIXI.Application 的 width 和 CSS width 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"`PIXI.Application` 的 `width` 代表遊戲內部渲染尺寸，CSS `width` 代表瀏覽器畫面上的顯示尺寸。做等比例縮放時，通常保留固定內部尺寸，再調整 canvas 的 CSS 顯示大小。"}},{"@type":"Question","name":"PixiJS 場景要怎麼避免畫面被拉伸？","acceptedAnswer":{"@type":"Answer","text":"PixiJS 場景可以用 `Math.min(windowWidth / gameWidth, windowHeight / gameHeight)` 計算縮放比例。這樣寬和高會用同一個比例縮放，遊戲畫面就不會被拉寬或壓扁。"}},{"@type":"Question","name":"舊版 PixiJS 的 `fromImage()` 還能用嗎？","acceptedAnswer":{"@type":"Answer","text":"`PIXI.Sprite.fromImage()` 是舊版 PixiJS 常見寫法。維護 2018 年左右的專案可以照版本保留；新專案應先查目前 PixiJS 版本文件，改用對應的 `Sprite.from()` 或 Assets 載入流程。"}},{"@type":"Question","name":"SystemJS 是 PixiJS 必要工具嗎？","acceptedAnswer":{"@type":"Answer","text":"SystemJS 不是 PixiJS 必要工具。這份筆記使用 SystemJS 是當時專案的模組載入方式；現在的新 PixiJS 專案常見做法是用 Vite、Webpack 或其他 bundler 管理入口與模組。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_pixijs-scene-setup.webp" alt="PixiJS 遊戲場景顯示在瀏覽器中的測試畫面" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-10-29">2018-10-29</time></span><span class="post-meta-pill">PixiJS · TypeScript · WebGL · 遊戲開發</span></div></div><h1 class="insights-hero-title">PixiJS 場景設定教學：Application、Canvas 與自動縮放</h1><p class="insights-hero-description">說明 PixiJS 場景設定流程，從載入 PixiJS、SystemJS、jQuery，到建立 PIXI.Application、掛載 canvas、設定 options，並讓遊戲畫面依螢幕尺寸置中縮放。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>PixiJS 場景設定的基本流程是先把 PixiJS、SystemJS 與 jQuery 放進 HTML 入口檔，再用 <code>PIXI.Application</code> 建立 canvas 遊戲畫面。完成場景後，可以把 canvas 放進指定容器，並用 resize 邏輯讓遊戲畫面在不同螢幕尺寸下維持比例與置中。</p>
+</div><section aria-labelledby="pixijs-專案需要先載入哪些-library"><h2 id="pixijs-專案需要先載入哪些-library">PixiJS 專案需要先載入哪些 library？</h2>
+<p>PixiJS 專案在這份 2018 年筆記中使用 PixiJS、SystemJS 與 jQuery。PixiJS 負責渲染遊戲畫面，SystemJS 負責載入編譯後的 JavaScript 模組，jQuery 則用來取得 DOM 元素。</p>
+<p>先新增一個 <code>index.html</code> 入口檔，把需要的 CSS 與 library 加進頁面：</p>
+<pre><code class="hljs language-html"><span class="hljs-meta">&#x3C;!DOCTYPE <span class="hljs-keyword">html</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">html</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">head</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"viewport"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"width=device-width"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">title</span>></span>Test<span class="hljs-tag">&#x3C;/<span class="hljs-name">title</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/css"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"assets/style.css"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"lib/system.js"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">script</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"lib/jquery.min.js"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">script</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"lib/pixi.min.js"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">script</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">head</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">body</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">body</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">html</span>></span>
+</code></pre>
+<p>如果直接打開 HTML，瀏覽器會顯示找不到檔案。這時可以在 <code>gulpfile.js</code> 增加一個 <code>libs</code> task，把專案需要的 library 複製到 <code>build/lib</code>：</p>
+<pre><code class="hljs language-js">gulp.<span class="hljs-title function_">task</span>(<span class="hljs-string">'libs'</span>, <span class="hljs-function">() =></span> {
+    <span class="hljs-keyword">return</span> gulp
+        .<span class="hljs-title function_">src</span>([
+            <span class="hljs-string">'node_modules/jquery/dist/jquery.min.js'</span>,
+            <span class="hljs-string">'node_modules/jquery/dist/jquery.min.map'</span>,
+            <span class="hljs-string">'node_modules/systemjs/dist/system-polyfills.js'</span>,
+            <span class="hljs-string">'node_modules/systemjs/dist/system-polyfills.js.map'</span>,
+            <span class="hljs-string">'node_modules/systemjs/dist/system.js'</span>,
+            <span class="hljs-string">'node_modules/systemjs/dist/system.js.map'</span>,
+            <span class="hljs-string">'node_modules/pixi.js/dist/pixi.min.js'</span>,
+            <span class="hljs-string">'node_modules/pixi.js/dist/pixi.min.js.map'</span>
+        ])
+        .<span class="hljs-title function_">pipe</span>(gulp.<span class="hljs-title function_">dest</span>(<span class="hljs-string">"build/lib"</span>));
+});
+</code></pre>
+<p>這樣每次編譯時，gulp 就會自動把使用到的 library 放進目標資料夾。</p>
+</section><section aria-labelledby="pixi-application-怎麼建立基本遊戲場景"><h2 id="pixi-application-怎麼建立基本遊戲場景">PIXI.Application 怎麼建立基本遊戲場景？</h2>
+<p><code>PIXI.Application</code> 可以建立 PixiJS 的 canvas 遊戲畫面，並提供 renderer、stage、ticker 等常用入口。最小範例只需要設定寬、高與背景色，再把 <code>app.view</code> 加到頁面中。</p>
+<p>PixiJS 官方基礎範例中的建立方式如下：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-title class_">Application</span>(<span class="hljs-number">800</span>, <span class="hljs-number">600</span>, {backgroundColor : <span class="hljs-number">0x1099bb</span>});
+<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(app.<span class="hljs-property">view</span>);
+</code></pre>
+<p><code>PIXI.Application</code> 這個類別有兩種建構子寫法：一種把寬高放在前兩個參數，另一種把設定集中放進 options 物件。PixiJS v4 之後，官方把相關參數整合進 options 物件，使用時只需要傳入專案真的要設定的值；先傳入寬高的寫法主要是為了兼容舊版。</p>
+<figure class="article-figure"><img src="/images/tech/pixijs-scene-setup-application-options.webp" alt="PIXI.Application 建構子參數截圖" loading="lazy" class="markdown-img"></figure>
+<p>如果兩邊都傳入相同屬性，會以 options 裡的值為主。下面這段程式雖然前面傳入 <code>960</code>，但因為 options 裡設定了 <code>width: 100</code>，實際建立的場景寬度會是 <code>100</code>。</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-title class_">Application</span>(<span class="hljs-number">960</span>, <span class="hljs-number">540</span>, {<span class="hljs-attr">width</span>:<span class="hljs-number">100</span>, backgroundColor : <span class="hljs-number">0x000000</span>, <span class="hljs-attr">view</span>: gameCanvasContext});
+</code></pre>
+</section><section aria-labelledby="pixi-application-options-常用參數有哪些"><h2 id="pixi-application-options-常用參數有哪些">PIXI.Application options 常用參數有哪些？</h2>
+<p><code>PIXI.Application</code> options 用來控制 canvas 尺寸、背景、透明度、解析度、渲染模式與 ticker/loader 共用設定。建立 PixiJS 場景時，先設定 <code>width</code>、<code>height</code>、<code>backgroundColor</code> 與 <code>view</code> 通常就足夠。</p>
+<p>常用 options 可以整理成下表：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>參數</th><th>型別</th><th>預設值</th><th>用途</th></tr></thead><tbody><tr><td><code>autoStart</code></td><td><code>boolean</code></td><td><code>true</code></td><td>是否自動啟動 ticker</td></tr><tr><td><code>width</code></td><td><code>number</code></td><td><code>800</code></td><td>renderer view 的寬</td></tr><tr><td><code>height</code></td><td><code>number</code></td><td><code>600</code></td><td>renderer view 的高</td></tr><tr><td><code>view</code></td><td><code>HTMLCanvasElement</code></td><td>無</td><td>指定遊戲場景要使用的 canvas；未傳入時會新建 canvas</td></tr><tr><td><code>transparent</code></td><td><code>boolean</code></td><td><code>false</code></td><td>是否讓 canvas 背景透明，可看到底下物件</td></tr><tr><td><code>antialias</code></td><td><code>boolean</code></td><td><code>false</code></td><td>是否開啟防鋸齒</td></tr><tr><td><code>preserveDrawingBuffer</code></td><td><code>boolean</code></td><td><code>false</code></td><td>是否保留繪圖緩衝，方便使用 <code>toDataURL()</code></td></tr><tr><td><code>resolution</code></td><td><code>number</code></td><td><code>1</code></td><td>renderer 解析度</td></tr><tr><td><code>forceCanvas</code></td><td><code>boolean</code></td><td><code>false</code></td><td>即使存在 WebGL 也強制使用 Canvas</td></tr><tr><td><code>backgroundColor</code></td><td><code>number</code></td><td><code>0x000000</code></td><td>場景背景顏色</td></tr><tr><td><code>clearBeforeRender</code></td><td><code>boolean</code></td><td><code>true</code></td><td>每次繪圖前是否先清除 canvas</td></tr><tr><td><code>roundPixels</code></td><td><code>boolean</code></td><td><code>false</code></td><td>是否用 <code>Math.floor()</code> 處理圖像位置</td></tr><tr><td><code>forceFXAA</code></td><td><code>boolean</code></td><td><code>false</code></td><td>強制使用 FXAA，速度可能較快但品質可能低於 WebGL 預設效果</td></tr><tr><td><code>legacy</code></td><td><code>boolean</code></td><td><code>false</code></td><td>提高與舊裝置相容性</td></tr><tr><td><code>powerPreference</code></td><td><code>string</code></td><td>無</td><td>傳給 WebGL 的效能偏好，雙顯卡設備可用來指定效能傾向</td></tr><tr><td><code>sharedTicker</code></td><td><code>boolean</code></td><td><code>false</code></td><td>是否使用共用的 <code>PIXI.ticker.shared</code></td></tr><tr><td><code>sharedLoader</code></td><td><code>boolean</code></td><td><code>false</code></td><td>是否使用共用的 <code>PIXI.loaders.shared</code></td></tr></tbody></table></div>
+<p>我通常會先把畫面尺寸和實際 CSS 縮放分開：<code>Application</code> 負責遊戲內部座標系，CSS 負責瀏覽器視窗中的顯示大小。這樣後面處理不同螢幕比例時比較不會互相牽制。</p>
+</section><section aria-labelledby="如何在專案中指定-pixijs-使用既有-canvas"><h2 id="如何在專案中指定-pixijs-使用既有-canvas">如何在專案中指定 PixiJS 使用既有 canvas？</h2>
+<p>指定既有 canvas 的好處是可以在 HTML 與 CSS 中控制容器位置。PixiJS 只負責把畫面畫進 <code>#gameCanvas</code>，頁面排版則交給 <code>#gameContainer</code> 和 CSS 管理。</p>
+<p>先在 <code>index.html</code> 加上一個容器與 canvas：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">body</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"gameContainer"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">canvas</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"gameCanvas"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">canvas</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">body</span>></span>
+</code></pre>
+<p>接著建立 <code>Main.ts</code>，在 <code>initGame()</code> 裡取得 <code>#gameCanvas</code>，再把它傳給 <code>PIXI.Application</code> 的 <code>view</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Application</span> = <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">Application</span>;
+
+<span class="hljs-comment">// 將 application 設定為 export，這樣可以在專案的任何地方取到這個元件</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> <span class="hljs-attr">application</span>:<span class="hljs-title class_">Application</span>
+<span class="hljs-comment">/**
+ * 主要的 client application.
+ *
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> {
+
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">initGame</span>(<span class="hljs-params"></span>) {
+       <span class="hljs-comment">// 設定場景</span>
+       <span class="hljs-keyword">let</span> gameCanvasContext = (&#x3C; <span class="hljs-title class_">HTMLCanvasElement</span> ><span class="hljs-title function_">jQuery</span>(<span class="hljs-string">"#gameCanvas"</span>)[<span class="hljs-number">0</span>]);
+       application = <span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-title class_">Application</span>(<span class="hljs-number">960</span>, <span class="hljs-number">540</span>, {<span class="hljs-attr">width</span>:<span class="hljs-number">100</span>,backgroundColor : <span class="hljs-number">0x000000</span>, <span class="hljs-attr">view</span>: gameCanvasContext});
+
+       <span class="hljs-comment">// 貼一張圖片</span>
+       <span class="hljs-keyword">var</span> bunny = <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">Sprite</span>.<span class="hljs-title function_">fromImage</span>(<span class="hljs-string">'assets/bunny.png'</span>);
+       bunny.<span class="hljs-property">x</span> = application.<span class="hljs-property">screen</span>.<span class="hljs-property">width</span> / <span class="hljs-number">2</span>;
+       bunny.<span class="hljs-property">y</span> = application.<span class="hljs-property">screen</span>.<span class="hljs-property">height</span> / <span class="hljs-number">2</span>;
+       application.<span class="hljs-property">stage</span>.<span class="hljs-title function_">addChild</span>(bunny);
+    }
+}
+</code></pre>
+<p>這段程式先建立 PixiJS application，再用 <code>PIXI.Sprite.fromImage()</code> 放一張 <code>bunny.png</code> 到舞台中央。<code>application.stage.addChild(bunny)</code> 是把 Sprite 加進 PixiJS 顯示清單，之後才會被 renderer 畫出來。</p>
+</section><section aria-labelledby="systemjs-要如何啟動-pixijs-main-類別"><h2 id="systemjs-要如何啟動-pixijs-main-類別">SystemJS 要如何啟動 PixiJS Main 類別？</h2>
+<p>SystemJS 可以在瀏覽器中載入編譯後的 JavaScript 模組。這份專案會在頁面 ready 後設定 <code>baseURL</code> 與副檔名，再 <code>import('Main')</code> 執行 <code>initGame()</code>。</p>
+<p>在 <code>index.html</code> 加上下面這段 JavaScript：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> game;
+$(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+    <span class="hljs-comment">// 設定要載入的 js 位置與副檔名</span>
+    <span class="hljs-title class_">SystemJS</span>.<span class="hljs-title function_">config</span>({
+        <span class="hljs-attr">baseURL</span>: <span class="hljs-string">"/"</span>,
+        <span class="hljs-attr">packages</span>: {
+            <span class="hljs-string">"/"</span>: { <span class="hljs-attr">defaultExtension</span>: <span class="hljs-string">"js"</span> }
+        }
+    });
+    <span class="hljs-comment">// 載入 Main.js，載完後執行裡面的某個 func</span>
+    <span class="hljs-title class_">SystemJS</span>.<span class="hljs-keyword">import</span>(<span class="hljs-string">'Main'</span>).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">m</span>) {
+        m.<span class="hljs-property">Main</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-title function_">initGame</span>();
+    });
+});
+</code></pre>
+<p>打開瀏覽器後，就可以看到 PixiJS 場景已經建立，畫面中間會出現測試用的 bunny 圖片。</p>
+<figure class="article-figure"><img src="/images/tech/pixijs-scene-setup-result.webp" alt="PixiJS 場景建立後的瀏覽器畫面" loading="lazy" class="markdown-img"></figure>
+<p>這份寫法是舊版 TypeScript 與 SystemJS 專案常見的啟動方式。新專案如果使用 Vite、Webpack 或其他 bundler，入口通常會改成直接從 <code>main.ts</code> 匯入並執行初始化函式。</p>
+</section><section aria-labelledby="pixijs-canvas-如何隨螢幕大小置中縮放"><h2 id="pixijs-canvas-如何隨螢幕大小置中縮放">PixiJS canvas 如何隨螢幕大小置中縮放？</h2>
+<p>PixiJS canvas 可以用視窗寬高計算縮放比例，再改變 <code>application.view.style</code> 的位置與顯示尺寸。關鍵是用 <code>Math.min()</code> 保持固定比例，避免遊戲畫面被拉伸變形。</p>
+<p>前面的成果右下方還有許多空白。若沒有特別對 canvas 做縮放，canvas 會一直維持相同尺寸，這樣在不同平台與不同螢幕尺寸上不容易順利呈現遊戲畫面。</p>
+<p>在 <code>Main.ts</code> 加上 <code>onResize()</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">public</span> <span class="hljs-title function_">onResize</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">var</span> w = <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span>;
+    <span class="hljs-keyword">var</span> h = <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span>;
+    <span class="hljs-keyword">var</span> scale = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(w/<span class="hljs-number">860</span>,h/<span class="hljs-number">540</span>);
+    application.<span class="hljs-property">view</span>.<span class="hljs-property">style</span>.<span class="hljs-property">left</span> = (w-scale*<span class="hljs-number">860</span>)/<span class="hljs-number">2</span> + <span class="hljs-string">"px"</span>;
+    application.<span class="hljs-property">view</span>.<span class="hljs-property">style</span>.<span class="hljs-property">top</span> = (h-scale*<span class="hljs-number">540</span>)/<span class="hljs-number">2</span> + <span class="hljs-string">"px"</span>;
+    application.<span class="hljs-property">view</span>.<span class="hljs-property">style</span>.<span class="hljs-property">width</span> = scale*<span class="hljs-number">860</span> + <span class="hljs-string">"px"</span>;
+    application.<span class="hljs-property">view</span>.<span class="hljs-property">style</span>.<span class="hljs-property">height</span> = scale*<span class="hljs-number">540</span> + <span class="hljs-string">"px"</span>;
+}
+</code></pre>
+<p>再在 <code>initGame()</code> 加上下面兩行：</p>
+<pre><code class="hljs language-ts"><span class="hljs-comment">// 設定遊戲大小隨視窗大小改變</span>
+<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">onResize</span>();
+<span class="hljs-variable language_">window</span>.<span class="hljs-property">onresize</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">onResize</span>;
+</code></pre>
+<p>完成後，遊戲畫面會永遠置中，並自動縮放到適合螢幕的大小。</p>
+<figure class="article-figure"><img src="/images/tech/pixijs-scene-setup-responsive-result.webp" alt="PixiJS 場景隨瀏覽器視窗縮放後的畫面" loading="lazy" class="markdown-img"></figure>
+<p>這裡有一個實務細節要注意：<code>new PIXI.Application(960, 540, ...)</code> 的內部尺寸和 <code>onResize()</code> 裡的 <code>860/540</code> 不一致。若正式專案要維護固定比例，建議抽成共用常數，例如 <code>GAME_WIDTH</code> 與 <code>GAME_HEIGHT</code>，避免後續座標、縮放與碰撞範圍出現不一致。</p>
+</section><section aria-labelledby="pixijs-場景設定流程可以怎麼整理"><h2 id="pixijs-場景設定流程可以怎麼整理">PixiJS 場景設定流程可以怎麼整理？</h2>
+<p>PixiJS 場景設定可以拆成五步：準備 library、建立 HTML canvas、初始化 <code>PIXI.Application</code>、加入第一個 Sprite、最後處理螢幕縮放。這個順序適合先確認渲染成功，再逐步接上素材與遊戲邏輯。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>步驟</th><th>檔案</th><th>重點</th></tr></thead><tbody><tr><td>1</td><td><code>index.html</code></td><td>載入 <code>system.js</code>、<code>jquery.min.js</code>、<code>pixi.min.js</code></td></tr><tr><td>2</td><td><code>gulpfile.js</code></td><td>把 library 複製到 <code>build/lib</code></td></tr><tr><td>3</td><td><code>index.html</code></td><td>建立 <code>#gameContainer</code> 與 <code>#gameCanvas</code></td></tr><tr><td>4</td><td><code>Main.ts</code></td><td>用 <code>PIXI.Application</code> 指定 canvas 並建立 stage</td></tr><tr><td>5</td><td><code>Main.ts</code></td><td>寫 <code>onResize()</code>，讓 canvas 等比例置中縮放</td></tr></tbody></table></div>
+<p>今日成果包含兩個檔案：一個可啟動 PixiJS 場景的 <code>index.html</code>，以及一個集中初始化遊戲畫面的 <code>Main.ts</code>。下一步通常會接素材載入流程，避免圖片在場景建立後才臨時載入。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS 場景一定要自己建立 canvas 嗎？</span></h3>
+<p>PixiJS 場景不一定要自己建立 canvas。未指定 <code>view</code> 時，<code>PIXI.Application</code> 會建立新的 canvas；如果想用 HTML 與 CSS 控制位置，建議先在頁面建立 canvas，再透過 <code>view</code> 傳給 <code>PIXI.Application</code>。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PIXI.Application 的 width 和 CSS width 有什麼不同？</span></h3>
+<p><code>PIXI.Application</code> 的 <code>width</code> 代表遊戲內部渲染尺寸，CSS <code>width</code> 代表瀏覽器畫面上的顯示尺寸。做等比例縮放時，通常保留固定內部尺寸，再調整 canvas 的 CSS 顯示大小。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS 場景要怎麼避免畫面被拉伸？</span></h3>
+<p>PixiJS 場景可以用 <code>Math.min(windowWidth / gameWidth, windowHeight / gameHeight)</code> 計算縮放比例。這樣寬和高會用同一個比例縮放，遊戲畫面就不會被拉寬或壓扁。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>舊版 PixiJS 的 <code>fromImage()</code> 還能用嗎？</span></h3>
+<p><code>PIXI.Sprite.fromImage()</code> 是舊版 PixiJS 常見寫法。維護 2018 年左右的專案可以照版本保留；新專案應先查目前 PixiJS 版本文件，改用對應的 <code>Sprite.from()</code> 或 Assets 載入流程。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>SystemJS 是 PixiJS 必要工具嗎？</span></h3>
+<p>SystemJS 不是 PixiJS 必要工具。這份筆記使用 SystemJS 是當時專案的模組載入方式；現在的新 PixiJS 專案常見做法是用 Vite、Webpack 或其他 bundler 管理入口與模組。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>PixiJS Basics 範例：<a href="https://pixijs.com/8.x/examples/basic/container" target="_blank" rel="noopener noreferrer">https://pixijs.com/8.x/examples/basic/container</a></li>
+<li>PixiJS Application API：<a href="https://pixijs.download/release/docs/app.Application.html" target="_blank" rel="noopener noreferrer">https://pixijs.download/release/docs/app.Application.html</a></li>
+<li>MDN HTMLCanvasElement.toDataURL()：<a href="https://developer.mozilla.org/zh-TW/docs/Web/API/HTMLCanvasElement/toDataURL" target="_blank" rel="noopener noreferrer">https://developer.mozilla.org/zh-TW/docs/Web/API/HTMLCanvasElement/toDataURL</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/pixijs-button-basics">PixiJS 按鈕製作基礎：Sprite 互動、ButtonBase 與靜音切換</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/game-dev-tech-introduction">遊戲開發技術介紹：Graphics Library、遊戲平台與遊戲引擎怎麼選？</a>：同樣聚焦 遊戲開發、WebGL，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-introduction-2d-webgl-game-engine">PixiJS 介紹：2D WebGL 遊戲引擎適合做什麼？</a>：同樣聚焦 PixiJS、WebGL，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（2018-10-29 發布的 PixiJS 場景設定筆記，本文保留原始實作脈絡並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-10-29</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

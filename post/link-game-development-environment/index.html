@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>連連看遊戲開發環境設定：VS Code、npm、TypeScript、Gulp 與 GitHub｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="連連看遊戲開發環境設定教學，整理 VS Code、Node.js/npm、TypeScript、Gulp 與 GitHub 的用途、安裝指令、package.json、tsconfig.json、gulpfile.js 基本配置，適合準備 PixiJS 或 H5 遊戲專案前閱讀。" />
+<meta name="keywords" content="前端開發, VS Code, npm, TypeScript, Gulp, 遊戲開發" />
+<link rel="canonical" href="https://claire-chang.com/post/link-game-development-environment/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="連連看遊戲開發環境設定：VS Code、npm、TypeScript、Gulp 與 GitHub｜Claire Chang" />
+<meta property="og:description" content="連連看遊戲開發環境設定教學，整理 VS Code、Node.js/npm、TypeScript、Gulp 與 GitHub 的用途、安裝指令、package.json、tsconfig.json、gulpfile.js 基本配置，適合準備 PixiJS 或 H5 遊戲專案前閱讀。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/link-game-development-environment/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_link-game-development-environment-1fc632c2.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_link-game-development-environment-1fc632c2.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="連連看遊戲開發環境設定：VS Code、npm、TypeScript、Gulp 與 GitHub｜Claire Chang" />
+<meta name="twitter:description" content="連連看遊戲開發環境設定教學，整理 VS Code、Node.js/npm、TypeScript、Gulp 與 GitHub 的用途、安裝指令、package.json、tsconfig.json、gulpfile.js 基本配置，適合準備 PixiJS 或 H5 遊戲專案前閱讀。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_link-game-development-environment-1fc632c2.jpg" />
+<meta property="article:published_time" content="2018-10-18" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="VS Code" />
+<meta property="article:tag" content="npm" />
+<meta property="article:tag" content="TypeScript" />
+<meta property="article:tag" content="Gulp" />
+<meta property="article:tag" content="遊戲開發" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"連連看遊戲開發環境設定：VS Code、npm、TypeScript、Gulp 與 GitHub","item":"https://claire-chang.com/post/link-game-development-environment/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/link-game-development-environment/#article","headline":"連連看遊戲開發環境設定：VS Code、npm、TypeScript、Gulp 與 GitHub","description":"連連看遊戲開發環境設定教學，整理 VS Code、Node.js/npm、TypeScript、Gulp 與 GitHub 的用途、安裝指令、package.json、tsconfig.json、gulpfile.js 基本配置，適合準備 PixiJS 或 H5 遊戲專案前閱讀。","image":"https://claire-chang.com/images/tech/hero_link-game-development-environment.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-10-18","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/link-game-development-environment/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"VS Code, npm, TypeScript, Gulp, 遊戲開發","about":[{"@type":"Thing","name":"遊戲開發"}],"mentions":[{"@type":"Thing","name":"VS Code"},{"@type":"Thing","name":"npm"},{"@type":"Thing","name":"TypeScript"},{"@type":"Thing","name":"Gulp"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/link-game-development-environment/#faq","mainEntity":[{"@type":"Question","name":"開發連連看遊戲一定要用 VS Code 嗎？","acceptedAnswer":{"@type":"Answer","text":"開發連連看遊戲不一定要用 VS Code，也可以使用 WebStorm、Sublime Text 或其他編輯器。這篇使用 VS Code，是因為 VS Code 免費、支援 TypeScript、內建 Git，也方便在同一個視窗中操作終端機。"}},{"@type":"Question","name":"npm init 產生的 package.json 有什麼用？","acceptedAnswer":{"@type":"Answer","text":"`package.json` 會記錄專案名稱、版本、啟動指令與套件相依性。對前端遊戲專案來說，`package.json` 可以讓建置工具、開發工具與第三方 library 的版本集中管理。"}},{"@type":"Question","name":"TypeScript 和 JavaScript 的差別是什麼？","acceptedAnswer":{"@type":"Answer","text":"TypeScript 是 JavaScript 的嚴格超集，會在 JavaScript 之上加入靜態型別與類別語法。TypeScript 最後仍會編譯成 JavaScript，因此適合用來管理較大型的前端專案結構。"}},{"@type":"Question","name":"Gulp 的 --save-dev 和 --save 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"`--save-dev` 會把套件寫進 `devDependencies`，代表套件主要用在開發或建置階段。`--save` 會把套件寫進 `dependencies`，代表執行專案時也需要這個套件。"}},{"@type":"Question","name":"新專案還適合照這篇使用 Gulp 3 寫法嗎？","acceptedAnswer":{"@type":"Answer","text":"新專案不建議直接照搬 Gulp 3 寫法，因為 Gulp 後續版本的 task API 已經改變。這篇比較適合用來理解 2018 年 TypeScript 遊戲專案的建置分工；實作新專案時，要依目前工具版本調整設定。"}},{"@type":"Question","name":"GitHub 對個人遊戲開發有什麼幫助？","acceptedAnswer":{"@type":"Answer","text":"GitHub 可以保存每次修改的版本紀錄，讓遊戲功能拆開開發、回溯與分享都更容易。對連連看這種連續教學專案來說，GitHub 也能讓讀者對照不同日期的程式進度。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_link-game-development-environment.webp" alt="VS Code 官網畫面截圖，象徵連連看遊戲開發環境設定" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-10-18">2018-10-18</time></span><span class="post-meta-pill">VS Code · npm · TypeScript · Gulp · 遊戲開發</span></div></div><h1 class="insights-hero-title">連連看遊戲開發環境設定：VS Code、npm、TypeScript、Gulp 與 GitHub</h1><p class="insights-hero-description">連連看遊戲開發環境設定教學，整理 VS Code、Node.js/npm、TypeScript、Gulp 與 GitHub 的用途、安裝指令、package.json、tsconfig.json、gulpfile.js 基本配置，適合準備 PixiJS 或 H5 遊戲專案前閱讀。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>連連看遊戲開發環境可以先準備五個工具：VS Code 負責寫程式，Node.js 與 npm 負責套件管理，TypeScript 負責型別與編譯，Gulp 負責自動化建置，GitHub 則負責保存程式碼。這篇保留 2018 年用 TypeScript 製作 H5 連連看遊戲時的環境設定筆記，適合在進入 PixiJS 或遊戲邏輯之前，先把本機開發工具整理好。</p>
+</div><section aria-labelledby="連連看遊戲開發環境需要先準備哪些工具"><h2 id="連連看遊戲開發環境需要先準備哪些工具">連連看遊戲開發環境需要先準備哪些工具？</h2>
+<p>連連看遊戲開發環境的核心工具是 VS Code、Node.js/npm、TypeScript、Gulp 與 GitHub。這五個工具分別處理編輯、套件、語言、建置與版本管理。</p>
+<p>我會先把工具分工拆清楚，因為環境設定最容易卡在「我到底是在裝編輯器、執行環境，還是建置工具」。下面這張表是這篇筆記的主線：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>工具</th><th>負責的工作</th><th>在連連看專案中的用途</th></tr></thead><tbody><tr><td>VS Code</td><td>程式編輯器與開發介面</td><td>寫 TypeScript、看提示、開終端機、管理 Git</td></tr><tr><td>Node.js / npm</td><td>JavaScript 執行環境與套件管理</td><td>安裝 Gulp、browser-sync、gulp-typescript 等套件</td></tr><tr><td>TypeScript</td><td>JavaScript 的型別化語言</td><td>讓遊戲類別、資料結構與邏輯更容易維護</td></tr><tr><td>Gulp</td><td>自動化建置工具</td><td>編譯 TypeScript、複製資源、產生 bundle、啟動開發伺服器</td></tr><tr><td>GitHub</td><td>程式碼儲存庫</td><td>保存連連看系列的範例程式碼與版本紀錄</td></tr></tbody></table></div>
+</section><section aria-labelledby="vs-code-適合用來開發-typescript-遊戲嗎"><h2 id="vs-code-適合用來開發-typescript-遊戲嗎">VS Code 適合用來開發 TypeScript 遊戲嗎？</h2>
+<p>VS Code 很適合用來開發 TypeScript 遊戲，因為 VS Code 內建 Git 支援、偵錯能力與良好的自動提示。對 H5 遊戲專案來說，VS Code 的輕量與擴充性也很夠用。</p>
+<p><a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">Visual Studio Code</a>（簡稱 VS Code）是一個由微軟開發的 IDE。VS Code 最大的優點是免費、開源，也支援偵錯、內建 Git 版本控制，還能搭配終端機與擴充套件處理前端開發流程。</p>
+<p>我自己覺得 VS Code 滿方便好用，自動提示、自動補完和顏色選擇功能都很強。對這種 TypeScript 遊戲專案來說，程式碼會分成場景、素材、盤面、演算法與 UI 類別；編輯器如果能快速跳轉與提示型別，後面拆類別會省很多時間。</p>
+<figure class="article-figure"><img src="/images/tech/link-game-development-environment-vscode.webp" alt="VS Code 官網與下載頁面" loading="lazy" class="markdown-img"></figure>
+<p>下載連結可以從 <a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener noreferrer">Download Visual Studio Code</a> 進入。</p>
+</section><section aria-labelledby="npm-在前端遊戲專案中解決什麼問題"><h2 id="npm-在前端遊戲專案中解決什麼問題">npm 在前端遊戲專案中解決什麼問題？</h2>
+<p>npm 解決的是前端套件管理問題。前端遊戲專案會用到建置、編譯、同步更新與第三方函式庫，npm 可以把這些相依套件寫進 <code>package.json</code>。</p>
+<p>npm 是 Node Package Manager 的簡稱，也是一個線上套件庫，可以下載各式各樣的 JavaScript 套件來使用。</p>
+<p>過去如果想使用 jQuery，通常會下載一個 jQuery library 檔案放進專案目錄裡。但是當 library 越來越大、越來越多，就會很難管理；svn 或 git 等版本管理系統也會多管一些其實不屬於專案本體的程式碼。library 之間的版本管理也會變得困難。</p>
+<p>另外，很多元件庫只會在開發時期用到，部署時不一定需要。這些情況都會增加套件管理的複雜度。因此多數前端工程師會用 npm 管理套件，讓專案需要什麼、開發時需要什麼，都清楚寫在同一份設定檔裡。</p>
+</section><section aria-labelledby="如何安裝-npm-並初始化-package-json"><h2 id="如何安裝-npm-並初始化-package-json">如何安裝 npm 並初始化 package.json？</h2>
+<p>安裝 npm 通常先安裝 Node.js，因為 Node.js 0.6.3 之後已內建 npm。建立專案時執行 <code>npm init</code>，就能產生記錄專案資訊與套件相依性的 <code>package.json</code>。</p>
+<p>安裝 npm 前要先去 <a href="https://nodejs.org/en/" target="_blank" rel="noopener noreferrer">Node.js 官網</a> 安裝 Node.js。Node.js 從 0.6.3 版本開始內建 npm；如果安裝的是此版本或更新版本，就可以略過額外安裝 npm 的步驟。</p>
+<p>若要檢查 npm 是否正確安裝，可以使用以下指令：</p>
+<pre><code class="hljs language-cmd">npm -v
+</code></pre>
+<p>要初始化一個 npm 專案，使用下列指令，接著依序填寫專案名稱、版本、描述、進入點、測試指令、Git repository、關鍵字、作者與授權等資訊。</p>
+<pre><code class="hljs language-cmd">npm init
+</code></pre>
+<figure class="article-figure"><img src="/images/tech/link-game-development-environment-npm-init.webp" alt="npm init 產生 package.json 的終端機畫面" loading="lazy" class="markdown-img"></figure>
+<p>按下 Enter 完成後，資料夾裡會增加一個名為 <code>package.json</code> 的檔案。這個檔案會記錄專案資訊、可執行指令與套件相依性。</p>
+<p>下面是一個簡單的 <code>package.json</code> 範例：</p>
+<pre><code class="hljs language-jsonc"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"lianliankan"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"version"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0.0.1"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"scripts"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"launch"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"gulp launch-web"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"license"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ISC"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"browser-sync"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"^2.24.7"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"gulp"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"^3.9.1"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"gulp-typescript"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"^5.0.0-alpha.3"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>在這個例子裡，<code>name</code> 是專案名稱，<code>version</code> 是版本號，<code>scripts</code> 可以放啟動專案時要跑的指令，<code>dependencies</code> 則記錄專案需要的套件。</p>
+</section><section aria-labelledby="typescript-為什麼適合用在連連看遊戲開發"><h2 id="typescript-為什麼適合用在連連看遊戲開發">TypeScript 為什麼適合用在連連看遊戲開發？</h2>
+<p>TypeScript 適合連連看遊戲開發，因為 TypeScript 在 JavaScript 之上加入型別與類別語法。當遊戲開始拆成 Board、Path、Scene、Sprite 等類別時，型別檢查可以提早抓出基本錯誤。</p>
+<p><a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer">TypeScript</a> 是一種由微軟開發的自由且開源的程式語言。TypeScript 是 JavaScript 的嚴格超集，加入靜態型別與類別基礎的物件導向特性。TypeScript 的開發也有 Anders Hejlsberg 參與；他是 C# 的首席架構師，也是 Delphi 和 Turbo Pascal 的創始人。</p>
+<p>TypeScript 的設計目標是開發大型應用，然後轉譯成 JavaScript。由於 TypeScript 是 JavaScript 的嚴格超集，任何現有 JavaScript 程式都是合法的 TypeScript 程式。</p>
+<p>TypeScript 的物件導向特性，讓我在寫 TypeScript 時，有一點像是在寫強型別語言；IDE 也可以幫忙檢查基本錯誤。將 TypeScript 編譯成 JavaScript 時，也可以設定要轉成哪一種版本，例如 ES5、ES6，避免寫程式時還要一直注意不同 JavaScript 版本的兼容性。</p>
+<p>安裝 TypeScript 命令列工具的方法如下：</p>
+<pre><code class="hljs language-cmd">npm install -g typescript
+</code></pre>
+<p>編譯 <code>.ts</code> 檔案的方法如下：</p>
+<pre><code class="hljs language-cmd">tsc hello.ts
+</code></pre>
+</section><section aria-labelledby="tsconfig-json-應該設定哪些編譯選項"><h2 id="tsconfig-json-應該設定哪些編譯選項">tsconfig.json 應該設定哪些編譯選項？</h2>
+<p><code>tsconfig.json</code> 是 TypeScript 專案的編譯設定檔。大型專案不會一個檔案一個檔案手動編譯，而是透過 <code>files</code> 與 <code>compilerOptions</code> 統一管理輸入、輸出與 JavaScript 版本。</p>
+<p>當開發一個比較大型的專案時，通常不會一個一個檔案用 <code>tsc hello.ts</code> 去 compile。這時候會設定 TypeScript 的 config 檔案：<code>tsconfig.json</code>。</p>
+<p>下面是一個 <code>tsconfig.json</code> 的簡單範例，<code>compilerOptions</code> 用來設定如何編譯 TypeScript 檔案：</p>
+<pre><code class="hljs language-jsonc"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"files"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">"src/*.ts"</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"compilerOptions"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"target"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"es5"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"module"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"system"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"moduleResolution"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"node"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"sourceMap"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"removeComments"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"noImplicitAny"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"rootDir"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"src/"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"lib"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"es6"</span><span class="hljs-punctuation">,</span> <span class="hljs-string">"dom"</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"allowSyntheticDefaultImports"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>幾個常看的設定如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>設定</th><th>意義</th></tr></thead><tbody><tr><td><code>files</code></td><td>指定要 compile 哪些 TypeScript 檔案</td></tr><tr><td><code>target</code></td><td>指定要輸出成哪個 JavaScript 版本，例如 <code>es5</code></td></tr><tr><td><code>module</code></td><td>指定模組生成規則，可用 <code>commonjs</code>、<code>amd</code>、<code>umd</code>、<code>system</code>、<code>es6</code>、<code>es2015</code>、<code>none</code></td></tr><tr><td><code>sourceMap</code></td><td>開發環境可開啟，讓 Chrome DevTools 錯誤位置連回 TypeScript 檔</td></tr><tr><td><code>removeComments</code></td><td>設為 <code>true</code> 時不輸出註解</td></tr><tr><td><code>noImplicitAny</code></td><td>型別為 <code>any</code> 時是否發出警告</td></tr><tr><td><code>rootDir</code></td><td>指定 TypeScript 來源根目錄</td></tr></tbody></table></div>
+<p><code>module</code> 選擇 <code>commonjs</code> 會生成符合 CommonJS 規範的檔案；使用 <code>amd</code> 會生成 AMD 規範的檔案；使用 <code>system</code> 會生成使用 ES6 <code>System.import</code> 的程式碼。更詳細的設定可以看 <a href="https://www.typescriptlang.org/docs/handbook/tsconfig-json.html" target="_blank" rel="noopener noreferrer">TypeScript tsconfig 官方說明</a>。</p>
+</section><section aria-labelledby="gulp-在-typescript-專案中負責什麼"><h2 id="gulp-在-typescript-專案中負責什麼">Gulp 在 TypeScript 專案中負責什麼？</h2>
+<p>Gulp 在 TypeScript 專案中負責自動化工作，例如編譯 TypeScript、複製 HTML 與資源、打包 bundle、啟動本機伺服器與監看檔案變更。對遊戲開發來說，Gulp 可以縮短改檔到看結果的時間。</p>
+<p>安裝完 Node.js 後，可以使用 Windows 的 cmd 或 Mac 的 Terminal 安裝 Gulp。首先把 Gulp 安裝到全域，這樣才能在命令列呼叫 <code>gulp</code> 執行工作；Mac 環境如果遇到權限問題，可能需要在指令前面加 <code>sudo</code>。</p>
+<pre><code class="hljs language-cmd">npm install -g gulp
+</code></pre>
+<p>接著在專案裡安裝 Gulp 模組。<code>--save-dev</code> 代表把這個模組加到 <code>package.json</code> 的 <code>devDependencies</code> 裡；如果寫 <code>--save</code>，則會加到 <code>dependencies</code>。這兩個欄位的差異，是讓接手專案的人知道某個模組是開發時使用，還是執行專案時需要。</p>
+<pre><code class="hljs language-cmd">npm install gulp --save-dev
+</code></pre>
+<p>因為這個專案使用 TypeScript，因此也要安裝 <code>gulp-typescript</code>。</p>
+<pre><code class="hljs language-cmd">npm install gulp-typescript --save-dev
+</code></pre>
+<figure class="article-figure"><img src="/images/tech/link-game-development-environment-gulp.webp" alt="安裝 gulp 與 gulp-typescript 的終端機畫面" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="gulpfile-js-可以怎麼設定建置流程"><h2 id="gulpfile-js-可以怎麼設定建置流程">gulpfile.js 可以怎麼設定建置流程？</h2>
+<p><code>gulpfile.js</code> 可以把多個開發步驟串成一個指令。連連看遊戲專案可以在 <code>gulp default</code> 時編譯 TypeScript、複製資源、產生 bundle，並用 BrowserSync 開啟本機網頁。</p>
+<p>下面是當時設定的 <code>gulpfile.js</code>。這個檔案主要設定部署或開發時要做的動作，例如在呼叫 <code>gulp default</code> 時自動做幾個步驟：</p>
+<ul>
+<li>編譯 TypeScript 檔案。</li>
+<li>複製 HTML 與相關資源。</li>
+<li>產生 bundle。</li>
+<li>使用 BrowserSync 開啟並同步更新網頁。</li>
+</ul>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>);
+<span class="hljs-keyword">var</span> browserify = <span class="hljs-built_in">require</span>(<span class="hljs-string">"browserify"</span>);
+<span class="hljs-keyword">var</span> source = <span class="hljs-built_in">require</span>(<span class="hljs-string">"vinyl-source-stream"</span>);
+<span class="hljs-keyword">var</span> tsify = <span class="hljs-built_in">require</span>(<span class="hljs-string">"tsify"</span>);
+<span class="hljs-keyword">var</span> browserSync = <span class="hljs-built_in">require</span>(<span class="hljs-string">"browser-sync"</span>);
+
+gulp.<span class="hljs-title function_">task</span>(<span class="hljs-string">"copy-html"</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> gulp.<span class="hljs-title function_">src</span>([<span class="hljs-string">"src/*.html"</span>, <span class="hljs-string">"src/libs/*"</span>])
+    .<span class="hljs-title function_">pipe</span>(gulp.<span class="hljs-title function_">dest</span>(<span class="hljs-string">"build"</span>));
+});
+
+gulp.<span class="hljs-title function_">task</span>(<span class="hljs-string">"build"</span>, [<span class="hljs-string">"copy-html"</span>], <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-title function_">browserify</span>({
+    <span class="hljs-attr">basedir</span>: <span class="hljs-string">"."</span>,
+    <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">entries</span>: [<span class="hljs-string">"src/main.ts"</span>],
+    <span class="hljs-attr">cache</span>: {},
+    <span class="hljs-attr">packageCache</span>: {}
+  })
+    .<span class="hljs-title function_">plugin</span>(tsify)
+    .<span class="hljs-title function_">bundle</span>()
+    .<span class="hljs-title function_">pipe</span>(<span class="hljs-title function_">source</span>(<span class="hljs-string">"bundle.js"</span>))
+    .<span class="hljs-title function_">pipe</span>(gulp.<span class="hljs-title function_">dest</span>(<span class="hljs-string">"build"</span>));
+});
+
+gulp.<span class="hljs-title function_">task</span>(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"server"</span>], <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+  gulp.<span class="hljs-title function_">watch</span>([<span class="hljs-string">"src/**/*"</span>], [<span class="hljs-string">"build"</span>]);
+});
+
+gulp.<span class="hljs-title function_">task</span>(<span class="hljs-string">"server"</span>, [<span class="hljs-string">"build"</span>], <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-title function_">browserSync</span>({
+    <span class="hljs-attr">open</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">port</span>: <span class="hljs-number">8001</span>,
+    <span class="hljs-attr">files</span>: [<span class="hljs-string">"build/**/*.{html,htm,css,js,json}"</span>],
+    <span class="hljs-attr">server</span>: {
+      <span class="hljs-string">"baseDir"</span>: <span class="hljs-string">"./build"</span>
+    }
+  });
+});
+</code></pre>
+<p>這段範例保留的是 2018 年筆記中的 Gulp 3 寫法；如果用新版 Gulp 建立新專案，需要依目前版本改成新版 task 寫法。對這篇連連看系列來說，重點是理解建置流程：來源碼放在 <code>src/</code>，編譯與打包後輸出到 <code>build/</code>，本機伺服器再讀取 <code>build/</code> 顯示結果。</p>
+</section><section aria-labelledby="github-在這個連連看系列中扮演什麼角色"><h2 id="github-在這個連連看系列中扮演什麼角色">GitHub 在這個連連看系列中扮演什麼角色？</h2>
+<p>GitHub 負責保存連連看專案的程式碼與版本紀錄。環境設定完成後，把程式碼放進 GitHub repository，可以讓每一天的遊戲開發進度更容易追蹤。</p>
+<p>這個連連看專案的所有程式碼會放在 GitHub 儲存庫：<a href="https://github.com/cochiachang/ironman2018" target="_blank" rel="noopener noreferrer">cochiachang/ironman2018</a>。</p>
+<p>Git 本身的主題很大，這篇不展開版本控制教學。如果還不熟悉 Git，可以參考 Will 保哥整理的 <a href="https://github.com/doggy8088/Learn-Git-in-30-days" target="_blank" rel="noopener noreferrer">30 天精通 Git 版本控管</a>。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>開發連連看遊戲一定要用 VS Code 嗎？</span></h3>
+<p>開發連連看遊戲不一定要用 VS Code，也可以使用 WebStorm、Sublime Text 或其他編輯器。這篇使用 VS Code，是因為 VS Code 免費、支援 TypeScript、內建 Git，也方便在同一個視窗中操作終端機。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>npm init 產生的 package.json 有什麼用？</span></h3>
+<p><code>package.json</code> 會記錄專案名稱、版本、啟動指令與套件相依性。對前端遊戲專案來說，<code>package.json</code> 可以讓建置工具、開發工具與第三方 library 的版本集中管理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>TypeScript 和 JavaScript 的差別是什麼？</span></h3>
+<p>TypeScript 是 JavaScript 的嚴格超集，會在 JavaScript 之上加入靜態型別與類別語法。TypeScript 最後仍會編譯成 JavaScript，因此適合用來管理較大型的前端專案結構。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Gulp 的 --save-dev 和 --save 有什麼不同？</span></h3>
+<p><code>--save-dev</code> 會把套件寫進 <code>devDependencies</code>，代表套件主要用在開發或建置階段。<code>--save</code> 會把套件寫進 <code>dependencies</code>，代表執行專案時也需要這個套件。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>新專案還適合照這篇使用 Gulp 3 寫法嗎？</span></h3>
+<p>新專案不建議直接照搬 Gulp 3 寫法，因為 Gulp 後續版本的 task API 已經改變。這篇比較適合用來理解 2018 年 TypeScript 遊戲專案的建置分工；實作新專案時，要依目前工具版本調整設定。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>GitHub 對個人遊戲開發有什麼幫助？</span></h3>
+<p>GitHub 可以保存每次修改的版本紀錄，讓遊戲功能拆開開發、回溯與分享都更容易。對連連看這種連續教學專案來說，GitHub 也能讓讀者對照不同日期的程式進度。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Visual Studio Code：<a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">https://code.visualstudio.com/</a></li>
+<li>Download Visual Studio Code：<a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener noreferrer">https://code.visualstudio.com/Download</a></li>
+<li>Node.js：<a href="https://nodejs.org/en/" target="_blank" rel="noopener noreferrer">https://nodejs.org/en/</a></li>
+<li>TypeScript：<a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer">https://www.typescriptlang.org/</a></li>
+<li>TypeScript tsconfig 官方說明：<a href="https://www.typescriptlang.org/docs/handbook/tsconfig-json.html" target="_blank" rel="noopener noreferrer">https://www.typescriptlang.org/docs/handbook/tsconfig-json.html</a></li>
+<li>TypeScript 配置文件 tsconfig 简析：<a href="https://github.com/hstarorg/HstarDoc/blob/master/%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3/TypeScript%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6tsconfig%E7%AE%80%E6%9E%90.md" target="_blank" rel="noopener noreferrer">https://github.com/hstarorg/HstarDoc/blob/master/%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3/TypeScript%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6tsconfig%E7%AE%80%E6%9E%90.md</a></li>
+<li>Gulp 學習 1 - 安裝與執行：<a href="https://www.oxxostudio.tw/articles/201503/gulp-install-webserver.html" target="_blank" rel="noopener noreferrer">https://www.oxxostudio.tw/articles/201503/gulp-install-webserver.html</a></li>
+<li>cochiachang/ironman2018：<a href="https://github.com/cochiachang/ironman2018" target="_blank" rel="noopener noreferrer">https://github.com/cochiachang/ironman2018</a></li>
+<li>30 天精通 Git 版本控管：<a href="https://github.com/doggy8088/Learn-Git-in-30-days" target="_blank" rel="noopener noreferrer">https://github.com/doggy8088/Learn-Git-in-30-days</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/game-dev-modules-introduction">用 NPM 模組打造網頁遊戲開發環境：我的套件選擇清單</a>：同樣聚焦 TypeScript、遊戲開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/link-game-development-introduction">連連看遊戲開發前言：從規則、益智遊戲定位到 PixiJS 製作規劃</a>：同樣聚焦 TypeScript、遊戲開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-link-game-start-end-clear-screens">PixiJS 連連看遊戲開始、結束與過關畫面教學</a>：同樣聚焦 TypeScript、遊戲開發，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2018-10-18 發布；2026-08-28 依現行技術文章結構整理。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-10-18</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>什麼是數據思維？用資料找出營收下降原因的完整案例｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="數據思維是先把直覺轉成可驗證問題，再透過事實、量化、變異觀察、反覆測試與證據修正判斷，找出真正值得處理的原因。" />
+<meta name="keywords" content="工具應用, Excel, AI 工具應用, 試算表自動化" />
+<link rel="canonical" href="https://claire-chang.com/post/data-thinking-revenue-drop/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="什麼是數據思維？用資料找出營收下降原因的完整案例｜Claire Chang" />
+<meta property="og:description" content="數據思維是先把直覺轉成可驗證問題，再透過事實、量化、變異觀察、反覆測試與證據修正判斷，找出真正值得處理的原因。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/data-thinking-revenue-drop/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_data-thinking-revenue-drop-f60747fc.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_data-thinking-revenue-drop-f60747fc.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="什麼是數據思維？用資料找出營收下降原因的完整案例｜Claire Chang" />
+<meta name="twitter:description" content="數據思維是先把直覺轉成可驗證問題，再透過事實、量化、變異觀察、反覆測試與證據修正判斷，找出真正值得處理的原因。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_data-thinking-revenue-drop-f60747fc.jpg" />
+<meta property="article:published_time" content="2026-08-25" />
+<meta property="article:modified_time" content="2026-08-30" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Excel" />
+<meta property="article:tag" content="AI 工具應用" />
+<meta property="article:tag" content="試算表自動化" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"什麼是數據思維？用資料找出營收下降原因的完整案例","item":"https://claire-chang.com/post/data-thinking-revenue-drop/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/data-thinking-revenue-drop/#article","headline":"什麼是數據思維？用資料找出營收下降原因的完整案例","description":"數據思維是先把直覺轉成可驗證問題，再透過事實、量化、變異觀察、反覆測試與證據修正判斷，找出真正值得處理的原因。","image":"https://claire-chang.com/images/articles/hero_data-thinking-revenue-drop.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2026-08-25","dateModified":"2026-08-30","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/data-thinking-revenue-drop/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"工具應用","keywords":"Excel, AI 工具應用, 試算表自動化","about":[{"@type":"Thing","name":"AI 工具應用"},{"@type":"Thing","name":"試算表自動化"}],"mentions":[{"@type":"Thing","name":"Excel"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/data-thinking-revenue-drop/#faq","mainEntity":[{"@type":"Question","name":"數據思維一定要會統計嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定。初步的數據思維可以從定義問題、量化差異、比較趨勢與檢查反例開始；需要預測或因果推論時，才需要更進階方法。"}},{"@type":"Question","name":"營收下降應該先看哪個指標？","acceptedAnswer":{"@type":"Answer","text":"先把營收拆成流量、轉換率與客單價，再依通路、商品與期間比較，通常比直接看總營收更容易定位問題。"}},{"@type":"Question","name":"資料不完整還能分析嗎？","acceptedAnswer":{"@type":"Answer","text":"可以先標示缺口並縮小結論範圍，但不能把缺失資料當成沒有發生。重要決策前應補足關鍵欄位。"}},{"@type":"Question","name":"數據分析結果一定正確嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定。分析結果受資料品質、指標定義與假設影響，因此必須保留限制說明並用後續行動驗證。"}},{"@type":"Question","name":"數據思維和資料分析有什麼差別？","acceptedAnswer":{"@type":"Answer","text":"數據思維是一種用證據做判斷的習慣；資料分析則是整理、計算與解讀資料的具體工作。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/articles/hero_data-thinking-revenue-drop.webp" alt="股價走勢圖呈現下滑趨勢，象徵用數據思維找出營收下降原因" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tutorials/" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 工具應用</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2026-08-25">2026-08-25</time></span><span class="post-meta-pill">Excel · AI 工具應用 · 試算表自動化</span></div></div><h1 class="insights-hero-title">什麼是數據思維？用資料找出營收下降原因的完整案例</h1><p class="insights-hero-description">數據思維是先把直覺轉成可驗證問題，再透過事實、量化、變異觀察、反覆測試與證據修正判斷，找出真正值得處理的原因。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<blockquote>
+<p><strong>系列：</strong> AI × 試算表｜第 01 篇<br>
+<strong>主查詢：</strong> 什麼是數據思維？如何用資料找出營收下降的真正原因？<br>
+<strong>目標讀者：</strong> 不具程式背景的行政、營運、行銷與管理者<br>
+<strong>資訊增益：</strong> SnackFlow 連續虛構案例、六句提示法、漸進式工具選擇與人工驗收方法。</p>
+</blockquote>
+<p>數據思維是先把直覺轉成可驗證問題，再透過事實、量化、變異觀察、反覆測試與證據修正判斷，找出真正值得處理的原因。數據思維不要求高深數學，重點是問對問題並用資料檢查假設。</p>
+<blockquote>
+<p><strong>教學資料聲明：</strong> 本文中的 SnackFlow、人物、訂單與成效數字均為虛構教學素材，不代表真實企業導入成果。實作時請以假資料或經組織核准的資料測試。</p>
+</blockquote>
+</div><section aria-labelledby="什麼是數據思維-如何用資料找出營收下降的真正原因"><h2 id="什麼是數據思維-如何用資料找出營收下降的真正原因">什麼是數據思維？如何用資料找出營收下降的真正原因？</h2>
+<p><strong>直接答案：</strong> 數據思維是先把直覺轉成可驗證問題，再透過事實、量化、變異觀察、反覆測試與證據修正判斷，找出真正值得處理的原因。</p>
+<p>數據思維是先把直覺轉成可驗證問題，再透過事實、量化、變異觀察、反覆測試與證據修正判斷，找出真正值得處理的原因。數據思維不要求高深數學，重點是問對問題並用資料檢查假設。</p>
+<p>本篇會完成一個可驗收的工作成果，而不是只介紹觀念。讀者將依序理解故事情境、用途、適用狀況、操作步驟、完整 Prompt、驗收方法、常見錯誤與 FAQ。</p>
+</section><section aria-labelledby="snackflow-遇到了什麼工作問題"><h2 id="snackflow-遇到了什麼工作問題">SnackFlow 遇到了什麼工作問題？</h2>
+<p><strong>直接答案：</strong> SnackFlow 本季營收下降，老闆直覺認為「最近零食賣不動」，準備全站打折。</p>
+<p>SnackFlow 本季營收下降，老闆直覺認為「最近零食賣不動」，準備全站打折。營運團隊沒有直接接受這個答案，而是檢查商品曝光、加入購物車、付款完成率、退款原因與通路差異。模擬資料顯示，曝光與加購沒有明顯下降，異常集中在加入購物車後的付款完成率。</p>
+<p>這個故事的關鍵不是「使用 AI 就會得到答案」，而是先把工作問題、資料欄位、規則與驗收條件說清楚，再讓工具協助處理可重複、可檢查的部分。</p>
+</section><section aria-labelledby="這項做法有哪些用途與效益"><h2 id="這項做法有哪些用途與效益">這項做法有哪些用途與效益？</h2>
+<p><strong>直接答案：</strong> 數據思維適合用在營收變動、客訴增加、交期延誤、成本上升與活動成效不佳等問題，數據思維的效益不是「產生更多圖表」，而是避免把預算投入錯誤原因。</p>
+<p>數據思維適合用在營收變動、客訴增加、交期延誤、成本上升與活動成效不佳等問題。數據思維的效益不是「產生更多圖表」，而是避免把預算投入錯誤原因，例如問題在結帳流程時卻先增加廣告或全站降價。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>面向</th><th>實際效益</th></tr></thead><tbody><tr><td>工作流程</td><td>把零散步驟整理成可重複執行的流程</td></tr><tr><td>溝通</td><td>讓需求、欄位、規則與輸出可以被同事核對</td></tr><tr><td>品質</td><td>在交付前用明確條件驗收，不以「有產出」當作正確</td></tr><tr><td>維護</td><td>日後欄位或規則改變時，知道要修改哪個環節</td></tr></tbody></table></div>
+</section><section aria-labelledby="哪些狀況適合-哪些狀況不適合"><h2 id="哪些狀況適合-哪些狀況不適合">哪些狀況適合，哪些狀況不適合？</h2>
+<p><strong>直接答案：</strong> 適合已有基本紀錄、能把問題拆成指標且結果可由人員複核的情境。不適合資料完全不存在、指標定義互相衝突，或把相關性直接當成因果關係的高風險決策。</p>
+<p>適合已有基本紀錄、能把問題拆成指標且結果可由人員複核的情境。不適合資料完全不存在、指標定義互相衝突，或把相關性直接當成因果關係的高風險決策。</p>
+<p>若資料涉及個資、財務、法遵、交易或未公開商業資訊，先遵守組織資料政策。只需要提供資料結構時，應使用欄位名稱與三筆虛構資料，不要直接貼入敏感原始資料。</p>
+</section><section aria-labelledby="完整操作教學怎麼做"><h2 id="完整操作教學怎麼做">完整操作教學怎麼做？</h2>
+<p><strong>直接答案：</strong> 完整操作從確認工具與資料結構開始，再依序設定規則、產出結果、測試例外並人工驗收。每一步都要保留可核對的輸入與輸出。</p>
+<h3>步驟 1：建立測試副本與成功條件</h3>
+<p>先複製原始檔，或建立只含欄位標題與三筆假資料的測試表。寫下「完成後應看到什麼」，例如公式回傳數字、試算表新增一列、雲端硬碟出現指定檔案，或 Dashboard 顯示可回扣的 KPI。</p>
+<h3>步驟 2：確認資料欄位與型態</h3>
+<p>逐欄核對工作表名稱、欄位標題、日期、文字、數字與唯一鍵。不要只依投影片中的欄位字母，因為實際檔案插入或刪除欄位後，位置可能不同。</p>
+<h3>步驟 3：依序完成核心工作</h3>
+<ol>
+<li>把「賣不動」改寫成可衡量的問題。</li>
+<li>確認期間、通路、商品與比較基準。</li>
+<li>列出可能原因，例如曝光、價格、付款、到貨與商品資訊。</li>
+<li>為每個假設指定能驗證的欄位。</li>
+<li>比較趨勢、通路與轉換漏斗。</li>
+<li>提出最小改善方案，設定追蹤指標。</li>
+</ol>
+<h3>步驟 4：貼入完整 Prompt 並補上自己的資料位置</h3>
+<p>先把下方 Prompt 中的工作表名稱、欄位、網址、Spreadsheet ID、文件樣板、Email 或 MENU 替換成自己的測試資料。若需求涉及 Apps Script，要求輸出完整的 Code.gs 與 Index.html，不能只拿片段程式碼。</p>
+<h3>步驟 5：先小量執行，再擴大範圍</h3>
+<p>公式先用三至五筆資料測試；Apps Script 先用副本與自己的測試信箱執行；Web App 先送出一筆測試資料。確認結果正確後，再換成完整資料範圍。</p>
+<h3>步驟 6：依驗收清單核對與記錄例外</h3>
+<p>至少保留一個正常案例、一個邊界案例與一個錯誤案例。若結果不符，回頭檢查欄位名稱、資料型態、日期範圍、唯一鍵、權限與部署版本。</p>
+</section><section aria-labelledby="可直接複製的完整-prompt"><h2 id="可直接複製的完整-prompt">可直接複製的完整 Prompt</h2>
+<p><strong>直接答案：</strong> 以下 Prompt 依投影片的六句提示法補齊目的、使用者、欄位、功能、規則與畫面或輸出。複製前必須替換自己的資料位置與測試條件。</p>
+<pre><code class="hljs language-text">① 我要做什麼
+我要分析 SnackFlow 最近三個月營收下降 30% 的原因，請先把「零食賣不動」改寫成可衡量、可驗證的商業問題，不要預設一定是價格或曝光造成。
+② 給誰使用
+給 SnackFlow 的營運主管與管理階層使用，目的是決定最值得優先改善的環節。
+③ 有哪些欄位
+資料可能包含日期、通路、商品名稱、品牌、商品分類、曝光數、加入購物車數、付款完成數、訂單金額、退款原因、到貨天數與植物性標示。若缺少必要欄位，請列出資料缺口，不要自行補數字。
+④ 要哪些功能
+請把分析拆成流量、加入購物車率、付款完成率、平均客單價、退款與通路差異；為每個可能原因提出可驗證假設、必要計算、建議圖表與判斷方式。
+⑤ 有哪些規則
+比較期間必須一致；區分百分比與百分點；不得把相關性直接解釋成因果。最後只保留一個最值得優先處理的問題，並提出三項可執行行動與後續追蹤指標。
+⑥ 輸出格式
+依「問題定義、需要資料、分析步驟、主要洞察、限制、行動建議、驗收方法」七個區塊輸出，使用台灣繁體中文。
+</code></pre>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>如何使用這份 Prompt？</span></h3>
+<ol>
+<li>保留六個區塊，不要只複製第一句。</li>
+<li>把範例中的工作表、欄位字母、網址、ID、Email 與日期換成測試資料。</li>
+<li>要求先說明假設，再輸出公式或完整程式碼。</li>
+<li>執行前檢查是否會寄信、分享檔案、覆寫資料或建立公開網址。</li>
+<li>把錯誤訊息與預期結果一起回填，要求只修正受影響部分。</li>
+</ol>
+</section><section aria-labelledby="如何驗收結果"><h2 id="如何驗收結果">如何驗收結果？</h2>
+<p><strong>直接答案：</strong> 驗收不能只確認公式沒有錯誤或程式成功執行，還要核對資料範圍、計算規則、例外案例、輸出內容與必要權限。</p>
+<ul>
+<li>營收、訂單與轉換率的定義一致。</li>
+<li>比較期間包含相同天數與相近活動條件。</li>
+<li>至少檢查一項能推翻原先假設的證據。</li>
+<li>結論能對應到具體行動與後續追蹤。</li>
+</ul>
+<p>建議再做三層核對：第一層用兩至三筆資料手算；第二層比較來源總筆數與輸出總筆數；第三層測試空白、重複、未對應、期間外或權限不足等例外。</p>
+</section><section aria-labelledby="常見錯誤與限制有哪些"><h2 id="常見錯誤與限制有哪些">常見錯誤與限制有哪些？</h2>
+<p><strong>直接答案：</strong> 最常見問題是欄位與指標未定義清楚、直接相信產出，以及忽略資料型態、權限、部署版本與工具規模限制。</p>
+<ul>
+<li>只看單月數字，忽略季節性與波動。</li>
+<li>看到兩件事同時發生，就認定具有因果關係。</li>
+<li>先決定答案，再挑支持答案的資料。</li>
+</ul>
+<p>若工作涉及正式財務、法遵、薪資、交易、大量多人使用或高可用性要求，應加入正式審核、權限、測試、記錄與稽核機制，不能只依賴教學用試算表原型。</p>
+</section><section aria-labelledby="工具功能與來源依據"><h2 id="工具功能與來源依據">工具功能與來源依據</h2>
+<p><strong>直接答案：</strong> 文章中的工具操作以官方文件或實際引用來源為準；產品介面、可用方案與配額可能變動，操作前應再次核對官方說明。</p>
+<p>本文涉及的產品功能或操作範圍，以 <a href="https://ithelp.ithome.com.tw/m/articles/10259958" target="_blank" rel="noopener noreferrer">iT 邦幫忙：資料分析流程的六大階段</a> 為查核依據；功能、方案與介面可能更新，實作時仍應以官方頁面為準。</p>
+</section><section aria-labelledby="常見問題-faq"><h2 id="常見問題-faq">常見問題 FAQ</h2>
+<p><strong>直接答案：</strong> 以下問答處理操作、驗證與工具選擇時常見的疑問；每個答案都可脫離前文單獨閱讀與套用。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>數據思維一定要會統計嗎？</span></h3>
+<p>不一定。初步的數據思維可以從定義問題、量化差異、比較趨勢與檢查反例開始；需要預測或因果推論時，才需要更進階方法。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>營收下降應該先看哪個指標？</span></h3>
+<p>先把營收拆成流量、轉換率與客單價，再依通路、商品與期間比較，通常比直接看總營收更容易定位問題。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>資料不完整還能分析嗎？</span></h3>
+<p>可以先標示缺口並縮小結論範圍，但不能把缺失資料當成沒有發生。重要決策前應補足關鍵欄位。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>數據分析結果一定正確嗎？</span></h3>
+<p>不一定。分析結果受資料品質、指標定義與假設影響，因此必須保留限制說明並用後續行動驗證。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>數據思維和資料分析有什麼差別？</span></h3>
+<p>數據思維是一種用證據做判斷的習慣；資料分析則是整理、計算與解讀資料的具體工作。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<p><strong>直接答案：</strong> 參考資料只列出本文實際使用的投影片與公開來源；日期無法確認時標示日期不明，不自行推測發布時間。</p>
+<ul>
+<li><a href="https://ithelp.ithome.com.tw/m/articles/10259958" target="_blank" rel="noopener noreferrer">資料分析流程的六大階段</a>｜iT 邦幫忙｜發布日期：日期不明｜存取日期：2026-08-24</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/google-six-steps-data-analysis">職場數據分析怎麼做？Google 六步驟完整教學</a>：同樣聚焦 Excel、AI 工具應用，可接著比較不同情境的做法。</li>
+<li><a href="/post/spreadsheet-analysis-business-problems">拿到一份試算表怎麼分析？從商業問題找出優先改善項目</a>：同樣聚焦 Excel、AI 工具應用，可接著比較不同情境的做法。</li>
+<li><a href="/post/split-google-sheets-reports">如何把 Google 試算表自動拆成多份報表？</a>：同樣聚焦 Excel、AI 工具應用，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2026-08-25</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

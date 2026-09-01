@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenAI o1-preview 介紹：推理模型帶來什麼改變？｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="介紹 OpenAI o1-preview 的發布背景、推理模型特色、程式實測觀察、限制與使用建議。" />
+<meta name="keywords" content="生成式AI, OpenAI, o1-preview, 推理模型, LLM, ChatGPT" />
+<link rel="canonical" href="https://claire-chang.com/post/openai-o1-preview-introduction/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="OpenAI o1-preview 介紹：推理模型帶來什麼改變？｜Claire Chang" />
+<meta property="og:description" content="介紹 OpenAI o1-preview 的發布背景、推理模型特色、程式實測觀察、限制與使用建議。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/openai-o1-preview-introduction/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_openai-o1-preview-introduction-089b7ab9.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_openai-o1-preview-introduction-089b7ab9.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="OpenAI o1-preview 介紹：推理模型帶來什麼改變？｜Claire Chang" />
+<meta name="twitter:description" content="介紹 OpenAI o1-preview 的發布背景、推理模型特色、程式實測觀察、限制與使用建議。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_openai-o1-preview-introduction-089b7ab9.jpg" />
+<meta property="article:published_time" content="2024-09-15" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="OpenAI" />
+<meta property="article:tag" content="o1-preview" />
+<meta property="article:tag" content="推理模型" />
+<meta property="article:tag" content="LLM" />
+<meta property="article:tag" content="ChatGPT" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"OpenAI o1-preview 介紹：推理模型帶來什麼改變？","item":"https://claire-chang.com/post/openai-o1-preview-introduction/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/openai-o1-preview-introduction/#article","headline":"OpenAI o1-preview 介紹：推理模型帶來什麼改變？","description":"介紹 OpenAI o1-preview 的發布背景、推理模型特色、程式實測觀察、限制與使用建議。","image":"https://claire-chang.com/images/tech/hero_openai-o1-preview-introduction.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-09-15","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/openai-o1-preview-introduction/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"OpenAI, o1-preview, 推理模型, LLM, ChatGPT","about":[{"@type":"Thing","name":"推理模型"},{"@type":"Thing","name":"LLM"}],"mentions":[{"@type":"Organization","name":"OpenAI"},{"@type":"Thing","name":"o1-preview"},{"@type":"Thing","name":"ChatGPT"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/openai-o1-preview-introduction/#faq","mainEntity":[{"@type":"Question","name":"OpenAI o1-preview 是 GPT-4o 的升級版嗎？","acceptedAnswer":{"@type":"Answer","text":"OpenAI o1-preview 不適合簡單理解成 GPT-4o 的直接升級版。o1-preview 的強項是複雜推理、程式與數學任務；GPT-4o 則在速度、多模態與一般互動體驗上有不同定位。"}},{"@type":"Question","name":"o1-preview 現在還能在 API 使用嗎？","acceptedAnswer":{"@type":"Answer","text":"以 2026 年 8 月 28 日查到的 OpenAI API 文件來看，`o1-preview` 已標示為 deprecated，API 關閉日期記錄為 2025 年 7 月 28 日。新專案應查 OpenAI 最新模型頁與 deprecation 頁面，不要直接依賴 `o1-preview`。"}},{"@type":"Question","name":"o1-preview 為什麼寫程式感覺比較強？","acceptedAnswer":{"@type":"Answer","text":"o1-preview 比較擅長把大任務拆成多個步驟，並在產生答案前檢查策略與錯誤。程式任務常同時包含狀態、資料結構、互動與邊界條件，因此推理模型的優勢特別明顯。"}},{"@type":"Question","name":"使用 o1-preview 需要看完整 Chain-of-Thought 嗎？","acceptedAnswer":{"@type":"Answer","text":"使用 o1-preview 不需要、也不應依賴完整 Chain-of-Thought。比較好的做法是要求模型輸出「摘要式理由、檢查清單與測試結果」，讓人能審查結論，而不是要求模型暴露完整內部推理。"}},{"@type":"Question","name":"o1-preview 適合所有 ChatGPT 任務嗎？","acceptedAnswer":{"@type":"Answer","text":"o1-preview 不適合所有 ChatGPT 任務。短文改寫、簡單翻譯、一般問答通常不需要高推理成本；複雜程式、架構比較、數學推導與多步決策才更適合推理模型。"}},{"@type":"Question","name":"工程師會因為 o1-preview 這類模型被取代嗎？","acceptedAnswer":{"@type":"Answer","text":"o1-preview 會改變工程師工作內容，但不等於直接取代工程師。工程師仍要定義需求、檢查輸出、做系統整合、處理安全與維運問題；模型越能寫程式，工程師越需要有審查與架構判斷能力。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_openai-o1-preview-introduction.webp" alt="OpenAI o1-preview 在數學、程式與科學問題基準測試中的表現圖表" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-09-15">2024-09-15</time></span><span class="post-meta-pill">OpenAI · o1-preview · 推理模型 · LLM · ChatGPT</span></div></div><h1 class="insights-hero-title">OpenAI o1-preview 介紹：推理模型帶來什麼改變？</h1><p class="insights-hero-description">介紹 OpenAI o1-preview 的發布背景、推理模型特色、程式實測觀察、限制與使用建議。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>OpenAI o1-preview 是 OpenAI 在 2024 年 9 月 12 日推出的早期推理模型，重點不是更快聊天，而是讓模型在回答前花更多時間拆解問題。我的觀察是：o1-preview 對程式撰寫、程式理解、除錯與複雜任務拆解的改變很明顯，但使用時也要知道 o1-preview 曾是 preview 模型，現在更適合被理解為推理模型時代的起點，而不是新的正式專案首選模型。</p>
+</div><section aria-labelledby="openai-o1-preview-是什麼"><h2 id="openai-o1-preview-是什麼">OpenAI o1-preview 是什麼？</h2>
+<p>OpenAI o1-preview 是 OpenAI o1 系列的早期預覽模型。OpenAI o1-preview 的核心特色是強化複雜推理，尤其適合科學、程式與數學任務。</p>
+<p>OpenAI 在發布說明中提到，o1 系列模型被設計成在回答前花更多時間思考，能處理比過去模型更困難的科學、程式與數學問題（OpenAI，2024-09）。這也是我第一次明顯感覺到：ChatGPT 不只是把指令拆成文字回覆，而是開始比較像一個會先規劃、再執行、再修正的工作夥伴。</p>
+<p>o1-preview 的「preview」很重要。o1-preview 代表當時還在早期測試階段，功能完整度、速度、工具支援與使用限制都還在變動。以 2026 年 8 月 28 日回看，OpenAI API 文件已將 <code>o1-preview</code> 標示為 deprecated，並記錄 API 關閉日期為 2025 年 7 月 28 日，官方建議替代模型為 <code>o3</code>（OpenAI Developers，2026-08 存取）。</p>
+</section><section aria-labelledby="o1-preview-為什麼被稱為推理模型"><h2 id="o1-preview-為什麼被稱為推理模型">o1-preview 為什麼被稱為推理模型？</h2>
+<p>o1-preview 被稱為推理模型，是因為訓練目標強調長鏈推理、錯誤修正與策略嘗試。o1-preview 不是只預測下一句，而是更擅長把複雜問題拆成步驟。</p>
+<p>OpenAI 在〈Learning to reason with LLMs〉中說明，o1 是以強化學習訓練來執行複雜推理的大型語言模型。o1 會在回答前產生內部推理流程，但 OpenAI 並未把完整 Chain-of-Thought（思路鏈）直接開放給使用者；官方做法是保留隱藏推理，必要時呈現摘要（OpenAI，2024-09）。</p>
+<p>這個設計對使用者很有感。過去我常需要先把任務拆細，例如「先幫我建立 HTML 結構」、「再補互動」、「再修 CSS」、「最後整合功能」。使用 o1-preview 時，模型更常自己先分析任務、安排順序、檢查邊界情境，再一次完成比較大的工作。</p>
+</section><section aria-labelledby="o1-preview-的官方能力重點有哪些"><h2 id="o1-preview-的官方能力重點有哪些">o1-preview 的官方能力重點有哪些？</h2>
+<p>o1-preview 的官方重點集中在複雜推理與程式能力。OpenAI 公布的評測顯示，o1-preview 在 Codeforces、AIME 與 GPQA 類型任務上明顯優於 GPT-4o。</p>
+<figure class="article-figure"><img src="/images/tech/hero_openai-o1-preview-introduction.webp" alt="OpenAI o1-preview 與 GPT-4o、o1 的基準測試比較" loading="lazy" class="markdown-img"></figure>
+<p>從 OpenAI 公布的圖表可以看到，o1-preview 在競賽程式 Codeforces 評測從 GPT-4o 的 11.0 percentile 提升到 62.0 percentile，後續 o1 則到 89.0 percentile。AIME 2024 與 GPQA Diamond 也呈現類似方向：推理模型在需要多步推導的任務上更有優勢（OpenAI，2024-09）。</p>
+<p>我會把官方重點整理成四類：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>面向</th><th>o1-preview 的意義</th><th>使用時的提醒</th></tr></thead><tbody><tr><td>複雜推理</td><td>能處理需要多步拆解的問題</td><td>不適合每個簡單任務都使用</td></tr><tr><td>程式能力</td><td>對程式生成、除錯、重構更有幫助</td><td>仍需要工程師檢查安全與邊界條件</td></tr><tr><td>長鏈思考</td><td>能嘗試不同策略並修正錯誤</td><td>完整內部思路不應當成可驗證證據</td></tr><tr><td>產品階段</td><td>preview 階段提供早期能力測試</td><td>正式導入應確認當前可用模型與 API 狀態</td></tr></tbody></table></div>
+</section><section aria-labelledby="我用-o1-preview-做了什麼實測"><h2 id="我用-o1-preview-做了什麼實測">我用 o1-preview 做了什麼實測？</h2>
+<p>我用 o1-preview 生成一個 HTML 俄羅斯方塊小遊戲。o1-preview 不只產生可運作版本，也能持續加入計分板、下一個方塊與版面調整。</p>
+<p>這次實測最讓我驚訝的地方，不是模型能寫出一段程式，而是模型能把「做一個遊戲」這種大任務拆成可執行的結構。o1-preview 會先整理遊戲玩法、畫面元件、鍵盤操作、碰撞邏輯與計分規則，然後再把程式碼組起來。</p>
+<p>對話紀錄可以看這裡：<a href="https://chatgpt.com/share/66e6bcf1-4254-8005-a573-a250e1b51702" target="_blank" rel="noopener noreferrer">使用 o1-preview 製作 HTML 俄羅斯方塊的 ChatGPT 分享紀錄</a>。</p>
+<figure class="article-figure"><img src="/images/tech/openai-o1-preview-tetris-first-result.webp" alt="o1-preview 生成 HTML 俄羅斯方塊初版畫面" loading="lazy" class="markdown-img"></figure>
+<p>接著我請 o1-preview 增加計分板與顯示下一個方塊，o1-preview 也能維持原本功能並補上新的 UI。</p>
+<figure class="article-figure"><img src="/images/tech/openai-o1-preview-tetris-score-next.webp" alt="o1-preview 加上計分板與下一個方塊預覽" loading="lazy" class="markdown-img"></figure>
+<p>我再請 o1-preview 調整版面，模型同樣能理解既有程式結構，再把畫面整理得更完整。</p>
+<figure class="article-figure"><img src="/images/tech/openai-o1-preview-tetris-layout.webp" alt="o1-preview 調整俄羅斯方塊遊戲版面" loading="lazy" class="markdown-img"></figure>
+<p>最後成果也保留鍵盤操作：左右鍵移動方塊、下鍵加速下落、上鍵旋轉方塊、空白鍵直接下降。</p>
+<figure class="article-figure"><img src="/images/tech/openai-o1-preview-tetris-final.webp" alt="o1-preview 生成的俄羅斯方塊完整成果" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="o1-preview-對工程師工作流程有什麼影響"><h2 id="o1-preview-對工程師工作流程有什麼影響">o1-preview 對工程師工作流程有什麼影響？</h2>
+<p>o1-preview 對工程師最大的影響，是把「拆任務」的一部分交給模型處理。工程師仍要設計需求與驗收標準，但可以把更多時間放在架構判斷。</p>
+<p>我以前使用 ChatGPT 寫程式時，常見工作方式是人先把任務拆成很小的步驟，再逐步要求模型完成。這種方式能降低模型出錯，但也代表工程師要花很多力氣當任務切分器。</p>
+<p>o1-preview 讓我感覺這個分工開始改變。模型可以先理解大目標，自己拆出畫面、狀態、事件、資料結構與錯誤處理；工程師則轉向檢查需求是否被正確理解、實作是否可維護、程式是否有安全或效能問題。</p>
+<p>這不代表工程師不重要。o1-preview 反而讓工程師的判斷更重要，因為模型能寫出更多程式碼，也代表錯誤可能藏在更大的輸出裡。真正的門檻會從「能不能寫」轉向「能不能定義問題、審查輸出、整合系統」。</p>
+</section><section aria-labelledby="使用-o1-preview-時應該怎麼下提示"><h2 id="使用-o1-preview-時應該怎麼下提示">使用 o1-preview 時應該怎麼下提示？</h2>
+<p>使用 o1-preview 時，提示應該給清楚目標、限制條件、驗收標準與可用上下文。o1-preview 擅長推理，但無關資訊仍會干擾判斷。</p>
+<p>我的使用建議是把 prompt 寫成「任務規格」，不要只寫一句願望。</p>
+<ol>
+<li><strong>先說目標</strong>：例如「做一個可直接開啟的 HTML 俄羅斯方塊」。</li>
+<li><strong>補限制條件</strong>：例如「不要使用外部框架」、「全部放在單一檔案」。</li>
+<li><strong>給驗收標準</strong>：例如「左右移動、旋轉、消行、計分、遊戲結束都要可用」。</li>
+<li><strong>要求模型自檢</strong>：例如「完成後列出你檢查過的功能與可能限制」。</li>
+<li><strong>避免塞入無關內容</strong>：推理模型需要上下文，但不是上下文越多越好。</li>
+</ol>
+<p>OpenAI 在 o1 系列說明中也提醒，o1-preview 當時不具備某些 GPT-4o 已有的工具功能，例如瀏覽、檔案或多模態相關能力還在逐步補齊（OpenAI，2024-09）。因此，使用 o1-preview 這類推理模型時，應先確認任務需要的是「思考更久」還是「工具更多」。</p>
+</section><section aria-labelledby="o1-preview-有哪些限制與風險"><h2 id="o1-preview-有哪些限制與風險">o1-preview 有哪些限制與風險？</h2>
+<p>o1-preview 的限制包括延遲、成本、工具支援、使用額度與模型生命週期。推理能力變強不代表輸出一定正確，也不代表可以省略驗證。</p>
+<p>第一個限制是速度。推理模型通常會花更多時間產生答案，適合難題，不適合每個簡單客服回覆或短文改寫都使用。</p>
+<p>第二個限制是可用性。o1-preview 在 2024 年 9 月推出時，ChatGPT Plus 與 Team 使用者可使用，API 則先提供給符合層級的開發者；OpenAI 後續也曾調整使用額度（OpenAI，2024-09）。以目前 API 狀態來看，<code>o1-preview</code> 已不適合新系統依賴，正式專案應查最新模型清單與 deprecation 頁面。</p>
+<p>第三個限制是信任。o1-preview 的內部推理不等於可引用證據；如果任務涉及法規、醫療、財務或正式決策，仍要要求來源、跑測試、保留人工審查。</p>
+</section><section aria-labelledby="什麼情境適合使用推理模型"><h2 id="什麼情境適合使用推理模型">什麼情境適合使用推理模型？</h2>
+<p>推理模型適合需要拆解、規劃、驗證與多步判斷的任務。簡單摘要、翻譯或格式轉換通常不需要使用高推理成本模型。</p>
+<p>我會用以下方式判斷：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>任務類型</th><th>是否適合推理模型</th><th>原因</th></tr></thead><tbody><tr><td>複雜程式生成</td><td>適合</td><td>需要同時處理需求、狀態、邏輯與邊界條件</td></tr><tr><td>程式除錯與重構</td><td>適合</td><td>需要追蹤錯誤來源並比較修法</td></tr><tr><td>數學與邏輯題</td><td>適合</td><td>需要多步推導與自我檢查</td></tr><tr><td>文件摘要</td><td>視情況</td><td>長文件歸納可能適合，短文摘要不一定需要</td></tr><tr><td>翻譯與改寫</td><td>通常不需要</td><td>任務多半不需要長鏈推理</td></tr><tr><td>即時資料查詢</td><td>取決於工具</td><td>模型需要搜尋、RAG 或 function calling 才能取得最新資訊</td></tr></tbody></table></div>
+<p>推理模型最適合用在「答案不能只靠直覺」的任務。當我需要模型先想清楚架構、比較選項、找出錯誤、規劃步驟，o1-preview 這類模型就會比一般對話模型更有價值。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>OpenAI o1-preview 是 GPT-4o 的升級版嗎？</span></h3>
+<p>OpenAI o1-preview 不適合簡單理解成 GPT-4o 的直接升級版。o1-preview 的強項是複雜推理、程式與數學任務；GPT-4o 則在速度、多模態與一般互動體驗上有不同定位。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>o1-preview 現在還能在 API 使用嗎？</span></h3>
+<p>以 2026 年 8 月 28 日查到的 OpenAI API 文件來看，<code>o1-preview</code> 已標示為 deprecated，API 關閉日期記錄為 2025 年 7 月 28 日。新專案應查 OpenAI 最新模型頁與 deprecation 頁面，不要直接依賴 <code>o1-preview</code>。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>o1-preview 為什麼寫程式感覺比較強？</span></h3>
+<p>o1-preview 比較擅長把大任務拆成多個步驟，並在產生答案前檢查策略與錯誤。程式任務常同時包含狀態、資料結構、互動與邊界條件，因此推理模型的優勢特別明顯。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>使用 o1-preview 需要看完整 Chain-of-Thought 嗎？</span></h3>
+<p>使用 o1-preview 不需要、也不應依賴完整 Chain-of-Thought。比較好的做法是要求模型輸出「摘要式理由、檢查清單與測試結果」，讓人能審查結論，而不是要求模型暴露完整內部推理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>o1-preview 適合所有 ChatGPT 任務嗎？</span></h3>
+<p>o1-preview 不適合所有 ChatGPT 任務。短文改寫、簡單翻譯、一般問答通常不需要高推理成本；複雜程式、架構比較、數學推導與多步決策才更適合推理模型。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>工程師會因為 o1-preview 這類模型被取代嗎？</span></h3>
+<p>o1-preview 會改變工程師工作內容，但不等於直接取代工程師。工程師仍要定義需求、檢查輸出、做系統整合、處理安全與維運問題；模型越能寫程式，工程師越需要有審查與架構判斷能力。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>OpenAI. <a href="https://openai.com/index/introducing-openai-o1-preview/" target="_blank" rel="noopener noreferrer">Introducing OpenAI o1-preview</a>. 2024-09-12，存取日期：2026-08-28。</li>
+<li>OpenAI. <a href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank" rel="noopener noreferrer">Learning to reason with LLMs</a>. 2024-09-12，存取日期：2026-08-28。</li>
+<li>GitHub Blog. <a href="https://github.blog/news-insights/product-news/openai-o1-in-github-copilot/" target="_blank" rel="noopener noreferrer">Try out OpenAI o1 in GitHub Copilot and Models</a>. 2024-09-19，存取日期：2026-08-28。</li>
+<li>OpenAI Developers. <a href="https://developers.openai.com/api/docs/models/o1" target="_blank" rel="noopener noreferrer">o1 model documentation</a>. 存取日期：2026-08-28。</li>
+<li>OpenAI API. <a href="https://platform.openai.com/docs/deprecations" target="_blank" rel="noopener noreferrer">Deprecations</a>. 存取日期：2026-08-28。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/prompt-engineering-six-strategies">Prompt engineering 提示工程：獲得更好結果的六種策略</a>：同樣聚焦 LLM、ChatGPT，可接著比較不同情境的做法。</li>
+<li><a href="/post/prompt-engineering-techniques">Prompt Engineering 提示工程：獲得更好 LLM 輸出的六大策略</a>：同樣聚焦 LLM、OpenAI，可接著比較不同情境的做法。</li>
+<li><a href="/post/llm-function-calling-guide">了解 LLM 的函數調用 Function Calling</a>：同樣聚焦 LLM、OpenAI，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28：補上 GEO 結構、FAQ、參考資料、站內延伸閱讀，並更新 <code>o1-preview</code> 的 API 生命週期提醒。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-09-15</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

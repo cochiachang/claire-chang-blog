@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LlamaIndex 查詢流程解析：Retriever、Router 與 Response Synthesizer 怎麼分工｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 LlamaIndex 查詢流程如何從 Retriever 檢索節點、經 Node Postprocessor 處理，再由 Response Synthesizer 生成 RAG 回答。" />
+<meta name="keywords" content="生成式AI, LlamaIndex, RAG, Retriever, Query Engine, Response Synthesizer, Python" />
+<link rel="canonical" href="https://claire-chang.com/post/llamaindex-query-flow/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="LlamaIndex 查詢流程解析：Retriever、Router 與 Response Synthesizer 怎麼分工｜Claire Chang" />
+<meta property="og:description" content="說明 LlamaIndex 查詢流程如何從 Retriever 檢索節點、經 Node Postprocessor 處理，再由 Response Synthesizer 生成 RAG 回答。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/llamaindex-query-flow/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_llamaindex-basic-components-b11db481.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_llamaindex-basic-components-b11db481.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="LlamaIndex 查詢流程解析：Retriever、Router 與 Response Synthesizer 怎麼分工｜Claire Chang" />
+<meta name="twitter:description" content="說明 LlamaIndex 查詢流程如何從 Retriever 檢索節點、經 Node Postprocessor 處理，再由 Response Synthesizer 生成 RAG 回答。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_llamaindex-basic-components-b11db481.jpg" />
+<meta property="article:published_time" content="2024-05-17" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="LlamaIndex" />
+<meta property="article:tag" content="RAG" />
+<meta property="article:tag" content="Retriever" />
+<meta property="article:tag" content="Query Engine" />
+<meta property="article:tag" content="Response Synthesizer" />
+<meta property="article:tag" content="Python" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"LlamaIndex 查詢流程解析：Retriever、Router 與 Response Synthesizer 怎麼分工","item":"https://claire-chang.com/post/llamaindex-query-flow/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/llamaindex-query-flow/#article","headline":"LlamaIndex 查詢流程解析：Retriever、Router 與 Response Synthesizer 怎麼分工","description":"說明 LlamaIndex 查詢流程如何從 Retriever 檢索節點、經 Node Postprocessor 處理，再由 Response Synthesizer 生成 RAG 回答。","image":"https://claire-chang.com/images/tech/hero_llamaindex-basic-components.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-05-17","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/llamaindex-query-flow/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"LlamaIndex, RAG, Retriever, Query Engine, Response Synthesizer, Python","about":[{"@type":"Thing","name":"RAG"}],"mentions":[{"@type":"Thing","name":"LlamaIndex"},{"@type":"Thing","name":"Retriever"},{"@type":"Thing","name":"Query Engine"},{"@type":"Thing","name":"Response Synthesizer"},{"@type":"Thing","name":"Python"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/llamaindex-query-flow/#faq","mainEntity":[{"@type":"Question","name":"LlamaIndex 查詢流程和 RAG 是同一件事嗎？","acceptedAnswer":{"@type":"Answer","text":"LlamaIndex 查詢流程可以實作 RAG，但兩者不是完全同一件事。RAG 是「先檢索、再生成」的架構概念；LlamaIndex 則提供 Retriever、Query Engine、Response Synthesizer 等元件來實作這條流程。"}},{"@type":"Question","name":"Retriever 和 Response Synthesizer 最大差別是什麼？","acceptedAnswer":{"@type":"Answer","text":"Retriever 負責找資料，Response Synthesizer 負責寫答案。Retriever 回傳的是相關 Node 或 NodeWithScore；Response Synthesizer 會把這些內容和使用者問題交給大型語言模型，產生可讀的回答。"}},{"@type":"Question","name":"Router Retriever 一定要使用嗎？","acceptedAnswer":{"@type":"Answer","text":"Router Retriever 不一定要使用。當資料來源單純、索引類型單一時，普通 Retriever 就夠；當不同問題需要走不同檢索器或不同資料庫時，Router Retriever 才比較有價值。"}},{"@type":"Question","name":"Node Postprocessor 可以解決檢索不準嗎？","acceptedAnswer":{"@type":"Answer","text":"Node Postprocessor 可以改善檢索結果，但不能完全補救錯誤索引或錯誤 embedding。Node Postprocessor 比較適合做過濾、重排與門檻控制；如果 Retriever 一開始完全找錯資料，仍要回頭調整切分、索引或檢索策略。"}},{"@type":"Question","name":"Response Synthesizer 的 response mode 要怎麼選？","acceptedAnswer":{"@type":"Answer","text":"Response Synthesizer 的 response mode 要看答案需要多細、節點數量有多少、成本是否敏感。`compact` 通常適合先做 baseline；`refine` 適合需要逐段整合的回答，但 LLM 呼叫次數和成本可能更高。"}},{"@type":"Question","name":"為什麼要先單獨測 Retriever？","acceptedAnswer":{"@type":"Answer","text":"先單獨測 Retriever 可以把「資料找錯」和「模型寫不好」分開。若檢索到的 Node 沒有答案依據，Query Engine 生成出來的文字再流暢也不可靠。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_llamaindex-basic-components.webp" alt="藍綠色積木堆疊，象徵 LlamaIndex 查詢流程中的可組合元件" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-05-17">2024-05-17</time></span><span class="post-meta-pill">LlamaIndex · RAG · Retriever · Query Engine · Response Synthesizer · Python</span></div></div><h1 class="insights-hero-title">LlamaIndex 查詢流程解析：Retriever、Router 與 Response Synthesizer 怎麼分工</h1><p class="insights-hero-description">說明 LlamaIndex 查詢流程如何從 Retriever 檢索節點、經 Node Postprocessor 處理，再由 Response Synthesizer 生成 RAG 回答。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>LlamaIndex 查詢流程的核心是先用 Retriever 從索引中找出相關節點，再用 Response Synthesizer 把節點、問題與大型語言模型串成回答。我的理解是：Query Engine 是對外最方便的入口，但真正影響 RAG 品質的地方，常常藏在 Retriever、Node Postprocessor 與 Response Synthesizer 的分工裡。</p>
+</div><section aria-labelledby="llamaindex-查詢流程包含哪些階段"><h2 id="llamaindex-查詢流程包含哪些階段">LlamaIndex 查詢流程包含哪些階段？</h2>
+<p>LlamaIndex 查詢流程通常包含檢索、節點後處理與回應合成三個階段。Query Engine 只是把這三段包成一個可呼叫介面。</p>
+<p>LlamaIndex 官方文件把 querying 拆成 retrieval、postprocessing、response synthesis 三個主要階段：Retriever 從 Index 找資料，Node Postprocessor 過濾或重新排序資料，Response Synthesizer 則把資料交給大型語言模型生成答案（LlamaIndex Docs，2026-08 存取）。</p>
+<p>我會把流程記成這樣：</p>
+<ol>
+<li>使用者提出 query。</li>
+<li>Retriever 根據 query 從 Index 取回相關 Node。</li>
+<li>Node Postprocessor 對 Node 做過濾、排序或轉換。</li>
+<li>Response Synthesizer 讀取 query 與 Node，呼叫大型語言模型產生回答。</li>
+<li>Query Engine 回傳 Response 物件或文字結果。</li>
+</ol>
+<p>這也是 RAG（Retrieval-Augmented Generation，檢索增強生成）的基本形狀：先檢索外部資料，再讓模型根據檢索內容回答，而不是只靠模型訓練記憶。</p>
+</section><section aria-labelledby="retriever-在-llamaindex-中負責什麼"><h2 id="retriever-在-llamaindex-中負責什麼">Retriever 在 LlamaIndex 中負責什麼？</h2>
+<p>Retriever 在 LlamaIndex 中負責從索引取回相關 Node。Retriever 不負責產生自然語言答案，只決定哪些內容應該交給後續生成流程。</p>
+<p>LlamaIndex 的 Retriever 可以理解成「資料查找器」。Index 已經把文件整理成可搜尋的結構，Retriever 則依照查詢策略從 Index 裡取出候選節點。官方舊版 API 文件也把 Retriever 定義為依 query 從 index 取回一組 Node 的元件（LlamaIndex Docs，2026-08 存取）。</p>
+<p>這個分工很重要。若 Retriever 找到的 Node 不相關，後面的 Response Synthesizer 再會寫，也只能把錯誤或鬆散的脈絡包裝成看似合理的回答。RAG 的品質常常不是「模型會不會回答」，而是「模型拿到的內容是不是對的」。</p>
+</section><section aria-labelledby="router-retriever-什麼時候會用到"><h2 id="router-retriever-什麼時候會用到">Router Retriever 什麼時候會用到？</h2>
+<p>Router Retriever 適合多個檢索器並存的情境。Router Retriever 會根據查詢與候選檢索器的 metadata，選擇一個或多個檢索器執行查詢。</p>
+<p>如果知識庫只有一種資料和一種索引，單一 Retriever 通常就夠。可是實務上常會有不同資料來源，例如產品文件走向量檢索，FAQ 走關鍵字檢索，資料庫說明走結構化查詢。這時候 Router Retriever 可以讓系統先判斷「這個問題應該交給誰找資料」。</p>
+<p>LlamaIndex 的 RouterRetriever 官方 API 說明提到，RouterRetriever 會在多個 candidate retrievers 中選擇一個或多個來執行 query，選擇依據包含每個 candidate 的 metadata 與 query（LlamaIndex Docs，2026-08 存取）。所以 Router 的重點不是回答，而是把查詢導到合適的檢索路徑。</p>
+</section><section aria-labelledby="node-postprocessor-如何影響查詢品質"><h2 id="node-postprocessor-如何影響查詢品質">Node Postprocessor 如何影響查詢品質？</h2>
+<p>Node Postprocessor 會在檢索後處理節點。Node Postprocessor 可以過濾低分節點、重新排序候選內容，或移除不該進入回答的資料片段。</p>
+<p>Retriever 取回的 Node 通常還不是最終要丟進大型語言模型的內容。Node Postprocessor 會接手這些候選節點，依規則進一步整理。例如相似度低於門檻的節點可以被移除，含特定關鍵字的節點可以被保留或排除，也可以接 reranker 重新排序。</p>
+<p>我會把 Node Postprocessor 當成查詢流程中的品質閘門。Retriever 負責「找可能相關的內容」，Node Postprocessor 負責「把不夠好的候選內容擋掉」。這一層若沒處理好，模型 prompt 會塞進太多雜訊，回答就容易變得模糊。</p>
+</section><section aria-labelledby="response-synthesizer-在-rag-裡做什麼"><h2 id="response-synthesizer-在-rag-裡做什麼">Response Synthesizer 在 RAG 裡做什麼？</h2>
+<p>Response Synthesizer 負責把使用者問題與檢索到的文本片段合成回答。Response Synthesizer 是 Retriever 之後、Query Engine 回應之前的生成層。</p>
+<p>LlamaIndex 官方 Response Synthesizer 文件把它定義為使用大型語言模型、使用者 query 與一組 text chunks 產生 response 的元件；在 Query Engine 中，Response Synthesizer 會在 Retriever 取回 nodes、Node Postprocessor 執行之後才運作（LlamaIndex Docs，2026-08 存取）。</p>
+<p>Response Synthesizer 的模式會影響成本與答案形狀。例如 <code>refine</code> 會逐段讀取節點並更新答案，通常比較細但 LLM 呼叫次數較多；<code>compact</code> 會先壓縮與串接內容，再用較少呼叫產生回答。若資料片段很多，我會先測 <code>compact</code>，再用代表性問題比較 <code>refine</code> 是否真的帶來更好的答案。</p>
+</section><section aria-labelledby="常見-retriever-類型怎麼選"><h2 id="常見-retriever-類型怎麼選">常見 Retriever 類型怎麼選？</h2>
+<p>LlamaIndex Retriever 的選擇要看資料形狀與查詢目的。向量檢索適合語意相似問題，關鍵字檢索適合明確詞彙，樹狀或列表檢索適合特定索引結構。</p>
+<p>我通常先用資料形狀來選 Retriever，而不是一開始就追最複雜的策略。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>Retriever 類型</th><th>適合資料</th><th>查詢特性</th><th>我會注意的風險</th></tr></thead><tbody><tr><td>Vector Index Retriever</td><td>文字文件、知識庫、語意相近內容</td><td>問法和文件文字不完全相同也要找得到</td><td>embedding 品質與 <code>similarity_top_k</code> 會影響命中</td></tr><tr><td>List Retriever</td><td>文件量小、想掃過多數節點</td><td>需要完整讀取或依 embedding 取前 k 筆</td><td>資料一多就容易增加成本</td></tr><tr><td>Tree Retriever</td><td>有階層或摘要結構的資料</td><td>問題需要從樹狀節點挑內容</td><td>樹狀摘要或選擇策略錯誤會漏掉細節</td></tr><tr><td>Keyword Table Retriever</td><td>專有名詞、代碼、錯誤訊息</td><td>查詢詞和文件詞彙高度重疊</td><td>同義詞與語意變體不一定抓得到</td></tr><tr><td>Knowledge Graph Retriever</td><td>實體與關係清楚的資料</td><td>需要查概念、關係或三元組</td><td>建圖品質會直接影響回答</td></tr><tr><td>Router Retriever</td><td>多資料源、多索引並存</td><td>不同問題要走不同檢索器</td><td>metadata 描述不清時容易選錯路</td></tr></tbody></table></div>
+<p>如果只是建立第一版 RAG，我會先用 Vector Index Retriever 做 baseline。等 baseline 出現「問得到但答不好」或「某類問題特別差」時，再加入 keyword、reranker、router 或更進階的索引設計。</p>
+</section><section aria-labelledby="如何用-listindex-建立-retriever-範例"><h2 id="如何用-listindex-建立-retriever-範例">如何用 ListIndex 建立 Retriever 範例？</h2>
+<p>ListIndex 可以用 <code>as_retriever()</code> 建立 Retriever，再直接呼叫 <code>retrieve()</code> 查看取回的 Node。這種寫法適合先觀察檢索結果，不急著生成回答。</p>
+<p>下面範例的重點是：先讀取 YouTube transcript，建立 ListIndex，再用 embedding 模式取回相關內容。實際套件路徑會依 LlamaIndex 版本不同而調整，若使用新版專案，我會先對照目前安裝版本的 import 寫法。</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> llama_index <span class="hljs-keyword">import</span> ListIndex
+<span class="hljs-keyword">from</span> llama_index <span class="hljs-keyword">import</span> download_loader
+
+YoutubeTranscriptReader = download_loader(<span class="hljs-string">"YoutubeTranscriptReader"</span>)
+
+loader = YoutubeTranscriptReader()
+docs = loader.load_data(
+    ytlinks=[<span class="hljs-string">"https://www.youtube.com/watch?v=nHcbHdgVUJg"</span>]
+)
+
+list_index = ListIndex(docs)
+retriever = list_index.as_retriever(
+    retriever_mode=<span class="hljs-string">"embedding"</span>,
+)
+</code></pre>
+<p>建立 Retriever 之後，可以直接查詢：</p>
+<pre><code class="hljs language-python">nodes = retriever.retrieve(<span class="hljs-string">"What is the difference between a stock and a bond?"</span>)
+<span class="hljs-built_in">print</span>(nodes)
+</code></pre>
+<p>回傳結果通常會是 <code>NodeWithScore</code> 清單，裡面包含節點文字、metadata、分數與節點關係。這時候我會先看兩件事：第一，最高分節點是否真的回答了問題；第二，metadata 是否足夠讓後續答案標示來源。</p>
+</section><section aria-labelledby="retriever-和-query-engine-該怎麼分開測"><h2 id="retriever-和-query-engine-該怎麼分開測">Retriever 和 Query Engine 該怎麼分開測？</h2>
+<p>Retriever 和 Query Engine 最好分開測。Retriever 測資料是否找對，Query Engine 測檢索內容是否能被合成為可靠答案。</p>
+<p>我在調 RAG 流程時，會先把 <code>.retrieve()</code> 的結果印出來，而不是直接看 <code>.query()</code> 的自然語言回答。因為 <code>.query()</code> 會把檢索與生成混在一起，答案不好時很難判斷問題出在檢索、prompt、模型，還是 response mode。</p>
+<p>一個簡單的檢查順序是：</p>
+<ol>
+<li>先用 Retriever 單獨取回 Node。</li>
+<li>檢查 Node 文字是否真的包含答案依據。</li>
+<li>調整 <code>similarity_top_k</code>、metadata filter 或檢索模式。</li>
+<li>加入 Node Postprocessor 過濾雜訊。</li>
+<li>最後再交給 Query Engine 與 Response Synthesizer 生成回答。</li>
+</ol>
+<p>這樣做比較慢一點，但除錯會清楚很多。RAG 系統最怕的不是「沒有回答」，而是「回答很順但來源其實不對」。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LlamaIndex 查詢流程和 RAG 是同一件事嗎？</span></h3>
+<p>LlamaIndex 查詢流程可以實作 RAG，但兩者不是完全同一件事。RAG 是「先檢索、再生成」的架構概念；LlamaIndex 則提供 Retriever、Query Engine、Response Synthesizer 等元件來實作這條流程。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Retriever 和 Response Synthesizer 最大差別是什麼？</span></h3>
+<p>Retriever 負責找資料，Response Synthesizer 負責寫答案。Retriever 回傳的是相關 Node 或 NodeWithScore；Response Synthesizer 會把這些內容和使用者問題交給大型語言模型，產生可讀的回答。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Router Retriever 一定要使用嗎？</span></h3>
+<p>Router Retriever 不一定要使用。當資料來源單純、索引類型單一時，普通 Retriever 就夠；當不同問題需要走不同檢索器或不同資料庫時，Router Retriever 才比較有價值。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Node Postprocessor 可以解決檢索不準嗎？</span></h3>
+<p>Node Postprocessor 可以改善檢索結果，但不能完全補救錯誤索引或錯誤 embedding。Node Postprocessor 比較適合做過濾、重排與門檻控制；如果 Retriever 一開始完全找錯資料，仍要回頭調整切分、索引或檢索策略。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Response Synthesizer 的 response mode 要怎麼選？</span></h3>
+<p>Response Synthesizer 的 response mode 要看答案需要多細、節點數量有多少、成本是否敏感。<code>compact</code> 通常適合先做 baseline；<code>refine</code> 適合需要逐段整合的回答，但 LLM 呼叫次數和成本可能更高。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼要先單獨測 Retriever？</span></h3>
+<p>先單獨測 Retriever 可以把「資料找錯」和「模型寫不好」分開。若檢索到的 Node 沒有答案依據，Query Engine 生成出來的文字再流暢也不可靠。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>LlamaIndex, Querying, <a href="https://docs.llamaindex.ai/en/v0.10.19/understanding/querying/querying.html%EF%BC%8C%E5%AD%98%E5%8F%96%E6%97%A5%E6%9C%9F%EF%BC%9A2026-08-28%E3%80%82" target="_blank" rel="noopener noreferrer">https://docs.llamaindex.ai/en/v0.10.19/understanding/querying/querying.html，存取日期：2026-08-28。</a></li>
+<li>LlamaIndex, RouterRetriever API Reference, <a href="https://docs.llamaindex.ai/en/stable/api_reference/retrievers/router/%EF%BC%8C%E5%AD%98%E5%8F%96%E6%97%A5%E6%9C%9F%EF%BC%9A2026-08-28%E3%80%82" target="_blank" rel="noopener noreferrer">https://docs.llamaindex.ai/en/stable/api_reference/retrievers/router/，存取日期：2026-08-28。</a></li>
+<li>LlamaIndex, Response Synthesizer, <a href="https://docs.llamaindex.ai/en/v0.10.20/module_guides/querying/response_synthesizers/root.html%EF%BC%8C%E5%AD%98%E5%8F%96%E6%97%A5%E6%9C%9F%EF%BC%9A2026-08-28%E3%80%82" target="_blank" rel="noopener noreferrer">https://docs.llamaindex.ai/en/v0.10.20/module_guides/querying/response_synthesizers/root.html，存取日期：2026-08-28。</a></li>
+<li>LlamaIndex, Defining a Custom Query Engine, <a href="https://docs.llamaindex.ai/en/v0.10.19/examples/query_engine/custom_query_engine.html%EF%BC%8C%E5%AD%98%E5%8F%96%E6%97%A5%E6%9C%9F%EF%BC%9A2026-08-28%E3%80%82" target="_blank" rel="noopener noreferrer">https://docs.llamaindex.ai/en/v0.10.19/examples/query_engine/custom_query_engine.html，存取日期：2026-08-28。</a></li>
+</ul>
+<p>最後更新：2026-08-28</p>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/llamaindex-rag-introduction">LlamaIndex 介紹：用 Python 建立 RAG 索引與查詢流程</a>：同樣聚焦 LlamaIndex、RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/llamaindex-basic-components">LlamaIndex 的基礎元件：Node、Index、Retriever 與 Query Engine</a>：同樣聚焦 LlamaIndex、RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/llamaindex-load-multiple-file-types">使用LlamaIndex載入多種類文件</a>：同樣聚焦 LlamaIndex、RAG，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-05-17</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixiParticles 教學：用 PixiJS 製作粒子特效｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 PixiParticles 如何用 Emitter 與 config 製作火焰、煙霧、爆炸等 PixiJS 粒子特效，並整理粒子編輯器與版本注意事項。" />
+<meta name="keywords" content="前端開發, PixiJS, PixiParticles, 粒子系統, 遊戲開發" />
+<link rel="canonical" href="https://claire-chang.com/post/pixijs-pixiparticles-particle-effects/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="PixiParticles 教學：用 PixiJS 製作粒子特效｜Claire Chang" />
+<meta property="og:description" content="說明 PixiParticles 如何用 Emitter 與 config 製作火焰、煙霧、爆炸等 PixiJS 粒子特效，並整理粒子編輯器與版本注意事項。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/pixijs-pixiparticles-particle-effects/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_pixijs-introduction-2d-webgl-game-engine-d43b4026.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_pixijs-introduction-2d-webgl-game-engine-d43b4026.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PixiParticles 教學：用 PixiJS 製作粒子特效｜Claire Chang" />
+<meta name="twitter:description" content="說明 PixiParticles 如何用 Emitter 與 config 製作火焰、煙霧、爆炸等 PixiJS 粒子特效，並整理粒子編輯器與版本注意事項。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_pixijs-introduction-2d-webgl-game-engine-d43b4026.jpg" />
+<meta property="article:published_time" content="2018-11-11" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="PixiJS" />
+<meta property="article:tag" content="PixiParticles" />
+<meta property="article:tag" content="粒子系統" />
+<meta property="article:tag" content="遊戲開發" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"PixiParticles 教學：用 PixiJS 製作粒子特效","item":"https://claire-chang.com/post/pixijs-pixiparticles-particle-effects/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/pixijs-pixiparticles-particle-effects/#article","headline":"PixiParticles 教學：用 PixiJS 製作粒子特效","description":"說明 PixiParticles 如何用 Emitter 與 config 製作火焰、煙霧、爆炸等 PixiJS 粒子特效，並整理粒子編輯器與版本注意事項。","image":"https://claire-chang.com/images/tech/hero_pixijs-introduction-2d-webgl-game-engine.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-11-11","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/pixijs-pixiparticles-particle-effects/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"PixiJS, PixiParticles, 粒子系統, 遊戲開發","about":[{"@type":"Thing","name":"粒子系統"},{"@type":"Thing","name":"遊戲開發"}],"mentions":[{"@type":"Thing","name":"PixiJS"},{"@type":"Thing","name":"PixiParticles"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/pixijs-pixiparticles-particle-effects/#faq","mainEntity":[{"@type":"Question","name":"PixiParticles 和 PixiJS ParticleContainer 一樣嗎？","acceptedAnswer":{"@type":"Answer","text":"PixiParticles 和 PixiJS ParticleContainer 不一樣。PixiParticles 偏向用 emitter 與 config 生成火焰、煙霧、爆炸等特效；PixiJS ParticleContainer 則是用來高效渲染大量簡單粒子的容器。"}},{"@type":"Question","name":"PixiParticles 的 `emitter.update()` 要傳什麼單位？","acceptedAnswer":{"@type":"Answer","text":"PixiParticles 舊版範例中的 `emitter.update()` 要傳入秒數。若時間來源是 `Date.now()`，毫秒差需要乘上 `0.001`，否則粒子生命週期與速度會嚴重失真。"}},{"@type":"Question","name":"`frequency` 和 `particlesPerWave` 差在哪裡？","acceptedAnswer":{"@type":"Answer","text":"`frequency` 控制多久生成一次粒子，單位是秒。`particlesPerWave` 控制每次生成時產生幾個粒子，兩者一起決定粒子密度。"}},{"@type":"Question","name":"`maxParticles` 設越大越好嗎？","acceptedAnswer":{"@type":"Answer","text":"`maxParticles` 不是越大越好。數值越大，同時需要更新與渲染的粒子越多，手機或低階裝置更容易掉 FPS；建議從效果能接受的低值開始測。"}},{"@type":"Question","name":"Pixi Particles Editor 產生的 config 可以直接用嗎？","acceptedAnswer":{"@type":"Answer","text":"Pixi Particles Editor 產生的 config 通常可以作為起點，但仍要確認套件版本。舊版 PixiParticles 與新版 `@pixi/particle-emitter` 的 config 結構不完全相同，升級時可能需要轉換。"}},{"@type":"Question","name":"新 PixiJS 專案還應該用 PixiParticles 嗎？","acceptedAnswer":{"@type":"Answer","text":"新 PixiJS 專案可以先評估 `@pixi/particle-emitter` 與 PixiJS 版本相容性。若專案只需要大量簡單粒子，PixiJS 內建的 `ParticleContainer` 也可能更合適。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_pixijs-introduction-2d-webgl-game-engine.webp" alt="使用 PixiJS 製作 2D 網頁遊戲與粒子特效的開發畫面" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-11-11">2018-11-11</time></span><span class="post-meta-pill">PixiJS · PixiParticles · 粒子系統 · 遊戲開發</span></div></div><h1 class="insights-hero-title">PixiParticles 教學：用 PixiJS 製作粒子特效</h1><p class="insights-hero-description">說明 PixiParticles 如何用 Emitter 與 config 製作火焰、煙霧、爆炸等 PixiJS 粒子特效，並整理粒子編輯器與版本注意事項。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>PixiParticles 可以在 PixiJS 專案中用 <code>Emitter</code> 與 config 製作火焰、煙霧、下雨、沙塵、爆炸等粒子特效。我當時的筆記使用 2018 年常見的 <code>new PIXI.particles.Emitter(particleParent, particleImages, config)</code> 寫法；維護舊專案時可保留這個結構，新專案則要先確認目前使用的是 PixiParticles 舊版 API，還是新版 <code>@pixi/particle-emitter</code> API。</p>
+</div><section aria-labelledby="粒子系統是什麼"><h2 id="粒子系統是什麼">粒子系統是什麼？</h2>
+<p>粒子系統是用大量短生命週期的小圖像模擬特效的技術。火焰、煙霧、雨滴、沙塵與爆炸通常不適合逐格手畫，改用發射器參數控制會更有效率。</p>
+<p>遊戲經常透過粒子系統製作各種視覺效果，例如火焰、煙霧、下雨、沙塵、爆炸等效果，並不容易使用一般的動畫工具製作。</p>
+<p>通常粒子系統在三維空間中的位置與運動是由發射器控制的，發射器可以設定粒子生成速度，也就是單位時間粒子生成的數目；也可以設定粒子初始速度向量、粒子壽命、粒子顏色，以及粒子在生命週期中的變化。經由這些參數，粒子系統就能產生不同的特效效果。</p>
+<p>我當時的筆記附了一張火焰粒子特效範例圖，但匯出資料夾沒有找到對應圖片檔。這裡先保留文字脈絡，不把原 WordPress HTTP 圖片直接放進正式文章。</p>
+</section><section aria-labelledby="pixiparticles-在-pixijs-裡扮演什麼角色"><h2 id="pixiparticles-在-pixijs-裡扮演什麼角色">PixiParticles 在 PixiJS 裡扮演什麼角色？</h2>
+<p>PixiParticles 是 PixiJS 生態系的粒子系統函式庫，核心工作是建立 particle emitter。粒子素材放在 PixiJS 容器中，特效外觀則由 config 控制。</p>
+<p>PixiParticles 官網對這個工具的定位是 PixiJS 的 particle system library，並提供互動式粒子編輯器，用來設計與預覽自訂 particle emitters（PixiParticles 文件，2026 年 8 月存取）。</p>
+<p>我當時的筆記使用的官方網址如下：</p>
+<ul>
+<li>PixiParticles 文件：<a href="https://pixijs.io/pixi-particles/docs/index.html" target="_blank" rel="noopener noreferrer">https://pixijs.io/pixi-particles/docs/index.html</a></li>
+<li>PixiParticles Editor：<a href="https://pixijs.io/pixi-particles-editor/#pixieDust" target="_blank" rel="noopener noreferrer">https://pixijs.io/pixi-particles-editor/#pixieDust</a></li>
+</ul>
+<p>維護舊 PixiJS 專案時，這篇文章最值得保留的是「用 Emitter 接收容器、粒子圖片與設定檔」的思路。新版 <code>@pixi/particle-emitter</code> 的 <code>Emitter</code> constructor 已改成接收 <code>Container</code> 與 <code>EmitterConfigV3</code>，舊版 config 可用 <code>upgradeConfig()</code> 升級（<code>@pixi/particle-emitter</code> 文件，2026 年 8 月存取）。</p>
+</section><section aria-labelledby="pixiparticles-emitter-要怎麼建立"><h2 id="pixiparticles-emitter-要怎麼建立">PixiParticles Emitter 要怎麼建立？</h2>
+<p>PixiParticles 舊版建立方式是把粒子容器、粒子貼圖與 config 傳入 <code>Emitter</code>。發射器建立後，需要在每一幀呼叫 <code>emitter.update(deltaSeconds)</code> 才會推進粒子狀態。</p>
+<p>我當時的筆記中的基本方法如下：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">particles</span>.<span class="hljs-title class_">Emitter</span>(particleParent, particleImages, config)
+</code></pre>
+<p>簡單的使用範例如下：</p>
+<pre><code class="hljs language-js"><span class="hljs-comment">// Create a new emitter</span>
+<span class="hljs-keyword">var</span> emitter = <span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">particles</span>.<span class="hljs-title class_">Emitter</span>(
+
+    <span class="hljs-comment">// The PIXI.Container to put the emitter in</span>
+    <span class="hljs-comment">// if using blend modes, it's important to put this</span>
+    <span class="hljs-comment">// on top of a bitmap, and not use the root stage Container</span>
+    container,
+
+    <span class="hljs-comment">// The collection of particle images to use</span>
+    [<span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">Texture</span>.<span class="hljs-title function_">fromImage</span>(<span class="hljs-string">'image.jpg'</span>)],
+
+    <span class="hljs-comment">// Emitter configuration, edit this to change the look</span>
+    <span class="hljs-comment">// of the emitter</span>
+    {
+        <span class="hljs-attr">alpha</span>: {
+            <span class="hljs-attr">list</span>: [
+                {
+                    <span class="hljs-attr">value</span>: <span class="hljs-number">0.8</span>,
+                    <span class="hljs-attr">time</span>: <span class="hljs-number">0</span>
+                },
+                {
+                    <span class="hljs-attr">value</span>: <span class="hljs-number">0.1</span>,
+                    <span class="hljs-attr">time</span>: <span class="hljs-number">1</span>
+                }
+            ],
+            <span class="hljs-attr">isStepped</span>: <span class="hljs-literal">false</span>
+        },
+        <span class="hljs-attr">scale</span>: {
+            <span class="hljs-attr">list</span>: [
+                {
+                    <span class="hljs-attr">value</span>: <span class="hljs-number">1</span>,
+                    <span class="hljs-attr">time</span>: <span class="hljs-number">0</span>
+                },
+                {
+                    <span class="hljs-attr">value</span>: <span class="hljs-number">0.3</span>,
+                    <span class="hljs-attr">time</span>: <span class="hljs-number">1</span>
+                }
+            ],
+            <span class="hljs-attr">isStepped</span>: <span class="hljs-literal">false</span>
+        },
+        <span class="hljs-attr">color</span>: {
+            <span class="hljs-attr">list</span>: [
+                {
+                    <span class="hljs-attr">value</span>: <span class="hljs-string">"fb1010"</span>,
+                    <span class="hljs-attr">time</span>: <span class="hljs-number">0</span>
+                },
+                {
+                    <span class="hljs-attr">value</span>: <span class="hljs-string">"f5b830"</span>,
+                    <span class="hljs-attr">time</span>: <span class="hljs-number">1</span>
+                }
+            ],
+            <span class="hljs-attr">isStepped</span>: <span class="hljs-literal">false</span>
+        },
+        <span class="hljs-attr">speed</span>: {
+            <span class="hljs-attr">list</span>: [
+                {
+                    <span class="hljs-attr">value</span>: <span class="hljs-number">200</span>,
+                    <span class="hljs-attr">time</span>: <span class="hljs-number">0</span>
+                },
+                {
+                    <span class="hljs-attr">value</span>: <span class="hljs-number">100</span>,
+                    <span class="hljs-attr">time</span>: <span class="hljs-number">1</span>
+                }
+            ],
+            <span class="hljs-attr">isStepped</span>: <span class="hljs-literal">false</span>
+        },
+        <span class="hljs-attr">startRotation</span>: {
+            <span class="hljs-attr">min</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">max</span>: <span class="hljs-number">360</span>
+        },
+        <span class="hljs-attr">rotationSpeed</span>: {
+            <span class="hljs-attr">min</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">max</span>: <span class="hljs-number">0</span>
+        },
+        <span class="hljs-attr">lifetime</span>: {
+            <span class="hljs-attr">min</span>: <span class="hljs-number">0.5</span>,
+            <span class="hljs-attr">max</span>: <span class="hljs-number">0.5</span>
+        },
+        <span class="hljs-attr">frequency</span>: <span class="hljs-number">0.008</span>,
+        <span class="hljs-attr">spawnChance</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">particlesPerWave</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">emitterLifetime</span>: <span class="hljs-number">0.31</span>,
+        <span class="hljs-attr">maxParticles</span>: <span class="hljs-number">1000</span>,
+        <span class="hljs-attr">pos</span>: {
+            <span class="hljs-attr">x</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">y</span>: <span class="hljs-number">0</span>
+        },
+        <span class="hljs-attr">addAtBack</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">spawnType</span>: <span class="hljs-string">"circle"</span>,
+        <span class="hljs-attr">spawnCircle</span>: {
+            <span class="hljs-attr">x</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">y</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">r</span>: <span class="hljs-number">10</span>
+        }
+    }
+);
+
+<span class="hljs-comment">// Calculate the current time</span>
+<span class="hljs-keyword">var</span> elapsed = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>();
+
+<span class="hljs-comment">// Update function every frame</span>
+<span class="hljs-keyword">var</span> update = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+
+    <span class="hljs-comment">// Update the next frame</span>
+    <span class="hljs-title function_">requestAnimationFrame</span>(update);
+
+    <span class="hljs-keyword">var</span> now = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>();
+
+    <span class="hljs-comment">// The emitter requires the elapsed</span>
+    <span class="hljs-comment">// number of seconds since the last update</span>
+    emitter.<span class="hljs-title function_">update</span>((now - elapsed) * <span class="hljs-number">0.001</span>);
+    elapsed = now;
+
+    <span class="hljs-comment">// Should re-render the PIXI Stage</span>
+    <span class="hljs-comment">// renderer.render(stage);</span>
+};
+
+<span class="hljs-comment">// Start emitting</span>
+emitter.<span class="hljs-property">emit</span> = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// Start the update</span>
+<span class="hljs-title function_">update</span>();
+</code></pre>
+<p>這段範例有一個很重要的細節：<code>emitter.update()</code> 需要的是秒數，而不是毫秒。我當時的筆記用 <code>(now - elapsed) * 0.001</code> 把 <code>Date.now()</code> 的毫秒差轉成秒，這個轉換不能省。</p>
+</section><section aria-labelledby="pixiparticles-config-的主要參數怎麼看"><h2 id="pixiparticles-config-的主要參數怎麼看">PixiParticles config 的主要參數怎麼看？</h2>
+<p>PixiParticles config 可以分成外觀、速度、生命週期、生成頻率與生成位置五類。讀 config 時先看 <code>alpha</code>、<code>scale</code>、<code>color</code>、<code>speed</code>、<code>lifetime</code>、<code>frequency</code> 與 <code>maxParticles</code>。</p>
+<p>我當時的筆記範例的 config 很長，但實務上可以先抓住幾個會直接影響畫面的欄位。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>參數</th><th align="right">我當時的筆記範例</th><th>作用</th></tr></thead><tbody><tr><td><code>alpha</code></td><td align="right"><code>0.8</code> 到 <code>0.1</code></td><td>控制粒子從明顯到淡出的透明度變化</td></tr><tr><td><code>scale</code></td><td align="right"><code>1</code> 到 <code>0.3</code></td><td>控制粒子生命週期中的縮放</td></tr><tr><td><code>color</code></td><td align="right"><code>fb1010</code> 到 <code>f5b830</code></td><td>控制粒子顏色漸變</td></tr><tr><td><code>speed</code></td><td align="right"><code>200</code> 到 <code>100</code></td><td>控制粒子移動速度</td></tr><tr><td><code>lifetime</code></td><td align="right"><code>0.5</code> 秒</td><td>控制單一粒子的存活時間</td></tr><tr><td><code>frequency</code></td><td align="right"><code>0.008</code> 秒</td><td>控制每次生成粒子的間隔</td></tr><tr><td><code>particlesPerWave</code></td><td align="right"><code>1</code></td><td>控制每次生成幾個粒子</td></tr><tr><td><code>emitterLifetime</code></td><td align="right"><code>0.31</code> 秒</td><td>控制發射器持續產生新粒子的時間</td></tr><tr><td><code>maxParticles</code></td><td align="right"><code>1000</code></td><td>控制同時存活的粒子上限</td></tr></tbody></table></div>
+<p>新版 <code>EmitterConfigV3</code> 文件仍保留 <code>frequency</code>、<code>lifetime</code>、<code>maxParticles</code>、<code>particlesPerWave</code>、<code>pos</code>、<code>spawnChance</code>、<code>emitterLifetime</code> 等概念；其中 <code>frequency</code> 以秒為單位，<code>maxParticles</code> 表示同一個 emitter 允許同時存在的最大粒子數（<code>@pixi/particle-emitter</code> EmitterConfigV3，2026 年 8 月存取）。</p>
+</section><section aria-labelledby="pixi-particles-editor-可以解決什麼問題"><h2 id="pixi-particles-editor-可以解決什麼問題">Pixi Particles Editor 可以解決什麼問題？</h2>
+<p>Pixi Particles Editor 適合讓美術或開發者調整粒子 config，再把設定交給程式播放。粒子特效靠數值微調，很難只靠手寫 config 一次到位。</p>
+<p>粒子特效的 config 通常需要一個編輯軟體讓美術來調整相關數值。PixiParticles 的編輯器在官網有提供，其網址為：<a href="https://pixijs.io/pixi-particles-editor/#pixieDust" target="_blank" rel="noopener noreferrer">https://pixijs.io/pixi-particles-editor/#pixieDust</a>。</p>
+<figure class="article-figure"><img src="/images/tech/pixijs-frame-animation-particle-editor.webp" alt="Pixi 粒子系統編輯器畫面，右側可調整粒子參數" loading="lazy" class="markdown-img"></figure>
+<p>資訊增益：我會把 particle editor 當成「效果設計工具」，而不是「程式替代品」。美術調出合適效果後，工程端仍要確認三件事：粒子圖片是否已正確載入、config 版本是否符合目前使用的套件、<code>update()</code> 是否接到正確的遊戲迴圈。</p>
+</section><section aria-labelledby="pixijs-粒子特效有哪些效能注意事項"><h2 id="pixijs-粒子特效有哪些效能注意事項">PixiJS 粒子特效有哪些效能注意事項？</h2>
+<p>PixiJS 粒子特效效能要先控管同時存在的粒子數、貼圖尺寸與更新頻率。粒子很好用，但大量粒子每幀更新位置、顏色、縮放與透明度，仍會吃掉 CPU 與 GPU 預算。</p>
+<p>我當時的筆記範例把 <code>maxParticles</code> 設成 <code>1000</code>，這不是每個專案都適用的魔法數字。手機瀏覽器、低階顯示晶片、較大的粒子貼圖、多個 emitter 同時播放，都可能讓同樣的數量變得太重。</p>
+<p>實作時可以用這份檢查表：</p>
+<ol>
+<li>先用少量粒子調出方向，再逐步提高 <code>maxParticles</code>。</li>
+<li>粒子貼圖盡量小，避免用大圖只顯示很小的火花。</li>
+<li>不需要持續噴發時，把 <code>emitter.emit</code> 設成 <code>false</code>。</li>
+<li>場景切換或特效結束後，清掉不再使用的 emitter。</li>
+<li>若只需要大量簡單粒子，可評估 PixiJS 的 <code>ParticleContainer</code>；<code>ParticleContainer</code> 是針對大量粒子最佳化的容器，但粒子只能保留基本屬性，例如位置、縮放、旋轉與顏色（PixiJS ParticleContainer API，2026 年 8 月存取）。</li>
+</ol>
+<p>PixiJS v8 對 <code>ParticleContainer</code> 做過重構，官方 migration guide 也提醒新版粒子容器不再直接把 sprite 當 child，而是使用較輕量的 <code>Particle</code> 或符合 <code>IParticle</code> 介面的物件（PixiJS v8 Migration Guide，2026 年 8 月存取）。這代表舊專案升級時，粒子系統不是只改 import 就結束，要先確認目前依賴的是 PixiParticles 的 emitter，還是 PixiJS 內建的粒子容器。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiParticles 和 PixiJS ParticleContainer 一樣嗎？</span></h3>
+<p>PixiParticles 和 PixiJS ParticleContainer 不一樣。PixiParticles 偏向用 emitter 與 config 生成火焰、煙霧、爆炸等特效；PixiJS ParticleContainer 則是用來高效渲染大量簡單粒子的容器。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiParticles 的 <code>emitter.update()</code> 要傳什麼單位？</span></h3>
+<p>PixiParticles 舊版範例中的 <code>emitter.update()</code> 要傳入秒數。若時間來源是 <code>Date.now()</code>，毫秒差需要乘上 <code>0.001</code>，否則粒子生命週期與速度會嚴重失真。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>frequency</code> 和 <code>particlesPerWave</code> 差在哪裡？</span></h3>
+<p><code>frequency</code> 控制多久生成一次粒子，單位是秒。<code>particlesPerWave</code> 控制每次生成時產生幾個粒子，兩者一起決定粒子密度。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span><code>maxParticles</code> 設越大越好嗎？</span></h3>
+<p><code>maxParticles</code> 不是越大越好。數值越大，同時需要更新與渲染的粒子越多，手機或低階裝置更容易掉 FPS；建議從效果能接受的低值開始測。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Pixi Particles Editor 產生的 config 可以直接用嗎？</span></h3>
+<p>Pixi Particles Editor 產生的 config 通常可以作為起點，但仍要確認套件版本。舊版 PixiParticles 與新版 <code>@pixi/particle-emitter</code> 的 config 結構不完全相同，升級時可能需要轉換。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>新 PixiJS 專案還應該用 PixiParticles 嗎？</span></h3>
+<p>新 PixiJS 專案可以先評估 <code>@pixi/particle-emitter</code> 與 PixiJS 版本相容性。若專案只需要大量簡單粒子，PixiJS 內建的 <code>ParticleContainer</code> 也可能更合適。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>PixiParticles 文件：<a href="https://pixijs.io/pixi-particles/docs/index.html" target="_blank" rel="noopener noreferrer">https://pixijs.io/pixi-particles/docs/index.html</a>（存取日期：2026-08-28）</li>
+<li>Pixi Particles Editor：<a href="https://pixijs.io/pixi-particles-editor/#pixieDust" target="_blank" rel="noopener noreferrer">https://pixijs.io/pixi-particles-editor/#pixieDust</a>（存取日期：2026-08-28）</li>
+<li><code>@pixi/particle-emitter</code> API，Emitter：<a href="https://particle-emitter.pixijs.io/docs/classes/Emitter.html" target="_blank" rel="noopener noreferrer">https://particle-emitter.pixijs.io/docs/classes/Emitter.html</a>（存取日期：2026-08-28）</li>
+<li><code>@pixi/particle-emitter</code> API，EmitterConfigV3：<a href="https://particle-emitter.pixijs.io/docs/interfaces/EmitterConfigV3.html" target="_blank" rel="noopener noreferrer">https://particle-emitter.pixijs.io/docs/interfaces/EmitterConfigV3.html</a>（存取日期：2026-08-28）</li>
+<li>PixiJS API，ParticleContainer：<a href="https://pixijs.download/release/docs/scene.ParticleContainer.html" target="_blank" rel="noopener noreferrer">https://pixijs.download/release/docs/scene.ParticleContainer.html</a>（存取日期：2026-08-28）</li>
+<li>PixiJS v8 Migration Guide：<a href="https://pixijs.com/8.x/guides/migrations/v8" target="_blank" rel="noopener noreferrer">https://pixijs.com/8.x/guides/migrations/v8</a>（存取日期：2026-08-28）</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/pixijs-button-basics">PixiJS 按鈕製作基礎：Sprite 互動、ButtonBase 與靜音切換</a>：同樣聚焦 PixiJS、遊戲開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-scene-setup">PixiJS 場景設定教學：Application、Canvas 與自動縮放</a>：同樣聚焦 PixiJS、遊戲開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/game-dev-tech-introduction">遊戲開發技術介紹：Graphics Library、遊戲平台與遊戲引擎怎麼選？</a>：同樣聚焦 遊戲開發、PixiJS，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-11-11</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

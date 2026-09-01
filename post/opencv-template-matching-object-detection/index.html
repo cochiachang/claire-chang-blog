@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenCV Template Matching 教學：在圖像中查找物件與縮放旋轉限制｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 OpenCV template matching 如何用 cv.matchTemplate 找物件，並判斷何時改用特徵匹配與 Homography。" />
+<meta name="keywords" content="機器學習, OpenCV, Template Matching, 物件偵測, 電腦視覺, Python" />
+<link rel="canonical" href="https://claire-chang.com/post/opencv-template-matching-object-detection/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="OpenCV Template Matching 教學：在圖像中查找物件與縮放旋轉限制｜Claire Chang" />
+<meta property="og:description" content="說明 OpenCV template matching 如何用 cv.matchTemplate 找物件，並判斷何時改用特徵匹配與 Homography。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/opencv-template-matching-object-detection/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_opencv-image-pyramid-a3cb21a9.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_opencv-image-pyramid-a3cb21a9.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="OpenCV Template Matching 教學：在圖像中查找物件與縮放旋轉限制｜Claire Chang" />
+<meta name="twitter:description" content="說明 OpenCV template matching 如何用 cv.matchTemplate 找物件，並判斷何時改用特徵匹配與 Homography。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_opencv-image-pyramid-a3cb21a9.jpg" />
+<meta property="article:published_time" content="2022-12-19" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="OpenCV" />
+<meta property="article:tag" content="Template Matching" />
+<meta property="article:tag" content="物件偵測" />
+<meta property="article:tag" content="電腦視覺" />
+<meta property="article:tag" content="Python" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"OpenCV Template Matching 教學：在圖像中查找物件與縮放旋轉限制","item":"https://claire-chang.com/post/opencv-template-matching-object-detection/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/opencv-template-matching-object-detection/#article","headline":"OpenCV Template Matching 教學：在圖像中查找物件與縮放旋轉限制","description":"說明 OpenCV template matching 如何用 cv.matchTemplate 找物件，並判斷何時改用特徵匹配與 Homography。","image":"https://claire-chang.com/images/tech/hero_opencv-image-pyramid.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2022-12-19","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/opencv-template-matching-object-detection/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"OpenCV, Template Matching, 物件偵測, 電腦視覺, Python","about":[{"@type":"Thing","name":"物件偵測"},{"@type":"Thing","name":"電腦視覺"}],"mentions":[{"@type":"Thing","name":"OpenCV"},{"@type":"Thing","name":"Template Matching"},{"@type":"Thing","name":"Python"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/opencv-template-matching-object-detection/#faq","mainEntity":[{"@type":"Question","name":"OpenCV Template Matching 可以用來做物件偵測嗎？","acceptedAnswer":{"@type":"Answer","text":"OpenCV Template Matching 可以用來做簡單物件查找，但不等於完整的通用物件偵測。固定攝影機、固定角度、固定尺寸的圖樣最適合使用 Template Matching。"}},{"@type":"Question","name":"cv.matchTemplate 找不到正確位置時先檢查什麼？","acceptedAnswer":{"@type":"Answer","text":"`cv.matchTemplate()` 找不到正確位置時，先檢查圖片是否成功讀取、模板是否小於輸入圖、模板是否過於普通，以及 matching method 是否適合。也可以先看結果圖，不要只看最後畫出的框。"}},{"@type":"Question","name":"TM_SQDIFF 和其他 matching method 差在哪？","acceptedAnswer":{"@type":"Answer","text":"`TM_SQDIFF` 與 `TM_SQDIFF_NORMED` 是分數越低越像，其他常見方法通常是分數越高越像。因此使用 `cv.minMaxLoc()` 後，這兩種方法要取 `min_loc`，不是 `max_loc`。"}},{"@type":"Question","name":"Template Matching 能處理縮放嗎？","acceptedAnswer":{"@type":"Answer","text":"單次固定模板的 Template Matching 不能自然處理縮放。若只是小範圍尺度變化，可以用 image pyramid 或多個尺度模板嘗試；若場景變化大，通常應改用特徵匹配或物件偵測模型。"}},{"@type":"Question","name":"Template Matching 能處理旋轉嗎？","acceptedAnswer":{"@type":"Answer","text":"單次固定模板的 Template Matching 不能自然處理旋轉。可以準備多個旋轉角度模板做粗略比對，但角度很多時成本會上升；有足夠特徵點的物件更適合用 SIFT、ORB 與 Homography。"}},{"@type":"Question","name":"SIFT、SURF、ORB 要怎麼選？","acceptedAnswer":{"@type":"Answer","text":"SIFT 與 SURF 對尺度與旋轉較有代表性，但計算成本通常比 ORB 高；ORB 常用於較快的二進位描述符流程。實務上要用自己的圖片測 keypoints 數量、匹配品質與速度。"}},{"@type":"Question","name":"Homography 一定找得到物件嗎？","acceptedAnswer":{"@type":"Answer","text":"Homography 不一定找得到物件。`cv.findHomography()` 至少需要足夠且正確的匹配點；若物件太平滑、遮擋嚴重、特徵點不足或錯誤匹配太多，推估出來的框就會不穩。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_opencv-image-pyramid.webp" alt="OpenCV 多尺度影像處理示意圖，代表 template matching 與圖像物件查找" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2022-12-19">2022-12-19</time></span><span class="post-meta-pill">OpenCV · Template Matching · 物件偵測 · 電腦視覺 · Python</span></div></div><h1 class="insights-hero-title">OpenCV Template Matching 教學：在圖像中查找物件與縮放旋轉限制</h1><p class="insights-hero-description">說明 OpenCV template matching 如何用 cv.matchTemplate 找物件，並判斷何時改用特徵匹配與 Homography。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>OpenCV Template Matching 適合在一張大圖中尋找「形狀、尺度、角度都接近固定」的小圖樣板。做法是用 <code>cv.matchTemplate()</code> 逐格比對模板與影像區塊，再用 <code>cv.minMaxLoc()</code> 找出最佳匹配位置；但只要物件被明顯縮放、旋轉或透視變形，傳統模板匹配就容易失準。</p>
+</div><section aria-labelledby="opencv-template-matching-是什麼"><h2 id="opencv-template-matching-是什麼">OpenCV Template Matching 是什麼？</h2>
+<p>OpenCV Template Matching 是以模板圖片在輸入影像中滑動比對的傳統電腦視覺方法。OpenCV 官方文件說明，<code>cv.matchTemplate()</code> 會回傳一張灰階結果圖，每個位置代表該區塊與模板的相似程度（OpenCV，存取日期：2026-08-28）。</p>
+<p>Template Matching 的核心概念很直覺：準備一張 <code>template.jpg</code>，再到較大的 <code>messi5.jpg</code> 裡逐一比對可能位置。若輸入影像大小為 <code>W x H</code>，模板大小為 <code>w x h</code>，結果圖大小會是 <code>W-w+1 x H-h+1</code>；接著用 <code>cv.minMaxLoc()</code> 找出最高分或最低分的位置，再畫出矩形框。</p>
+<p>我當時的筆記重點是先把六種 OpenCV 比對方法跑過一次，而不是一開始就相信某一種方法。不同相似度函式對亮度、背景與紋理的敏感度不同，先看結果圖通常比只看最後框線更容易除錯。</p>
+</section><section aria-labelledby="如何用-cv-matchtemplate-在圖像中查找物件"><h2 id="如何用-cv-matchtemplate-在圖像中查找物件">如何用 cv.matchTemplate 在圖像中查找物件？</h2>
+<p><code>cv.matchTemplate()</code> 的基本流程是讀取灰階影像、讀取灰階模板、逐一套用比對方法，最後用 <code>cv.minMaxLoc()</code> 取得最佳位置。若方法是 <code>TM_SQDIFF</code> 或 <code>TM_SQDIFF_NORMED</code>，最低值才是最佳匹配。</p>
+<p>這段範例保留我當時整理的 OpenCV 官方教學程式碼。程式會把每一種 matching method 的結果圖與偵測框一起顯示，方便比較不同方法的差異。</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">import</span> cv2 <span class="hljs-keyword">as</span> cv
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt
+img = cv.imread(<span class="hljs-string">'messi5.jpg'</span>,<span class="hljs-number">0</span>)
+img2 = img.copy()
+template = cv.imread(<span class="hljs-string">'template.jpg'</span>,<span class="hljs-number">0</span>)
+w, h = template.shape[::-<span class="hljs-number">1</span>]
+<span class="hljs-comment"># All the 6 methods for comparison in a list</span>
+methods = [<span class="hljs-string">'cv.TM_CCOEFF'</span>, <span class="hljs-string">'cv.TM_CCOEFF_NORMED'</span>, <span class="hljs-string">'cv.TM_CCORR'</span>,
+            <span class="hljs-string">'cv.TM_CCORR_NORMED'</span>, <span class="hljs-string">'cv.TM_SQDIFF'</span>, <span class="hljs-string">'cv.TM_SQDIFF_NORMED'</span>]
+<span class="hljs-keyword">for</span> meth <span class="hljs-keyword">in</span> methods:
+    img = img2.copy()
+    method = <span class="hljs-built_in">eval</span>(meth)
+    <span class="hljs-comment"># Apply template Matching</span>
+    res = cv.matchTemplate(img,template,method)
+    min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
+    <span class="hljs-comment"># If the method is TM_SQDIFF or TM_SQDIFF_NORMED, take minimum</span>
+    <span class="hljs-keyword">if</span> method <span class="hljs-keyword">in</span> [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
+        top_left = min_loc
+    <span class="hljs-keyword">else</span>:
+        top_left = max_loc
+    bottom_right = (top_left[<span class="hljs-number">0</span>] + w, top_left[<span class="hljs-number">1</span>] + h)
+    cv.rectangle(img,top_left, bottom_right, <span class="hljs-number">255</span>, <span class="hljs-number">2</span>)
+    plt.subplot(<span class="hljs-number">121</span>),plt.imshow(res,cmap = <span class="hljs-string">'gray'</span>)
+    plt.title(<span class="hljs-string">'Matching Result'</span>), plt.xticks([]), plt.yticks([])
+    plt.subplot(<span class="hljs-number">122</span>),plt.imshow(img,cmap = <span class="hljs-string">'gray'</span>)
+    plt.title(<span class="hljs-string">'Detected Point'</span>), plt.xticks([]), plt.yticks([])
+    plt.suptitle(meth)
+    plt.show()
+</code></pre>
+<p>實務上我會先確認三件事：影像和模板是否真的讀到、模板尺寸是否小於輸入影像、結果圖的高分或低分是否集中在合理位置。若結果圖到處都有高分，通常代表模板太普通，或背景紋理太像模板。</p>
+</section><section aria-labelledby="template-matching-遇到縮放或旋轉為什麼會失準"><h2 id="template-matching-遇到縮放或旋轉為什麼會失準">Template Matching 遇到縮放或旋轉為什麼會失準？</h2>
+<p>Template Matching 對尺度與角度很敏感，因為模板會以固定大小、固定方向去比對影像區塊。物件只要被縮放、旋轉或透視變形，模板像素排列就不再對齊，匹配分數會明顯下降。</p>
+<p>OpenCV 官方教學把 Template Matching 定位為在大圖中尋找模板位置的方法，而不是完整的尺度不變或旋轉不變物件偵測器（OpenCV，存取日期：2026-08-28）。Stack Overflow 上同一類問題也指出，<code>matchTemplate</code> 在物件旋轉或縮放後通常不適合直接使用，常見替代方向是 Features2D、SIFT/SURF 描述符、FLANN matcher 與 <code>findHomography()</code>（Stack Overflow，2012，存取日期：2026-08-28）。</p>
+<p>這也是這篇筆記真正想補上的判斷：Template Matching 不是不能用，而是要先確認場景假設。如果攝影機固定、產品角度固定、物件大小穩定，Template Matching 很輕巧；如果物件會在 3D 空間裡移動，直接套模板通常會把問題簡化過頭。</p>
+</section><section aria-labelledby="物件會縮放旋轉時應該改用什麼方法"><h2 id="物件會縮放旋轉時應該改用什麼方法">物件會縮放旋轉時應該改用什麼方法？</h2>
+<p>物件會縮放或旋轉時，建議改用特徵點偵測、描述符匹配與 Homography。流程是找出目標圖和場景圖的 keypoints，計算 descriptors，用 matcher 配對，再用 <code>findHomography()</code> 推估物件在場景中的位置。</p>
+<p>OpenCV 的 Feature Matching + Homography 教學示範了這個方向：先用 SIFT 找兩張圖的特徵與描述符，再用 FLANN 做 KNN matching，通過 ratio test 篩選好的 matches，最後把匹配點交給 <code>cv.findHomography()</code> 估出透視轉換（OpenCV，存取日期：2026-08-28）。</p>
+<p>整體流程可以拆成六步：</p>
+<ol>
+<li>尋找目標圖像的關鍵點（Keypoints）。</li>
+<li>從目標圖像關鍵點提取描述符（Descriptors）。</li>
+<li>尋找場景圖像的關鍵點。</li>
+<li>從場景圖像關鍵點提取描述符。</li>
+<li>透過 matcher 匹配兩組描述符。</li>
+<li>分析匹配結果，推估目標圖像在場景中的位置。</li>
+</ol>
+<p>有不同類別的 Feature Detectors、Descriptor Extractors 和 Descriptor Matchers，選擇時要回到任務條件：物件有沒有足夠角點與紋理、是否需要即時、是否允許誤判、影像解析度多大。</p>
+</section><section aria-labelledby="如何用-sift-提取-opencv-關鍵點"><h2 id="如何用-sift-提取-opencv-關鍵點">如何用 SIFT 提取 OpenCV 關鍵點？</h2>
+<p>SIFT 可以在影像中找出較穩定的局部特徵點，並計算描述符供後續匹配使用。這段範例只示範 keypoints 與 descriptors 的取得，尚未包含 FLANN matching 或 Homography。</p>
+<p>以下為我當時筆記中提取關鍵點的一個範例：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> print_function
+<span class="hljs-keyword">import</span> cv2
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> argparse
+<span class="hljs-built_in">print</span>(cv2.__version__)
+img = cv2.imread(<span class="hljs-string">'./D10.jpg'</span>, cv2.IMREAD_COLOR)
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+sift = cv2.SIFT_create()
+
+kp = sift.detect(gray, <span class="hljs-literal">None</span>)
+
+
+ret = cv2.drawKeypoints(gray, kp, img)
+cv2.imshow(<span class="hljs-string">'ret'</span>, ret)
+cv2.waitKey(<span class="hljs-number">0</span>)
+cv2.destroyAllWindows()
+
+kp, des = sift.compute(gray, kp)
+
+<span class="hljs-built_in">print</span>(np.shape(kp))
+<span class="hljs-built_in">print</span>(np.shape(des))
+
+<span class="hljs-built_in">print</span>(des[<span class="hljs-number">0</span>])
+</code></pre>
+<p>這段範例的檢查點很單純：<code>kp</code> 是偵測到的關鍵點集合，<code>des</code> 是描述符矩陣。若 <code>des</code> 是 <code>None</code> 或 keypoints 很少，後續 matcher 再漂亮也救不回來；這時要先回頭看影像是否過於平坦、模糊、曝光不足，或目標物本身缺少可辨識紋理。</p>
+</section><section aria-labelledby="template-matching-和特徵匹配怎麼選"><h2 id="template-matching-和特徵匹配怎麼選">Template Matching 和特徵匹配怎麼選？</h2>
+<p>Template Matching 適合固定角度、固定尺度、低成本的圖樣查找；特徵匹配適合尺度、旋轉或透視可能變動的物件查找。選擇方法前，先問物件在場景中是否仍像同一張模板。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>判斷條件</th><th>適合 Template Matching</th><th>適合特徵匹配與 Homography</th></tr></thead><tbody><tr><td>物件尺度</td><td>幾乎固定</td><td>可能變大或變小</td></tr><tr><td>物件角度</td><td>幾乎固定</td><td>可能旋轉</td></tr><tr><td>場景透視</td><td>幾乎沒有變形</td><td>有斜拍或透視變形</td></tr><tr><td>物件外觀</td><td>模板紋理清楚且固定</td><td>有足夠角點、邊緣與局部特徵</td></tr><tr><td>實作成本</td><td>較低</td><td>較高，需要調 matcher 與篩選條件</td></tr></tbody></table></div>
+<p>我的實務判斷是：先用 Template Matching 做最小可行驗證，能過就不必急著換重方法；只要測試圖片一加入縮放、旋轉、不同拍攝角度就開始飄，再改用 SIFT/ORB、FLANN/BFMatcher 與 Homography。這樣比較不會一開始就把簡單問題做重，也不會讓錯誤方法卡住整個專案。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<p>OpenCV Template Matching 的常見問題多半不是語法，而是場景假設。模板、輸入圖、尺度、角度與光線條件只要沒有對齊，結果就會很快失準。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>OpenCV Template Matching 可以用來做物件偵測嗎？</span></h3>
+<p>OpenCV Template Matching 可以用來做簡單物件查找，但不等於完整的通用物件偵測。固定攝影機、固定角度、固定尺寸的圖樣最適合使用 Template Matching。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>cv.matchTemplate 找不到正確位置時先檢查什麼？</span></h3>
+<p><code>cv.matchTemplate()</code> 找不到正確位置時，先檢查圖片是否成功讀取、模板是否小於輸入圖、模板是否過於普通，以及 matching method 是否適合。也可以先看結果圖，不要只看最後畫出的框。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>TM_SQDIFF 和其他 matching method 差在哪？</span></h3>
+<p><code>TM_SQDIFF</code> 與 <code>TM_SQDIFF_NORMED</code> 是分數越低越像，其他常見方法通常是分數越高越像。因此使用 <code>cv.minMaxLoc()</code> 後，這兩種方法要取 <code>min_loc</code>，不是 <code>max_loc</code>。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Template Matching 能處理縮放嗎？</span></h3>
+<p>單次固定模板的 Template Matching 不能自然處理縮放。若只是小範圍尺度變化，可以用 image pyramid 或多個尺度模板嘗試；若場景變化大，通常應改用特徵匹配或物件偵測模型。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Template Matching 能處理旋轉嗎？</span></h3>
+<p>單次固定模板的 Template Matching 不能自然處理旋轉。可以準備多個旋轉角度模板做粗略比對，但角度很多時成本會上升；有足夠特徵點的物件更適合用 SIFT、ORB 與 Homography。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>SIFT、SURF、ORB 要怎麼選？</span></h3>
+<p>SIFT 與 SURF 對尺度與旋轉較有代表性，但計算成本通常比 ORB 高；ORB 常用於較快的二進位描述符流程。實務上要用自己的圖片測 keypoints 數量、匹配品質與速度。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Homography 一定找得到物件嗎？</span></h3>
+<p>Homography 不一定找得到物件。<code>cv.findHomography()</code> 至少需要足夠且正確的匹配點；若物件太平滑、遮擋嚴重、特徵點不足或錯誤匹配太多，推估出來的框就會不穩。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<p>本文主要參考 OpenCV 官方文件，並補充我當時查到的縮放旋轉討論。外部連結都使用 HTTPS，方便讀者回查原始技術說明。</p>
+<ul>
+<li>OpenCV，〈<a href="https://docs.opencv.org/4.x/d4/dc6/tutorial_py_template_matching.html" target="_blank" rel="noopener noreferrer">Template Matching</a>〉，存取日期：2026-08-28。</li>
+<li>OpenCV，〈<a href="https://docs.opencv.org/4.x/d1/de0/tutorial_py_feature_homography.html" target="_blank" rel="noopener noreferrer">Feature Matching + Homography to find Objects</a>〉，存取日期：2026-08-28。</li>
+<li>OpenCV，〈<a href="https://docs.opencv.org/4.x/dc/dc3/tutorial_py_matcher.html" target="_blank" rel="noopener noreferrer">Feature Matching</a>〉，存取日期：2026-08-28。</li>
+<li>Stack Overflow，〈<a href="https://stackoverflow.com/questions/10666436/scale-and-rotation-template-matching" target="_blank" rel="noopener noreferrer">scale and rotation Template matching</a>〉，2012-05-19，存取日期：2026-08-28。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/yolov8-usage-example">YOLOv8 使用範例：Roboflow 資料集訓練與 best.pt 即時偵測</a>：同樣聚焦 物件偵測、OpenCV，可接著比較不同情境的做法。</li>
+<li><a href="/post/opencv-gpu-support">讓 OpenCV 支持 GPU</a>：同樣聚焦 OpenCV、電腦視覺，可接著比較不同情境的做法。</li>
+<li><a href="/post/opencv-rotate-image">用 OpenCV 旋轉圖片：getRotationMatrix2D 與 warpAffine 範例</a>：同樣聚焦 OpenCV、Python，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新日期是 2026-08-28。此次更新補齊 GEO Answer Blocks、FAQ、站內延伸閱讀、參考資料與作者資訊。</p>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2022-12-19</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

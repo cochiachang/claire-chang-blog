@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TensorFlow 目標檢測 API：訓練自己的資料｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="用 labelImg 標記圖片、轉換 TFRecord，並修改 pipeline.config 訓練自訂物件偵測模型的完整步驟。" />
+<meta name="keywords" content="機器學習, TensorFlow, 物件偵測, 機器學習, 電腦視覺" />
+<link rel="canonical" href="https://claire-chang.com/post/tensorflow-object-detection-custom-training/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="TensorFlow 目標檢測 API：訓練自己的資料｜Claire Chang" />
+<meta property="og:description" content="用 labelImg 標記圖片、轉換 TFRecord，並修改 pipeline.config 訓練自訂物件偵測模型的完整步驟。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/tensorflow-object-detection-custom-training/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_tensorflow-object-detection-custom-training-6986b19d.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_tensorflow-object-detection-custom-training-6986b19d.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="TensorFlow 目標檢測 API：訓練自己的資料｜Claire Chang" />
+<meta name="twitter:description" content="用 labelImg 標記圖片、轉換 TFRecord，並修改 pipeline.config 訓練自訂物件偵測模型的完整步驟。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_tensorflow-object-detection-custom-training-6986b19d.jpg" />
+<meta property="article:published_time" content="2023-07-28" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="TensorFlow" />
+<meta property="article:tag" content="物件偵測" />
+<meta property="article:tag" content="機器學習" />
+<meta property="article:tag" content="電腦視覺" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"TensorFlow 目標檢測 API：訓練自己的資料","item":"https://claire-chang.com/post/tensorflow-object-detection-custom-training/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/tensorflow-object-detection-custom-training/#article","headline":"TensorFlow 目標檢測 API：訓練自己的資料","description":"用 labelImg 標記圖片、轉換 TFRecord，並修改 pipeline.config 訓練自訂物件偵測模型的完整步驟。","image":"https://claire-chang.com/images/tech/hero_tensorflow-object-detection-custom-training.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-07-28","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/tensorflow-object-detection-custom-training/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"TensorFlow, 物件偵測, 機器學習, 電腦視覺","about":[{"@type":"Thing","name":"物件偵測"},{"@type":"Thing","name":"機器學習"},{"@type":"Thing","name":"電腦視覺"}],"mentions":[{"@type":"Thing","name":"TensorFlow"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/tensorflow-object-detection-custom-training/#faq","mainEntity":[{"@type":"Question","name":"一定要用 SSD MobileNet V2 FPNLite 嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定，這是模型 zoo 裡眾多預訓練模型的其中一個，選它是因為模型小、推論快，適合先跑通整套流程。要追求精度可以換模型 zoo 裡更大的模型，只是訓練和推論時間都會拉長。"}},{"@type":"Question","name":"TFRecord 檔案一定要自己寫轉換程式嗎？","acceptedAnswer":{"@type":"Answer","text":"如果標籤是 labelImg 存出來的 PascalVOC XML，TensorFlow Object Detection API 的 repo 裡通常有現成的 `create_pascal_tf_record.py` 之類的轉換腳本可以參考，不用整段從零寫，但欄位對應（尤其是 bounding box 座標要不要正規化）還是得對照自己的標籤格式檢查一次。"}},{"@type":"Question","name":"label_map 的 id 可以從 0 開始嗎？","acceptedAnswer":{"@type":"Answer","text":"不行，TensorFlow Object Detection API 的 id 是從 1 開始編號，0 保留給背景類別。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_tensorflow-object-detection-custom-training.webp" alt="相機鏡頭中反射出藍綠色物件偵測方框光影" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-07-28">2023-07-28</time></span><span class="post-meta-pill">TensorFlow · 物件偵測 · 機器學習 · 電腦視覺</span></div></div><h1 class="insights-hero-title">TensorFlow 目標檢測 API：訓練自己的資料</h1><p class="insights-hero-description">用 labelImg 標記圖片、轉換 TFRecord，並修改 pipeline.config 訓練自訂物件偵測模型的完整步驟。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>TensorFlow Object Detection API 訓練自己的資料集，核心流程是四步：用 labelImg 標記圖片、把標籤轉成 TFRecord 格式、修改 pipeline.config 指向自己的資料，最後跑 <code>model_main_tf2.py</code> 開始訓練。以下記錄我實際跑一輪的每個步驟，包含容易卡住的路徑設定和標籤檔案格式。</p>
+</div><section aria-labelledby="怎麼標記訓練圖片-用-labelimg"><h2 id="怎麼標記訓練圖片-用-labelimg">怎麼標記訓練圖片？用 labelImg</h2>
+<p>自己收集的圖片要先標出物件的邊界框（bounding box）才能拿去訓練，這一步我用 labelImg。到 <a href="https://github.com/HumanSignal/labelImg" target="_blank" rel="noopener noreferrer">labelImg 的 GitHub</a> 下載 release 版本就能直接執行，不用自己編譯。</p>
+<figure class="article-figure"><img src="/images/tech/tensorflow-object-detection-labelimg-download.webp" alt="labelImg 下載頁面截圖" loading="lazy" class="markdown-img"></figure>
+<p>打開之後介面長這樣，左側是操作按鈕（開圖、換資料夾、上一張下一張、存檔），右上是這張圖目前標好的類別清單，右下是整個資料夾的檔案列表：</p>
+<figure class="article-figure"><img src="/images/tech/tensorflow-object-detection-labelimg-ui.webp" alt="labelImg 操作介面，畫面中三顆骰子分別框出白骰、紅骰、藍骰三個類別" loading="lazy" class="markdown-img"></figure>
+<p>每張圖框好物件、填上類別名稱後存檔，預設會存成 PascalVOC 格式的 XML，這也是後面轉 TFRecord 時要讀的標籤格式。</p>
+</section><section aria-labelledby="訓練自訂物件偵測模型的完整步驟是什麼"><h2 id="訓練自訂物件偵測模型的完整步驟是什麼">訓練自訂物件偵測模型的完整步驟是什麼？</h2>
+<p>從標記完的圖片到能用的模型，中間大致是六個階段：</p>
+<ol>
+<li><strong>資料準備</strong>：把圖像和標籤轉換成 TensorFlow 訓練用的格式，也就是 TFRecord。沒有現成 TFRecord 的話，要用 <code>tf.Example</code> 把每張圖的圖像資料、邊界框、類別都包進去。</li>
+<li><strong>下載並選擇模型</strong>：從 <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md" target="_blank" rel="noopener noreferrer">TensorFlow Object Detection API 的模型 zoo</a> 下載一個預訓練模型，我這次用的是 SSD MobileNet V2 FPNLite 640x640，它已經在 COCO 資料集上訓練過，拿來微調速度會快很多。</li>
+<li><strong>修改配置文件</strong>：每個模型都會附一份 <code>pipeline.config</code>，裡面定義了模型架構、輸入尺寸、訓練策略等等。至少要改 <code>num_classes</code>（你的類別數量）、<code>input_path</code> 和 <code>label_map_path</code>（指向你的訓練/驗證資料）。</li>
+<li><strong>訓練模型</strong>：用 <code>model_main_tf2.py</code>，帶上 <code>pipeline_config_path</code> 和 <code>model_dir</code> 兩個參數開始訓練。</li>
+<li><strong>評估模型</strong>：一樣用 <code>model_main_tf2.py</code>，改成帶 <code>checkpoint_dir</code> 指向訓練產生的檢查點目錄，就能跑評估。</li>
+<li><strong>導出模型</strong>：滿意結果之後，用 <code>exporter_main_v2.py</code> 把訓練好的權重導出成可以拿去推論的圖模型。</li>
+</ol>
+</section><section aria-labelledby="怎麼把圖片和標籤轉換成-tfrecord-格式"><h2 id="怎麼把圖片和標籤轉換成-tfrecord-格式">怎麼把圖片和標籤轉換成 TFRecord 格式？</h2>
+<p>這一步最容易卡住，因為每個人的標籤格式（XML、CSV、JSON⋯）都不一樣，寫轉換程式時要自己對應。下面是我實際用的骨架，重點是 <code>create_tf_example</code> 這個函式，它把單張圖片和它的標註打包成一筆 <code>tf.Example</code>：</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf
+<span class="hljs-keyword">from</span> object_detection.utils <span class="hljs-keyword">import</span> dataset_util, label_map_util
+
+<span class="hljs-comment"># 適應你的標籤。標籤字典應該映射類別名稱到整數ID。</span>
+labels_path = <span class="hljs-string">'path_to_your_labels.pbtxt'</span>
+label_map = label_map_util.load_labelmap(labels_path)
+categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=<span class="hljs-number">90</span>)
+category_index = label_map_util.create_category_index(categories)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">create_tf_example</span>(<span class="hljs-params">image_path, annotations_list</span>):
+    <span class="hljs-comment"># 從圖像檔案讀取數據並將其轉換為tf.Example。</span>
+
+    img_data = tf.io.gfile.GFile(image_path, <span class="hljs-string">'rb'</span>).read()
+    img = Image.<span class="hljs-built_in">open</span>(image_path)
+    width, height = img.size
+
+    filename = image_path.encode(<span class="hljs-string">'utf8'</span>)
+    image_format = <span class="hljs-string">b'jpeg'</span>  <span class="hljs-comment"># or b'png'</span>
+
+    xmins = []  <span class="hljs-comment"># List of normalized left x coordinates in bounding box (1 per box)</span>
+    xmaxs = []  <span class="hljs-comment"># List of normalized right x coordinates in bounding box (1 per box)</span>
+    ymins = []  <span class="hljs-comment"># List of normalized top y coordinates in bounding box (1 per box)</span>
+    ymaxs = []  <span class="hljs-comment"># List of normalized bottom y coordinates in bounding box (1 per box)</span>
+    classes_text = []  <span class="hljs-comment"># List of string class name of bounding box (1 per box)</span>
+    classes = []  <span class="hljs-comment"># List of integer class id of bounding box (1 per box)</span>
+
+    <span class="hljs-keyword">for</span> ann <span class="hljs-keyword">in</span> annotations_list:
+        xmins.append(<span class="hljs-built_in">float</span>(ann[<span class="hljs-string">'xmin'</span>]) / width)
+        xmaxs.append(<span class="hljs-built_in">float</span>(ann[<span class="hljs-string">'xmax'</span>]) / width)
+        ymins.append(<span class="hljs-built_in">float</span>(ann[<span class="hljs-string">'ymin'</span>]) / height)
+        ymaxs.append(<span class="hljs-built_in">float</span>(ann[<span class="hljs-string">'ymax'</span>]) / height)
+        classes_text.append(ann[<span class="hljs-string">'class'</span>].encode(<span class="hljs-string">'utf8'</span>))
+        classes.append(category_index[ann[<span class="hljs-string">'class'</span>]][<span class="hljs-string">'id'</span>])
+
+    tf_example = tf.train.Example(features=tf.train.Features(feature={
+        <span class="hljs-string">'image/height'</span>: dataset_util.int64_feature(height),
+        <span class="hljs-string">'image/width'</span>: dataset_util.int64_feature(width),
+        <span class="hljs-string">'image/filename'</span>: dataset_util.bytes_feature(filename),
+        <span class="hljs-string">'image/source_id'</span>: dataset_util.bytes_feature(filename),
+        <span class="hljs-string">'image/encoded'</span>: dataset_util.bytes_feature(img_data),
+        <span class="hljs-string">'image/format'</span>: dataset_util.bytes_feature(image_format),
+        <span class="hljs-string">'image/object/bbox/xmin'</span>: dataset_util.float_list_feature(xmins),
+        <span class="hljs-string">'image/object/bbox/xmax'</span>: dataset_util.float_list_feature(xmaxs),
+        <span class="hljs-string">'image/object/bbox/ymin'</span>: dataset_util.float_list_feature(ymins),
+        <span class="hljs-string">'image/object/bbox/ymax'</span>: dataset_util.float_list_feature(ymaxs),
+        <span class="hljs-string">'image/object/class/text'</span>: dataset_util.bytes_list_feature(classes_text),
+        <span class="hljs-string">'image/object/class/label'</span>: dataset_util.int64_list_feature(classes),
+    }))
+    <span class="hljs-keyword">return</span> tf_example
+
+writer = tf.io.TFRecordWriter(<span class="hljs-string">'path_to_output.tfrecord'</span>)
+
+<span class="hljs-comment"># 適應你的圖像路徑和標籤。</span>
+images_path = <span class="hljs-string">'path_to_your_images'</span>
+annotations_path = <span class="hljs-string">'path_to_your_annotations'</span>
+
+<span class="hljs-keyword">for</span> image_file <span class="hljs-keyword">in</span> os.listdir(images_path):
+    image_path = os.path.join(images_path, image_file)
+    annotation_path = os.path.join(annotations_path, image_file.replace(<span class="hljs-string">'.jpg'</span>, <span class="hljs-string">'.xml'</span>))
+
+    <span class="hljs-comment"># 讀取標籤檔案並解析標籤。你可能需要根據你的標籤格式調整這個。</span>
+    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(annotation_path) <span class="hljs-keyword">as</span> f:
+        annotation_xml = f.read()
+    annotations = parse_annotations(annotation_xml)  <span class="hljs-comment"># 這個函數根據你的標籤格式。</span>
+
+    tf_example = create_tf_example(image_path, annotations)
+    writer.write(tf_example.SerializeToString())
+
+writer.close()
+</code></pre>
+<p>跑完這段之後會產出 <code>path_to_output.tfrecord</code>，拿到 object detection 底下新建一個資料夾放好即可。</p>
+</section><section aria-labelledby="label-map-pbtxt-裡的-name-欄位要填什麼"><h2 id="label-map-pbtxt-裡的-name-欄位要填什麼">label_map.pbtxt 裡的 name 欄位要填什麼？</h2>
+<p>準備分類設定檔案 <code>*.pbtxt</code> 時，可以參考 <code>\models\research\object_detection\data</code> 底下內建的 <code>mscoco_label_map.pbtxt</code>，格式長這樣：</p>
+<pre><code>item {
+  name: "/m/01g317"
+  id: 1
+  display_name: "person"
+}
+item {
+  name: "/m/0199g"
+  id: 2
+  display_name: "bicycle"
+}
+item {
+  name: "/m/0k4j"
+  id: 3
+  display_name: "car"
+}
+...
+</code></pre>
+<p>這裡的 <code>/m/01g317</code> 是 Google Knowledge Graph 裡的專屬識別碼，代表 "person" 這個概念，Google 用這套系統儲存數以億計的實體並互相連結，藉此提升搜尋結果的準確度。</p>
+<p>但如果你的專案跟 Google Knowledge Graph 完全無關，<code>name</code> 欄位不需要照抄這套 ID。只要保證每個類別的 <code>name</code> 和 <code>id</code> 在你的檔案裡是唯一的，<code>display_name</code> 清楚寫出類別意思（例如骰子偵測就直接寫 <code>white_dice</code>、<code>red_dice</code>)，訓練照樣能跑。</p>
+</section><section aria-labelledby="pipeline-config-要怎麼指定資料集位置"><h2 id="pipeline-config-要怎麼指定資料集位置">pipeline.config 要怎麼指定資料集位置？</h2>
+<p><code>pipeline.config</code> 裡有兩個關鍵區塊，<code>train_input_reader</code> 和 <code>eval_input_reader</code>，分別對應訓練和驗證資料：</p>
+<pre><code>model {
+  // Model settings go here
+  ...
+}
+
+train_config {
+  // Training settings go here
+  ...
+}
+
+train_input_reader: {
+  tf_record_input_reader {
+    input_path: "path_to_train.tfrecord"
+  }
+  label_map_path: "path_to_label_map.pbtxt"
+}
+
+eval_config {
+  // Evaluation settings go here
+  ...
+}
+
+eval_input_reader: {
+  tf_record_input_reader {
+    input_path: "path_to_eval.tfrecord"
+  }
+  label_map_path: "path_to_label_map.pbtxt"
+}
+</code></pre>
+<p>這裡有個踩雷點：<code>input_path</code> 和 <code>label_map_path</code> 要填檔案系統上的絕對路徑，不是相對於 <code>pipeline.config</code> 檔案本身的相對路徑。假設訓練用的 TFRecord 放在 <code>/home/user/dataset/train.tfrecord</code>，就要這樣寫：</p>
+<pre><code>train_input_reader: {
+  tf_record_input_reader {
+    input_path: "/home/user/dataset/train.tfrecord"
+  }
+  label_map_path: "/path_to/your_label_map.pbtxt"
+}
+</code></pre>
+<p>第一次沒注意到這點，路徑寫成相對路徑，訓練腳本直接報 file not found，改成絕對路徑就正常了。</p>
+</section><section aria-labelledby="訓練指令怎麼下"><h2 id="訓練指令怎麼下">訓練指令怎麼下？</h2>
+<p>資料、標籤、config 都準備好之後，訓練指令只有一行：</p>
+<pre><code class="hljs language-bash">python models/research/object_detection/model_main_tf2.py \
+    --pipeline_config_path=path_to_your_pipeline.config \
+    --model_dir=path_to_output_model_dir \
+    --alsologtostderr
+</code></pre>
+<p><code>pipeline_config_path</code> 指向改好的 config 檔，<code>model_dir</code> 是訓練過程中檢查點和日誌要存放的資料夾。訓練跑起來後，同一個 <code>model_dir</code> 也可以拿來做評估，只要把 <code>model_main_tf2.py</code> 的參數換成 <code>checkpoint_dir</code> 即可。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>一定要用 SSD MobileNet V2 FPNLite 嗎？</span></h3>
+<p>不一定，這是模型 zoo 裡眾多預訓練模型的其中一個，選它是因為模型小、推論快，適合先跑通整套流程。要追求精度可以換模型 zoo 裡更大的模型，只是訓練和推論時間都會拉長。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>TFRecord 檔案一定要自己寫轉換程式嗎？</span></h3>
+<p>如果標籤是 labelImg 存出來的 PascalVOC XML，TensorFlow Object Detection API 的 repo 裡通常有現成的 <code>create_pascal_tf_record.py</code> 之類的轉換腳本可以參考，不用整段從零寫，但欄位對應（尤其是 bounding box 座標要不要正規化）還是得對照自己的標籤格式檢查一次。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>label_map 的 id 可以從 0 開始嗎？</span></h3>
+<p>不行，TensorFlow Object Detection API 的 id 是從 1 開始編號，0 保留給背景類別。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ol>
+<li>TensorFlow Models 官方 GitHub repo，Object Detection API 說明文件，存取日期：2026-08-27。<a href="https://github.com/tensorflow/models/tree/master/research/object_detection" target="_blank" rel="noopener noreferrer">https://github.com/tensorflow/models/tree/master/research/object_detection</a></li>
+<li>TensorFlow Models 官方 GitHub repo，TF2 Detection Model Zoo（含 SSD MobileNet V2 FPNLite），存取日期：2026-08-27。<a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md" target="_blank" rel="noopener noreferrer">https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md</a></li>
+</ol>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/object-detection-technology-introduction">物體偵測技術介紹：Bounding Box、類別分類與常見模型架構</a>：同樣聚焦 物體偵測、電腦視覺，可接著比較不同情境的做法。</li>
+<li><a href="/post/yolov8-object-detection-model">YOLOv8 物件偵測模型介紹：安裝、預測、訓練與輸出流程</a>：同樣聚焦 物體偵測、電腦視覺，可接著比較不同情境的做法。</li>
+<li><a href="/post/tensorflow-object-detection-api-overview">TensorFlow Object Detection API 功能介紹與模型選擇</a>：同樣聚焦 TensorFlow、物體偵測，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-07-28</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

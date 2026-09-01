@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebCodecs + WebGPU：開啟個人化串流新視界｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理 WebCodecs、WebGPU 與 WebAssembly 如何讓瀏覽器處理低延遲串流、逐幀影像與端側 AI。" />
+<meta name="keywords" content="前端開發, WebCodecs, WebGPU, WebAssembly, 串流, 前端開發, Web AI" />
+<link rel="canonical" href="https://claire-chang.com/post/webcodecs-webgpu-personalized-streaming/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="WebCodecs + WebGPU：開啟個人化串流新視界｜Claire Chang" />
+<meta property="og:description" content="整理 WebCodecs、WebGPU 與 WebAssembly 如何讓瀏覽器處理低延遲串流、逐幀影像與端側 AI。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/webcodecs-webgpu-personalized-streaming/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_webcodecs-webgpu-personalized-streaming-895843bd.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_webcodecs-webgpu-personalized-streaming-895843bd.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="WebCodecs + WebGPU：開啟個人化串流新視界｜Claire Chang" />
+<meta name="twitter:description" content="整理 WebCodecs、WebGPU 與 WebAssembly 如何讓瀏覽器處理低延遲串流、逐幀影像與端側 AI。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_webcodecs-webgpu-personalized-streaming-895843bd.jpg" />
+<meta property="article:published_time" content="2024-11-30" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="WebCodecs" />
+<meta property="article:tag" content="WebGPU" />
+<meta property="article:tag" content="WebAssembly" />
+<meta property="article:tag" content="串流" />
+<meta property="article:tag" content="前端開發" />
+<meta property="article:tag" content="Web AI" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"WebCodecs + WebGPU：開啟個人化串流新視界","item":"https://claire-chang.com/post/webcodecs-webgpu-personalized-streaming/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/webcodecs-webgpu-personalized-streaming/#article","headline":"WebCodecs + WebGPU：開啟個人化串流新視界","description":"整理 WebCodecs、WebGPU 與 WebAssembly 如何讓瀏覽器處理低延遲串流、逐幀影像與端側 AI。","image":"https://claire-chang.com/images/tech/hero_webcodecs-webgpu-personalized-streaming.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-11-30","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/webcodecs-webgpu-personalized-streaming/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"WebCodecs, WebGPU, WebAssembly, 串流, 前端開發, Web AI","about":[{"@type":"Thing","name":"串流"},{"@type":"Thing","name":"前端開發"}],"mentions":[{"@type":"Thing","name":"WebCodecs"},{"@type":"Thing","name":"WebGPU"},{"@type":"Thing","name":"WebAssembly"},{"@type":"Thing","name":"Web AI"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/webcodecs-webgpu-personalized-streaming/#faq","mainEntity":[{"@type":"Question","name":"WebCodecs 是什麼？","acceptedAnswer":{"@type":"Answer","text":"WebCodecs 是瀏覽器提供的低階影音編碼與解碼 API。WebCodecs 可讓前端拿到 `VideoFrame`、`AudioData`、`EncodedVideoChunk` 與 `EncodedAudioChunk`，適合需要逐幀控制的直播、剪輯、轉碼與視訊處理。"}},{"@type":"Question","name":"WebGPU 和 WebGL 有什麼差別？","acceptedAnswer":{"@type":"Answer","text":"WebGPU 是較新的 Web graphics 與 GPU compute API，設計目標是提供比 WebGL 更現代的 GPU 存取方式。WebGPU 更適合 compute shader、現代渲染管線與機器學習推理這類平行運算。"}},{"@type":"Question","name":"WebCodecs + WebGPU 可以取代 WebRTC 嗎？","acceptedAnswer":{"@type":"Answer","text":"WebCodecs + WebGPU 不等於 WebRTC。WebRTC 負責低延遲即時通訊與媒體傳輸，WebCodecs + WebGPU 更像是讓瀏覽器端能控制解碼後的影格與渲染流程；實務上三者可以一起使用。"}},{"@type":"Question","name":"為什麼不用 Canvas 逐格處理影片就好？","acceptedAnswer":{"@type":"Answer","text":"Canvas 逐格處理影片可以做簡單效果，但每幀擷取、複製、修改與重畫會帶來效能成本。當影片是 30 到 60 FPS，且還要做 AI 推理、濾鏡或低延遲互動時，WebCodecs + WebGPU 更適合承擔高頻率影像處理。"}},{"@type":"Question","name":"WebAssembly 和 WebGPU 要怎麼選？","acceptedAnswer":{"@type":"Answer","text":"WebAssembly 適合 CPU 型運算、既有 C/C++ 函式庫移植與較小工作負載。WebGPU 適合大量平行運算、影像處理、GPU shader 與大型 tensor 計算；同一個串流產品常會同時使用兩者。"}},{"@type":"Question","name":"WebCodecs 支援所有影片格式嗎？","acceptedAnswer":{"@type":"Answer","text":"WebCodecs 不保證支援所有 container 與 codec。開發者要分開確認 demuxer、codec、瀏覽器版本、硬體加速與作業系統支援；副檔名能播放，不代表可被 WebCodecs 管線逐幀處理。"}},{"@type":"Question","name":"WebGPU 可以用來做瀏覽器端 AI 嗎？","acceptedAnswer":{"@type":"Answer","text":"WebGPU 可以支援瀏覽器端 AI 推理，尤其是影像、tensor 與平行運算量大的工作。實務上通常會透過 TensorFlow.js、ONNX Runtime Web、MediaPipe 或其他 runtime 使用 WebGPU，而不是每個專案都手寫完整 GPU compute pipeline。"}},{"@type":"Question","name":"WebCodecs + WebGPU 適合哪些產品？","acceptedAnswer":{"@type":"Answer","text":"WebCodecs + WebGPU 適合雲端遊戲、低延遲直播、互動影音、線上會議特效、瀏覽器內影片剪輯、即時畫質增強與端側 AI。若只是一般影片播放，`\u003cvideo>`、HLS、DASH 或 MSE 通常更簡單。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_webcodecs-webgpu-personalized-streaming.webp" alt="DevFest Taipei 2024 WebCodecs 與 WebGPU 講題活動視覺" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-11-30">2024-11-30</time></span><span class="post-meta-pill">WebCodecs · WebGPU · WebAssembly · 串流 · 前端開發 · Web AI</span></div></div><h1 class="insights-hero-title">WebCodecs + WebGPU：開啟個人化串流新視界</h1><p class="insights-hero-description">整理 WebCodecs、WebGPU 與 WebAssembly 如何讓瀏覽器處理低延遲串流、逐幀影像與端側 AI。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>WebCodecs + WebGPU 適合解決「瀏覽器想低延遲播放串流，還想在畫面被渲染前做客製化處理」的問題。WebCodecs 讓前端直接取得解碼後的 <code>VideoFrame</code> 與 <code>AudioData</code>，WebGPU 則把影像處理、渲染與部分 AI 推理交給 GPU，讓個人化直播、雲端遊戲、線上會議特效與互動影音不必全部繞回伺服器。</p>
+<p>這是我在 DevFest Taipei 2024 分享的主題。過去我做過 H5 網頁遊戲、串流播放器、串流伺服器、OpenCV 影像辨識，也用 TensorFlow、YOLO 做過影像辨識；這場分享想回答的問題很單純：當影音串流進到瀏覽器後，前端能不能不只「播放」，而是更靠近媒體管線本身。</p>
+</div><section aria-labelledby="webcodecs-webgpu-想解決什麼問題"><h2 id="webcodecs-webgpu-想解決什麼問題">WebCodecs + WebGPU 想解決什麼問題？</h2>
+<div class="answer">
+<p>WebCodecs + WebGPU 解決的是瀏覽器影音管線過度封裝的問題。前端若要在解碼後、渲染前插入自訂處理，就需要更低階的媒體與 GPU 存取能力。</p>
+</div>
+<p>傳統網頁影音播放多半交給 <code>HTMLMediaElement</code>、WebRTC 或 Media Source Extensions（MSE）。這些 API 很好用，適合播放、通訊與 adaptive streaming，但多數細節被瀏覽器封裝起來；開發者很難在 demux、decode、render 之間插入自己的影像處理流程。</p>
+<p>如果真的要改畫面，常見做法是先把影片畫到 Canvas，再逐格取出影像修改。這條路能做，但成本很高。一般網路影片大約 30 到 60 FPS，電影常見 24 FPS；每一幀都從播放元素取出、複製、處理、再畫回去，效能壓力很快會浮出來。</p>
+<p>MDN 對 MSE 的說明也點出它主要是讓 JavaScript 產生媒體串流給 <code>&#x3C;audio></code> 與 <code>&#x3C;video></code> 播放，並支援像 DASH、HLS 這類串流播放流程；DASH live profile 可能引入延遲，因此不適合取代 WebRTC 做即時通訊（MDN Web Docs，2026-03）。</p>
+</section><section aria-labelledby="低延遲串流為什麼不能只靠傳統-hls-或-dash"><h2 id="低延遲串流為什麼不能只靠傳統-hls-或-dash">低延遲串流為什麼不能只靠傳統 HLS 或 DASH？</h2>
+<div class="answer">
+<p>低延遲互動串流不能只靠傳統 HLS 或 DASH，因為分段傳輸會帶來緩衝與播放延遲。雲端遊戲、互動劇情與即時特效更需要逐幀處理能力。</p>
+</div>
+<p>HLS 與 DASH 的基本思路，是把影音切成一段一段的檔案，再由播放器依網路狀況載入。這對大量觀眾、CDN 傳輸與穩定播放很有幫助，但對互動遊戲、即時濾鏡、遠端控制或雲端遊戲來說，延遲就是產品體驗的一部分。</p>
+<p>我會把瀏覽器串流需求分成兩種：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>需求</th><th>傳統播放 API 是否足夠</th><th>更適合的方向</th></tr></thead><tbody><tr><td>一般直播觀看</td><td>通常足夠</td><td>HLS、DASH、MSE、HTMLMediaElement</td></tr><tr><td>視訊會議</td><td>需要即時通訊能力</td><td>WebRTC</td></tr><tr><td>低延遲雲端遊戲</td><td>單純播放不夠</td><td>WebCodecs、WebGPU、WebTransport 或 RTCDataChannel</td></tr><tr><td>即時背景移除與畫質增強</td><td>單純播放不夠</td><td>WebCodecs 解碼逐幀處理，WebGPU 做渲染或推理</td></tr><tr><td>瀏覽器內轉碼或剪輯</td><td>單純播放不夠</td><td>WebCodecs 搭配 WebAssembly、Worker、Canvas</td></tr></tbody></table></div>
+<p>重點不是 HLS 或 DASH 不好，而是「播放穩定」和「逐幀互動」是兩種不同目標。前者追求可擴展、可緩衝、可容錯；後者追求低延遲、可介入、可客製。</p>
+</section><section aria-labelledby="webcodecs-在串流管線裡負責什麼"><h2 id="webcodecs-在串流管線裡負責什麼">WebCodecs 在串流管線裡負責什麼？</h2>
+<div class="answer">
+<p>WebCodecs 負責讓前端直接處理音訊與視訊的編碼、解碼與逐幀資料。WebCodecs 適合直播、雲端遊戲、媒體編輯與瀏覽器內轉碼。</p>
+</div>
+<p>WebCodecs 是低階 Web API，讓開發者能以瀏覽器原生能力處理音訊與視訊資料。MDN 將 WebCodecs 定位為可有效率地在瀏覽器中 encode/decode video/audio，並提供 per-frame 低階控制的 API；常見場景包含 browser-based editing、live streaming 與 video conferencing（MDN Web Docs，2026-08）。</p>
+<p>WebCodecs 裡幾個重要實體要先分清楚：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>類型</th><th>影像</th><th>聲音</th></tr></thead><tbody><tr><td>原始資料</td><td><code>VideoFrame</code></td><td><code>AudioData</code></td></tr><tr><td>編碼後資料</td><td><code>EncodedVideoChunk</code></td><td><code>EncodedAudioChunk</code></td></tr><tr><td>解碼器</td><td><code>VideoDecoder</code></td><td><code>AudioDecoder</code></td></tr><tr><td>編碼器</td><td><code>VideoEncoder</code></td><td><code>AudioEncoder</code></td></tr></tbody></table></div>
+<p>在 W3C WebCodecs sample 的 audio-video-player 範例裡，流程是用 demuxer 取出 chunks，交給 <code>AudioDecoder</code> 與 <code>VideoDecoder</code> 解碼，再同步音訊與視訊並輸出到播放端。投影片裡我特別放了 <code>SharedArrayBuffer</code>、Web Worker 與 <code>VideoFrame</code> / <code>AudioData</code>，因為真正要穩定處理串流，主執行緒不能塞滿所有工作。</p>
+</section><section aria-labelledby="webgpu-為什麼適合接在-webcodecs-後面"><h2 id="webgpu-為什麼適合接在-webcodecs-後面">WebGPU 為什麼適合接在 WebCodecs 後面？</h2>
+<div class="answer">
+<p>WebGPU 適合接在 WebCodecs 後面，因為 WebGPU 可把解碼後的影格送進 GPU 渲染管線。WebGPU 也能支援影像處理與機器學習推理這類平行運算。</p>
+</div>
+<p>WebCodecs 解碼後拿到的是 <code>VideoFrame</code>。接下來如果只是用 Canvas2D 每幀繪製，複製與轉換成本會變成瓶頸；如果能直接把 <code>VideoFrame</code> 匯入 WebGPU，就可以更靠近 GPU 記憶體與渲染管線。</p>
+<p>MDN 在 WebCodecs 使用指南中提到，使用 WebGPU 的 <code>importExternalTexture()</code> 將 <code>VideoFrame</code> 渲染到 Canvas，是最有效率的方式；這種方式使用同一個 <code>VideoFrame</code> 物件進入 WebGPU pipeline，但設定也最複雜（MDN Web Docs，2026-08）。</p>
+<p>W3C WebGPU Working Draft 對 <code>GPUExternalTexture</code> 的描述也說明，external texture 是包住外部 video object 的可取樣 2D texture，並透過 <code>GPUDevice.importExternalTexture()</code> 建立（W3C，2023-03）。投影片中的 video-decode-display 範例就是這條路線：WebCodecs 逐幀解碼，WebGPU 透過 WGSL shader 把外部紋理渲染到 Canvas。</p>
+</section><section aria-labelledby="webassembly-在這條管線裡還有角色嗎"><h2 id="webassembly-在這條管線裡還有角色嗎">WebAssembly 在這條管線裡還有角色嗎？</h2>
+<div class="answer">
+<p>WebAssembly 仍然適合放在瀏覽器串流管線裡處理 CPU 型重運算。WebGPU 不會取代 WebAssembly，兩者會依工作負載分工。</p>
+</div>
+<p>WebAssembly（Wasm）是一種可在瀏覽器中高效執行的二進位格式，常用來把 C/C++、Rust 或既有影音處理函式庫帶到 Web。當工作負載偏小、偏 CPU、或需要既有原生程式碼移植時，WebAssembly 仍然很實用。</p>
+<p>Chrome for Developers 在 2024 年 I/O 的 WebAssembly + WebGPU 文章中提到，瀏覽器端 AI 推理可透過 JavaScript、WebAssembly、WebGL 或 WebGPU 執行；WebAssembly 對文字或音訊這類較小工作負載仍有價值，WebGPU 則適合更大的 GPU 平行運算（Chrome for Developers，2024-05）。</p>
+<p>我的判斷方式是這樣：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>工作</th><th>較適合的技術</th></tr></thead><tbody><tr><td>解碼後逐幀取得影像</td><td>WebCodecs</td></tr><tr><td>影片濾鏡、畫面合成、GPU shader</td><td>WebGPU</td></tr><tr><td>既有 C/C++ 函式庫移植</td><td>WebAssembly</td></tr><tr><td>小型音訊或文字推理</td><td>WebAssembly 或 JavaScript runtime</td></tr><tr><td>大量 tensor 計算、影像模型推理</td><td>WebGPU 或支援 WebGPU 的 ML runtime</td></tr></tbody></table></div>
+<p>三者不是互斥選項。比較真實的架構會是 Fetch、WebSockets、WebTransport 或 RTCDataChannel 取得資料，demux 後交給 WebCodecs 解碼，影像處理用 JavaScript、WebAssembly 或 WebGPU 分工，最後再渲染到 Canvas。</p>
+</section><section aria-labelledby="個人化串流可以怎麼落地"><h2 id="個人化串流可以怎麼落地">個人化串流可以怎麼落地？</h2>
+<div class="answer">
+<p>個人化串流的落地方式，是在瀏覽器端依使用者情境即時改變畫面。WebCodecs 負責取得影格，WebGPU 或 WebAssembly 負責背景模糊、畫質增強、辨識與合成。</p>
+</div>
+<p>「個人化串流」不是只在播放器外面加 UI。更有趣的地方，是串流內容可以在使用者端被理解、修改與重新呈現：會議背景模糊、即時字幕、影像降噪、畫質增強、人臉辨識、互動影片、雲端遊戲畫面疊加，都屬於這個方向。</p>
+<p>投影片裡我放了幾個例子：</p>
+<ul>
+<li>Adobe 使用 TensorFlow.js 強化 Photoshop 網頁版。</li>
+<li>Google Meet 曾加入背景模糊效果。</li>
+<li>Whisper WebAssembly demo 可在網頁中做即時語音辨識。</li>
+<li>MediaPipe Studio 提供多種瀏覽器端 AI 與機器學習範例。</li>
+<li><code>llama.cpp</code> 也有在瀏覽器中執行大型語言模型的實驗路線。</li>
+</ul>
+<p>這些例子的共通點，是把一部分運算留在使用者裝置上。Chrome for Developers 也指出，browser client 端推理可降低伺服器成本、減少延遲，並讓敏感資料不必送回伺服器（Chrome for Developers，2024-05）。對直播、會議、醫療影像輔助或教育訓練來說，這不只是效能問題，也是隱私與產品設計問題。</p>
+</section><section aria-labelledby="開發-webcodecs-webgpu-管線要注意什麼"><h2 id="開發-webcodecs-webgpu-管線要注意什麼">開發 WebCodecs + WebGPU 管線要注意什麼？</h2>
+<div class="answer">
+<p>開發 WebCodecs + WebGPU 管線時，最容易出問題的是記憶體、執行緒、瀏覽器支援與 codec 相容性。正式上線前必須逐段驗證每一個媒體處理節點。</p>
+</div>
+<p>WebCodecs 與 WebGPU 都比較接近底層，因此自由度高，責任也會回到開發者手上。MDN 特別提醒，<code>VideoFrame</code> 可能消耗大量 GPU memory，處理每秒多幀影片時要在不需要後呼叫 <code>frame.close()</code>，避免記憶體洩漏造成應用程式崩潰（MDN Web Docs，2026-08）。</p>
+<p>我會用這份檢查表開始做原型：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查項目</th><th>要確認什麼</th></tr></thead><tbody><tr><td>傳輸方式</td><td>Fetch、WebSocket、WebTransport 或 RTCDataChannel 是否適合延遲需求</td></tr><tr><td>解封裝</td><td>瀏覽器端 demuxer 是否支援目標 container，例如 MP4、WebM 或 MPEG-TS</td></tr><tr><td>codec</td><td>H.264、HEVC、AV1、VP9、Opus 是否被目標瀏覽器與硬體支援</td></tr><tr><td>threading</td><td>解碼、同步、渲染是否放進 Worker，避免卡住主執行緒</td></tr><tr><td>frame lifecycle</td><td><code>VideoFrame</code> 是否在 encode 或 render 後釋放</td></tr><tr><td>GPU pipeline</td><td><code>importExternalTexture()</code>、shader、bind group 與 render pass 是否逐幀正確更新</td></tr><tr><td>fallback</td><td>不支援 WebGPU 或特定 codec 時，是否退回 Canvas、WebGL、MSE 或伺服器處理</td></tr></tbody></table></div>
+<p>這份檢查表也是我從串流播放器、串流伺服器與影像辨識經驗裡學到的事：影音問題通常不是單一 API 壞掉，而是傳輸、封裝、解碼、記憶體與渲染其中一段沒有對齊。</p>
+</section><section aria-labelledby="活動資訊與投影片"><h2 id="活動資訊與投影片">活動資訊與投影片</h2>
+<div class="answer">
+<p>這場分享是 DevFest Taipei 2024 的 WebCodecs + WebGPU 技術講題。內容聚焦瀏覽器端串流處理、Web AI 與低延遲互動影音。</p>
+</div>
+<p>活動頁可參考 GDG Taipei 的 DevFest Taipei 2024 頁面：<a href="https://gdg.community.dev/events/details/google-gdg-taipei-presents-devfest-taipei-2024/cohost-gdg-taipei" target="_blank" rel="noopener noreferrer">DevFest Taipei 2024</a>。</p>
+<p>投影片可從站內下載：<a href="/images/tech/webcodecs-webgpu-personalized-streaming-slides.pdf">WebCodecs + WebGPU：開啟個人化串流新視界</a>。</p>
+<figure class="article-figure"><img src="/images/tech/webcodecs-webgpu-devfest-session-1.webp" alt="WebCodecs + WebGPU DevFest Taipei 2024 講題現場照片" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/tech/webcodecs-webgpu-devfest-talk-1.jpg" alt="WebCodecs + WebGPU 講題介紹圖" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/tech/webcodecs-webgpu-devfest-session-2.webp" alt="DevFest Taipei 2024 WebCodecs + WebGPU 活動剪影" loading="lazy" class="markdown-img"></figure>
+<figure class="article-figure"><img src="/images/tech/webcodecs-webgpu-devfest-session-3.webp" alt="DevFest Taipei 2024 WebCodecs + WebGPU 現場交流照片" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<div class="answer">
+<p>WebCodecs + WebGPU 的常見問題多半圍繞用途、延遲、瀏覽器支援、WebAssembly 分工與上線風險。先釐清媒體管線，再決定 API 組合。</p>
+</div>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>WebCodecs 是什麼？</span></h3>
+<p>WebCodecs 是瀏覽器提供的低階影音編碼與解碼 API。WebCodecs 可讓前端拿到 <code>VideoFrame</code>、<code>AudioData</code>、<code>EncodedVideoChunk</code> 與 <code>EncodedAudioChunk</code>，適合需要逐幀控制的直播、剪輯、轉碼與視訊處理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>WebGPU 和 WebGL 有什麼差別？</span></h3>
+<p>WebGPU 是較新的 Web graphics 與 GPU compute API，設計目標是提供比 WebGL 更現代的 GPU 存取方式。WebGPU 更適合 compute shader、現代渲染管線與機器學習推理這類平行運算。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>WebCodecs + WebGPU 可以取代 WebRTC 嗎？</span></h3>
+<p>WebCodecs + WebGPU 不等於 WebRTC。WebRTC 負責低延遲即時通訊與媒體傳輸，WebCodecs + WebGPU 更像是讓瀏覽器端能控制解碼後的影格與渲染流程；實務上三者可以一起使用。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼不用 Canvas 逐格處理影片就好？</span></h3>
+<p>Canvas 逐格處理影片可以做簡單效果，但每幀擷取、複製、修改與重畫會帶來效能成本。當影片是 30 到 60 FPS，且還要做 AI 推理、濾鏡或低延遲互動時，WebCodecs + WebGPU 更適合承擔高頻率影像處理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>WebAssembly 和 WebGPU 要怎麼選？</span></h3>
+<p>WebAssembly 適合 CPU 型運算、既有 C/C++ 函式庫移植與較小工作負載。WebGPU 適合大量平行運算、影像處理、GPU shader 與大型 tensor 計算；同一個串流產品常會同時使用兩者。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>WebCodecs 支援所有影片格式嗎？</span></h3>
+<p>WebCodecs 不保證支援所有 container 與 codec。開發者要分開確認 demuxer、codec、瀏覽器版本、硬體加速與作業系統支援；副檔名能播放，不代表可被 WebCodecs 管線逐幀處理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>WebGPU 可以用來做瀏覽器端 AI 嗎？</span></h3>
+<p>WebGPU 可以支援瀏覽器端 AI 推理，尤其是影像、tensor 與平行運算量大的工作。實務上通常會透過 TensorFlow.js、ONNX Runtime Web、MediaPipe 或其他 runtime 使用 WebGPU，而不是每個專案都手寫完整 GPU compute pipeline。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>WebCodecs + WebGPU 適合哪些產品？</span></h3>
+<p>WebCodecs + WebGPU 適合雲端遊戲、低延遲直播、互動影音、線上會議特效、瀏覽器內影片剪輯、即時畫質增強與端側 AI。若只是一般影片播放，<code>&#x3C;video></code>、HLS、DASH 或 MSE 通常更簡單。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>MDN Web Docs, <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebCodecs_API" target="_blank" rel="noopener noreferrer">WebCodecs API</a>（存取日期：2026-08-28）</li>
+<li>MDN Web Docs, <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebCodecs_API/Using_the_WebCodecs_API" target="_blank" rel="noopener noreferrer">Using the WebCodecs API</a>（存取日期：2026-08-28）</li>
+<li>MDN Web Docs, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Media_Source_Extensions_API" target="_blank" rel="noopener noreferrer">Media Source API</a>（更新日期：2026-03-10，存取日期：2026-08-28）</li>
+<li>W3C, <a href="https://github.com/w3c/webcodecs/tree/main/samples/audio-video-player" target="_blank" rel="noopener noreferrer">WebCodecs samples: audio-video-player</a>（存取日期：2026-08-28）</li>
+<li>W3C, <a href="https://github.com/w3c/webcodecs/tree/main/samples/video-decode-display" target="_blank" rel="noopener noreferrer">WebCodecs samples: video-decode-display</a>（存取日期：2026-08-28）</li>
+<li>W3C, <a href="https://www.w3.org/TR/2023/WD-webgpu-20230302/" target="_blank" rel="noopener noreferrer">WebGPU Working Draft</a>（發布日期：2023-03-02，存取日期：2026-08-28）</li>
+<li>Chrome for Developers, <a href="https://developer.chrome.com/blog/io24-webassembly-webgpu-1" target="_blank" rel="noopener noreferrer">WebAssembly and WebGPU enhancements for faster Web AI, part 1</a>（發布日期：2024-05-16，存取日期：2026-08-28）</li>
+<li>GDG Taipei, <a href="https://gdg.community.dev/events/details/google-gdg-taipei-presents-devfest-taipei-2024/cohost-gdg-taipei" target="_blank" rel="noopener noreferrer">DevFest Taipei 2024</a>（存取日期：2026-08-28）</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/emscripten-webassembly-compile-guide">Emscripten 編譯 WebAssembly 實作筆記：從 MSYS2 到 emmake</a>：同樣聚焦 WebAssembly、前端開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/insert-flash-in-browser-settings">在瀏覽器內插入 Flash 的幾種設定：透明、全螢幕與 Script 存取</a>：同樣聚焦 前端開發，可接著比較不同情境的做法。</li>
+<li><a href="/post/browser-embed-flash-settings">在瀏覽器內插入 Flash 的幾種設定：透明、全螢幕與 JavaScript 存取</a>：同樣聚焦 前端開發，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。這次整理補上 GEO Answer Blocks、WebCodecs / WebGPU / WebAssembly 分工、串流管線檢查表、站內延伸閱讀、活動圖片與 FAQ。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-11-30</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>如何串接 Email、ERP 與企業資料，自動執行完整工作流程？｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="解析 AI Agent 如何串接 Email 與 ERP 自動化訂單。本文提供資料理解、規則驗證、五層授權分級與資安控管架構，打造可控且安全的企業 AI 流程。" />
+<meta name="keywords" content="智慧營運, AI Agent, 授權分級, 風險控管" />
+<link rel="canonical" href="https://claire-chang.com/post/ai-agent-permission/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="如何串接 Email、ERP 與企業資料，自動執行完整工作流程？｜Claire Chang" />
+<meta property="og:description" content="解析 AI Agent 如何串接 Email 與 ERP 自動化訂單。本文提供資料理解、規則驗證、五層授權分級與資安控管架構，打造可控且安全的企業 AI 流程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/ai-agent-permission/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_office-e6839941.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_office-e6839941.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="如何串接 Email、ERP 與企業資料，自動執行完整工作流程？｜Claire Chang" />
+<meta name="twitter:description" content="解析 AI Agent 如何串接 Email 與 ERP 自動化訂單。本文提供資料理解、規則驗證、五層授權分級與資安控管架構，打造可控且安全的企業 AI 流程。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_office-e6839941.jpg" />
+<meta property="article:published_time" content="2026-08-24" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="AI Agent" />
+<meta property="article:tag" content="授權分級" />
+<meta property="article:tag" content="風險控管" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"如何串接 Email、ERP 與企業資料，自動執行完整工作流程？","item":"https://claire-chang.com/post/ai-agent-permission/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/ai-agent-permission/#article","headline":"如何串接 Email、ERP 與企業資料，自動執行完整工作流程？","description":"解析 AI Agent 如何串接 Email 與 ERP 自動化訂單。本文提供資料理解、規則驗證、五層授權分級與資安控管架構，打造可控且安全的企業 AI 流程。","image":"https://claire-chang.com/images/articles/hero_office.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2026-08-24","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/ai-agent-permission/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"智慧營運","keywords":"AI Agent, 授權分級, 風險控管","about":[{"@type":"Thing","name":"AI Agent"},{"@type":"Thing","name":"授權分級"},{"@type":"Thing","name":"風險控管"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/ai-agent-permission/#faq","mainEntity":[{"@type":"Question","name":"公司已經有 ERP，還需要另外導入 AI Agent 嗎？","acceptedAnswer":{"@type":"Answer","text":"ERP 負責保存正式交易資料與執行企業規則，AI Agent 則可理解 Email、附件與自然語言。若工作只是固定欄位搬移，一般 Workflow 或 RPA 可能已足夠；只有需要處理非結構化輸入與模糊情境時，才需要加入 AI Agent。"}},{"@type":"Question","name":"AI Agent 可以直接修改 ERP 資料嗎？","acceptedAnswer":{"@type":"Answer","text":"技術上可以，但企業不應一開始就開放完整寫入權限。較安全的方式是先從唯讀查詢與建立草稿開始，再依錯誤率、影響程度與稽核需求，逐步開放核准後寫入或低風險自動執行。"}},{"@type":"Question","name":"AI Agent 與 RPA 可以一起使用嗎？","acceptedAnswer":{"@type":"Answer","text":"AI Agent 與 RPA 可以互補。AI Agent 負責理解自然語言、判斷語意與選擇下一步；RPA 或 Workflow 負責依明確規則操作介面、呼叫 API 與留下執行紀錄。"}},{"@type":"Question","name":"客戶只寫「跟上次一樣」，AI Agent 看得懂嗎？","acceptedAnswer":{"@type":"Answer","text":"AI Agent 可以嘗試查詢該客戶的歷史訂單並提出候選結果，但「跟上次一樣」可能涉及不同門市、數量或價格。企業應要求 AI Agent 顯示比對依據，並在資料不唯一時轉由客戶或員工確認。"}},{"@type":"Question","name":"AI Agent 找不到客戶或品項時會怎麼處理？","acceptedAnswer":{"@type":"Answer","text":"企業應預先設定停止條件。找不到客戶、品項有多個候選、庫存不足或價格超出授權時，AI Agent 應停止正式建單，改為詢問客戶、建立待確認草稿或轉交指定人員。"}},{"@type":"Question","name":"AI Agent 建立的訂單一定要由員工核准嗎？","acceptedAnswer":{"@type":"Answer","text":"導入初期應由員工核准。當企業累積足夠測試紀錄後，可讓低金額、固定客戶、標準品項與無例外的訂單條件式自動通過，高影響案件仍保留人工核准。"}},{"@type":"Question","name":"Email 或 PDF 可能攻擊 AI Agent 嗎？","acceptedAnswer":{"@type":"Answer","text":"外部 Email、PDF、圖片與網頁可能包含誤導 AI Agent 的惡意指令。企業必須把外部內容視為待解析資料，而非可信指令，並以最小權限、參數驗證與工具白名單限制可執行動作。"}},{"@type":"Question","name":"中小企業需要一次做到全自動化嗎？","acceptedAnswer":{"@type":"Answer","text":"中小企業不需要一開始就追求全自動化。先選擇高頻、輸入明確、錯誤可被攔截的流程，從讀取、建議或建立草稿開始，通常比直接讓 AI Agent 自主執行更容易驗證價值。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/articles/hero_office.webp" alt="辦公室中規劃 AI Agent 權限流程" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/insights/?category=%E6%99%BA%E6%85%A7%E7%87%9F%E9%81%8B" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 智慧營運</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2026-08-24">2026-08-24</time></span><span class="post-meta-pill">AI Agent · 授權分級 · 風險控管</span></div></div><h1 class="insights-hero-title">如何串接 Email、ERP 與企業資料，自動執行完整工作流程？</h1><p class="insights-hero-description">解析 AI Agent 如何串接 Email 與 ERP 自動化訂單。本文提供資料理解、規則驗證、五層授權分級與資安控管架構，打造可控且安全的企業 AI 流程。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>AI Agent 可以理解 Email 與附件、查詢企業資源規劃系統（Enterprise Resource Planning，ERP）、建立報價草稿並呼叫工具執行下一步。然而，企業級 AI Agent 的重點不是讓人工智慧自由操作 ERP，而是把資料理解、規則驗證、系統動作與人工核准設計成可停止、可追蹤、可回復的工作流程。</p>
+<p>根據企業訪談與導入現場的匿名觀察，許多看似單純的「訂單輸入」工作，其實同時包含客戶辨識、品項對應、庫存查詢、交期承諾及例外判斷。企業不應一次交出全部執行權，而應依序開放讀取、建議、建立草稿、核准後執行與條件式自動執行五層權限。</p>
+</div><section aria-labelledby="ai-agent-已經開始參與企業流程"><h2 id="ai-agent-已經開始參與企業流程">AI Agent 已經開始參與企業流程</h2>
+<blockquote>
+<p><strong>AI Agent 能理解 Email 與附件、查詢企業系統、產生文件並呼叫工具。AI Agent 因此能把分散在員工與系統間的步驟串成可控流程。</strong></p>
+</blockquote>
+<p>生成式 AI 助理主要回覆問題或產生內容；AI Agent 則能依目標選擇工具、取得資料並推進多步驟任務。SAP 在 2026 年 7 月公布的 Business AI 更新，也把企業人工智慧的方向描述為：AI Agent 進入核心業務流程執行工作，同時保留人工監督（SAP，2026 年 7 月）。</p>
+<p>Microsoft Sales Order Agent 已能監看指定信箱、分析客戶來信及附件、辨識客戶與品項、查詢庫存、建立報價，再由指定使用者核准對外訊息。這類設計顯示，Agent 的價值不是多一個聊天視窗，而是減少員工在 Email、附件與 ERP 之間反覆搬運資料（Microsoft Learn，2026 年 7 月）。</p>
+</section><section aria-labelledby="ai-agent-rpa-與-workflow-有什麼差別"><h2 id="ai-agent-rpa-與-workflow-有什麼差別">AI Agent、RPA 與 Workflow 有什麼差別？</h2>
+<blockquote>
+<p><strong>固定且可預測的步驟適合 Workflow 或 RPA。需要理解自然語言、附件與模糊需求時，才需要在自動化流程中加入 AI Agent。</strong></p>
+</blockquote>
+<p>Workflow 是依條件連接系統與任務的工作流程；機器人流程自動化（Robotic Process Automation，RPA）常用來模擬人員操作既有介面。AI Agent 擅長處理語意不固定的輸入，但不代表每項工作都應交給語言模型判斷。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>方式</th><th>最適合的工作</th><th>主要限制</th><th>訂單情境</th></tr></thead><tbody><tr><td>Workflow</td><td>條件明確、系統有 API</td><td>無法自行理解模糊文字</td><td>核准後通知 ERP 建單</td></tr><tr><td>RPA</td><td>畫面操作固定、舊系統無 API</td><td>介面變動可能造成流程失敗</td><td>把確認資料填入舊版 ERP</td></tr><tr><td>AI Agent</td><td>Email、PDF、圖片與自然語言</td><td>輸出具有不確定性，必須限制權限</td><td>理解「跟上次一樣」並提出候選訂單</td></tr><tr><td>組合架構</td><td>既有規則加上非結構化輸入</td><td>需要明確定義各層責任</td><td>Agent 理解內容，Workflow 驗證並執行</td></tr></tbody></table></div>
+<p>如果工作只是每天從固定欄位匯出資料、貼到固定表格並寄給主管，一般自動化通常更便宜且穩定。企業應先處理工作問題，再選擇工具，不必為了使用 AI Agent 而把簡單流程複雜化。</p>
+</section><section aria-labelledby="一封-email-訂單如何變成-erp-裡的正式訂單"><h2 id="一封-email-訂單如何變成-erp-裡的正式訂單">一封 Email 訂單如何變成 ERP 裡的正式訂單？</h2>
+<blockquote>
+<p><strong>Email 訂單可依序經過內容辨識、客戶與品項比對、庫存查詢、報價草稿、人工核准及正式建單，形成一條端到端流程。</strong></p>
+</blockquote>
+<ol>
+<li>**限定入口：**AI Agent 只監看指定接單信箱，不任意讀取全部員工信件。</li>
+<li>**辨識需求：**AI Agent 判斷信件是否為詢價或訂單，並解析本文、PDF、圖片等附件。</li>
+<li>**建立身分情境：**系統以寄件者 Email 對應客戶主檔，避免只憑相似公司名稱認人。</li>
+<li>**整理訂單欄位：**AI Agent 擷取品項、數量、單位、交期與客戶備註，再列出無法確認的欄位。</li>
+<li>**查詢正式資料：**ERP 回傳商品主檔、庫存、價格與交期規則，AI Agent 不自行編造企業資料。</li>
+<li>**建立安全草稿：**先產生報價或待確認訂單，避免立刻影響庫存、財務或生產排程。</li>
+<li>**核准後執行：**指定人員確認價格、交期與對外訊息後，Workflow 才建立正式訂單並留下紀錄。</li>
+</ol>
+<p>Microsoft Sales Order Agent 也是先建立報價，再依設定與確認結果轉成訂單；所有對外訊息可要求指定使用者審核。安全的中間狀態能讓企業在自動化速度與錯誤成本之間保留緩衝（Microsoft Learn，2026 年 7 月）。</p>
+</section><section aria-labelledby="ai-agent-可以判斷庫存-交期與訂單能否承接嗎"><h2 id="ai-agent-可以判斷庫存-交期與訂單能否承接嗎">AI Agent 可以判斷庫存、交期與訂單能否承接嗎？</h2>
+<blockquote>
+<p><strong>AI Agent 可以呼叫 ERP 查詢庫存與交期，但正式承諾應由企業規則或授權人員確認。語言模型不能憑文字推測企業可交付的結果。</strong></p>
+</blockquote>
+<p>AI Agent 適合理解客戶說了什麼、整理缺少的資料並選擇要呼叫哪項查詢工具。ERP、訂單管理系統或既有規則引擎才是庫存、價格、信用額度與承諾交期的正式資料來源。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>情況</th><th>AI Agent 可做的事</th><th>不得單獨決定的事</th><th>建議處理</th></tr></thead><tbody><tr><td>品項名稱明確</td><td>比對商品編號與規格</td><td>自行改用替代品</td><td>顯示比對依據</td></tr><tr><td>客戶寫「跟上次一樣」</td><td>查詢歷史訂單並提出候選</td><td>假定門市、數量與價格都相同</td><td>資料不唯一時詢問</td></tr><tr><td>庫存不足</td><td>取得 ERP 庫存與預計到貨日</td><td>承諾未經核准的交期</td><td>轉交業務或生管</td></tr><tr><td>價格超出授權</td><td>標示價差與規則</td><td>自行折扣或改價</td><td>交由主管核准</td></tr><tr><td>附件無法辨識</td><td>指出缺漏欄位</td><td>猜測不可讀內容</td><td>要求重傳或轉人工</td></tr></tbody></table></div>
+<p>Microsoft 官方文件也指出，產品資料的描述、屬性與分類品質會影響 Agent 的商品比對效果。導入 Agent 之前，企業仍需整理主檔與例外規則，否則只是把原本的資料問題交給速度更快的系統（Microsoft Learn，2026 年 7 月）。</p>
+</section><section aria-labelledby="用五層執行權限決定-ai-agent-可以做到哪一步"><h2 id="用五層執行權限決定-ai-agent-可以做到哪一步">用五層執行權限決定 AI Agent 可以做到哪一步</h2>
+<blockquote>
+<p><strong>企業可把 AI Agent 權限分為讀取、建議、建立草稿、核准後執行及條件式自動執行。企業應逐層驗證成效後再擴大授權。</strong></p>
+</blockquote>
+<p>以下五層方法源自企業訪談與流程拆解的實務觀察。五層執行權限不是軟體成熟度排名，而是企業願意承擔多少營運風險的授權選擇；同一個 Agent 在不同動作上也可能位於不同層級。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>層級</th><th>AI Agent 可以做什麼</th><th>訂單範例</th><th>升級前應驗證</th></tr></thead><tbody><tr><td>1. 讀取</td><td>讀取指定 Email、附件與 ERP 資料</td><td>查詢客戶與庫存</td><td>資料範圍、身分與存取紀錄</td></tr><tr><td>2. 建議</td><td>整理欄位、提出品項與處理建議</td><td>列出可能商品及缺漏欄位</td><td>正確率、錯誤類型與轉人工條件</td></tr><tr><td>3. 建立草稿</td><td>建立可修改、可撤回的中間成果</td><td>產生報價與回信草稿</td><td>必填驗證、版本紀錄與撤回能力</td></tr><tr><td>4. 核准後執行</td><td>人員確認後才寫入系統或對外寄送</td><td>核准後轉正式訂單</td><td>核准責任、權限與稽核軌跡</td></tr><tr><td>5. 條件式自動執行</td><td>符合低風險條件時自動完成</td><td>標準客戶與標準品項自動建單</td><td>金額、信心門檻、停機與回復機制</td></tr></tbody></table></div>
+<p>企業可以讓 AI Agent 自動整理全部訂單，但只允許固定客戶、標準品項、正常價格及明確庫存的案件自動建單。高金額、新客戶、特殊折扣與急單仍停在第四層，由指定人員核准。</p>
+</section><section aria-labelledby="ai-agent-串接-erp-後-企業要防範哪些風險"><h2 id="ai-agent-串接-erp-後-企業要防範哪些風險">AI Agent 串接 ERP 後，企業要防範哪些風險？</h2>
+<blockquote>
+<p><strong>AI Agent 連接 ERP 後，企業必須限制資料範圍、工具權限與可執行動作。高影響操作還要保留核准、稽核及停止機制。</strong></p>
+</blockquote>
+<p>Agent 讀取外部 Email、PDF、圖片或網頁時，外部內容只能視為待解析資料，不能視為可信指令。Microsoft Security 曾揭露 Agent 框架中的漏洞：惡意輸入可能影響工具參數，進一步造成未授權的檔案或程式操作。風險來源不只是模型回答錯誤，也包含工具本身過度信任模型輸出（Microsoft Security，2026 年 5 月）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>控制層</th><th>企業要回答的問題</th><th>基本措施</th></tr></thead><tbody><tr><td>資料範圍</td><td>AI Agent 可以讀哪些信箱、附件與客戶資料？</td><td>限定資料源、遮蔽不必要欄位</td></tr><tr><td>工具權限</td><td>AI Agent 能查詢、建立、修改或刪除哪些資料？</td><td>獨立身分、最小權限、工具白名單</td></tr><tr><td>輸入驗證</td><td>外部內容能否改變系統指令或工具參數？</td><td>分離資料與指令、驗證所有參數</td></tr><tr><td>執行條件</td><td>哪些案件必須停止並轉交人員？</td><td>金額、信心、客戶及例外門檻</td></tr><tr><td>核准與稽核</td><td>誰對價格、交期與正式訂單負責？</td><td>具名核准、完整日誌、版本與回復</td></tr></tbody></table></div>
+<p>人工核准不是唯一安全措施。員工若只看到整理後的結果，仍可能看不見藏在附件或工具參數裡的惡意內容；企業必須同時在身分、權限、工具及系統驗證層建立控制。</p>
+</section><section aria-labelledby="導入-ai-agent-後-員工的工作不是消失-而是重新分工"><h2 id="導入-ai-agent-後-員工的工作不是消失-而是重新分工">導入 AI Agent 後，員工的工作不是消失，而是重新分工</h2>
+<blockquote>
+<p><strong>AI Agent 接手查找、整理與重複輸入後，員工仍負責規則設計、例外判斷、正式核准及持續改善企業工作流程。</strong></p>
+</blockquote>
+<p>匿名企業訪談顯示，主管常先看到員工反覆複製、貼上訂單資料，因而認為整份工作都能交給 AI。實際流程拆解後，重複操作只是工作的一部分；客戶習慣、品項別名、急單處理與承諾交期仍仰賴員工經驗。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>工作</th><th>AI Agent</th><th>ERP／Workflow</th><th>員工</th></tr></thead><tbody><tr><td>理解來信與附件</td><td>擷取欄位、提出候選</td><td>提供格式與欄位規則</td><td>處理無法辨識內容</td></tr><tr><td>比對客戶與商品</td><td>語意比對與排序</td><td>驗證正式主檔</td><td>處理模糊或衝突結果</td></tr><tr><td>查詢庫存與交期</td><td>呼叫查詢工具</td><td>回傳正式資料與規則結果</td><td>判斷特殊承諾</td></tr><tr><td>產生報價或訂單</td><td>建立草稿</td><td>檢查必填欄位</td><td>核准價格、交期與對外訊息</td></tr><tr><td>改善流程</td><td>記錄錯誤與例外</td><td>保留執行軌跡</td><td>調整規則、門檻與授權</td></tr></tbody></table></div>
+<p>企業導入 AI Agent 的成果，不該只用「少掉幾個操作步驟」衡量。更重要的是讓員工從資料搬運者轉為規則設計者與例外處理者，同時讓原本只存在個人經驗中的判斷逐步成為可維護的流程資產。</p>
+</section><section aria-labelledby="企業應該如何開始規劃-ai-agent-工作流程"><h2 id="企業應該如何開始規劃-ai-agent-工作流程">企業應該如何開始規劃 AI Agent 工作流程？</h2>
+<blockquote>
+<p><strong>企業應先拆解一條真實工作流程，再決定 AI Agent、既有系統與員工的責任。導入初期應從唯讀、建議或草稿開始。</strong></p>
+</blockquote>
+<p>第一個流程應具備高頻、輸入相對明確、錯誤可被攔截，以及結果容易衡量等特徵。企業完成流程拆解後，先把正式資料來源、例外條件、核准責任與可回復的中間狀態寫清楚，再選擇 AI Agent、Workflow、RPA 或客製 API。</p>
+<p>AI Agent 的成熟，不等於企業必須立刻追求全自動化。真正可落地的做法，是讓授權程度隨證據增加：先看得到，再能建議；先能建立草稿，再核准後執行；只有經過驗證的低風險案件，才進入條件式自動執行。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<blockquote>
+<p><strong>企業導入 AI Agent 的常見疑問集中在 ERP 整合、執行權限、例外處理與資安。以下解答以分階段授權為共同原則。</strong></p>
+</blockquote>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>公司已經有 ERP，還需要另外導入 AI Agent 嗎？</span></h3>
+<p>ERP 負責保存正式交易資料與執行企業規則，AI Agent 則可理解 Email、附件與自然語言。若工作只是固定欄位搬移，一般 Workflow 或 RPA 可能已足夠；只有需要處理非結構化輸入與模糊情境時，才需要加入 AI Agent。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI Agent 可以直接修改 ERP 資料嗎？</span></h3>
+<p>技術上可以，但企業不應一開始就開放完整寫入權限。較安全的方式是先從唯讀查詢與建立草稿開始，再依錯誤率、影響程度與稽核需求，逐步開放核准後寫入或低風險自動執行。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI Agent 與 RPA 可以一起使用嗎？</span></h3>
+<p>AI Agent 與 RPA 可以互補。AI Agent 負責理解自然語言、判斷語意與選擇下一步；RPA 或 Workflow 負責依明確規則操作介面、呼叫 API 與留下執行紀錄。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>客戶只寫「跟上次一樣」，AI Agent 看得懂嗎？</span></h3>
+<p>AI Agent 可以嘗試查詢該客戶的歷史訂單並提出候選結果，但「跟上次一樣」可能涉及不同門市、數量或價格。企業應要求 AI Agent 顯示比對依據，並在資料不唯一時轉由客戶或員工確認。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI Agent 找不到客戶或品項時會怎麼處理？</span></h3>
+<p>企業應預先設定停止條件。找不到客戶、品項有多個候選、庫存不足或價格超出授權時，AI Agent 應停止正式建單，改為詢問客戶、建立待確認草稿或轉交指定人員。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI Agent 建立的訂單一定要由員工核准嗎？</span></h3>
+<p>導入初期應由員工核准。當企業累積足夠測試紀錄後，可讓低金額、固定客戶、標準品項與無例外的訂單條件式自動通過，高影響案件仍保留人工核准。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Email 或 PDF 可能攻擊 AI Agent 嗎？</span></h3>
+<p>外部 Email、PDF、圖片與網頁可能包含誤導 AI Agent 的惡意指令。企業必須把外部內容視為待解析資料，而非可信指令，並以最小權限、參數驗證與工具白名單限制可執行動作。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>中小企業需要一次做到全自動化嗎？</span></h3>
+<p>中小企業不需要一開始就追求全自動化。先選擇高頻、輸入明確、錯誤可被攔截的流程，從讀取、建議或建立草稿開始，通常比直接讓 AI Agent 自主執行更容易驗證價值。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<blockquote>
+<p><strong>本文優先採用官方技術文件與具名新聞來源，並在關鍵主張旁標示機構與發布時間。所有來源於 2026 年 8 月 24 日存取。</strong></p>
+</blockquote>
+<ol>
+<li>Microsoft Learn，<a href="https://learn.microsoft.com/en-us/dynamics365/business-central/sales-order-agent" target="_blank" rel="noopener noreferrer">Sales Order Agent overview</a>，更新於 2026-07-23，存取於 2026-08-24。</li>
+<li>SAP News Center，<a href="https://news.sap.com/2026/07/sap-business-ai-release-highlights-q2-2026/" target="_blank" rel="noopener noreferrer">SAP Business AI: Release Highlights Q2 2026</a>，發布於 2026-07-20，存取於 2026-08-24。</li>
+<li>Reuters，<a href="https://www.reuters.com/business/meta-launches-enterprise-focused-ai-business-agent-automate-daily-operations-2026-06-03/" target="_blank" rel="noopener noreferrer">Meta enters enterprise AI race with new business agent</a>，發布於 2026-06-03，存取於 2026-08-24。</li>
+<li>Microsoft Security Blog，<a href="https://www.microsoft.com/en-us/security/blog/2026/05/07/prompts-become-shells-rce-vulnerabilities-ai-agent-frameworks/" target="_blank" rel="noopener noreferrer">When prompts become shells: RCE vulnerabilities in AI agent frameworks</a>，發布於 2026-05-07，存取於 2026-08-24。</li>
+<li>Microsoft Dynamics 365 Blog，<a href="https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2025/04/03/sales-order-agent-in-microsoft-dynamics-365-business-central-now-in-public-preview/" target="_blank" rel="noopener noreferrer">Sales Order Agent in Microsoft Dynamics 365 Business Central</a>，發布於 2025-04-03，存取於 2026-08-24。</li>
+</ol>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/ai-agent-core-capabilities">企業導入前必懂的 MCP、Skills、Automation</a>：同樣聚焦 AI Agent，可接著比較不同情境的做法。</li>
+<li><a href="/post/ai-agent-adoption">AI Agent 落地五層診斷</a>：同樣聚焦 AI Agent，可接著比較不同情境的做法。</li>
+<li><a href="/post/small-business-ai-workflow">中小企業導入 AI 從哪裡開始？從工作流程找出真正值得做的專案</a>：同屬「智慧營運」主題，可延伸理解相近問題的判斷方式。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2026-08-24</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

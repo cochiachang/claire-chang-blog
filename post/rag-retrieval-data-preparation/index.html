@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG 檢索資料準備指南：切分、向量化與索引設計｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="拆解 RAG 的 embedding 向量搜尋五步驟，並比較手動問答對、AI 自動產生問答對、直接文件分段三種資料準備方式的優缺點與適用場景。" />
+<meta name="keywords" content="生成式AI, RAG, 向量搜尋, 資料處理" />
+<link rel="canonical" href="https://claire-chang.com/post/rag-retrieval-data-preparation/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="RAG 檢索資料準備指南：切分、向量化與索引設計｜Claire Chang" />
+<meta property="og:description" content="拆解 RAG 的 embedding 向量搜尋五步驟，並比較手動問答對、AI 自動產生問答對、直接文件分段三種資料準備方式的優缺點與適用場景。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/rag-retrieval-data-preparation/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/basic_rag-76d6f8a9.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/basic_rag-76d6f8a9.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="RAG 檢索資料準備指南：切分、向量化與索引設計｜Claire Chang" />
+<meta name="twitter:description" content="拆解 RAG 的 embedding 向量搜尋五步驟，並比較手動問答對、AI 自動產生問答對、直接文件分段三種資料準備方式的優缺點與適用場景。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/basic_rag-76d6f8a9.jpg" />
+<meta property="article:published_time" content="2024-06-06" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="RAG" />
+<meta property="article:tag" content="向量搜尋" />
+<meta property="article:tag" content="資料處理" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"RAG 檢索資料準備指南：切分、向量化與索引設計","item":"https://claire-chang.com/post/rag-retrieval-data-preparation/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/rag-retrieval-data-preparation/#article","headline":"RAG 檢索資料準備指南：切分、向量化與索引設計","description":"拆解 RAG 的 embedding 向量搜尋五步驟，並比較手動問答對、AI 自動產生問答對、直接文件分段三種資料準備方式的優缺點與適用場景。","image":"https://claire-chang.com/images/tech/basic_rag.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-06-06","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/rag-retrieval-data-preparation/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"RAG, 向量搜尋, 資料處理","about":[{"@type":"Thing","name":"RAG"},{"@type":"Thing","name":"向量搜尋"},{"@type":"Thing","name":"資料處理"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/rag-retrieval-data-preparation/#faq","mainEntity":[{"@type":"Question","name":"三種資料準備方式可以混用嗎？","acceptedAnswer":{"@type":"Answer","text":"可以，而且實務上很常見。例如把長文檔先分段建立基礎索引，再挑重點段落額外生成或人工補上問答對，兼顧覆蓋率與回答精確度。"}},{"@type":"Question","name":"AI 自動產生的問答對能直接拿去用嗎？","acceptedAnswer":{"@type":"Answer","text":"不建議完全不審核就直接使用。AI 生成的問答對品質不穩定，尤其在專業或高風險領域，上線前應該至少抽樣人工審核，確認答案沒有錯誤或誤導。"}},{"@type":"Question","name":"文件分段的長度要怎麼抓？","acceptedAnswer":{"@type":"Answer","text":"分段長度要在「保留完整語意」與「檢索精準度」之間取捨——分段太長，單一片段可能混雜多個主題，檢索時相關性不容易抓準；分段太短，則可能把一個完整概念切得七零八落，反而遺失上下文。實務上通常需要針對自己的資料做幾輪測試調整。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/basic_rag.webp" alt="RAG 檢索資料準備指南：切分、向量化與索引設計 技術文章封面圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-06-06">2024-06-06</time></span><span class="post-meta-pill">RAG · 向量搜尋 · 資料處理</span></div></div><h1 class="insights-hero-title">RAG 檢索資料準備指南：切分、向量化與索引設計</h1><p class="insights-hero-description">拆解 RAG 的 embedding 向量搜尋五步驟，並比較手動問答對、AI 自動產生問答對、直接文件分段三種資料準備方式的優缺點與適用場景。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>相關論文：<a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</a></p>
+</div><section aria-labelledby="embedding-向量搜尋在-rag-裡是怎麼運作的"><h2 id="embedding-向量搜尋在-rag-裡是怎麼運作的">Embedding 向量搜尋在 RAG 裡是怎麼運作的？</h2>
+<p>在 RAG（Retrieval-Augmented Generation）模型中，embedding 向量搜尋是關鍵步驟，用於在資料庫中找到與當前查詢相關的資訊。RAG 結合了檢索和生成的能力，透過把外部知識融入生成過程來提高生成內容的品質和相關性。主要步驟如下：</p>
+<ol>
+<li><strong>查詢嵌入（Query Embedding）</strong>：把用戶的查詢轉換成嵌入向量，通常透過預訓練的語言模型（如 BERT 或 RoBERTa）完成，把文字表示成固定長度的向量，捕捉文字的語義資訊。</li>
+<li><strong>資料庫嵌入（Database Embedding）</strong>：資料庫中每個文本片段（文章、段落、句子）也被轉換成嵌入向量，通常預先計算並存儲起來，以便查詢時能快速檢索。</li>
+<li><strong>相似度計算（Similarity Calculation）</strong>：用某種相似度度量（如餘弦相似度）計算查詢嵌入向量與資料庫嵌入向量之間的相似度，角度越小代表相似度越高。</li>
+<li><strong>檢索相關資料（Retrieve Relevant Data）</strong>：根據相似度分數，選擇與查詢最相關的前 N 個資料庫片段作為檢索結果。</li>
+<li><strong>融合與生成（Fusion and Generation）</strong>：RAG 模型把檢索到的相關片段與查詢結合，透過生成模型（如 GPT-3）生成最終的回應，利用檢索到的資訊生成更準確、更豐富的回答。</li>
+</ol>
+</section><section aria-labelledby="用一個簡單範例走一次向量檢索流程"><h2 id="用一個簡單範例走一次向量檢索流程">用一個簡單範例走一次向量檢索流程？</h2>
+<p>假設資料庫裡有以下句子：</p>
+<ol>
+<li>「Python 是一種流行的編程語言。」</li>
+<li>「GPT-3 是 OpenAI 開發的語言模型。」</li>
+<li>「嵌入向量是機器學習中的重要概念。」</li>
+</ol>
+<p>用戶查詢：「什麼是 GPT-3？」</p>
+<ol>
+<li><strong>查詢嵌入</strong>：把「什麼是 GPT-3？」轉換成嵌入向量 Q。</li>
+<li><strong>資料庫嵌入</strong>：把資料庫中每個句子轉換成嵌入向量 D1、D2、D3。</li>
+<li><strong>相似度計算</strong>：計算 Q 與 D1、D2、D3 的相似度，例如：Q 與 D1: 0.2、Q 與 D2: 0.9、Q 與 D3: 0.3。</li>
+<li><strong>檢索相關資料</strong>：根據相似度分數，檢索到最相關的片段是「GPT-3 是 OpenAI 開發的語言模型」。</li>
+<li><strong>融合與生成</strong>：RAG 模型把檢索到的片段與查詢結合，生成關於 GPT-3 的詳細說明。</li>
+</ol>
+<p>想更深入理解向量空間的文字語意檢索概念，可以參考這篇用書名做向量檢索的文章：<a href="https://towardsdatascience.com/building-a-recommendation-system-using-neural-network-embeddings-1ef92e5c80c9" target="_blank" rel="noopener noreferrer">Building a Recommendation System Using Neural Network Embeddings</a>。</p>
+</section><section aria-labelledby="準備檢索資料有哪三種方式"><h2 id="準備檢索資料有哪三種方式">準備檢索資料有哪三種方式？</h2>
+<p>大致可以分為【直接分段】或【以 QA 方式呈現】，而 QA 方式又分成【讓 AI 自動整理問答對】、【人工整理問答對】。<a href="https://www.fancyai.co/" target="_blank" rel="noopener noreferrer">Fancy AI</a> 這類工具的資料準備介面，也大致依循這三種分法。</p>
+<h3>1. 手動輸入問答對</h3>
+<p><strong>優點：</strong></p>
+<ul>
+<li><strong>高準確性</strong>：由專家或知識擁有者編寫，確保答案的準確性和相關性。</li>
+<li><strong>高度針對性</strong>：可以針對特定領域或問題編寫，回答更具針對性。</li>
+<li><strong>質量控制</strong>：可以進行嚴格的審查和驗證，確保資料的質量。</li>
+</ul>
+<p><strong>缺點：</strong></p>
+<ul>
+<li><strong>耗時耗力</strong>：手動編寫問答對需要大量人力和時間，尤其資料量大時。</li>
+<li><strong>不易擴展</strong>：隨著知識庫增長，維護和更新問答對會愈發困難。</li>
+</ul>
+<h3>2. AI 自動產生問答對</h3>
+<p><strong>優點：</strong></p>
+<ul>
+<li><strong>自動化程度高</strong>：用 AI 技術（如 NLP）自動生成問答對，大幅減少人力投入。</li>
+<li><strong>快速生成</strong>：可以在短時間內生成大量問答對，適合快速擴展知識庫。</li>
+<li><strong>適應性強</strong>：可以依需要自動更新和擴展問答對。</li>
+</ul>
+<p><strong>缺點：</strong></p>
+<ul>
+<li><strong>準確性不穩定</strong>：AI 自動生成的問答對可能存在錯誤或不精確的情況，需要人工審核。</li>
+<li><strong>質量參差不齊</strong>：自動生成的答案質量可能不均一，部分回答可能缺乏深度或詳細性。</li>
+</ul>
+<h3>3. 直接將文件做分段</h3>
+<p><strong>優點：</strong></p>
+<ul>
+<li><strong>節省時間</strong>：直接把長文檔分段，可以快速建立知識庫，省下人工編寫問答對的時間。</li>
+<li><strong>完整性</strong>：保留原始文檔的完整資訊，便於系統檢索和引用。</li>
+<li><strong>多樣性</strong>：文檔中的資訊可能涵蓋多個面向，能提供更豐富的回答。</li>
+</ul>
+<p><strong>缺點：</strong></p>
+<ul>
+<li><strong>相關性不一定高</strong>：分段的文檔內容可能不是針對具體問題，回答的針對性和相關性可能不如手動問答對。</li>
+<li><strong>需要處理和優化</strong>：分段後的文檔需要處理和優化，確保分段的合理性與檢索效率。</li>
+<li><strong>資料雜亂</strong>：如果文檔內容過於雜亂或不夠結構化，可能會影響檢索結果的質量。</li>
+</ul>
+</section><section aria-labelledby="這三種方式各適合什麼場景"><h2 id="這三種方式各適合什麼場景">這三種方式各適合什麼場景？</h2>
+<ul>
+<li><strong>手動輸入問答對</strong> 適合需要高度精確和針對性回答的應用場景，如專業領域的技術支持或知識管理。</li>
+<li><strong>AI 自動產生問答對</strong> 適合需要快速建立和擴展知識庫的情況，如大型網站的常見問題解答（FAQ）系統。</li>
+<li><strong>直接將文件做分段</strong> 適合需要處理大量現有文檔資料的應用，如文檔管理系統或數字圖書館。</li>
+</ul>
+</section><section aria-labelledby="直接分段的範例長什麼樣子"><h2 id="直接分段的範例長什麼樣子">直接分段的範例長什麼樣子？</h2>
+<p>以「怎麼串接 GPT-3 的 API？」這個查詢為例，假設有以下一段文檔：</p>
+<pre><code class="hljs language-text">Python是一種流行的編程語言。它擁有豐富的庫和框架，適用於各種應用場景。GPT-3是由OpenAI開發的一個強大的語言模型，可以生成高質量的自然語言文本。嵌入向量是機器學習中的重要概念，用於表示文字的語義信息。
+</code></pre>
+<p>可以把這段文檔拆分成以下分段：</p>
+<ol>
+<li>「Python 是一種流行的編程語言。」</li>
+<li>「它擁有豐富的庫和框架，適用於各種應用場景。」</li>
+<li>「GPT-3 是由 OpenAI 開發的一個強大的語言模型，可以生成高質量的自然語言文本。」</li>
+<li>「嵌入向量是機器學習中的重要概念，用於表示文字的語義信息。」</li>
+</ol>
+<p>然後對每個分段生成嵌入向量，並在檢索系統中建立索引。當用戶查詢「什麼是 GPT-3？」時，系統會找到與該查詢最相關的分段（第三個分段），並用它來生成回應。</p>
+</section><section aria-labelledby="產生問答對的範例長什麼樣子"><h2 id="產生問答對的範例長什麼樣子">產生問答對的範例長什麼樣子？</h2>
+<p>延續同一段文檔，可以生成以下問答對：</p>
+<ol>
+<li><strong>問題</strong>：Python 是什麼？　<strong>回答</strong>：Python 是一種流行的編程語言。</li>
+<li><strong>問題</strong>：Python 有哪些特點？　<strong>回答</strong>：Python 擁有豐富的庫和框架，適用於各種應用場景。</li>
+<li><strong>問題</strong>：GPT-3 是什麼？　<strong>回答</strong>：GPT-3 是由 OpenAI 開發的一個強大的語言模型，可以生成高質量的自然語言文本。</li>
+<li><strong>問題</strong>：嵌入向量是什麼？　<strong>回答</strong>：嵌入向量是機器學習中的重要概念，用於表示文字的語義信息。</li>
+<li><strong>問題</strong>：Python 的應用場景有哪些？　<strong>回答</strong>：Python 適用於各種應用場景，因為它擁有豐富的庫和框架。</li>
+<li><strong>問題</strong>：GPT-3 的開發者是誰？　<strong>回答</strong>：GPT-3 是由 OpenAI 開發的。</li>
+</ol>
+<p>生成問答對大致分三步：</p>
+<ol>
+<li><strong>文本分析</strong>：對給定的文本做語義分析，識別出關鍵概念和信息點——例如這段文本的關鍵概念包括「Python」「庫和框架」「GPT-3」「OpenAI」「嵌入向量」「機器學習」等。</li>
+<li><strong>生成問題</strong>：根據關鍵概念生成相關問題，問題應該簡潔明了，針對文本中的具體信息點。</li>
+<li><strong>生成答案</strong>：根據文本中提供的資訊生成相應答案，答案應準確反映文本內容，並與問題直接相關。</li>
+</ol>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>三種資料準備方式可以混用嗎？</span></h3>
+<p>可以，而且實務上很常見。例如把長文檔先分段建立基礎索引，再挑重點段落額外生成或人工補上問答對，兼顧覆蓋率與回答精確度。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI 自動產生的問答對能直接拿去用嗎？</span></h3>
+<p>不建議完全不審核就直接使用。AI 生成的問答對品質不穩定，尤其在專業或高風險領域，上線前應該至少抽樣人工審核，確認答案沒有錯誤或誤導。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>文件分段的長度要怎麼抓？</span></h3>
+<p>分段長度要在「保留完整語意」與「檢索精準度」之間取捨——分段太長，單一片段可能混雜多個主題，檢索時相關性不容易抓準；分段太短，則可能把一個完整概念切得七零八落，反而遺失上下文。實務上通常需要針對自己的資料做幾輪測試調整。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</a></li>
+<li><a href="https://towardsdatascience.com/building-a-recommendation-system-using-neural-network-embeddings-1ef92e5c80c9" target="_blank" rel="noopener noreferrer">Building a Recommendation System Using Neural Network Embeddings</a></li>
+<li><a href="https://www.fancyai.co/" target="_blank" rel="noopener noreferrer">Fancy AI</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/pgvector-postgresql-similarity-search">使用 pgvector 讓 PostgreSQL 支援向量相似度搜尋</a>：同樣聚焦 向量搜尋，可接著比較不同情境的做法。</li>
+<li><a href="/post/llm-fine-tuning-vs-rag-guide">LLM 微調是什麼？與 RAG 的選擇與資料準備挑戰</a>：同樣聚焦 RAG，可接著比較不同情境的做法。</li>
+<li><a href="/post/retrieval-augmented-generation">檢索增強生成（RAG）如何讓 LLM 回答更準確</a>：同樣聚焦 RAG，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-06-06</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

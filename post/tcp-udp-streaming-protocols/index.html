@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TCP/UDP 協議中的串流協定整理：RTP、RTSP、SRT、QUIC、RTMP 與 HLS｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="TCP 與 UDP 協議中的串流協定完整整理：RTP、RTSP、RTMP、HLS、SRT 等串流協定的特性、延遲差異、傳輸方式與適用情境比較，幫你為直播與影音串流服務選擇合適的傳輸協定與架構。" />
+<meta name="keywords" content="後端開發, 串流, TCP, UDP, RTMP, WebRTC" />
+<link rel="canonical" href="https://claire-chang.com/post/tcp-udp-streaming-protocols/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="TCP/UDP 協議中的串流協定整理：RTP、RTSP、SRT、QUIC、RTMP 與 HLS｜Claire Chang" />
+<meta property="og:description" content="TCP 與 UDP 協議中的串流協定完整整理：RTP、RTSP、RTMP、HLS、SRT 等串流協定的特性、延遲差異、傳輸方式與適用情境比較，幫你為直播與影音串流服務選擇合適的傳輸協定與架構。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/tcp-udp-streaming-protocols/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_tcp-udp-streaming-protocols-f7c55969.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_tcp-udp-streaming-protocols-f7c55969.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="TCP/UDP 協議中的串流協定整理：RTP、RTSP、SRT、QUIC、RTMP 與 HLS｜Claire Chang" />
+<meta name="twitter:description" content="TCP 與 UDP 協議中的串流協定完整整理：RTP、RTSP、RTMP、HLS、SRT 等串流協定的特性、延遲差異、傳輸方式與適用情境比較，幫你為直播與影音串流服務選擇合適的傳輸協定與架構。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_tcp-udp-streaming-protocols-f7c55969.jpg" />
+<meta property="article:published_time" content="2022-08-02" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="串流" />
+<meta property="article:tag" content="TCP" />
+<meta property="article:tag" content="UDP" />
+<meta property="article:tag" content="RTMP" />
+<meta property="article:tag" content="WebRTC" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"TCP/UDP 協議中的串流協定整理：RTP、RTSP、SRT、QUIC、RTMP 與 HLS","item":"https://claire-chang.com/post/tcp-udp-streaming-protocols/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/tcp-udp-streaming-protocols/#article","headline":"TCP/UDP 協議中的串流協定整理：RTP、RTSP、SRT、QUIC、RTMP 與 HLS","description":"TCP 與 UDP 協議中的串流協定完整整理：RTP、RTSP、RTMP、HLS、SRT 等串流協定的特性、延遲差異、傳輸方式與適用情境比較，幫你為直播與影音串流服務選擇合適的傳輸協定與架構。","image":"https://claire-chang.com/images/tech/hero_tcp-udp-streaming-protocols.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2022-08-02","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/tcp-udp-streaming-protocols/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"串流, TCP, UDP, RTMP, WebRTC","about":[{"@type":"Thing","name":"串流"}],"mentions":[{"@type":"Thing","name":"TCP"},{"@type":"Thing","name":"UDP"},{"@type":"Thing","name":"RTMP"},{"@type":"Thing","name":"WebRTC"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/tcp-udp-streaming-protocols/#faq","mainEntity":[{"@type":"Question","name":"RTP 為什麼通常跑在 UDP 而不是 TCP？","acceptedAnswer":{"@type":"Answer","text":"RTP 自身已有序列號與時間戳來處理排序與丟包偵測，若再疊加 TCP 的 ACK 重傳機制會造成功能重疊並增加延遲。UDP 低延遲的特性更適合即時音視頻傳輸。"}},{"@type":"Question","name":"RTSP 和 RTMP 的最大差別是什麼？","acceptedAnswer":{"@type":"Answer","text":"RTSP 是控制協議，控制信令走 TCP，媒體數據由 RTP/RTCP 在 UDP 上傳輸並帶丟包反饋；RTMP 的控制與媒體數據都走 TCP，可靠但延遲較高。"}},{"@type":"Question","name":"MPEG-DASH 是傳輸協定嗎？","acceptedAnswer":{"@type":"Answer","text":"嚴格來說不是。MPEG-DASH 是建立在 HTTP 之上的一種自適應比特率分片技術，雖然名稱含 HTTP，它也可以在其他傳輸協議上運行，包括 UDP。"}},{"@type":"Question","name":"QUIC 解決了 TCP 的什麼問題？","acceptedAnswer":{"@type":"Answer","text":"QUIC 基於 UDP 實現，減少了握手次數，降低連線建立延遲，同時內建 TLS 加密，兼顧安全與傳輸性能。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_tcp-udp-streaming-protocols.webp" alt="TCP 與 UDP 串流協定比較示意圖，涵蓋 RTP、RTSP、SRT、QUIC、RTMP 與 HLS" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2022-08-02">2022-08-02</time></span><span class="post-meta-pill">串流 · TCP · UDP · RTMP · WebRTC</span></div></div><h1 class="insights-hero-title">TCP/UDP 協議中的串流協定整理：RTP、RTSP、SRT、QUIC、RTMP 與 HLS</h1><p class="insights-hero-description">TCP 與 UDP 協議中的串流協定完整整理：RTP、RTSP、RTMP、HLS、SRT 等串流協定的特性、延遲差異、傳輸方式與適用情境比較，幫你為直播與影音串流服務選擇合適的傳輸協定與架構。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>串流協定可以依據底層傳輸方式分成基於 UDP 和基於 TCP 兩大陣營：UDP 陣營（RTP、SRT、QUIC）追求低延遲，TCP 陣營（HLS、RTMP、MPEG-DASH）追求可靠與相容性。這篇文章逐一整理這些協定的特性、層次與應用場景，幫助你在架設串流服務時選對協定。</p>
+</div><section aria-labelledby="基於或可以使用-udp-的協定有哪些"><h2 id="基於或可以使用-udp-的協定有哪些">基於或可以使用 UDP 的協定有哪些？</h2>
+<h3>RTP（Real-time Transport Protocol）</h3>
+<p>RTP（Real-time Transport Protocol，即時傳輸協定）是一個網絡協定，用於交付音頻和視頻等多媒體數據流。關鍵特性如下：</p>
+<ol>
+<li><strong>即時性</strong>：RTP 旨在實時交付數據，需要以最小的延遲和抖動來傳輸數據。</li>
+<li><strong>協議層次</strong>：RTP 通常運行在 UDP 之上，這樣可以降低延遲，但可能會導致一些封包丟失。在某些情況下，它也可以運行在 TCP 上。</li>
+<li><strong>封包結構</strong>：RTP 封包包括一個標頭和有效負載。標頭包括有關封包的資訊，如序列號、時間戳等，用於同步和順序排列。有效負載則包括媒體數據。</li>
+<li><strong>同步和排序</strong>：RTP 的頭部包含一個序列號，用於標識每個數據包。這使得<strong>接收端能夠檢測丟失的數據包並重新排序接收到的數據包</strong>。每個 RTP 數據包還包含一個時間戳，用於表示數據的取樣時刻，可以讓接收端同步不同類型的媒體流（例如音頻和視頻），並控制播放的速度和節奏。</li>
+<li><strong>與 RTCP 的組合使用</strong>：RTP 通常與 RTCP（RTP 控制協議）一同使用。RTCP 可以提供有關媒體傳輸質量的反饋，如丟包率、抖動等，這有助於調整和改進傳輸質量。</li>
+<li><strong>多播和單播</strong>：RTP 支持單播和多播傳輸，使其能夠服務於一對一通信和一對多通信的場景。</li>
+<li><strong>可擴展性</strong>：RTP 本身是一個相對簡單的協議，但它的設計允許通過擴展標頭和其他機制來添加新功能。</li>
+<li><strong>安全性</strong>：RTP 可以與 SRTP（安全 RTP）結合使用，以提供加密和數據完整性保護。</li>
+</ol>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RTP 和 WebRTC 有什麼不同？</span></h3>
+<p>RTP 和 WebRTC 是兩個密切相關但有所不同的技術：</p>
+<ol>
+<li><strong>定義和目的</strong>
+<ul>
+<li><strong>RTP</strong>：是一個協議，用於實時傳輸多媒體數據，例如音頻和視頻流。它可以運行在各種應用和平台上。</li>
+<li><strong>WebRTC</strong>：是一個開放的框架，允許 Web 瀏覽器進行即時通信（RTC）。它包括一組協議和 API，用於在 Web 瀏覽器之間建立 P2P 連接。</li>
+</ul>
+</li>
+<li><strong>組件和協議</strong>
+<ul>
+<li><strong>RTP</strong>：是實時數據傳輸的核心協議之一，通常與 RTCP 一起使用。</li>
+<li><strong>WebRTC</strong>：使用了多個協議和技術，其中 RTP 就是其中之一，用於媒體數據的實時傳輸。WebRTC 還使用了其他協議，如 STUN/TURN/ICE（用於 NAT 穿透和對等發現）和 DTLS/SRTP（用於安全性）。</li>
+</ul>
+</li>
+<li><strong>應用範圍</strong>
+<ul>
+<li><strong>RTP</strong>：不限於 Web，可用於各種音頻和視頻通信應用。</li>
+<li><strong>WebRTC</strong>：主要用於 Web 應用，允許瀏覽器進行視頻和音頻通信。</li>
+</ul>
+</li>
+<li><strong>傳輸層</strong>
+<ul>
+<li><strong>RTP</strong>：通常運行在 UDP 上，也可以在 TCP 上。但 RTP 在 TCP 上運行時，可能會有一些效能方面的考量：RTP 自身具有序列號，用於檢測丟失的數據包並重新排序，與 TCP 的可靠傳輸機制重疊；另外 TCP 的可靠傳輸需要確認（ACK）機制，可能會增加傳輸的延遲。</li>
+<li><strong>WebRTC</strong>：使用 RTP 作為其媒體數據的傳輸協議，並使用 UDP 作為傳輸層協議。</li>
+</ul>
+</li>
+</ol>
+<p>在 WebRTC 應用中，你可能需要使用 WebSocket 作為信令通道，以此幫助建立和協調 P2P 連接。在這種情況下，WebSocket 用於傳送元數據（例如 SDP 描述和 ICE 結果），而 WebRTC 用於傳送實時語音、視頻和數據。</p>
+<h3>RTSP（Real Time Streaming Protocol）</h3>
+<p>RTMP 和 RTSP 都是使用 TCP 進行控制信令傳輸，但它們在傳輸媒體數據的方式上有所不同。<strong>RTMP 使用 TCP 進行媒體數據的傳輸，而 RTSP 使用 RTP/RTCP 在 UDP 上進行媒體數據的傳輸</strong>。RTSP 允許客戶端通過建立和控制媒體流會話來請求和傳輸實時媒體數據。</p>
+<p>RTSP 的特點和功能：</p>
+<ol>
+<li><strong>實時性</strong>：RTSP 主要用於實時傳輸音頻和視頻等實時媒體數據，能夠提供較低的傳輸延遲，適用於實時的音視頻通訊。</li>
+<li><strong>客戶端/服務器模型</strong>：客戶端通過發送請求來控制服務器上的媒體流，並獲取媒體數據。</li>
+<li><strong>控制功能</strong>：客戶端可以發送請求來控制媒體流的播放、暫停、快進、倒退等操作。</li>
+<li><strong>媒體描述</strong>：客戶端可以通過請求獲取媒體流的描述信息，如編解碼器信息、媒體流格式等。</li>
+<li><strong>使用 RTP/RTCP</strong>：RTSP 常與 RTP 和 RTCP 結合使用，以在網絡上傳輸實時媒體數據。</li>
+</ol>
+<p>RTSP 在視頻監控、視頻會議、流媒體直播等場景中得到廣泛應用。它為實時媒體數據的傳輸提供了一種靈活、高效的通信機制。</p>
+<h3>SRT（Secure Reliable Transport）</h3>
+<p>SRT 是一種基於 UDP 的開源傳輸協定，由 Haivision 公司發起並由 SRT 聯盟持續開發。它的主要目的是優化在公共網路（如互聯網）上進行高品質視訊串流的性能。</p>
+<p>SRT 旨在解決在廣播等高品質視訊串流場景下，對於低延遲、丟包率低的傳輸要求。它在 UDP 之上實現了數據包重傳機制，並且加入了 AES 加密，以確保傳輸的安全性。此外，SRT 還提供了一個預測網路傳輸性能的機制（稱為「SRT 預測模型」），該模型可動態調整傳輸參數，以優化傳輸性能並減少延遲。</p>
+<p>因此，SRT 協定將 UDP 的低延遲特性與 TCP 的可靠傳輸特性相結合，在公共網路上提供一種安全、可靠、低延遲的視訊傳輸解決方案，廣泛應用於廣播、遠程生產和 OTT 串流等領域。</p>
+<h3>QUIC（Quick UDP Internet Connections）</h3>
+<p>QUIC 是一種實驗性的傳輸層協議，旨在優化網絡連接性能並提高網絡傳輸的安全性。QUIC 主要依賴於 UDP 而非傳統的 TCP，這使得 QUIC 能夠降低網絡延遲、提高連接速度，並在保持安全性的同時<strong>減少握手次數</strong>。</p>
+<p>要使用 QUIC，需要遵循以下幾個步驟：</p>
+<ol>
+<li><strong>確保瀏覽器或客戶端支持 QUIC</strong>：許多現代瀏覽器（如 Google Chrome 和 Mozilla Firefox）已默認啟用 QUIC。使用其他瀏覽器時，請查看其文檔確認是否支持。</li>
+<li><strong>使用支持 QUIC 的服務器</strong>：可以選擇支持 QUIC 的雲服務商，如 Google 雲平台，或者自行搭建支持 QUIC 的服務器，例如使用 Caddy 或 nginx。</li>
+<li><strong>配置服務器</strong>：對於 Caddy 和 nginx 等服務器軟件，可以參考相應的文檔來配置 QUIC 支持，並提供相應的加密證書。</li>
+<li><strong>測試 QUIC 連接</strong>：可以使用瀏覽器的開發者工具檢查網絡連接是否成功地使用了 QUIC 協議。</li>
+<li><strong>監控和優化</strong>：使用各種網絡分析工具來評估 QUIC 連接的表現，並根據結果優化服務器配置。</li>
+</ol>
+<h3>MPEG-DASH（Dynamic Adaptive Streaming over HTTP）</h3>
+<p>在使用 HTTP-TS 進行傳輸時，需要對數據進行分片，以提高傳輸效率和穩定性。可以使用各種分片技術，例如 MPEG-DASH 的架構技術、HLS 的 M3U8 文件等。雖然名稱中包含 "HTTP"，但 MPEG-DASH 可以在任何數據傳輸協議上運行，包括 UDP。</p>
+<p>MPEG-DASH 通常使用 HTTP 協議，因此它可以通過標準的 HTTP 端口 80 進行傳輸，HTTPS 則是端口 443。這樣的設計使得 MPEG-DASH 能夠更容易通過防火牆和代理伺服器，並在現有的 Web 基礎設施上部署，因為它使用的是 Web 通信的標準端口和協議。這種基於 HTTP 的流媒體傳輸方式還有其他好處，例如緩存和兼容性，許多現有的 HTTP 伺服器和網絡設備已經能夠支持 MPEG-DASH，無需特殊配置或升級。</p>
+<p>MPEG-DASH 是一種自適應比特率流媒體技術，允許高品質的流媒體通過 HTTP 進行交付，從不同的比特率和質量的媒體文件中進行選擇。因此，<strong>可以將其視為一種基於 HTTP 的分片技術，而非一個獨立的傳輸協議</strong>。</p>
+<p>這種自適應技術的核心是將媒體內容分成多個小的段（或稱分片），然後通過 HTTP 傳輸。客戶端（例如視頻播放器）可以根據網絡條件和設備能力動態選擇不同質量和比特率的段進行播放。這使得 MPEG-DASH 可以在各種網絡條件下提供更好的視頻觀看體驗，適應網絡帶寬的變化，並提供流暢的播放。</p>
+<h3>RTMP（Real-Time Messaging Protocol）</h3>
+<p>RTMP 和 RTSP 都是基於 TCP 的應用層協議，主要使用 TCP 協議進行數據傳輸，但 RTMP 也可以使用 UDP。</p>
+<p>RTMP 是一種用於實時數據傳輸的協議，主要用於音頻、視頻等媒體數據的傳輸。它使用 TCP 連接來傳輸數據，因為 TCP 提供了可靠的數據傳輸機制，適合實時數據的傳輸。</p>
+<p>RTSP 則用於控制媒體流的傳輸和播放。它使用 TCP 連接來發送控制命令和接收媒體描述信息等控制數據，以確保控制信令的可靠傳輸；而媒體數據本身通常使用 RTP 和 RTCP 協議在 UDP 上進行傳輸，因為 UDP 具有較低的傳輸延遲，更適合實時媒體數據的傳輸。</p>
+<p>那麼，同樣的數據，如果 RTSP 設計於 UDP 傳輸，有順序與可靠的檢查動作，而 RTMP 沒有，為什麼會這樣？</p>
+<ul>
+<li>RTSP 是一個控制協議，主要用於控制媒體流的傳輸和播放。它使用 TCP 發送控制命令，媒體數據則由 RTP/RTCP 在 UDP 上傳輸。RTP 負責傳輸媒體數據，並提供時序、序列號等信息來保證數據順序和實時性；RTCP 則用於傳輸控制信息，例如檢查丟包率並做出相應的調整，以保證媒體數據的傳輸質量。</li>
+<li>RTMP 是一種用於實時數據傳輸的協議，使用 TCP 連接來傳輸數據，保證數據的可靠性。RTMP 協議本身並沒有專門設計用於檢查丟包率和調整傳輸速率的機制，這些功能通常需要在應用層實現。</li>
+</ul>
+<p>綜上所述，RTSP 主要用於控制媒體流的傳輸和播放，使用 RTP/RTCP 在 UDP 上進行媒體數據傳輸，並帶有丟包檢測；而 RTMP 則主要用於傳輸媒體數據，使用 TCP 進行數據傳輸，對於丟包率和傳輸速率的控制通常需要應用層實現。</p>
+</section><section aria-labelledby="基於-tcp-的串流協定有哪些"><h2 id="基於-tcp-的串流協定有哪些">基於 TCP 的串流協定有哪些？</h2>
+<ol>
+<li><strong>HTTP Live Streaming (HLS)</strong>：由 Apple Inc. 提出的基於 HTTP 的串流協議，被廣泛使用在各種串流場景中。它將串流內容分割成一系列小型的基於 HTTP 的文件來傳遞給客戶端。</li>
+<li><strong>MPEG-DASH</strong>：一種領先的自適應比特率串流技術，使高品質的串流媒體成為可能，通過 HTTP 傳輸。</li>
+<li><strong>RTSP</strong>：雖然 RTSP 本身是一種控制協議，用於控制串流媒體服務器，但實際上，它的串流通常用 RTP 跨越 UDP 實現。然而，RTSP 也可以跨越 TCP 實現串流傳輸。</li>
+<li><strong>RTMP</strong>：由 Adobe Systems 為 Flash 播放器播放音訊、視訊和數據而開發的開放協議，主要使用 TCP。</li>
+<li><strong>Microsoft Smooth Streaming (MSS)</strong>：微軟開發的一種自適應串流協議，通過 HTTP 進行傳輸。</li>
+<li><strong>HTTP/2</strong>：HTTP 協議的第二個主要版本，它允許服務器將多個響應推送到客戶端，而無需客戶端明確的請求，這對於串流媒體來說是有利的。</li>
+</ol>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RTP 為什麼通常跑在 UDP 而不是 TCP？</span></h3>
+<p>RTP 自身已有序列號與時間戳來處理排序與丟包偵測，若再疊加 TCP 的 ACK 重傳機制會造成功能重疊並增加延遲。UDP 低延遲的特性更適合即時音視頻傳輸。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>RTSP 和 RTMP 的最大差別是什麼？</span></h3>
+<p>RTSP 是控制協議，控制信令走 TCP，媒體數據由 RTP/RTCP 在 UDP 上傳輸並帶丟包反饋；RTMP 的控制與媒體數據都走 TCP，可靠但延遲較高。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>MPEG-DASH 是傳輸協定嗎？</span></h3>
+<p>嚴格來說不是。MPEG-DASH 是建立在 HTTP 之上的一種自適應比特率分片技術，雖然名稱含 HTTP，它也可以在其他傳輸協議上運行，包括 UDP。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>QUIC 解決了 TCP 的什麼問題？</span></h3>
+<p>QUIC 基於 UDP 實現，減少了握手次數，降低連線建立延遲，同時內建 TLS 加密，兼顧安全與傳輸性能。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://www.haivision.com/products/srt-secure-reliable-transport/" target="_blank" rel="noopener noreferrer">Haivision SRT 官方說明</a></li>
+<li>本文其餘內容整理自個人實作筆記。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/streaming-network-concepts">串流的網路概念：FFmpeg、WebRTC 與 SRT 在 OSI 模型中的定位</a>：同樣聚焦 串流、WebRTC，可接著比較不同情境的做法。</li>
+<li><a href="/post/video-streaming-service-introduction">影音服務介紹：點播、直播、錄播的差異與直播串流原理</a>：同樣聚焦 串流、RTMP，可接著比較不同情境的做法。</li>
+<li><a href="/post/build-live-streaming-server-from-scratch">從零架設直播伺服器</a>：同樣聚焦 RTMP、WebRTC，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2022-08-02，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2022-08-02</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

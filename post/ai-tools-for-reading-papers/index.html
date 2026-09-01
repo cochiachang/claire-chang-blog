@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>閱讀論文的 AI 工具：SciSpace、Scopus AI、Google Scholar 與 Consensus 使用心得｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="整理閱讀論文時可搭配的 AI 工具與學術搜尋工具，包含 SciSpace、Scopus AI、Google Scholar、Consensus 的適用情境與限制。" />
+<meta name="keywords" content="生成式AI, AI工具, 論文閱讀, SciSpace, Scopus AI, Google Scholar, Consensus" />
+<link rel="canonical" href="https://claire-chang.com/post/ai-tools-for-reading-papers/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="閱讀論文的 AI 工具：SciSpace、Scopus AI、Google Scholar 與 Consensus 使用心得｜Claire Chang" />
+<meta property="og:description" content="整理閱讀論文時可搭配的 AI 工具與學術搜尋工具，包含 SciSpace、Scopus AI、Google Scholar、Consensus 的適用情境與限制。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/ai-tools-for-reading-papers/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_llamaindex-basic-components-b11db481.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_llamaindex-basic-components-b11db481.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="閱讀論文的 AI 工具：SciSpace、Scopus AI、Google Scholar 與 Consensus 使用心得｜Claire Chang" />
+<meta name="twitter:description" content="整理閱讀論文時可搭配的 AI 工具與學術搜尋工具，包含 SciSpace、Scopus AI、Google Scholar、Consensus 的適用情境與限制。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_llamaindex-basic-components-b11db481.jpg" />
+<meta property="article:published_time" content="2024-11-28" />
+<meta property="article:modified_time" content="2026-08-31" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="AI工具" />
+<meta property="article:tag" content="論文閱讀" />
+<meta property="article:tag" content="SciSpace" />
+<meta property="article:tag" content="Scopus AI" />
+<meta property="article:tag" content="Google Scholar" />
+<meta property="article:tag" content="Consensus" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"閱讀論文的 AI 工具：SciSpace、Scopus AI、Google Scholar 與 Consensus 使用心得","item":"https://claire-chang.com/post/ai-tools-for-reading-papers/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/ai-tools-for-reading-papers/#article","headline":"閱讀論文的 AI 工具：SciSpace、Scopus AI、Google Scholar 與 Consensus 使用心得","description":"整理閱讀論文時可搭配的 AI 工具與學術搜尋工具，包含 SciSpace、Scopus AI、Google Scholar、Consensus 的適用情境與限制。","image":"https://claire-chang.com/images/tech/hero_llamaindex-basic-components.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-11-28","dateModified":"2026-08-31","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/ai-tools-for-reading-papers/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"AI工具, 論文閱讀, SciSpace, Scopus AI, Google Scholar, Consensus","about":[{"@type":"Thing","name":"AI工具"},{"@type":"Thing","name":"論文閱讀"}],"mentions":[{"@type":"Thing","name":"SciSpace"},{"@type":"Thing","name":"Scopus AI"},{"@type":"Thing","name":"Google Scholar"},{"@type":"Thing","name":"Consensus"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/ai-tools-for-reading-papers/#faq","mainEntity":[{"@type":"Question","name":"閱讀論文時最推薦先用哪一個 AI 工具？","acceptedAnswer":{"@type":"Answer","text":"如果已經有 PDF，我會先用 SciSpace；如果還沒有文獻清單，我會先用 Google Scholar 或 Scopus AI。工具選擇取決於目前是在找資料，還是在讀資料。"}},{"@type":"Question","name":"Google Scholar 和 Scopus AI 有什麼差別？","acceptedAnswer":{"@type":"Answer","text":"Google Scholar 是廣泛的學術搜尋入口，適合查論文、引用與全文版本。Scopus AI 則建立在 Scopus 資料庫與 AI 摘要功能上，更適合用自然語言探索研究主題與文獻脈絡。"}},{"@type":"Question","name":"Consensus 可以取代文獻回顧嗎？","acceptedAnswer":{"@type":"Answer","text":"Consensus 不適合直接取代正式文獻回顧。Consensus 可以協助快速找研究、看摘要與比較方向，但正式文獻回顧仍要定義搜尋策略、納入排除條件、資料抽取方式與品質評估標準。"}},{"@type":"Question","name":"SciSpace 讀 PDF 的摘要可以直接引用嗎？","acceptedAnswer":{"@type":"Answer","text":"SciSpace 的摘要不建議直接當成正式引用。比較安全的做法是把 SciSpace 當成閱讀輔助，再回到 PDF 的段落、表格、圖表或期刊頁確認主張。"}},{"@type":"Question","name":"AI 工具會不會產生不存在的論文來源？","acceptedAnswer":{"@type":"Answer","text":"一般生成式 AI 工具有可能產生不存在或錯誤的來源。使用 SciSpace、Scopus AI、Consensus 這類以文獻資料庫或檢索流程為基礎的工具，可以降低假來源風險，但仍需要人工查核。"}},{"@type":"Question","name":"中文問題可以拿來查英文論文嗎？","acceptedAnswer":{"@type":"Answer","text":"中文問題可以作為起點，但我通常會再整理成英文關鍵字。Scopus AI 的 Copilot 有非英文查詢轉譯與查詢優化能力；即使如此，正式檢索時仍建議保留英文關鍵詞與布林查詢版本。"}},{"@type":"Question","name":"使用 AI 閱讀論文時，什麼內容一定要自己確認？","acceptedAnswer":{"@type":"Answer","text":"研究方法、樣本範圍、實驗設定、統計結果、限制條件與引用資訊一定要自己確認。AI 很適合幫忙找入口，但這些細節會直接影響研究結論能不能成立。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_llamaindex-basic-components.webp" alt="研究文件與查詢流程的示意圖，象徵使用 AI 工具協助閱讀論文" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-11-28">2024-11-28</time></span><span class="post-meta-pill">AI工具 · 論文閱讀 · SciSpace · Scopus AI · Google Scholar · Consensus</span></div></div><h1 class="insights-hero-title">閱讀論文的 AI 工具：SciSpace、Scopus AI、Google Scholar 與 Consensus 使用心得</h1><p class="insights-hero-description">整理閱讀論文時可搭配的 AI 工具與學術搜尋工具，包含 SciSpace、Scopus AI、Google Scholar、Consensus 的適用情境與限制。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>閱讀論文時，我會把 AI 工具當成「加速理解與查找脈絡」的助手，而不是把 AI 摘要直接當成研究結論。SciSpace 適合讀 PDF、Scopus AI 適合從 Scopus 資料庫探索研究脈絡、Google Scholar 適合查正式文獻與引用線索，Consensus 則適合用自然語言快速找出有研究支持的答案。</p>
+<p>這篇整理的是我在看論文與找資料時會搭配使用的幾種工具。我的核心判斷很簡單：先用 Google Scholar 或 Scopus AI 找到可靠文獻，再用 SciSpace 或 Consensus 協助摘要、提問、比對與延伸閱讀。AI 可以省下初讀時間，但真正要引用或做判斷時，還是要回到論文本身。</p>
+</div><section aria-labelledby="閱讀論文時應該怎麼選-ai-工具"><h2 id="閱讀論文時應該怎麼選-ai-工具">閱讀論文時應該怎麼選 AI 工具？</h2>
+<p>閱讀論文工具應該依任務選擇，而不是依工具名氣選擇。找文獻、讀 PDF、問研究共識與追引用脈絡，分別需要不同工具。</p>
+<p>我會先問自己現在卡在哪一段。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>任務</th><th>我會先用的工具</th><th>判斷理由</th></tr></thead><tbody><tr><td>找某個主題有哪些論文</td><td>Google Scholar、Scopus AI</td><td>先建立文獻範圍與引用脈絡。</td></tr><tr><td>讀單篇 PDF 的方法、結果與限制</td><td>SciSpace</td><td>可以針對上傳或開啟的論文提問。</td></tr><tr><td>想快速知道研究傾向</td><td>Consensus</td><td>適合自然語言問題與 citation-backed summary。</td></tr><tr><td>查跨領域關鍵字與概念圖</td><td>Scopus AI</td><td>Scopus AI 能用摘要、主題與概念圖協助探索。</td></tr><tr><td>產生正式引用前的來源確認</td><td>Google Scholar、出版社頁面</td><td>最後仍要回到 DOI、期刊頁或論文 PDF。</td></tr></tbody></table></div>
+<p>這個分工可以避免一個常見問題：拿 AI 摘要當搜尋引擎，又拿搜尋結果當論文閱讀。學術資料工作最好分層處理，先找來源，再讀內容，最後才整理自己的判斷。</p>
+</section><section aria-labelledby="scispace-適合怎麼幫助閱讀-pdf"><h2 id="scispace-適合怎麼幫助閱讀-pdf">SciSpace 適合怎麼幫助閱讀 PDF？</h2>
+<p>SciSpace 適合用來讀單篇論文 PDF，尤其是需要快速理解摘要、方法、表格或陌生術語時。SciSpace 的價值在於把「逐段讀不懂」變成可以提問的閱讀流程。</p>
+<p>SciSpace 是面向研究工作的 AI 平台，提供 Search Papers、Literature Review、Chat with PDF、AI Writer、Citation Generator、Extract Data 等工具（SciSpace，2026-08 存取）。我最常想到 SciSpace 的場景，是拿到一篇陌生領域論文，但還不確定要不要細讀。</p>
+<p>我會這樣用 SciSpace：</p>
+<ol>
+<li>先問這篇論文的研究問題、方法、資料來源與主要結論。</li>
+<li>再針對圖表、公式或實驗設定追問細節。</li>
+<li>最後請 SciSpace 列出限制與可能延伸閱讀方向。</li>
+</ol>
+<p>SciSpace 的好處是降低第一輪閱讀成本；限制是 AI 摘要仍可能漏掉方法限制或統計細節。只要準備在文章、報告或簡報中引用，我一定會回頭檢查 PDF 裡的原句、表格與實驗設定。</p>
+</section><section aria-labelledby="scopus-ai-適合處理什麼研究問題"><h2 id="scopus-ai-適合處理什麼研究問題">Scopus AI 適合處理什麼研究問題？</h2>
+<p>Scopus AI 適合探索研究主題、拆解複雜查詢與找到相關文獻脈絡。Scopus AI 比較像資料庫入口，不只是單篇 PDF 的閱讀助手。</p>
+<p>Elsevier 將 Scopus with AI 定位為結合生成式 AI 與 Scopus 摘要、作者資料和引用資料的研究探索工具；Scopus AI 會用自然語言查詢產生 Topic summary、Expanded summary，並附上來源參考（Elsevier，2026-08 存取）。</p>
+<p>我會在這幾種情境打開 Scopus AI：</p>
+<ul>
+<li>不確定一個主題在學術上常用哪些英文關鍵字。</li>
+<li>想知道某個研究方向的主要子題、相鄰領域或代表性文獻。</li>
+<li>查詢很長、很窄，需要工具協助拆成關鍵字或向量搜尋。</li>
+<li>想從摘要層級先判斷哪些論文值得下載細讀。</li>
+</ul>
+<p>Scopus AI 的 Copilot 會判斷查詢需要向量搜尋、關鍵字搜尋，或兩者一起使用；Elsevier 也提到 Copilot 會把複雜查詢拆成組成部分，並在需要時加入布林運算邏輯（Scopus Blog，2024-08）。這對跨領域查詢很有幫助，因為人一開始常常不知道正確術語。</p>
+</section><section aria-labelledby="google-scholar-還需要搭配-ai-工具嗎"><h2 id="google-scholar-還需要搭配-ai-工具嗎">Google Scholar 還需要搭配 AI 工具嗎？</h2>
+<p>Google Scholar 不是生成式 AI 工具，但仍是閱讀論文流程裡重要的基準搜尋入口。Google Scholar 適合查引用、相關文章、作者資料與可取得的全文版本。</p>
+<p>Google Scholar 官方說明指出，Google Scholar 可搜尋文章、論文、書籍、摘要、法院意見、學術出版社、學會、線上典藏庫與大學網站等多種學術資料，並可探索相關作品、引用、作者與出版品（Google Scholar，2026-08 存取）。</p>
+<p>我會把 Google Scholar 放在兩個位置：</p>
+<ol>
+<li><strong>開始時找來源</strong>：先用關鍵字、作者或論文標題找到候選文獻。</li>
+<li><strong>結束前查驗</strong>：確認引用次數、版本、免費 PDF、出版社頁面與 DOI。</li>
+</ol>
+<p>AI 工具常把資訊整理得很順，但學術閱讀不能只看順不順。Google Scholar 的價值是讓我回到文獻網路本身：誰引用誰、哪一版是正式出版、是否有開放全文、後續研究是否推翻或補強了前面結果。</p>
+</section><section aria-labelledby="consensus-gpt-和-consensus-適合問什麼"><h2 id="consensus-gpt-和-consensus-適合問什麼">Consensus GPT 和 Consensus 適合問什麼？</h2>
+<p>Consensus 適合用口語研究問題查找同儕審查文獻，並取得有引用支持的摘要。Consensus 比較適合問「研究怎麼說」，不適合要求它替我做最後判斷。</p>
+<p>Consensus 官方說明將 Consensus 定位為 AI research search engine，會先檢索相關學術論文，再用 AI 綜合研究發現，每個回答都附引用，方便追回來源（Consensus，2022）。Consensus Help Center 也提到，使用者可以用關鍵字、自然語言問題、布林查詢、論文標題、作者、DOI 或更詳細的研究指令搜尋（Consensus Help Center，2026-05）。</p>
+<p>我會拿 Consensus 來處理這類問題：</p>
+<ul>
+<li>「某個介入方法有沒有研究支持？」</li>
+<li>「這個現象在心理學、教育或醫學研究裡有沒有一致結論？」</li>
+<li>「請比較不同研究的樣本、方法與限制。」</li>
+<li>「幫我找出這個主題目前比較常見的研究缺口。」</li>
+</ul>
+<p>如果是在 ChatGPT 裡使用 Consensus App，也可以把 Consensus 的文獻搜尋帶進對話流程；Consensus Help Center 說明 Consensus ChatGPT App 可在 ChatGPT 中搜尋 Consensus 的研究資料庫，並產生帶引用的摘要與 research brief（Consensus Help Center，2026-08 存取）。</p>
+</section><section aria-labelledby="我會怎麼安排一套論文閱讀流程"><h2 id="我會怎麼安排一套論文閱讀流程">我會怎麼安排一套論文閱讀流程？</h2>
+<p>論文閱讀流程最好分成搜尋、篩選、精讀、驗證與整理五步。AI 工具適合加速前四步，但最後的研究判斷仍要由讀者自己完成。</p>
+<p>我的做法通常是這樣：</p>
+<ol>
+<li><strong>用 Google Scholar 找第一批文獻</strong>：先收集關鍵論文、引用次數高的文章與近年研究。</li>
+<li><strong>用 Scopus AI 擴展查詢語彙</strong>：把主題拆成更精準的英文關鍵字與子問題。</li>
+<li><strong>用 SciSpace 精讀 PDF</strong>：針對研究問題、方法、圖表、限制逐段提問。</li>
+<li><strong>用 Consensus 查研究傾向</strong>：看是否有多篇研究支持同一方向，或結果互相矛盾。</li>
+<li><strong>回到論文本身做引用</strong>：所有要放進文章、簡報或報告的主張，都回到 PDF、DOI 或期刊頁確認。</li>
+</ol>
+<p>這套流程的資訊增益不是工具清單，而是分工。Google Scholar 負責「找得到」，Scopus AI 負責「看脈絡」，SciSpace 負責「讀得懂」，Consensus 負責「問研究怎麼說」。四個工具混在一起用，反而容易讓來源、摘要與個人判斷黏成一團。</p>
+</section><section aria-labelledby="使用-ai-讀論文時要注意哪些限制"><h2 id="使用-ai-讀論文時要注意哪些限制">使用 AI 讀論文時要注意哪些限制？</h2>
+<p>使用 AI 讀論文時，最重要的限制是來源、摘要準確度、研究方法與引用責任。AI 可以幫忙讀，但不能替代研究者的查證。</p>
+<p>我會特別檢查四件事：</p>
+<ul>
+<li><strong>來源是否真實</strong>：AI 回答中的論文標題、作者、年份、DOI 都要能查到。</li>
+<li><strong>摘要是否漏掉限制</strong>：方法、樣本大小、控制組、統計顯著性與研究限制不能只看 AI 總結。</li>
+<li><strong>問題是否太寬</strong>：問「AI 是否有效」通常太大，改問「哪一類 AI 工具在什麼任務上有效」比較能找到可用文獻。</li>
+<li><strong>引用是否回到來源資料</strong>：正式引用要回到期刊頁、出版社頁、arXiv、PubMed 或 PDF，而不是引用 AI 回答本身。</li>
+</ul>
+<p>我很喜歡用 AI 工具降低閱讀門檻，但不會把 AI 當成最後裁判。真正有價值的閱讀，還是要能說清楚：這篇論文回答了什麼、沒有回答什麼、我為什麼相信或暫時不相信它。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>閱讀論文時最推薦先用哪一個 AI 工具？</span></h3>
+<p>如果已經有 PDF，我會先用 SciSpace；如果還沒有文獻清單，我會先用 Google Scholar 或 Scopus AI。工具選擇取決於目前是在找資料，還是在讀資料。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Google Scholar 和 Scopus AI 有什麼差別？</span></h3>
+<p>Google Scholar 是廣泛的學術搜尋入口，適合查論文、引用與全文版本。Scopus AI 則建立在 Scopus 資料庫與 AI 摘要功能上，更適合用自然語言探索研究主題與文獻脈絡。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Consensus 可以取代文獻回顧嗎？</span></h3>
+<p>Consensus 不適合直接取代正式文獻回顧。Consensus 可以協助快速找研究、看摘要與比較方向，但正式文獻回顧仍要定義搜尋策略、納入排除條件、資料抽取方式與品質評估標準。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>SciSpace 讀 PDF 的摘要可以直接引用嗎？</span></h3>
+<p>SciSpace 的摘要不建議直接當成正式引用。比較安全的做法是把 SciSpace 當成閱讀輔助，再回到 PDF 的段落、表格、圖表或期刊頁確認主張。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI 工具會不會產生不存在的論文來源？</span></h3>
+<p>一般生成式 AI 工具有可能產生不存在或錯誤的來源。使用 SciSpace、Scopus AI、Consensus 這類以文獻資料庫或檢索流程為基礎的工具，可以降低假來源風險，但仍需要人工查核。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>中文問題可以拿來查英文論文嗎？</span></h3>
+<p>中文問題可以作為起點，但我通常會再整理成英文關鍵字。Scopus AI 的 Copilot 有非英文查詢轉譯與查詢優化能力；即使如此，正式檢索時仍建議保留英文關鍵詞與布林查詢版本。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>使用 AI 閱讀論文時，什麼內容一定要自己確認？</span></h3>
+<p>研究方法、樣本範圍、實驗設定、統計結果、限制條件與引用資訊一定要自己確認。AI 很適合幫忙找入口，但這些細節會直接影響研究結論能不能成立。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>SciSpace, <a href="https://scispace.com/" target="_blank" rel="noopener noreferrer">AI for Research</a>，存取日期：2026-08-28。</li>
+<li>SciSpace Help Center, <a href="https://www.scispace.com/help/en/articles/10706821-how-scispace-search-works" target="_blank" rel="noopener noreferrer">How SciSpace Search Works</a>，2026-07-22，存取日期：2026-08-28。</li>
+<li>Elsevier, <a href="https://www.elsevier.com/en-gb/products/scopus/scopus-ai" target="_blank" rel="noopener noreferrer">Scopus with AI</a>，存取日期：2026-08-28。</li>
+<li>Scopus Blog, <a href="https://blog.scopus.com/introducing-copilot-a-new-feature-for-scopus-ai-to-handle-specific-and-complex-queries/" target="_blank" rel="noopener noreferrer">Introducing Copilot, a new feature for Scopus AI to handle specific and complex queries</a>，2024-08-14，存取日期：2026-08-28。</li>
+<li>Google Scholar, <a href="https://scholar.google.com/intl/engb/scholar/about.html" target="_blank" rel="noopener noreferrer">About Google Scholar</a>，存取日期：2026-08-28。</li>
+<li>Consensus, <a href="https://consensus.app/home/blog/welcome-to-consensus/" target="_blank" rel="noopener noreferrer">Welcome to Consensus</a>，2022-08-03，存取日期：2026-08-28。</li>
+<li>Consensus Help Center, <a href="https://help.consensus.app/en/articles/9922660-how-to-search-best-practices" target="_blank" rel="noopener noreferrer">How to Search &#x26; Best Practices</a>，2026-05-12，存取日期：2026-08-28。</li>
+<li>Consensus Help Center, <a href="https://help.consensus.app/en/articles/10059020-consensus-in-chatgpt" target="_blank" rel="noopener noreferrer">Consensus in ChatGPT</a>，存取日期：2026-08-28。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/ai-3d-model-generation">AI技術於3D模型領域的應用：用 Meshy 從文字與圖片生成 3D 模型</a>：同樣聚焦 AI工具，可接著比較不同情境的做法。</li>
+<li><a href="/post/claude-code-mcp-setup">Claude Code 使用 MCP 功能設定教學</a>：同樣聚焦 AI工具，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。此次更新補齊 GEO Answer Blocks、FAQ、站內延伸閱讀、參考資料，並把內容整理為第一人稱的論文閱讀工具使用心得。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-11-28</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

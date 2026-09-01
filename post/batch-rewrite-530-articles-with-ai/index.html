@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>530 篇舊文章如何用 AI Agent 重整？兩天實作、成本與驗收流程｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="記錄我如何把 530 多篇舊文章拆成 AI Agent 可重複執行的批次流程，兩天內完成改寫，並比較 ChatGPT、Claude、Gemini、DeepSeek、GLM 的批次表現、成本與驗收方法。" />
+<meta name="keywords" content="生成式AI, AI Agent, Hermes Agent, GLM, DeepSeek, 內容工程" />
+<link rel="canonical" href="https://claire-chang.com/post/batch-rewrite-530-articles-with-ai/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="530 篇舊文章如何用 AI Agent 重整？兩天實作、成本與驗收流程｜Claire Chang" />
+<meta property="og:description" content="記錄我如何把 530 多篇舊文章拆成 AI Agent 可重複執行的批次流程，兩天內完成改寫，並比較 ChatGPT、Claude、Gemini、DeepSeek、GLM 的批次表現、成本與驗收方法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/batch-rewrite-530-articles-with-ai/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_batch-rewrite-530-articles-with-ai-a2e961dc.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_batch-rewrite-530-articles-with-ai-a2e961dc.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="530 篇舊文章如何用 AI Agent 重整？兩天實作、成本與驗收流程｜Claire Chang" />
+<meta name="twitter:description" content="記錄我如何把 530 多篇舊文章拆成 AI Agent 可重複執行的批次流程，兩天內完成改寫，並比較 ChatGPT、Claude、Gemini、DeepSeek、GLM 的批次表現、成本與驗收方法。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_batch-rewrite-530-articles-with-ai-a2e961dc.jpg" />
+<meta property="article:published_time" content="2026-08-28" />
+<meta property="article:modified_time" content="2026-08-29" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="AI Agent" />
+<meta property="article:tag" content="Hermes Agent" />
+<meta property="article:tag" content="GLM" />
+<meta property="article:tag" content="DeepSeek" />
+<meta property="article:tag" content="內容工程" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"530 篇舊文章如何用 AI Agent 重整？兩天實作、成本與驗收流程","item":"https://claire-chang.com/post/batch-rewrite-530-articles-with-ai/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/batch-rewrite-530-articles-with-ai/#article","headline":"530 篇舊文章如何用 AI Agent 重整？兩天實作、成本與驗收流程","description":"記錄我如何把 530 多篇舊文章拆成 AI Agent 可重複執行的批次流程，兩天內完成改寫，並比較 ChatGPT、Claude、Gemini、DeepSeek、GLM 的批次表現、成本與驗收方法。","image":"https://claire-chang.com/images/tech/hero_batch-rewrite-530-articles-with-ai.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2026-08-28","dateModified":"2026-08-29","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/batch-rewrite-530-articles-with-ai/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"AI Agent, Hermes Agent, GLM, DeepSeek, 內容工程","about":[{"@type":"Thing","name":"AI Agent"},{"@type":"Thing","name":"內容工程"}],"mentions":[{"@type":"Thing","name":"Hermes Agent"},{"@type":"Thing","name":"GLM"},{"@type":"Thing","name":"DeepSeek"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/batch-rewrite-530-articles-with-ai/#faq","mainEntity":[{"@type":"Question","name":"一次可以讓 AI Agent 處理多少篇？","acceptedAnswer":{"@type":"Answer","text":"沒有固定答案，會受到文章長度、模型、平台限制與代理調度方式影響。我曾一次處理數十篇，也曾在健身課期間完成約 100 篇；實務上仍建議先從 10 篇開始測試。"}},{"@type":"Question","name":"Prompt 寫得夠完整，就不需要檢查嗎？","acceptedAnswer":{"@type":"Answer","text":"不行。DeepSeek 即使收到禁止提及「原文」的指令，仍可能重複出現；GLM 也可能在主文完成後漏掉 FAQ 或圖片。Prompt 是規格的一部分，驗收與重跑機制同樣重要。"}},{"@type":"Question","name":"為什麼開放權重模型需要搭配 Agent？","acceptedAnswer":{"@type":"Answer","text":"模型本身主要負責理解與生成；Hermes Agent 則提供讀寫檔案、呼叫工具、分配 Sub-agent、保存工作方法與持續執行的能力。這次成果來自「模型＋Hermes Agent＋明確方法＋多輪驗收」，不能理解成單用 GLM 或 DeepSeek 就能直接完成 530 篇文章。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_batch-rewrite-530-articles-with-ai.webp" alt="530 多篇既有文章透過 AI Agent 分批改寫，並以 Mapping 表追蹤進度與品質" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2026-08-28">2026-08-28</time></span><span class="post-meta-pill">AI Agent · Hermes Agent · GLM · DeepSeek · 內容工程</span></div></div><h1 class="insights-hero-title">530 篇舊文章如何用 AI Agent 重整？兩天實作、成本與驗收流程</h1><p class="insights-hero-description">記錄我如何把 530 多篇舊文章拆成 AI Agent 可重複執行的批次流程，兩天內完成改寫，並比較 ChatGPT、Claude、Gemini、DeepSeek、GLM 的批次表現、成本與驗收方法。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>我原本只是想替網站上的舊文章補充結構、來源與近期資料，真正開始處理後才發現，最耗時間的不是寫某一篇文章，而是 530 多次重複動作：開啟檔案、讀取內容、依規格修改、更新欄位、搬移圖片、改檔名、記錄狀態，再檢查有沒有漏掉。</p>
+<p>我最後把這些動作整理成 AI Agent 可以反覆執行的流程，兩天內完成 530 多篇文章。這兩天還包含測試模型、修改 Prompt、處理失敗結果，以及我原本的工作與生活；有一次我啟動約 100 篇的任務後去上健身課，回來時整批已經完成。</p>
+</div><section aria-labelledby="ai-agent-取代了哪些重複動作"><h2 id="ai-agent-取代了哪些重複動作">AI Agent 取代了哪些重複動作？</h2>
+<blockquote>
+<p><strong>AI Agent 最適合取代規則明確、需要重複執行，而且結果可以檢查的動作。這次它負責逐篇讀取、整理格式、補齊欄位、更新圖片與記錄進度，我則保留內容判斷、例外處理與最後驗收。</strong></p>
+</blockquote>
+<p>這次每篇文章大致需要完成：</p>
+<ul>
+<li>保留原有技術細節、觀點與有效超連結。</li>
+<li>更新標題、description、front matter 與標題階層。</li>
+<li>補充直接回答、可靠來源與必要的 FAQ。</li>
+<li>搬移圖片、更新網址，並改成具有意義的圖片檔名。</li>
+<li>登記原始檔名、輸出檔名、完成狀態與異常原因。</li>
+<li>檢查是否漏件、失真或殘留不該出現的文字。</li>
+</ul>
+<p>我使用 DeepSeek、GLM 這類開放權重或低成本模型時，不是直接把一段 Prompt 丟給模型，而是透過 <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener noreferrer">Hermes Agent</a> 串接。Hermes Agent 提供工具操作、持續記憶與 Sub-agent 分工，讓模型能讀寫檔案、分批執行並反覆檢查；缺少這層 Agent 能力，單用模型處理完整工作流程會弱很多。</p>
+<p>如果每篇人工處理 30 分鐘，530 篇需要 265 小時，約等於 33 個八小時工作天。AI Agent 的價值，是讓我不用親手重複 530 次相同步驟。</p>
+</section><section aria-labelledby="不同模型批次執行的差異有多大"><h2 id="不同模型批次執行的差異有多大">不同模型批次執行的差異有多大？</h2>
+<blockquote>
+<p><strong>單篇文章寫得好，不代表模型能穩定完成大量批次。這次 ChatGPT 與 Claude 最能保留既有內容；Gemini、DeepSeek 與 GLM 則各有固定失敗模式，需要用流程發現與補救。</strong></p>
+</blockquote>
+<p>以下是我在不同工具、批次與代理設定下的實際觀察，不是控制所有變因的模型評測：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>模型</th><th>這次批次處理的表現</th></tr></thead><tbody><tr><td>ChatGPT、Claude</td><td>即使我的需求很模糊，也會主動補齊工作細節；能保留技術內容與觀點，同時讓文字更順，一次約 10 篇仍會逐篇處理</td></tr><tr><td>Gemini</td><td>透過 Anti-Gravity 執行時，常省略大量內容、把文章縮得過短；可能同時受到模型、代理調度與批量影響</td></tr><tr><td>DeepSeek</td><td>少量測試尚可，大量處理時常寫出「原文提到」，而且省略既有內容的情況較嚴重，因此無法接受</td></tr><tr><td>GLM</td><td>也會殘留少量「原文」字樣，但通常能保留必要內容；較常漏掉 FAQ、參考資料、圖片搬移、網址更新或圖片檔名</td></tr></tbody></table></div>
+<p>ChatGPT 與 Claude 的能力仍然明顯比較強。我只提供相對模糊的需求，它們就能主動想到許多我沒有逐項說明的細節，並完成品質很好的文章；GLM 若只收到同樣模糊的要求，完整度還是有差距。</p>
+<p>GLM 後來進步的關鍵，是 ChatGPT 在執行時留下了一套完整的工作方法與處理步驟。我把這份方法整理後交給 GLM，讓它不必自行猜測每一步應該怎麼做。GLM 仍會殘留少量「原文」，但通常不會像 DeepSeek 一樣連必要內容都省略，因此比較容易用後續掃描修正。</p>
+<p>我再用 ChatGPT 與 Claude 交叉檢查常見問題，並花不少時間人工抽查。最後成品普遍可用，但這代表「高階模型設計方法＋低成本模型執行＋跨模型檢查＋人工抽查」有效，不代表 GLM 本身已經和 ChatGPT 一樣強。</p>
+</section><section aria-labelledby="我如何把-530-篇文章變成可管理的批次"><h2 id="我如何把-530-篇文章變成可管理的批次">我如何把 530 篇文章變成可管理的批次？</h2>
+<blockquote>
+<p><strong>大量任務不能只靠一段很長的 Prompt，而要拆成規格、測試、批次、狀態追蹤與驗收。AI Agent 可以負責執行，人必須先定義完成條件及失敗後怎麼處理。</strong></p>
+</blockquote>
+<p>我的流程分成六步：</p>
+<ol>
+<li><strong>定義完成標準：</strong> 明確列出必填欄位、內容結構、保留項目與禁止事項。</li>
+<li><strong>測試代表文章：</strong> 先確認模型會不會刪除細節、改變原意、破壞連結或捏造資料。</li>
+<li><strong>拆分批次：</strong> 先跑 10 篇，穩定後再擴大，避免單次失敗影響全部文章。</li>
+<li><strong>更新 Mapping 表：</strong> 逐篇記錄輸入、輸出、狀態、檢查結果與異常原因。</li>
+<li><strong>檢查完整性：</strong> 確認檔案數、必要欄位、來源、FAQ、圖片與禁止殘留文字。</li>
+<li><strong>檢查內容：</strong> 比對技術資訊、第一手經驗、作者原意及新增資料的可靠性。</li>
+</ol>
+<p>沒有 Mapping 表，即使 AI 漏掉三篇，整批看起來仍可能像已完成。有了逐篇狀態，才能知道少了哪篇、錯在哪裡，以及要重跑哪個步驟。</p>
+</section><section aria-labelledby="ai-agent-自動執行-為什麼仍要驗收"><h2 id="ai-agent-自動執行-為什麼仍要驗收">AI Agent 自動執行，為什麼仍要驗收？</h2>
+<blockquote>
+<p><strong>AI Agent 能自動執行，不代表可以無人負責。批次越大，越容易出現少數漏件、缺欄位或內容失真，真正可靠的自動化必須讓錯誤可以被發現、定位與重跑。</strong></p>
+</blockquote>
+<p>這次讓我最有感的，不是哪個模型最聰明，而是模型會用不同方式「看起來完成」：</p>
+<ul>
+<li>Gemini 可能交出完整檔案，內容卻被大幅縮短。</li>
+<li>DeepSeek 可能遵守格式，正文卻一直評論「原文」。</li>
+<li>GLM 可能把主文寫好，最後漏掉 FAQ、來源或圖片，也可能宣稱已移除所有「原文」字樣，實際檔案仍有殘留。</li>
+</ul>
+<p>只檢查檔案是否存在，或直接相信 Agent 回報「已全部比對」，這些問題都可能被當成成功。我讓 GLM 掃描多輪，再用 ChatGPT、Claude 交叉檢查，最後由我人工抽查；Agent 的完成聲明只能當成一筆狀態，不能取代實際驗收。</p>
+</section><section aria-labelledby="這套-ai-agent-流程花了多少錢"><h2 id="這套-ai-agent-流程花了多少錢">這套 AI Agent 流程花了多少錢？</h2>
+<blockquote>
+<p><strong>我的兩批 API 實測中，GPT-5.6 Sol 平均每篇約 1 美元；GLM-5.3 Flash 執行三輪後平均每篇約 0.0526 美元，約為前者的 1/19。這是兩批真實支出，不是控制文章長度、Token 與人工時間後的模型基準測試。</strong></p>
+</blockquote>
+<p>ChatGPT 那批的體驗其實非常好。我只用模糊的方式描述需求，去上健身課回來後，約 100 篇文章已經全部完成，而且品質比我預期更好。接著看到 API 支出約 100 美元時，我真的嚇了一跳，也因此開始研究：能不能先用高階模型建立方法，再讓價格較低的模型完成剩餘文章？</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>實測項目</th><th align="right">GPT-5.6 Sol</th><th align="right">GLM-5.3 Flash</th></tr></thead><tbody><tr><td>文章數</td><td align="right">100 篇</td><td align="right">76 篇</td></tr><tr><td>API 支出</td><td align="right">約 100 美元</td><td align="right">約 4 美元</td></tr><tr><td>平均每篇</td><td align="right">約 1 美元</td><td align="right">約 0.0526 美元</td></tr></tbody></table></div>
+<p>當時 OpenRouter 顯示，GPT-5.6 Sol 每百萬輸入／輸出 Token 為 2／10 美元；GLM-5.3 Flash 促銷價為 0.075／0.25 美元。成本降低很大一部分來自模型牌價，流程的價值則是讓低成本模型在驗收保護下承接工作。<a href="https://openrouter.ai/openai/gpt-5.6-sol" target="_blank" rel="noopener noreferrer">GPT-5.6 Sol 定價</a>、<a href="https://openrouter.ai/z-ai/glm-5.3-flash" target="_blank" rel="noopener noreferrer">GLM-5.3 Flash 定價</a></p>
+<p>1/19 只適用於這次兩批任務，沒有包含訂閱月費、Prompt 設計、跨模型檢查與我投入的大量人工抽查時間。GLM 的 API 成本很低，但不能因此解讀為整體專案幾乎不需要人力。</p>
+</section><section aria-labelledby="哪些工作適合交給-ai-agent"><h2 id="哪些工作適合交給-ai-agent">哪些工作適合交給 AI Agent？</h2>
+<blockquote>
+<p><strong>適合交給 AI Agent 的工作，通常具備三個條件：需要大量重複、規則能夠寫清楚、結果可以驗收。涉及高風險判斷、模糊目標或責任歸屬的工作，仍應由人主導。</strong></p>
+</blockquote>
+<p>文章重整只是其中一個案例。相同方法也能應用在資料分類、表格整理、報告格式化、文件搬移、欄位補齊與初步檢查。</p>
+<p>判斷一項工作能不能交給 AI Agent，可以先問：</p>
+<ol>
+<li>能不能清楚寫出輸入、步驟與完成條件？</li>
+<li>錯誤能不能被程式或清單發現？</li>
+<li>失敗後能不能只重跑受影響的部分？</li>
+<li>哪些例外必須交回人工判斷？</li>
+</ol>
+<p>如果只能告訴 AI「幫我做好」，卻無法說明什麼叫完成，就還不適合直接大規模自動化。</p>
+</section><section aria-labelledby="ai-agent-批次工作常見問題"><h2 id="ai-agent-批次工作常見問題">AI Agent 批次工作常見問題</h2>
+<blockquote>
+<p><strong>AI Agent 批次工作的核心，不是一次處理越多越好，而是每一項任務都有狀態、錯誤能被定位、失敗可以重跑。先用小批次驗證，再逐步放大，比直接追求全自動更可靠。</strong></p>
+</blockquote>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>一次可以讓 AI Agent 處理多少篇？</span></h3>
+<p>沒有固定答案，會受到文章長度、模型、平台限制與代理調度方式影響。我曾一次處理數十篇，也曾在健身課期間完成約 100 篇；實務上仍建議先從 10 篇開始測試。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Prompt 寫得夠完整，就不需要檢查嗎？</span></h3>
+<p>不行。DeepSeek 即使收到禁止提及「原文」的指令，仍可能重複出現；GLM 也可能在主文完成後漏掉 FAQ 或圖片。Prompt 是規格的一部分，驗收與重跑機制同樣重要。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼開放權重模型需要搭配 Agent？</span></h3>
+<p>模型本身主要負責理解與生成；Hermes Agent 則提供讀寫檔案、呼叫工具、分配 Sub-agent、保存工作方法與持續執行的能力。這次成果來自「模型＋Hermes Agent＋明確方法＋多輪驗收」，不能理解成單用 GLM 或 DeepSeek 就能直接完成 530 篇文章。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<blockquote>
+<p><strong>本文的模型價格來自 OpenRouter 公開資料；530 多篇文章的模型表現、Mapping 流程、三輪驗收與實際支出，來自我的第一手專案紀錄。</strong></p>
+</blockquote>
+<ul>
+<li><a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener noreferrer">Nous Research：Hermes Agent</a></li>
+<li><a href="https://openrouter.ai/openai/gpt-5.6-sol" target="_blank" rel="noopener noreferrer">OpenRouter：GPT-5.6 Sol 定價</a></li>
+<li><a href="https://openrouter.ai/z-ai/glm-5.3-flash" target="_blank" rel="noopener noreferrer">OpenRouter：GLM-5.3 Flash 定價</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/why-ai-does-not-cite-technical-blog">AI 搜尋引擎優化怎麼做？技術文章寫得夠專業，為什麼 AI 還是不引用</a>：同樣聚焦這批 530 多篇文章，可接著了解一篇文章要具備哪些條件才容易被 AI 引用。</li>
+<li><a href="/post/ai-agent-adoption">AI Agent 落地五層診斷</a>：同樣聚焦 AI Agent 導入，可接著比較不同情境下的落地方法。</li>
+<li><a href="/post/ai-agent-core-capabilities">企業導入前必懂的 MCP、Skills、Automation</a>：同樣聚焦 AI Agent 的規格化執行，可接著了解 Skill 化流程背後的技術概念。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2026-08-28</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

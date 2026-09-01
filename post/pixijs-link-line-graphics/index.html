@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixiJS Graphics 連線效果教學：連連看選取框與路徑繪製｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 PixiJS 連連看遊戲如何用 Graphics 畫出選取紅框與消除連線，並整理 GameIcon、LinkedLine 與 GameBoard 的實作方式。" />
+<meta name="keywords" content="前端開發, PixiJS, Graphics, TypeScript, 連連看" />
+<link rel="canonical" href="https://claire-chang.com/post/pixijs-link-line-graphics/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="PixiJS Graphics 連線效果教學：連連看選取框與路徑繪製｜Claire Chang" />
+<meta property="og:description" content="說明 PixiJS 連連看遊戲如何用 Graphics 畫出選取紅框與消除連線，並整理 GameIcon、LinkedLine 與 GameBoard 的實作方式。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/pixijs-link-line-graphics/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/pixijs-link-line-graphics-result-475676e0.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/pixijs-link-line-graphics-result-475676e0.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PixiJS Graphics 連線效果教學：連連看選取框與路徑繪製｜Claire Chang" />
+<meta name="twitter:description" content="說明 PixiJS 連連看遊戲如何用 Graphics 畫出選取紅框與消除連線，並整理 GameIcon、LinkedLine 與 GameBoard 的實作方式。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/pixijs-link-line-graphics-result-475676e0.jpg" />
+<meta property="article:published_time" content="2018-11-05" />
+<meta property="article:modified_time" content="2026-08-31" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="PixiJS" />
+<meta property="article:tag" content="Graphics" />
+<meta property="article:tag" content="TypeScript" />
+<meta property="article:tag" content="連連看" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"PixiJS Graphics 連線效果教學：連連看選取框與路徑繪製","item":"https://claire-chang.com/post/pixijs-link-line-graphics/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/pixijs-link-line-graphics/#article","headline":"PixiJS Graphics 連線效果教學：連連看選取框與路徑繪製","description":"說明 PixiJS 連連看遊戲如何用 Graphics 畫出選取紅框與消除連線，並整理 GameIcon、LinkedLine 與 GameBoard 的實作方式。","image":"https://claire-chang.com/images/tech/pixijs-link-line-graphics-result.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2018-11-05","dateModified":"2026-08-31","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/pixijs-link-line-graphics/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"PixiJS, Graphics, TypeScript, 連連看","about":[{"@type":"Thing","name":"連連看"}],"mentions":[{"@type":"Thing","name":"PixiJS"},{"@type":"Thing","name":"Graphics"},{"@type":"Thing","name":"TypeScript"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/pixijs-link-line-graphics/#faq","mainEntity":[{"@type":"Question","name":"PixiJS Graphics 適合拿來畫連連看連線嗎？","acceptedAnswer":{"@type":"Answer","text":"PixiJS Graphics 適合畫連連看連線。連線路徑是短時間出現的簡單線段，用 `moveTo()` 和 `lineTo()` 畫出來，比額外準備圖片素材更直接。"}},{"@type":"Question","name":"PixiJS 選取框要放在 Sprite 裡還是獨立圖層？","acceptedAnswer":{"@type":"Answer","text":"PixiJS 選取框適合放在每個 `GameIcon` 裡，因為選取框跟著單一圖塊狀態走。消除路徑則適合放在獨立 `LinkedLine` 圖層，因為路徑跨越多個圖塊。"}},{"@type":"Question","name":"LinkedLine 為什麼使用 singleton？","acceptedAnswer":{"@type":"Answer","text":"`LinkedLine` 使用 singleton 是為了讓不同類別都能取得同一個連線圖層。小型遊戲可以這樣快速共用物件；大型專案則可以改用場景管理器或依賴注入，讓生命週期更明確。"}},{"@type":"Question","name":"為什麼 drawPath 會先 removeChildren？","acceptedAnswer":{"@type":"Answer","text":"`drawPath()` 先 `removeChildren()` 是為了清除上一條連線。若沒有先清掉舊線段，玩家連續消除時，畫面上可能同時殘留多條紅線。"}},{"@type":"Question","name":"PixiJS 連線路徑為什麼會偏移？","acceptedAnswer":{"@type":"Answer","text":"PixiJS 連線路徑偏移通常是因為圖塊座標公式和連線座標公式不一致。應確認圖塊大小、間距、anchor、棋盤容器偏移與 `LinkedLine` 容器偏移是否使用同一套設定。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/pixijs-link-line-graphics-result.webp" alt="PixiJS 連連看遊戲畫面中兩個圖塊以紅色路徑連線消除" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2018-11-05">2018-11-05</time></span><span class="post-meta-pill">PixiJS · Graphics · TypeScript · 連連看</span></div></div><h1 class="insights-hero-title">PixiJS Graphics 連線效果教學：連連看選取框與路徑繪製</h1><p class="insights-hero-description">說明 PixiJS 連連看遊戲如何用 Graphics 畫出選取紅框與消除連線，並整理 GameIcon、LinkedLine 與 GameBoard 的實作方式。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>PixiJS 連連看遊戲可以用 <code>PIXI.Graphics</code> 畫出兩種即時回饋：玩家點選圖塊時的紅色選取框，以及兩個圖塊成功消除時的連線路徑。選取框適合放在每個 <code>GameIcon</code> 裡，連線路徑則適合抽成獨立的 <code>LinkedLine</code> 圖層，讓盤面邏輯和繪圖邏輯分開。</p>
+<figure class="article-figure"><img src="/images/tech/pixijs-link-line-graphics-result.webp" alt="PixiJS 連連看遊戲中成功連線消除的效果" loading="lazy" class="markdown-img"></figure>
+</div><section aria-labelledby="pixijs-連連看為什麼需要選取框與連線路徑"><h2 id="pixijs-連連看為什麼需要選取框與連線路徑">PixiJS 連連看為什麼需要選取框與連線路徑？</h2>
+<p>PixiJS 連連看需要選取框與連線路徑，因為玩家必須立刻知道哪個圖塊已被選中、哪條路徑成功通過。這兩個回饋能把路徑判斷結果轉成畫面訊息。</p>
+<p>在進行遊戲時，清楚的玩家操作說明及互動是很重要的遊戲要素。一般連連看遊戲會在玩家選擇第一個圖示後，先把該圖示加上效果，提示玩家目前已經選取某個符號。</p>
+<p>當玩家選擇第二個符號且連線成功時，畫面應顯示經過的路徑，並畫出一條線來消除這兩個符號。本篇要實作的就是這兩個功能：選取提示與消除連線。</p>
+</section><section aria-labelledby="pixi-graphics-可以畫哪些基本圖形"><h2 id="pixi-graphics-可以畫哪些基本圖形">PIXI.Graphics 可以畫哪些基本圖形？</h2>
+<p><code>PIXI.Graphics</code> 可以在 PixiJS 場景中即時畫線、矩形、圓角矩形、多邊形等向量圖形。連連看選取框與路徑線條都屬於這類暫時性 UI 回饋。</p>
+<p>PixiJS 官方範例中，<code>Graphics</code> 常用來建立不需要另外載入圖片的簡單圖形。畫線時會先設定 <code>lineStyle()</code>，再用 <code>moveTo()</code> 指定起點，接著用 <code>lineTo()</code> 畫出後續線段。</p>
+<p>下面是畫線的一個簡單範例：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-title class_">Application</span>(<span class="hljs-number">800</span>, <span class="hljs-number">600</span>, { <span class="hljs-attr">antialias</span>: <span class="hljs-literal">true</span> });
+<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(app.<span class="hljs-property">view</span>);
+
+<span class="hljs-keyword">var</span> graphics = <span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-title class_">Graphics</span>();
+
+<span class="hljs-comment">// set a line style</span>
+graphics.<span class="hljs-title function_">lineStyle</span>(<span class="hljs-number">4</span>, <span class="hljs-number">0xffd900</span>, <span class="hljs-number">1</span>);
+
+<span class="hljs-comment">// draw a shape</span>
+graphics.<span class="hljs-title function_">moveTo</span>(<span class="hljs-number">50</span>, <span class="hljs-number">50</span>);
+graphics.<span class="hljs-title function_">lineTo</span>(<span class="hljs-number">250</span>, <span class="hljs-number">50</span>);
+graphics.<span class="hljs-title function_">lineTo</span>(<span class="hljs-number">250</span>, <span class="hljs-number">250</span>);
+graphics.<span class="hljs-title function_">endFill</span>();
+
+app.<span class="hljs-property">stage</span>.<span class="hljs-title function_">addChild</span>(graphics);
+</code></pre>
+<p>成果如下：</p>
+<figure class="article-figure"><img src="/images/tech/pixijs-link-line-graphics-line-example.webp" alt="PixiJS Graphics 使用 lineStyle、moveTo、lineTo 畫出折線" loading="lazy" class="markdown-img"></figure>
+<p>而這是畫矩形的一個簡單範例：</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-title class_">Application</span>(<span class="hljs-number">800</span>, <span class="hljs-number">600</span>, { <span class="hljs-attr">antialias</span>: <span class="hljs-literal">true</span> });
+<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(app.<span class="hljs-property">view</span>);
+
+<span class="hljs-keyword">var</span> graphics = <span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-title class_">Graphics</span>();
+
+<span class="hljs-comment">// draw a rounded rectangle</span>
+graphics.<span class="hljs-title function_">lineStyle</span>(<span class="hljs-number">2</span>, <span class="hljs-number">0xFF00FF</span>, <span class="hljs-number">1</span>);
+graphics.<span class="hljs-title function_">beginFill</span>(<span class="hljs-number">0xFF00BB</span>, <span class="hljs-number">0</span>);
+graphics.<span class="hljs-title function_">drawRoundedRect</span>(<span class="hljs-number">150</span>, <span class="hljs-number">450</span>, <span class="hljs-number">300</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1</span>);
+graphics.<span class="hljs-title function_">endFill</span>();
+
+app.<span class="hljs-property">stage</span>.<span class="hljs-title function_">addChild</span>(graphics);
+</code></pre>
+<p>成果如下：</p>
+<figure class="article-figure"><img src="/images/tech/pixijs-link-line-graphics-rect-example.webp" alt="PixiJS Graphics 使用 drawRoundedRect 畫出方框" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="如何用-gameicon-為方塊加上選取效果"><h2 id="如何用-gameicon-為方塊加上選取效果">如何用 GameIcon 為方塊加上選取效果？</h2>
+<p><code>GameIcon</code> 可以繼承 <code>PIXI.Sprite</code>，並在 <code>select()</code> 裡新增一個 <code>PIXI.Graphics</code> 紅框。取消選取時移除子物件，就能把紅框從圖塊上清掉。</p>
+<p>過去產生方塊時，是直接 <code>new Sprite</code> 並加入場景。現在方塊要能夠有被選取、取消選取的功能，因此可以將方塊拉出成為獨立類別 <code>GameIcon</code>。</p>
+<p><code>GameIcon.ts</code> 的內容如下：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Sprite</span> = <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">Sprite</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Loader</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"../core/Loader"</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GameIcon</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Sprite</span>{
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">id,x,y</span>) {
+        <span class="hljs-variable language_">super</span>();
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">texture</span> = <span class="hljs-title class_">Loader</span>.<span class="hljs-property">resources</span>[<span class="hljs-string">'Icon'</span>].<span class="hljs-property">textures</span>[<span class="hljs-string">'icon_'</span> + id];
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = <span class="hljs-string">'icon_'</span> + x + <span class="hljs-string">"_"</span> + y;<span class="hljs-comment">//方便可以從父層更容易的取出這個方塊</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">width</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">height</span> = <span class="hljs-number">45</span>;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">x</span> = (<span class="hljs-variable language_">this</span>.<span class="hljs-property">width</span> + <span class="hljs-number">20</span>) * x + <span class="hljs-number">22.5</span>;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">y</span> = (<span class="hljs-variable language_">this</span>.<span class="hljs-property">width</span> + <span class="hljs-number">6</span>) * y + <span class="hljs-number">22.5</span>;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">anchor</span>.<span class="hljs-title function_">set</span>(<span class="hljs-number">0.5</span>);<span class="hljs-comment">//縮放時可以以中間為中心點</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">buttonMode</span> = <span class="hljs-literal">true</span>;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">interactive</span> = <span class="hljs-literal">true</span>;
+    }
+
+    <span class="hljs-comment">//選擇時，繪製邊框，顏色為紅色</span>
+    select = <span class="hljs-function">()=></span>{
+        <span class="hljs-keyword">let</span> gt = <span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-title class_">Graphics</span>();
+        gt.<span class="hljs-title function_">lineStyle</span>(<span class="hljs-number">3</span>,<span class="hljs-number">0xFF0000</span>,<span class="hljs-number">1</span>);
+        gt.<span class="hljs-title function_">drawRect</span>(-<span class="hljs-number">3</span>-<span class="hljs-number">22.5</span>,-<span class="hljs-number">3</span>-<span class="hljs-number">22.5</span>,<span class="hljs-number">51</span>,<span class="hljs-number">51</span>);
+        gt.<span class="hljs-title function_">endFill</span>();
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">addChild</span>(gt);
+    }
+
+    <span class="hljs-comment">//取消選擇時，將邊框拿掉</span>
+    unSelect = <span class="hljs-function">()=></span>{
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">removeChildren</span>();
+    }
+}
+</code></pre>
+<p><code>GameIcon</code> 的資訊增益在於「每個圖塊自己管理自己的選取視覺」。<code>GameBoard</code> 只要根據座標找到對應圖塊，再呼叫 <code>select()</code> 或 <code>unSelect()</code>，不用知道紅框的線寬、尺寸和顏色。</p>
+</section><section aria-labelledby="gameboard-如何切換圖塊選取狀態"><h2 id="gameboard-如何切換圖塊選取狀態">GameBoard 如何切換圖塊選取狀態？</h2>
+<p><code>GameBoard</code> 可以用圖塊名稱找到指定座標的 <code>GameIcon</code>，再呼叫選取或取消選取方法。這種做法讓點擊流程只處理狀態轉換，不直接寫繪圖細節。</p>
+<p>接著在 <code>GameBoard.ts</code> 裡撰寫兩個方法：<code>iconSelected()</code> 與 <code>iconUnSelected()</code>。</p>
+<pre><code class="hljs language-ts">iconSelected = <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">point</span>:<span class="hljs-title class_">Point</span></span>)=></span>{
+    <span class="hljs-comment">//根據在GameIcon設定的name來取得正確位置上的方塊</span>
+    <span class="hljs-keyword">let</span> icon = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getChildByName</span>(<span class="hljs-string">'icon_'</span>+point.<span class="hljs-property">x</span>+<span class="hljs-string">"_"</span>+point.<span class="hljs-property">y</span>) <span class="hljs-keyword">as</span> <span class="hljs-title class_">GameIcon</span>;
+    icon.<span class="hljs-title function_">select</span>();
+};
+
+iconUnSelected = <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">point</span>:<span class="hljs-title class_">Point</span></span>)=></span>{
+    <span class="hljs-keyword">let</span> icon = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getChildByName</span>(<span class="hljs-string">'icon_'</span>+point.<span class="hljs-property">x</span>+<span class="hljs-string">"_"</span>+point.<span class="hljs-property">y</span>) <span class="hljs-keyword">as</span> <span class="hljs-title class_">GameIcon</span>;
+    icon.<span class="hljs-title function_">unSelect</span>();
+};
+</code></pre>
+<p>然後改寫 <code>GameBoard.ts</code> 裡的 <code>createIcon()</code> 方法：</p>
+<pre><code class="hljs language-ts">createIcon = <span class="hljs-function">(<span class="hljs-params">id, x, y</span>)=></span>{
+    <span class="hljs-keyword">let</span> icon = <span class="hljs-keyword">new</span> <span class="hljs-title class_">GameIcon</span>(id,x,y);<span class="hljs-comment">//id為要顯示的圖片編號,x,y為位置</span>
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">addChild</span>(icon);
+    <span class="hljs-keyword">let</span> <span class="hljs-title function_">iconClickHandler</span> = (<span class="hljs-params"></span>)=>{
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">selected</span>) {
+            <span class="hljs-keyword">let</span> selectCorrect = <span class="hljs-literal">false</span>;
+            <span class="hljs-variable language_">this</span>.<span class="hljs-property">select2</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Point</span>(x, y);
+            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">iconSelected</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">select2</span>);<span class="hljs-comment">//將方塊加上紅框</span>
+            <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">()=></span>{<span class="hljs-comment">//為了避免第二個方塊都還沒有繪製到邊框就被取消掉，因此在此增加setTimeout</span>
+                <span class="hljs-keyword">if</span> (board.<span class="hljs-title function_">hasSameValue</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">select1</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">select2</span>)) {
+                    <span class="hljs-keyword">if</span> (! (<span class="hljs-variable language_">this</span>.<span class="hljs-property">select1</span>.<span class="hljs-property">x</span> == x &#x26;&#x26; <span class="hljs-variable language_">this</span>.<span class="hljs-property">select1</span>.<span class="hljs-property">y</span> == y) ) {
+                        <span class="hljs-keyword">let</span> path = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Path</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">select1</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">select2</span>, board);
+                        <span class="hljs-keyword">if</span>(path.<span class="hljs-title function_">canLinkInLine</span>()){
+                            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">clearIcon</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">select1</span>);
+                            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">clearIcon</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">select2</span>);
+                            eventEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-title class_">GameFlowEvent</span>.<span class="hljs-property">LinkedLineSuccess</span>);
+                            selectCorrect = <span class="hljs-literal">true</span>;
+                            <span class="hljs-comment">//判斷還有沒有路走</span>
+                            <span class="hljs-keyword">if</span>(board.<span class="hljs-title function_">gameRoundEnd</span>()){
+                                <span class="hljs-title function_">alert</span>(<span class="hljs-string">"恭喜完成遊戲!"</span>);
+                                <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">createNewGame</span>();
+                            }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(board.<span class="hljs-title function_">getFirstExistPath</span>() == <span class="hljs-literal">null</span>){
+                                <span class="hljs-variable language_">this</span>.<span class="hljs-property">reloadTimes</span>--;
+                                board.<span class="hljs-title function_">rearrangeBoard</span>();
+                            }
+                        }
+                    }
+                }
+                <span class="hljs-keyword">if</span>(selectCorrect){
+                    <span class="hljs-title class_">SoundMgr</span>.<span class="hljs-title function_">play</span>(<span class="hljs-string">'Sound_select_crrect'</span>);
+                }<span class="hljs-keyword">else</span>{
+                    <span class="hljs-title class_">SoundMgr</span>.<span class="hljs-title function_">play</span>(<span class="hljs-string">'Sound_select_error'</span>);
+                    <span class="hljs-comment">//不能消除，取消紅框</span>
+                    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">iconUnSelected</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">select1</span>);
+                    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">iconUnSelected</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">select2</span>);
+                }
+                <span class="hljs-variable language_">this</span>.<span class="hljs-property">selected</span> = <span class="hljs-literal">false</span>;
+            },<span class="hljs-number">0</span>);
+
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-variable language_">this</span>.<span class="hljs-property">select1</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Point</span>(x, y);
+            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">iconSelected</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">select1</span>);<span class="hljs-comment">//將方塊加上紅框</span>
+            <span class="hljs-variable language_">this</span>.<span class="hljs-property">selected</span> = <span class="hljs-literal">true</span>;
+            <span class="hljs-title class_">SoundMgr</span>.<span class="hljs-title function_">play</span>(<span class="hljs-string">'Sound_select_1'</span>);
+
+        }
+    };
+    icon.<span class="hljs-title function_">on</span>(<span class="hljs-string">"click"</span>, iconClickHandler);
+    icon.<span class="hljs-title function_">on</span>(<span class="hljs-string">"tap"</span>, iconClickHandler);
+}
+</code></pre>
+<p>這段程式保留了一個細節：第二個圖塊被選到後，使用 <code>setTimeout(..., 0)</code> 讓瀏覽器有機會先把紅框畫出來，再進入消除或取消選取流程。若沒有這一步，玩家可能看不到第二次選取回饋，錯誤時也會覺得畫面太突然。</p>
+</section><section aria-labelledby="如何用-linkedline-畫出消除連線路徑"><h2 id="如何用-linkedline-畫出消除連線路徑">如何用 LinkedLine 畫出消除連線路徑？</h2>
+<p><code>LinkedLine</code> 可以繼承 <code>PIXI.Container</code>，專門負責把 <code>Path.path_Detail</code> 裡的座標轉成畫面線段。連線圖層獨立後，消除邏輯不用直接操作 <code>PIXI.Graphics</code>。</p>
+<p>當成功消除兩個方塊時，應該要顯示剛剛連線的路徑，這樣使用者才能確認連線方式是正確的。前面盤面邏輯中的 <code>Path</code> 類別若呼叫 <code>canLinkInLine()</code> 回傳 <code>true</code>，也會把經過的路徑點放入 <code>path_Detail</code> 陣列。</p>
+<p>這個類別的主要職責，是把輸入的 <code>Path</code> 物件中的路徑畫出來。為了讓這個圖層能更方便被各個地方取用，當時筆記使用 singleton 方法建立物件，所有類別都可以用 <code>LinkedLine.instance</code> 取得唯一實體。</p>
+<p>下面是 <code>LinkedLine.ts</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Container</span> = <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">Container</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">Point</span> = <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-property">Point</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Path</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"../core/Path"</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LinkedLine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Container</span> {
+
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-variable language_">super</span>();
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">x</span> = <span class="hljs-number">175</span>;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">y</span> = <span class="hljs-number">20</span>;
+    }
+
+    <span class="hljs-comment">//將這個類別設定為singleton類別</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-attr">_instance</span>:<span class="hljs-title class_">LinkedLine</span>;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">get</span> <span class="hljs-title function_">instance</span>():<span class="hljs-title class_">LinkedLine</span>{
+        <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">_instance</span> == <span class="hljs-literal">null</span>){
+            <span class="hljs-variable language_">this</span>.<span class="hljs-property">_instance</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedLine</span>();
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">_instance</span>;
+    }
+
+    <span class="hljs-comment">//輸入一個path物件，藉由paths.path_Detail來畫出連線</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">drawPath</span>(<span class="hljs-params"><span class="hljs-attr">paths</span>:<span class="hljs-title class_">Path</span></span>){
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">removeChildren</span>();
+        <span class="hljs-keyword">let</span> point = paths.<span class="hljs-property">path_Detail</span>.<span class="hljs-title function_">pop</span>();<span class="hljs-comment">//取出第一個點</span>
+        <span class="hljs-keyword">let</span> gt = <span class="hljs-keyword">new</span> <span class="hljs-variable constant_">PIXI</span>.<span class="hljs-title class_">Graphics</span>();
+        gt.<span class="hljs-title function_">lineStyle</span>(<span class="hljs-number">5</span>, <span class="hljs-number">0xff0000</span>);
+        <span class="hljs-keyword">let</span> start = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getPositionFromPoint</span>(point);
+        gt.<span class="hljs-title function_">moveTo</span>(start.<span class="hljs-property">x</span>,start.<span class="hljs-property">y</span>);<span class="hljs-comment">//先移到第一個點的位置</span>
+        <span class="hljs-keyword">do</span>{
+            point = paths.<span class="hljs-property">path_Detail</span>.<span class="hljs-title function_">pop</span>();<span class="hljs-comment">//取出後面的點</span>
+            <span class="hljs-keyword">let</span> line = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getPositionFromPoint</span>(point);
+            gt.<span class="hljs-title function_">lineTo</span>(line.<span class="hljs-property">x</span>,line.<span class="hljs-property">y</span>);<span class="hljs-comment">//繪製連線</span>
+        }<span class="hljs-keyword">while</span>(paths.<span class="hljs-property">path_Detail</span>.<span class="hljs-property">length</span> > <span class="hljs-number">0</span>);
+
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">addChild</span>(gt);
+
+        <span class="hljs-comment">//設定連線會在500毫秒後自動消失</span>
+        <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">()=></span>{<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">removeChildren</span>();},<span class="hljs-number">500</span>);
+    }
+    <span class="hljs-comment">//把遊戲盤面的x,y系統轉化為畫面上實際的坐標系統</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">getPositionFromPoint</span>(<span class="hljs-params"><span class="hljs-attr">point</span>:<span class="hljs-title class_">Point</span></span>){
+        <span class="hljs-keyword">let</span> x = (<span class="hljs-number">45</span> + <span class="hljs-number">20</span>) * point.<span class="hljs-property">x</span> + <span class="hljs-number">22.5</span>;
+        <span class="hljs-keyword">let</span> y = (<span class="hljs-number">45</span> + <span class="hljs-number">6</span>) * point.<span class="hljs-property">y</span> + <span class="hljs-number">22.5</span>;
+        <span class="hljs-keyword">if</span>(y &#x3C; <span class="hljs-number">0</span>){
+            y = -<span class="hljs-number">5</span>;
+        }
+        <span class="hljs-keyword">if</span>(y > <span class="hljs-number">502</span>){
+            y = <span class="hljs-number">510</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Point</span>(x, y);
+    }
+}
+</code></pre>
+<p><code>drawPath()</code> 一開始會先 <code>removeChildren()</code>，避免上一條連線還留在畫面上。接著依序取出 <code>path_Detail</code> 中的點，用 <code>moveTo()</code> 移到起點，再用 <code>lineTo()</code> 畫出每一段路徑，最後在 500 毫秒後自動清除。</p>
+</section><section aria-labelledby="linkedline-的座標換算要注意什麼"><h2 id="linkedline-的座標換算要注意什麼">LinkedLine 的座標換算要注意什麼？</h2>
+<p><code>LinkedLine</code> 的座標換算要和 <code>GameIcon</code> 的圖塊位置公式一致。若圖塊間距、錨點或盤面圖層偏移不同，紅線就會偏離圖塊中心。</p>
+<p>這篇筆記裡的圖塊大小是 45，橫向間距是 20，縱向間距是 6，因此座標換算使用同一組公式：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">let</span> x = (<span class="hljs-number">45</span> + <span class="hljs-number">20</span>) * point.<span class="hljs-property">x</span> + <span class="hljs-number">22.5</span>;
+<span class="hljs-keyword">let</span> y = (<span class="hljs-number">45</span> + <span class="hljs-number">6</span>) * point.<span class="hljs-property">y</span> + <span class="hljs-number">22.5</span>;
+</code></pre>
+<p><code>22.5</code> 是圖塊寬高的一半，目的是讓線段落在圖塊中心。<code>y &#x3C; 0</code> 與 <code>y > 502</code> 的處理，則是讓繞到盤面外側的路徑仍然能畫在可見範圍附近。</p>
+<p>如果後續要改圖塊尺寸，最好把 <code>45</code>、<code>20</code>、<code>6</code>、<code>22.5</code> 抽成共用常數。否則 <code>GameIcon</code> 和 <code>LinkedLine</code> 任一邊改動，連線位置就可能開始錯位。</p>
+</section><section aria-labelledby="gamescene-要在哪裡加入-linkedline-圖層"><h2 id="gamescene-要在哪裡加入-linkedline-圖層">GameScene 要在哪裡加入 LinkedLine 圖層？</h2>
+<p><code>LinkedLine</code> 應加在遊戲盤面上方，讓紅色路徑不被圖塊遮住。實作時只要在連線成功後呼叫 <code>drawPath()</code>，並在場景建立時把 singleton 加到 stage。</p>
+<p>在 <code>GameBoard.ts</code> 裡，連線成功時加上這行來繪製連線：</p>
+<pre><code class="hljs language-ts"><span class="hljs-title class_">LinkedLine</span>.<span class="hljs-property">instance</span>.<span class="hljs-title function_">drawPath</span>(path);
+</code></pre>
+<p>在 <code>GameScene.ts</code> 裡加上 <code>LinkedLine</code> 元件：</p>
+<pre><code class="hljs language-ts">application.<span class="hljs-property">stage</span>.<span class="hljs-title function_">addChild</span>(<span class="hljs-title class_">LinkedLine</span>.<span class="hljs-property">instance</span>);
+</code></pre>
+<p>顯示層的順序很重要。若 <code>LinkedLine.instance</code> 加得太早，後加入的棋盤圖塊可能蓋住連線；若加在 UI 按鈕之上，又可能遮住按鈕互動。比較穩定的做法是把棋盤、連線效果、UI 控制分成不同容器，再按層級加入 stage。</p>
+</section><section aria-labelledby="今日成果保留了哪些當時的連結"><h2 id="今日成果保留了哪些當時的連結">今日成果保留了哪些當時的連結？</h2>
+<p>當時筆記附有線上 demo 與成果下載。這兩個連結使用 HTTP，本文保留記錄，不放進參考資料清單，也不把非 HTTPS 連結改寫成外部引用。</p>
+<p>當時記錄的今日成果如下：</p>
+<ul>
+<li>線上 demo：<code>http://claire-chang.com/ironman2018/1105/</code></li>
+<li>今日成果下載：ironman20181105.zip（原下載連結已失效）</li>
+</ul>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS Graphics 適合拿來畫連連看連線嗎？</span></h3>
+<p>PixiJS Graphics 適合畫連連看連線。連線路徑是短時間出現的簡單線段，用 <code>moveTo()</code> 和 <code>lineTo()</code> 畫出來，比額外準備圖片素材更直接。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS 選取框要放在 Sprite 裡還是獨立圖層？</span></h3>
+<p>PixiJS 選取框適合放在每個 <code>GameIcon</code> 裡，因為選取框跟著單一圖塊狀態走。消除路徑則適合放在獨立 <code>LinkedLine</code> 圖層，因為路徑跨越多個圖塊。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LinkedLine 為什麼使用 singleton？</span></h3>
+<p><code>LinkedLine</code> 使用 singleton 是為了讓不同類別都能取得同一個連線圖層。小型遊戲可以這樣快速共用物件；大型專案則可以改用場景管理器或依賴注入，讓生命週期更明確。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼 drawPath 會先 removeChildren？</span></h3>
+<p><code>drawPath()</code> 先 <code>removeChildren()</code> 是為了清除上一條連線。若沒有先清掉舊線段，玩家連續消除時，畫面上可能同時殘留多條紅線。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>PixiJS 連線路徑為什麼會偏移？</span></h3>
+<p>PixiJS 連線路徑偏移通常是因為圖塊座標公式和連線座標公式不一致。應確認圖塊大小、間距、anchor、棋盤容器偏移與 <code>LinkedLine</code> 容器偏移是否使用同一套設定。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>PixiJS Graphics 官方文件：<a href="https://pixijs.download/release/docs/scene.Graphics.html" target="_blank" rel="noopener noreferrer">https://pixijs.download/release/docs/scene.Graphics.html</a></li>
+<li>PixiJS Graphics 範例：<a href="https://pixijs.com/8.x/examples/graphics/simple" target="_blank" rel="noopener noreferrer">https://pixijs.com/8.x/examples/graphics/simple</a></li>
+<li>PixiJS Events / Interaction Guide：<a href="https://pixijs.com/8.x/guides/components/events" target="_blank" rel="noopener noreferrer">https://pixijs.com/8.x/guides/components/events</a></li>
+<li>PixiJS Container 官方文件：<a href="https://pixijs.download/release/docs/scene.Container.html" target="_blank" rel="noopener noreferrer">https://pixijs.download/release/docs/scene.Container.html</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/pixi-link-game-board">PixiJS 如何實作連連看盤面與消除邏輯</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/link-game-development-introduction">連連看遊戲開發前言：從規則、益智遊戲定位到 PixiJS 製作規劃</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/pixijs-hint-refresh-buttons-link-game">PixiJS 提示與重整按鈕教學：連連看遊戲功能實作</a>：同樣聚焦 PixiJS、TypeScript，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2018-11-05；本文依 2018 年 PixiJS 連連看連線效果筆記整理，保留當時的 TypeScript 實作，並補上 GEO 結構、FAQ 與站內延伸閱讀。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2018-11-05</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

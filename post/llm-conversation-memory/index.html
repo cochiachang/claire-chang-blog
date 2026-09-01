@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>讓 LLM 記憶對話的實現方式｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="比較 LangChain 常見對話記憶模式，說明 Buffer、Summary、Window、Entity Memory 適合的場景。" />
+<meta name="keywords" content="生成式AI, LLM, LangChain, 對話記憶, Chatbot" />
+<link rel="canonical" href="https://claire-chang.com/post/llm-conversation-memory/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="讓 LLM 記憶對話的實現方式｜Claire Chang" />
+<meta property="og:description" content="比較 LangChain 常見對話記憶模式，說明 Buffer、Summary、Window、Entity Memory 適合的場景。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/llm-conversation-memory/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/ab6cd8ea8067fecb668cd6a017eff60f7a320d8b-3079x1427-1-scaled-1-8542f627.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/ab6cd8ea8067fecb668cd6a017eff60f7a320d8b-3079x1427-1-scaled-1-8542f627.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="讓 LLM 記憶對話的實現方式｜Claire Chang" />
+<meta name="twitter:description" content="比較 LangChain 常見對話記憶模式，說明 Buffer、Summary、Window、Entity Memory 適合的場景。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/ab6cd8ea8067fecb668cd6a017eff60f7a320d8b-3079x1427-1-scaled-1-8542f627.jpg" />
+<meta property="article:published_time" content="2024-11-11" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="LLM" />
+<meta property="article:tag" content="LangChain" />
+<meta property="article:tag" content="對話記憶" />
+<meta property="article:tag" content="Chatbot" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"讓 LLM 記憶對話的實現方式","item":"https://claire-chang.com/post/llm-conversation-memory/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/llm-conversation-memory/#article","headline":"讓 LLM 記憶對話的實現方式","description":"比較 LangChain 常見對話記憶模式，說明 Buffer、Summary、Window、Entity Memory 適合的場景。","image":"https://claire-chang.com/images/tech/ab6cd8ea8067fecb668cd6a017eff60f7a320d8b-3079x1427-1-scaled-1.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2024-11-11","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/llm-conversation-memory/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"生成式AI","keywords":"LLM, LangChain, 對話記憶, Chatbot","about":[{"@type":"Thing","name":"LLM"},{"@type":"Thing","name":"對話記憶"},{"@type":"Thing","name":"Chatbot"}],"mentions":[{"@type":"Thing","name":"LangChain"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/llm-conversation-memory/#faq","mainEntity":[{"@type":"Question","name":"LLM 一定需要對話記憶嗎？","acceptedAnswer":{"@type":"Answer","text":"LLM 不一定需要對話記憶。單輪問答、分類、摘要等任務通常不需要保存歷史；聊天機器人、客服助理、個人助理與多輪任務流程才需要對話記憶。"}},{"@type":"Question","name":"ConversationBufferMemory 最大的問題是什麼？","acceptedAnswer":{"@type":"Answer","text":"ConversationBufferMemory 最大的問題是 token 成本會隨對話長度增加。當歷史訊息越來越長，模型延遲、費用與上下文限制都會變成實務瓶頸。"}},{"@type":"Question","name":"ConversationSummaryMemory 為什麼可能讓回答偏掉？","acceptedAnswer":{"@type":"Answer","text":"ConversationSummaryMemory 依賴 LLM 產生摘要。摘要如果保留了無關舊話題，或漏掉使用者真正想延續的細節，後續回答就可能被錯誤上下文帶偏。"}},{"@type":"Question","name":"ConversationBufferWindowMemory 的 k 要設多少？","acceptedAnswer":{"@type":"Answer","text":"ConversationBufferWindowMemory 的 k 應該依任務調整。客服與工具操作通常可以從 4 到 8 輪開始測試；需要追蹤較長推理鏈的任務可提高視窗，但要同步觀察 token 成本。"}},{"@type":"Question","name":"Entity Memory 適合所有聊天機器人嗎？","acceptedAnswer":{"@type":"Answer","text":"Entity Memory 不適合所有聊天機器人。只有當產品需要長期記住人物、公司、專案、地點或偏好時，Entity Memory 才值得加入。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/ab6cd8ea8067fecb668cd6a017eff60f7a320d8b-3079x1427-1-scaled-1.webp" alt="ConversationBufferWindowMemory token 使用量比較圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E7%94%9F%E6%88%90%E5%BC%8FAI" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 生成式AI</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2024-11-11">2024-11-11</time></span><span class="post-meta-pill">LLM · LangChain · 對話記憶 · Chatbot</span></div></div><h1 class="insights-hero-title">讓 LLM 記憶對話的實現方式</h1><p class="insights-hero-description">比較 LangChain 常見對話記憶模式，說明 Buffer、Summary、Window、Entity Memory 適合的場景。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>LLM 要能進行連貫對話，通常需要在 prompt 外另外設計「對話記憶」。以 LangChain 的常見記憶類型來看，短對話可以直接保留歷史訊息，長對話則需要摘要、視窗或實體記憶，才能在 token 成本、回答品質與上下文穩定度之間取得平衡。</p>
+</div><section aria-labelledby="llm-對話記憶要解決什麼問題"><h2 id="llm-對話記憶要解決什麼問題">LLM 對話記憶要解決什麼問題？</h2>
+<p>LLM 對話記憶的核心任務，是把使用者前面提供過的資訊帶入下一次回答。對聊天機器人來說，對話記憶能避免模型每輪都像第一次見到使用者。</p>
+<p>如果沒有對話記憶，LLM 只會根據當下輸入與系統提示回答。實作聊天機器人、客服助理、任務型 Agent 時，使用者常會用「剛剛那個」「改成另一種」等方式延續上下文，因此系統必須決定哪些過去訊息要留下。</p>
+<p>對話記憶常見的取捨有三個：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>取捨項目</th><th>說明</th></tr></thead><tbody><tr><td>token 成本</td><td>保留越多原始對話，prompt 越長，費用與延遲越高。</td></tr><tr><td>記憶完整度</td><td>摘要越濃縮，越可能遺失細節或保留錯誤重點。</td></tr><tr><td>話題穩定度</td><td>過多舊話題可能干擾新問題，使回答偏離使用者最新意圖。</td></tr></tbody></table></div>
+</section><section aria-labelledby="conversationbuffermemory-適合什麼情境"><h2 id="conversationbuffermemory-適合什麼情境">ConversationBufferMemory 適合什麼情境？</h2>
+<p>ConversationBufferMemory 適合短對話與測試階段，因為 ConversationBufferMemory 會傳送完整歷史訊息。ConversationBufferMemory 的缺點是對話一長就會快速消耗 token。</p>
+<p>ConversationBufferMemory 是最直覺的做法：把所有過去對話都放進下一次 prompt。這種方式不需要摘要、不需要判斷哪一句重要，也最容易 debug。</p>
+<p>不過 ConversationBufferMemory 很快會遇到模型上下文長度限制。當使用者來回對話增加，系統會把越來越多無關內容送給 LLM，導致成本上升、延遲變長，也可能讓新問題被舊內容干擾。</p>
+</section><section aria-labelledby="conversationsummarymemory-有什麼風險"><h2 id="conversationsummarymemory-有什麼風險">ConversationSummaryMemory 有什麼風險？</h2>
+<p>ConversationSummaryMemory 適合長對話摘要，但 ConversationSummaryMemory 會額外呼叫 LLM 產生摘要。摘要品質如果不穩，模型可能記住不該記的資訊。</p>
+<p>ConversationSummaryMemory 的做法是把歷史對話壓縮成摘要，再把摘要放回下一輪 prompt。這種方式能處理更長的對話，特別適合使用者長時間累積背景資訊的場景。</p>
+<p>我實測這種方式時，最常遇到的問題是摘要不一定保留我想保留的重點。有時候 LLM 會把已經切換掉的舊話題放進摘要，反而讓新回應偏離最新問題。使用 ConversationSummaryMemory 時，摘要提示詞與摘要更新時機會直接影響結果。</p>
+</section><section aria-labelledby="conversationbufferwindowmemory-為什麼常是實用選擇"><h2 id="conversationbufferwindowmemory-為什麼常是實用選擇">ConversationBufferWindowMemory 為什麼常是實用選擇？</h2>
+<p>ConversationBufferWindowMemory 只保留最近固定輪數的對話，因此 token 使用量容易控制。ConversationBufferWindowMemory 適合只需要近期上下文、不需要長期記憶的聊天情境。</p>
+<p>ConversationBufferWindowMemory 會設定一個視窗大小，例如只保留最近 6 輪或 12 輪對話。對於大部分任務型聊天機器人，使用者的最新需求通常比很久以前的內容更重要。</p>
+<p>我在實作對話記憶時，覺得 ConversationBufferWindowMemory 是簡單又效果不錯的方法。這種方式不會嘗試理解所有歷史內容，因此可控性高；缺點是無法回答很久之前提到的細節。</p>
+<figure class="article-figure"><img src="/images/tech/ab6cd8ea8067fecb668cd6a017eff60f7a320d8b-3079x1427-1-scaled-1.webp" alt="ConversationBufferWindowMemory token 使用量比較" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="conversationsummarybuffermemory-如何結合摘要與近期對話"><h2 id="conversationsummarybuffermemory-如何結合摘要與近期對話">ConversationSummaryBufferMemory 如何結合摘要與近期對話？</h2>
+<p>ConversationSummaryBufferMemory 會摘要較早的互動，並完整保留最新對話。ConversationSummaryBufferMemory 適合同時需要長期背景與近期細節的應用。</p>
+<p>ConversationSummaryBufferMemory 結合了摘要與緩衝視窗。系統會把較早的互動壓成摘要，再用原始形式保留最近的對話，讓模型既能知道遠期背景，又能看到最新訊息的完整語氣與細節。</p>
+<p>這種方法比單純摘要更有彈性，也是常見記憶模式中比較能兼顧「遙遠互動」與「近期原文」的方式。不過它仍需要調整：哪些內容要摘要、摘要多長、近期視窗多大，都會影響品質。</p>
+<figure class="article-figure"><img src="/images/tech/839a4c11b780250f5ae3adeb1d7873c7002ae21b-3627x1427-1-scaled-1.webp" alt="ConversationSummaryBufferMemory token 使用量比較" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="entity-memory-和-knowledge-graph-memory-解決什麼問題"><h2 id="entity-memory-和-knowledge-graph-memory-解決什麼問題">Entity Memory 和 Knowledge Graph Memory 解決什麼問題？</h2>
+<p>Entity Memory 與 Knowledge Graph Memory 用來記住對話中的人物、組織、地點與關係。Entity Memory 適合需要追蹤特定實體資訊的長期互動。</p>
+<p>ConversationEntityMemory 會使用 LLM 從對話中抽取實體，並逐步建立實體知識。例如使用者提到 Abi、Andy、Lucas、Harpreet 正在建立 LLMOps 社群，Entity Memory 會把這些人名與社群關係記錄下來。</p>
+<p>當後續對話補充「Abi 住在 India」「Andy 住在 Scotland」「Lucas 在 Microsoft 工作」時，記憶內容會持續更新。之後使用者問「What do you know about Abi?」，系統就能根據實體記憶回答 Abi 的角色、工作與地點。</p>
+<p>這種方式的價值在於讓模型了解特定實體與相關資訊，但風險也很明顯：如果抽取錯誤、保留不當描述，錯誤資訊會被長期帶入後續回答。</p>
+</section><section aria-labelledby="對話記憶該怎麼選"><h2 id="對話記憶該怎麼選">對話記憶該怎麼選？</h2>
+<p>對話記憶選型應先看對話長度、成本限制與是否需要長期實體資訊。多數產品可以先用 ConversationBufferWindowMemory，再視需求加入摘要或實體記憶。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>需求</th><th>建議記憶模式</th><th>原因</th></tr></thead><tbody><tr><td>短對話或原型測試</td><td>ConversationBufferMemory</td><td>實作簡單，方便觀察完整上下文。</td></tr><tr><td>長對話但只要大意</td><td>ConversationSummaryMemory</td><td>可壓縮歷史內容，但要注意摘要品質。</td></tr><tr><td>只需要近期上下文</td><td>ConversationBufferWindowMemory</td><td>token 可控，行為穩定。</td></tr><tr><td>同時要長期背景與近期細節</td><td>ConversationSummaryBufferMemory</td><td>摘要舊內容，保留新內容原文。</td></tr><tr><td>需要追蹤人物、地點、組織</td><td>ConversationEntityMemory</td><td>可保存對話中的關鍵實體與關係。</td></tr></tbody></table></div>
+<p>我的實作建議是先不要追求最複雜的記憶架構。先用近期視窗驗證產品流程，再針對真正需要長期記憶的欄位加入摘要或實體資料庫，通常比一開始就把所有對話都丟進記憶系統更容易維護。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>LLM 一定需要對話記憶嗎？</span></h3>
+<p>LLM 不一定需要對話記憶。單輪問答、分類、摘要等任務通常不需要保存歷史；聊天機器人、客服助理、個人助理與多輪任務流程才需要對話記憶。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ConversationBufferMemory 最大的問題是什麼？</span></h3>
+<p>ConversationBufferMemory 最大的問題是 token 成本會隨對話長度增加。當歷史訊息越來越長，模型延遲、費用與上下文限制都會變成實務瓶頸。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ConversationSummaryMemory 為什麼可能讓回答偏掉？</span></h3>
+<p>ConversationSummaryMemory 依賴 LLM 產生摘要。摘要如果保留了無關舊話題，或漏掉使用者真正想延續的細節，後續回答就可能被錯誤上下文帶偏。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ConversationBufferWindowMemory 的 k 要設多少？</span></h3>
+<p>ConversationBufferWindowMemory 的 k 應該依任務調整。客服與工具操作通常可以從 4 到 8 輪開始測試；需要追蹤較長推理鏈的任務可提高視窗，但要同步觀察 token 成本。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Entity Memory 適合所有聊天機器人嗎？</span></h3>
+<p>Entity Memory 不適合所有聊天機器人。只有當產品需要長期記住人物、公司、專案、地點或偏好時，Entity Memory 才值得加入。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Pinecone, LangChain Conversational Memory, <a href="https://www.pinecone.io/learn/series/langchain/langchain-conversational-memory/%EF%BC%8C%E5%AD%98%E5%8F%96%E6%97%A5%E6%9C%9F%EF%BC%9A2026-08-27%E3%80%82" target="_blank" rel="noopener noreferrer">https://www.pinecone.io/learn/series/langchain/langchain-conversational-memory/，存取日期：2026-08-27。</a></li>
+<li>Comet, Advanced Memory in LangChain, <a href="https://www.comet.com/site/blog/advanced-memory-in-langchain/%EF%BC%8C%E5%AD%98%E5%8F%96%E6%97%A5%E6%9C%9F%EF%BC%9A2026-08-27%E3%80%82" target="_blank" rel="noopener noreferrer">https://www.comet.com/site/blog/advanced-memory-in-langchain/，存取日期：2026-08-27。</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/langchain-chains-introduction">LangChain 基礎鏈介紹：LLMChain、SequentialChain 與 TransformChain 入門</a>：同樣聚焦 LangChain、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/langchain-chains-introduction">LangChain 基礎鏈介紹：LLMChain、SequentialChain 與 TransformChain 怎麼用？</a>：同樣聚焦 LangChain、LLM，可接著比較不同情境的做法。</li>
+<li><a href="/post/llm-function-calling-guide">了解 LLM 的函數調用 Function Calling</a>：同樣聚焦 LLM，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>Mon Nov 11 2024 08:00:00 GMT+0800 (Taiwan Standard Time)</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2024-11-11</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

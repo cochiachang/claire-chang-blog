@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starling MovieClip 動畫：用 Juggler 驅動影格播放｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 Starling MovieClip 與原生差異、Juggler 驅動動畫的原理，並附透明區域 hitTest 範例。" />
+<meta name="keywords" content="前端開發, Starling, ActionScript, AIR, MovieClip, 動畫" />
+<link rel="canonical" href="https://claire-chang.com/post/starling-movieclip-juggler-animation/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Starling MovieClip 動畫：用 Juggler 驅動影格播放｜Claire Chang" />
+<meta property="og:description" content="說明 Starling MovieClip 與原生差異、Juggler 驅動動畫的原理，並附透明區域 hitTest 範例。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/starling-movieclip-juggler-animation/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_starling-movieclip-juggler-animation-92c56572.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_starling-movieclip-juggler-animation-92c56572.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Starling MovieClip 動畫：用 Juggler 驅動影格播放｜Claire Chang" />
+<meta name="twitter:description" content="說明 Starling MovieClip 與原生差異、Juggler 驅動動畫的原理，並附透明區域 hitTest 範例。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_starling-movieclip-juggler-animation-92c56572.jpg" />
+<meta property="article:published_time" content="2014-02-11" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Starling" />
+<meta property="article:tag" content="ActionScript" />
+<meta property="article:tag" content="AIR" />
+<meta property="article:tag" content="MovieClip" />
+<meta property="article:tag" content="動畫" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Starling MovieClip 動畫：用 Juggler 驅動影格播放","item":"https://claire-chang.com/post/starling-movieclip-juggler-animation/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/starling-movieclip-juggler-animation/#article","headline":"Starling MovieClip 動畫：用 Juggler 驅動影格播放","description":"說明 Starling MovieClip 與原生差異、Juggler 驅動動畫的原理，並附透明區域 hitTest 範例。","image":"https://claire-chang.com/images/tech/hero_starling-movieclip-juggler-animation.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2014-02-11","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/starling-movieclip-juggler-animation/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Starling, ActionScript, AIR, MovieClip, 動畫","about":[{"@type":"Thing","name":"動畫"}],"mentions":[{"@type":"Thing","name":"Starling"},{"@type":"Thing","name":"ActionScript"},{"@type":"Thing","name":"AIR"},{"@type":"Thing","name":"MovieClip"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/starling-movieclip-juggler-animation/#faq","mainEntity":[{"@type":"Question","name":"Starling MovieClip 可以塞子物件嗎？","acceptedAnswer":{"@type":"Answer","text":"不行。它繼承 `Image` 而非 `DisplayObjectContainer`，沒有 `addChild()`。要做群組動畫，得靠外層的 Sprite 容器把多個 MovieClip 組在一起，而不是往 MovieClip 裡塞東西。"}},{"@type":"Question","name":"為什麼動畫要用 EnterFrameEvent 而不是 Event.ENTER_FRAME？","acceptedAnswer":{"@type":"Answer","text":"因為只有 `EnterFrameEvent` 帶 `passedTime`。把這個值傳給 Juggler 的 `advanceTime()`，動畫播放速度才會跟真實經過時間掛勾，不受 frame rate 波動影響。"}},{"@type":"Question","name":"一個 Juggler 可以管多個動畫嗎？","acceptedAnswer":{"@type":"Answer","text":"可以，也建議這樣做。`Starling.juggler` 本身就是設計來同時管理任意數量的 `IAnimatable` 物件；需要獨立生命週期的動畫（例如暫停選單的特效）再另外開一個 Juggler 實例分開管理。"}},{"@type":"Question","name":"想要動畫命中判斷排除透明區域，一定要自己寫 hitTest 嗎？","acceptedAnswer":{"@type":"Answer","text":"如果用原生 MovieClip，是的，需要覆寫 `hitTest()` 並比對 `BitmapData` 的 alpha 值。上面範例的 `AlphaMovieClip` 就是這個做法；社群論壇上也有現成版本可以直接參考、修改。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_starling-movieclip-juggler-animation.webp" alt="深色背景上顯示大量程式碼的螢幕畫面" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2014-02-11">2014-02-11</time></span><span class="post-meta-pill">Starling · ActionScript · AIR · MovieClip · 動畫</span></div></div><h1 class="insights-hero-title">Starling MovieClip 動畫：用 Juggler 驅動影格播放</h1><p class="insights-hero-description">說明 Starling MovieClip 與原生差異、Juggler 驅動動畫的原理，並附透明區域 hitTest 範例。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>這是 Starling Display Objects 系列的第五篇（前面談過 Sprite、Button，這篇轉向會動的物件）。主角是 <code>starling.display.MovieClip</code> 和負責驅動它的 <code>starling.animation.Juggler</code>——兩者搭配起來，才是 Starling 裡動畫真正的播放機制。</p>
+</div><section aria-labelledby="starling-的-movieclip-和-flash-原生-movieclip-差在哪"><h2 id="starling-的-movieclip-和-flash-原生-movieclip-差在哪">Starling 的 MovieClip 和 Flash 原生 MovieClip 差在哪？</h2>
+<p>Starling MovieClip 表面上做的事跟 Flash 原生 MovieClip 很像（播放一連串影格），但底層邏輯完全不同，差異列出來就知道不能用舊習慣硬套：</p>
+<ul>
+<li><strong>可個別設 fps</strong>：new MovieClip 時就要指定影格速率。Starling 專案的 frameRate 通常拉得很高，但一支動畫用不到那麼多張圖，所以每個 MovieClip 各自有自己的播放速度，不受整體 frameRate 綁死。</li>
+<li><strong>由一連串連續圖檔組成</strong>：素材來源是 TextureAtlas 裡一組命名規則一致的圖片，MovieClip 依序輪播。</li>
+<li><strong>裡面不能塞子物件</strong>：Starling MovieClip 繼承的是 <code>Image</code>，不是 <code>DisplayObjectContainer</code>，所以沒有 <code>addChild()</code>。實際運作比較像一張大 png 蓋在 Image 上面，靠一個方形遮罩不斷切換顯示區塊。</li>
+<li><strong>動畫必須交給 Juggler 驅動</strong>：所有會動的物件都要實作 <code>IAnimatable</code> 介面，動畫效果（包含 Tween、DelayedCall）統一由 Juggler 呼叫 <code>advanceTime()</code> 推進。</li>
+<li><strong>沒有 frameLabel</strong>：官方沒內建，部分 Starling extension 有自己補上這個功能。</li>
+<li><strong><code>isComplete</code> 為 true 時動畫會自動停</strong>。</li>
+</ul>
+<p>另外兩個實用方法值得記一下：<code>setFrameDuration()</code> 可以單獨調整某一影格的停留時間（影格數從 0 起算），<code>setFrameSound()</code> 則能在播到指定影格時觸發一段音效。連續圖檔本身怎麼產生，可以參考另一篇「產生 TextureAtlas 素材的方式」。</p>
+<p>官方 API 文件：<a href="https://doc.starling-framework.org/core/starling/display/MovieClip.html" target="_blank" rel="noopener noreferrer">https://doc.starling-framework.org/core/starling/display/MovieClip.html</a></p>
+</section><section aria-labelledby="juggler-是怎麼讓動畫動起來的"><h2 id="juggler-是怎麼讓動畫動起來的">Juggler 是怎麼讓動畫動起來的？</h2>
+<p>Juggler 本身是一個很單純的 class，作用是集中管理所有實作了 <code>IAnimatable</code> 的物件。你把物件用 <code>add()</code> 丟進去之後，每次 Juggler 的 <code>advanceTime()</code> 被呼叫，它就會逐一呼叫底下每個物件的 <code>advanceTime()</code>，讓動畫往前推進；等某個物件進入 complete 狀態，Juggler 會自動把它踢出管理清單。</p>
+<p>Starling 內建一個預設的 <code>Starling.juggler</code>——只要 <code>Starling.current</code> 在跑，每個 frame 就會自動呼叫它的 <code>advanceTime()</code>。一般做法是把遊戲裡大部分動畫都丟進這個預設 juggler；但如果有些動畫要獨立於遊戲主邏輯之外（比如遊戲暫停時仍要播放的畫面），就自己再開一個 Juggler 實例，自行決定每個 frame 什麼時候呼叫它的 <code>advanceTime()</code>。</p>
+<p>呼叫的時機要用 <code>EnterFrameEvent.ENTER_FRAME</code>，而不是 <code>Event.ENTER_FRAME</code>——差別在於 <code>EnterFrameEvent</code> 帶了 <code>passedTime</code>（跟上一次事件相隔多久），這個值可以直接餵給 Juggler 的 <code>advanceTime()</code>。用經過時間而不是固定影格數來推進動畫，才不會因為 frame rate 不穩而讓動畫忽快忽慢。</p>
+<p>要讓一個物件能被 Juggler 管理，只需要實作 <code>IAnimatable</code> 的 <code>advanceTime()</code> 方法，並且自己設一個判斷條件：達成後把 <code>isComplete</code> 設成 true，Juggler 看到就會自動把它從清單移除。</p>
+<p>官方 API：<a href="https://doc.starling-framework.org/current/starling/animation/Juggler.html" target="_blank" rel="noopener noreferrer">https://doc.starling-framework.org/current/starling/animation/Juggler.html</a>；另一篇中文介紹可參考 <a href="http://grayliao.blogspot.tw/2011/11/starling-framework6jugglertweendelaycal.html" target="_blank" rel="noopener noreferrer">http://grayliao.blogspot.tw/2011/11/starling-framework6jugglertweendelaycal.html</a>。</p>
+</section><section aria-labelledby="movieclip-的點擊範圍要怎麼判斷透明區域"><h2 id="movieclip-的點擊範圍要怎麼判斷透明區域">MovieClip 的點擊範圍要怎麼判斷透明區域？</h2>
+<p>Starling 裡不管是 MovieClip 還是 Button，觸控範圍預設都是矩形（正方形/長方形），不會自動排除透明像素。如果動畫的透明部分不該吃到點擊事件，就得覆寫 <code>hitTest()</code>，回頭用最原始的 <code>BitmapData.hitTest</code> 邏輯去判斷該點是否真的落在不透明區域上。</p>
+<p>下面這個範例類別 <code>AlphaMovieClip</code> 繼承 <code>MovieClip</code>，額外存了一份原始 <code>BitmapData</code>，在 <code>hitTest()</code> 裡先算出目前影格對應到大圖裡的座標，再用 <code>getPixel32</code> 取出 alpha 值，alpha 為 0 就直接回傳 <code>null</code>（視為沒點中）：</p>
+<pre><code class="hljs language-actionscript">public class AlphaMovieClip extends MovieClip
+{
+    private var m_TexturePrefix    :String            = "";
+    private var m_TextureAtlas     :TextureAtlas      = null;
+    private var m_Textures         :Vector.&#x3C;Texture>  = null;
+    private var m_TextureInfo      :Dictionary         = null;
+    private var m_BitmapData       :BitmapData         = null;
+
+    public function AlphaMovieClip(texturePrefix:String, textureAtlas:TextureAtlas, bitmapData:BitmapData, fps:Number = 12)
+    {
+        m_TextureInfo = new Dictionary();
+
+        var names:Vector.&#x3C;String> = textureAtlas.getNames(texturePrefix);
+        for each (var name:String in names)
+        {
+            var textureInfo:Object = { };
+            textureInfo.name = name;
+            textureInfo.texture = textureAtlas.getTexture(name);
+            m_TextureInfo[name] = textureInfo;
+        }
+
+        m_TexturePrefix = texturePrefix;
+        m_TextureAtlas = textureAtlas;
+        m_Textures = textureAtlas.getTextures(texturePrefix);
+        m_BitmapData = bitmapData;
+
+        super(m_Textures, fps);
+    }
+
+    override public function hitTest(localPoint:Point, forTouch:Boolean = false):DisplayObject
+    {
+        if (forTouch &#x26;&#x26; visible &#x26;&#x26; touchable)
+        {
+            if (getBounds(this).containsPoint(localPoint))
+            {
+                var texture:Texture = getFrameTexture(currentFrame);
+                var subtexture:SubTexture = texture as SubTexture;
+                var textureFrame:Rectangle = subtexture.frame;
+                var clipping:Rectangle = subtexture.clipping;
+                var frameBound:Rectangle = new Rectangle(
+                    Math.abs(textureFrame.x),
+                    Math.abs(textureFrame.y),
+                    clipping.width * m_TextureAtlas.texture.width,
+                    clipping.height * m_TextureAtlas.texture.height
+                );
+                clipping.x *= m_TextureAtlas.texture.width;
+                clipping.y *= m_TextureAtlas.texture.height;
+
+                var final_x:uint = (frameBound.containsPoint(localPoint) ? localPoint.x - frameBound.x : uint.MAX_VALUE);
+                var final_y:uint = (frameBound.containsPoint(localPoint) ? localPoint.y - frameBound.y : uint.MAX_VALUE);
+
+                if (final_x != uint.MAX_VALUE &#x26;&#x26; final_y != uint.MAX_VALUE)
+                {
+                    var pixel:uint = m_BitmapData.getPixel32(clipping.x + final_x, clipping.y + final_y);
+                    if (uint((pixel >> 24) &#x26; 0xFF) == 0)
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        return super.hitTest(localPoint, forTouch);
+    }
+}
+</code></pre>
+<p>這個做法的完整討論原本發表在 Starling 官方論壇。</p>
+</section><section aria-labelledby="一個完整的-movieclip-範例長什麼樣子"><h2 id="一個完整的-movieclip-範例長什麼樣子">一個完整的 MovieClip 範例長什麼樣子？</h2>
+<p>下面用一組跑步動畫的 TextureAtlas 示範完整流程：讀圖、建 atlas、建 MovieClip、丟進 Juggler、用觸控事件控制暫停/播放。</p>
+<p><code>StarlingTest.as</code>（進入點，啟動 Starling）：</p>
+<pre><code class="hljs language-actionscript">package
+{
+    import flash.display.Sprite;
+    import starling.core.Starling;
+
+    [SWF(frameRate="60",Width="800",Height="600")]
+    public class StarlingTest extends Sprite
+    {
+        public function StarlingTest()
+        {
+            var star:Starling = new Starling(Main, stage);
+            star.start();
+        }
+    }
+}
+</code></pre>
+<p><code>Main.as</code>（建立 TextureAtlas，產生兩個 MovieClip，一個用自訂的 AlphaMovieClip，一個用原生 MovieClip 對照）：</p>
+<pre><code class="hljs language-actionscript">package {
+    import flash.display.Bitmap;
+    import starling.core.Starling;
+    import starling.display.MovieClip;
+    import starling.display.Sprite;
+    import starling.events.Touch;
+    import starling.events.TouchEvent;
+    import starling.events.TouchPhase;
+    import starling.textures.Texture;
+    import starling.textures.TextureAtlas;
+
+    public class Main extends Sprite {
+        [Embed(source = 'test.xml', mimeType = 'application/octet-stream')]
+        private var AtlasXML:Class;
+
+        [Embed(source = 'test.png')]
+        private var AtlasTexture:Class;
+
+        private var mc:AlphaMovieClip;
+
+        public function Main() {
+            var bitmap:Bitmap = new AtlasTexture();
+            var texture:Texture = Texture.fromBitmap(bitmap);
+            var xml:XML = XML(new AtlasXML());
+            var atlas:TextureAtlas = new TextureAtlas(texture, xml);
+
+            mc = new AlphaMovieClip("run", atlas, bitmap.bitmapData, 30);
+            var m2:MovieClip = new MovieClip(atlas.getTextures("run"), 30);
+            m2.loop = false;
+            m2.x = 200;
+            mc.addEventListener(TouchEvent.TOUCH, touchEventHandler);
+            addChild(mc);
+            addChild(m2);
+
+            Starling.juggler.add(mc);
+            Starling.juggler.add(m2);
+        }
+
+        private function touchEventHandler(event:TouchEvent):void {
+            var touch:Touch = event.getTouch(this);
+            if (!touch) return;
+            if (touch.phase == TouchPhase.BEGAN) {
+                mc.pause();
+            } else if (touch.phase == TouchPhase.ENDED) {
+                mc.play();
+            }
+        }
+    }
+}
+</code></pre>
+<p>素材是一張 12 格跑步動作的 TextureAtlas（<code>test.png</code>），對應的 <code>test.xml</code> 定義每一格在大圖裡的座標：</p>
+<figure class="article-figure"><img src="/images/tech/starling-movieclip-textureatlas-sample.webp" alt="Starling MovieClip 用的跑步動作 TextureAtlas 範例，12 格連續動作圖排列成一張大圖" loading="lazy" class="markdown-img"></figure>
+<pre><code class="hljs language-xml"><span class="hljs-meta">&#x3C;?xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span>?></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">textureAtlas</span> <span class="hljs-attr">imagePath</span>=<span class="hljs-string">"test.png"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0001"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"94"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"156"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"-4"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0002"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"98"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"94"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"150"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"-10"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0003"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"194"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"98"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"148"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"-1"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"-12"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0004"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"294"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"154"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"-6"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0005"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"396"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"98"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"160"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0006"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"164"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"96"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"160"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0007"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"164"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"96"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"158"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"-1"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"-2"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0008"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"198"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"164"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"96"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"152"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"-1"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"-8"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0009"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"296"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"164"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"98"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"150"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"-1"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"-10"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0010"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"396"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"164"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"156"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"-4"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0011"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"326"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"98"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"160"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">subTexture</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"run0012"</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"102"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"326"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"96"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"160"</span> <span class="hljs-attr">frameX</span>=<span class="hljs-string">"-1"</span> <span class="hljs-attr">frameY</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">frameWidth</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">frameHeight</span>=<span class="hljs-string">"160"</span>/></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">textureAtlas</span>></span>
+</code></pre>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Starling MovieClip 可以塞子物件嗎？</span></h3>
+<p>不行。它繼承 <code>Image</code> 而非 <code>DisplayObjectContainer</code>，沒有 <code>addChild()</code>。要做群組動畫，得靠外層的 Sprite 容器把多個 MovieClip 組在一起，而不是往 MovieClip 裡塞東西。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼動畫要用 EnterFrameEvent 而不是 Event.ENTER_FRAME？</span></h3>
+<p>因為只有 <code>EnterFrameEvent</code> 帶 <code>passedTime</code>。把這個值傳給 Juggler 的 <code>advanceTime()</code>，動畫播放速度才會跟真實經過時間掛勾，不受 frame rate 波動影響。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>一個 Juggler 可以管多個動畫嗎？</span></h3>
+<p>可以，也建議這樣做。<code>Starling.juggler</code> 本身就是設計來同時管理任意數量的 <code>IAnimatable</code> 物件；需要獨立生命週期的動畫（例如暫停選單的特效）再另外開一個 Juggler 實例分開管理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>想要動畫命中判斷排除透明區域，一定要自己寫 hitTest 嗎？</span></h3>
+<p>如果用原生 MovieClip，是的，需要覆寫 <code>hitTest()</code> 並比對 <code>BitmapData</code> 的 alpha 值。上面範例的 <code>AlphaMovieClip</code> 就是這個做法；社群論壇上也有現成版本可以直接參考、修改。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Starling Framework, MovieClip API：<a href="https://doc.starling-framework.org/core/starling/display/MovieClip.html" target="_blank" rel="noopener noreferrer">https://doc.starling-framework.org/core/starling/display/MovieClip.html</a></li>
+<li>Starling Framework, Juggler API：<a href="https://doc.starling-framework.org/current/starling/animation/Juggler.html" target="_blank" rel="noopener noreferrer">https://doc.starling-framework.org/current/starling/animation/Juggler.html</a></li>
+<li>Juggler / Tween / DelayedCall 介紹：<a href="http://grayliao.blogspot.tw/2011/11/starling-framework6jugglertweendelaycal.html" target="_blank" rel="noopener noreferrer">http://grayliao.blogspot.tw/2011/11/starling-framework6jugglertweendelaycal.html</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/starling-display-objects-introduction">Starling Display Objects 介紹：Starling 啟動、物件樹與 Stage</a>：同樣聚焦 Starling、ActionScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/starling-display-objects-button-sprite">Starling Display Objects：Button 與 Sprite 實作重點</a>：同樣聚焦 Starling、ActionScript，可接著比較不同情境的做法。</li>
+<li><a href="/post/starling-framework-intro">Starling Framework簡介</a>：同樣聚焦 ActionScript、Starling，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2014-02-11</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

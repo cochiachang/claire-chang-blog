@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prometheus json_exporter 設定教學：把 JSON API 轉成監控指標｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="說明 Prometheus json_exporter 如何讀取 JSON API，設定 JSONPath metrics，並在 Kubernetes Pod 旁部署 exporter。" />
+<meta name="keywords" content="DevOps, Prometheus, json_exporter, Kubernetes, Exporter, 監控" />
+<link rel="canonical" href="https://claire-chang.com/post/prometheus-json-exporter/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Prometheus json_exporter 設定教學：把 JSON API 轉成監控指標｜Claire Chang" />
+<meta property="og:description" content="說明 Prometheus json_exporter 如何讀取 JSON API，設定 JSONPath metrics，並在 Kubernetes Pod 旁部署 exporter。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/prometheus-json-exporter/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_prometheus-exporter-target-info-ab49c852.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_prometheus-exporter-target-info-ab49c852.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Prometheus json_exporter 設定教學：把 JSON API 轉成監控指標｜Claire Chang" />
+<meta name="twitter:description" content="說明 Prometheus json_exporter 如何讀取 JSON API，設定 JSONPath metrics，並在 Kubernetes Pod 旁部署 exporter。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_prometheus-exporter-target-info-ab49c852.jpg" />
+<meta property="article:published_time" content="2023-04-19" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Prometheus" />
+<meta property="article:tag" content="json_exporter" />
+<meta property="article:tag" content="Kubernetes" />
+<meta property="article:tag" content="Exporter" />
+<meta property="article:tag" content="監控" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Prometheus json_exporter 設定教學：把 JSON API 轉成監控指標","item":"https://claire-chang.com/post/prometheus-json-exporter/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/prometheus-json-exporter/#article","headline":"Prometheus json_exporter 設定教學：把 JSON API 轉成監控指標","description":"說明 Prometheus json_exporter 如何讀取 JSON API，設定 JSONPath metrics，並在 Kubernetes Pod 旁部署 exporter。","image":"https://claire-chang.com/images/tech/hero_prometheus-exporter-target-info.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-04-19","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/prometheus-json-exporter/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"DevOps","keywords":"Prometheus, json_exporter, Kubernetes, Exporter, 監控","about":[{"@type":"Thing","name":"監控"}],"mentions":[{"@type":"Thing","name":"Prometheus"},{"@type":"Thing","name":"json_exporter"},{"@type":"Thing","name":"Kubernetes"},{"@type":"Thing","name":"Exporter"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/prometheus-json-exporter/#faq","mainEntity":[{"@type":"Question","name":"Prometheus json_exporter 和一般 Exporter 差在哪裡？","acceptedAnswer":{"@type":"Answer","text":"Prometheus json_exporter 不直接讀系統狀態，而是把遠端 JSON API 轉成 Prometheus metrics。一般 exporter 多半內建特定系統的採集邏輯，例如 node_exporter 讀主機指標，json_exporter 則需要自己寫 JSONPath 設定。"}},{"@type":"Question","name":"json_exporter 一定要和主要服務放同一個 Pod 嗎？","acceptedAnswer":{"@type":"Answer","text":"json_exporter 不一定要和主要服務放同一個 Pod，但在 Kubernetes 裡用 sidecar 部署最容易維持一個 exporter 對應一個 application instance。若 JSON API 是外部設備或無法部署 sidecar 的服務，就要改用 Prometheus target 與 relabeling 管理目標。"}},{"@type":"Question","name":"json_exporter 的 target 要寫在 exporter 還是 Prometheus？","acceptedAnswer":{"@type":"Answer","text":"json_exporter 的 target 通常由 Prometheus scrape 設定傳入 `/probe` query string。這樣做可以讓 Prometheus 保留 target 與 label 資訊，符合 Prometheus 官方把 service discovery 放在 Prometheus 端的設計。"}},{"@type":"Question","name":"JSONPath label 應該怎麼選？","acceptedAnswer":{"@type":"Answer","text":"JSONPath label 應該選穩定、可分辨來源、基數不會爆炸的欄位，例如 stream name、service name 或 instance name。不建議把 request id、timestamp 或高變動字串當 label，否則 Prometheus time series 數量會快速膨脹。"}},{"@type":"Question","name":"json_exporter 回傳 metrics 但 Grafana 查不到怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"先在 Prometheus Targets 確認 scrape 是否成功，再到 Graph 頁面查 metrics 名稱。若 Prometheus 查得到但 Grafana 查不到，多半是 Grafana data source、dashboard query、label selector 或時間範圍設定問題。"}},{"@type":"Question","name":"json_exporter 可以用 HTTP header 呼叫 JSON API 嗎？","acceptedAnswer":{"@type":"Answer","text":"json_exporter 可以在 module 設定 headers。這段範例使用 `X-Dummy: my-test-header`，實務上也可用於內部 API 需要固定 header 的情境；若涉及 token，建議用 Kubernetes Secret 或安全的設定管理方式處理，不要把敏感值寫進文章或公開 repo。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_prometheus-exporter-target-info.webp" alt="graphs of performance analytics on a laptop screen" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=DevOps" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ DevOps</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-04-19">2023-04-19</time></span><span class="post-meta-pill">Prometheus · json_exporter · Kubernetes · Exporter · 監控</span></div></div><h1 class="insights-hero-title">Prometheus json_exporter 設定教學：把 JSON API 轉成監控指標</h1><p class="insights-hero-description">說明 Prometheus json_exporter 如何讀取 JSON API，設定 JSONPath metrics，並在 Kubernetes Pod 旁部署 exporter。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Prometheus json_exporter 適合把既有 JSON API 轉成 Prometheus 可 scrape 的 metrics。核心做法是先用 JSONPath 在 <code>config.yml</code> 定義要抽取的欄位，再讓 Prometheus 透過 <code>/probe</code> 呼叫 json_exporter，最後把回傳的 metrics 接到 Grafana 或 PromQL 查詢。</p>
+</div><section aria-labelledby="prometheus-json-exporter-是什麼"><h2 id="prometheus-json-exporter-是什麼">Prometheus json_exporter 是什麼？</h2>
+<p>Prometheus json_exporter 是一個用 JSONPath 抓取遠端 JSON 的 Prometheus exporter。Prometheus json_exporter 會把 JSON 欄位轉成 Prometheus metrics，讓原本沒有 <code>/metrics</code> endpoint 的服務也能被監控。</p>
+<p>Prometheus exporter 是監控資料的提供端；Prometheus 會定期 scrape exporter endpoint，取得時間序列資料。json_exporter 的定位比較特殊：被監控服務仍然提供 JSON API，json_exporter 負責把 JSON response 轉譯成 Prometheus 格式。</p>
+<p>官方專案對 json_exporter 的描述是「scrapes remote JSON by JSONPath」，也就是用 JSONPath 從遠端 JSON 抽取資料（prometheus-community/json_exporter，存取日期：2026-08-28）。這篇筆記保留我當時以 SRS stream API 為例的設定，把 <code>clients</code>、<code>send_bytes</code>、<code>recv_bytes</code>、<code>frames</code> 與 <code>publish.active</code> 轉成可查詢指標。</p>
+</section><section aria-labelledby="json-exporter-應該怎麼部署在服務旁邊"><h2 id="json-exporter-應該怎麼部署在服務旁邊">json_exporter 應該怎麼部署在服務旁邊？</h2>
+<p>json_exporter 建議和被監控的服務部署在同一個 Pod 或同一台主機旁。Prometheus 官方建議每個 exporter 監控一個 application instance，讓服務發現留在 Prometheus，而不是讓 exporter 自己管理一批目標。</p>
+<p>Prometheus 官方 Writing exporters 文件指出，exporter 最好坐在被監控 instance 旁邊，且一個 exporter 對應一個 application instance（Prometheus Docs，存取日期：2026-08-28）。放在 Kubernetes Pod 裡時，常見做法是 sidecar container：主要服務負責提供 JSON API，json_exporter 在同一個 Pod 內用 <code>127.0.0.1</code> 呼叫主要服務。</p>
+<p>這樣部署的好處有三個：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>設計</th><th>好處</th></tr></thead><tbody><tr><td>json_exporter 與主要服務在同一個 Pod</td><td>可直接用 localhost 呼叫內部 API，減少網路與權限變數</td></tr><tr><td>每個 Pod 各自帶一個 json_exporter</td><td>Prometheus 可以清楚知道是哪個 instance 回傳 metrics</td></tr><tr><td>服務發現交給 Prometheus 或 Prometheus Operator</td><td>target 狀態、label 與 scrape error 更容易排查</td></tr></tbody></table></div>
+<p>我當時的截圖顯示的是 sidecar 部署概念；目前本 repo 沒有該截圖的本機檔案，因此本文改用文字與 YAML 保留部署邏輯。</p>
+</section><section aria-labelledby="json-api-範例資料長什麼樣"><h2 id="json-api-範例資料長什麼樣">JSON API 範例資料長什麼樣？</h2>
+<p>JSON API 範例資料代表 SRS stream 狀態，每個 stream 物件包含連線數、流量、影格與推流狀態。json_exporter 需要先知道 JSON 結構，才能用 JSONPath 抽出 metrics value 與 label。</p>
+<p>這篇筆記使用的 JSON 範例如下：</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"code"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"server"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"vid-69t27o3"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"streams"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"vid-0diw412"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"livestream"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"vhost"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"vid-y000397"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"app"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"live"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"tcUrl"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"rtmp://172.16.46.86:1935/live"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"url"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/live/livestream"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"live_ms"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1681903514993</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"clients"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"frames"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"send_bytes"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">45370</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"recv_bytes"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">34930</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"kbps"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"recv_30s"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"send_30s"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"publish"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"video"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"audio"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>這份資料的監控重點不是整包 JSON，而是 <code>streams[]</code> 裡每條 stream 的數值。實務上會先選出穩定欄位當 label，例如 <code>name</code>；再選出可量測欄位當 value，例如 <code>clients</code>、<code>send_bytes</code>、<code>recv_bytes</code> 與 <code>frames</code>。</p>
+</section><section aria-labelledby="json-exporter-的-config-yml-要怎麼寫"><h2 id="json-exporter-的-config-yml-要怎麼寫">json_exporter 的 config.yml 要怎麼寫？</h2>
+<p>json_exporter 的 <code>config.yml</code> 會定義 module、metrics、JSONPath、labels 與 values。Prometheus 呼叫 <code>/probe?module=default&#x26;target=...</code> 時，json_exporter 會用對應 module 解析目標 JSON。</p>
+<p>當時使用的 <code>config.yml</code> 如下，本文保留欄位與指令意圖：</p>
+<pre><code class="hljs language-yaml"><span class="hljs-attr">modules:</span>
+  <span class="hljs-attr">default:</span>
+    <span class="hljs-attr">metrics:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">server</span>
+        <span class="hljs-attr">path:</span> <span class="hljs-string">"{ .server}"</span>
+
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">stream_clients</span>
+        <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
+        <span class="hljs-attr">help:</span> <span class="hljs-string">Example</span> <span class="hljs-string">of</span> <span class="hljs-string">sub-level</span> <span class="hljs-string">value</span> <span class="hljs-string">scrapes</span> <span class="hljs-string">from</span> <span class="hljs-string">a</span> <span class="hljs-string">json</span>
+        <span class="hljs-attr">path:</span> <span class="hljs-string">'{.streams[?(@.name!="")]}'</span>
+        <span class="hljs-attr">labels:</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">'{.name}'</span>
+        <span class="hljs-attr">values:</span>
+          <span class="hljs-attr">clients:</span> <span class="hljs-string">'{.clients}'</span>
+          <span class="hljs-attr">send_bytes:</span> <span class="hljs-string">'{.send_bytes}'</span>
+          <span class="hljs-attr">recv_bytes:</span> <span class="hljs-string">'{.recv_bytes}'</span>
+          <span class="hljs-attr">frames:</span> <span class="hljs-string">'{.frames}'</span>
+          <span class="hljs-attr">publish:</span> <span class="hljs-string">'{.publish.active}'</span>
+
+    <span class="hljs-attr">headers:</span>
+      <span class="hljs-attr">X-Dummy:</span> <span class="hljs-string">my-test-header</span>
+</code></pre>
+<p>這段設定會從 <code>streams</code> 陣列中挑出 <code>name</code> 不為空的項目，並把同一個物件底下的欄位轉成 metrics。資訊增益：我會把這類設定拆成「label 欄位」與「value 欄位」檢查；label 應該穩定且低基數，value 才是會隨時間變動的監控數字。</p>
+</section><section aria-labelledby="kubernetes-pod-裡如何掛載-json-exporter"><h2 id="kubernetes-pod-裡如何掛載-json-exporter">Kubernetes Pod 裡如何掛載 json_exporter？</h2>
+<p>Kubernetes 裡部署 json_exporter 時，可以把 exporter 當成 sidecar container，並用 ConfigMap 掛載 <code>config.yml</code>。json_exporter container 啟動時用 <code>--config.file</code> 指向掛載後的設定檔。</p>
+<p>這段 Deployment 片段只整理縮排，保留當時的設定意圖：</p>
+<pre><code class="hljs language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">apps/v1</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">Deployment</span>
+<span class="hljs-attr">metadata:</span>
+  <span class="hljs-attr">labels:</span>
+    <span class="hljs-attr">app.kubernetes.io/instance:</span> <span class="hljs-string">srs-core1</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">srs-core1</span>
+  <span class="hljs-attr">namespace:</span> <span class="hljs-string">stu-srs</span>
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-attr">template:</span>
+    <span class="hljs-attr">metadata:</span>
+      <span class="hljs-attr">labels:</span>
+        <span class="hljs-attr">app.kubernetes.io/instance:</span> <span class="hljs-string">srs-core1</span>
+    <span class="hljs-attr">spec:</span>
+      <span class="hljs-attr">containers:</span>
+        <span class="hljs-comment"># Other container here</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">dev-registry.xycloud.org/ldr/streaming/json-exporter</span>
+          <span class="hljs-attr">imagePullPolicy:</span> <span class="hljs-string">IfNotPresent</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">json-exporter</span>
+          <span class="hljs-attr">resources:</span> {}
+          <span class="hljs-attr">terminationMessagePath:</span> <span class="hljs-string">/dev/termination-log</span>
+          <span class="hljs-attr">terminationMessagePolicy:</span> <span class="hljs-string">File</span>
+          <span class="hljs-attr">args:</span> [<span class="hljs-string">"--config.file"</span>, <span class="hljs-string">"/config.yml"</span>]
+          <span class="hljs-attr">volumeMounts:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/config.yml</span>
+              <span class="hljs-attr">name:</span> <span class="hljs-string">json-exporter</span>
+              <span class="hljs-attr">subPath:</span> <span class="hljs-string">config.yml</span>
+      <span class="hljs-attr">volumes:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">configMap:</span>
+            <span class="hljs-attr">defaultMode:</span> <span class="hljs-number">420</span>
+            <span class="hljs-attr">name:</span> <span class="hljs-string">json-exporter</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">json-exporter</span>
+</code></pre>
+<p>正式環境還要補上 container port、readiness probe、resource requests/limits，以及對外供 Prometheus scrape 的 Service。這段範例沒有包含 Service 與 ServiceMonitor，因此這篇只把缺口標出，不替實際叢集 invent selector。</p>
+</section><section aria-labelledby="如何測試-json-exporter-是否吐出-metrics"><h2 id="如何測試-json-exporter-是否吐出-metrics">如何測試 json_exporter 是否吐出 metrics？</h2>
+<p>測試 json_exporter 時，先進入同一個 Pod 或同一個 network namespace，直接 curl <code>/probe</code> endpoint。只要 <code>target</code> 指到 JSON API，json_exporter 就會依 <code>module</code> 設定回傳 Prometheus metrics。</p>
+<p>這篇筆記保留的測試指令如下：</p>
+<pre><code class="hljs language-bash">curl <span class="hljs-string">"http://localhost:7979/probe?target=http://127.0.0.1:1985/api/v1/streams/"</span>
+</code></pre>
+<p>若有多個 module，建議明確帶上 <code>module=default</code>：</p>
+<pre><code class="hljs language-bash">curl <span class="hljs-string">"http://localhost:7979/probe?module=default&#x26;target=http://127.0.0.1:1985/api/v1/streams/"</span>
+</code></pre>
+<p>測試時先看三件事：</p>
+<ol>
+<li><code>/probe</code> 是否回傳 Prometheus text format，而不是 JSON 或 HTML error。</li>
+<li>metrics 名稱是否符合預期，例如 <code>stream_clients_clients</code>、<code>stream_clients_send_bytes</code>。</li>
+<li>label 是否出現預期值，例如 <code>name="livestream"</code>。</li>
+</ol>
+</section><section aria-labelledby="prometheus-要怎麼-scrape-json-exporter"><h2 id="prometheus-要怎麼-scrape-json-exporter">Prometheus 要怎麼 scrape json_exporter？</h2>
+<p>Prometheus scrape json_exporter 時，通常把 exporter 本身當 target，再用 <code>params.target</code> 指定真正的 JSON API。Prometheus 設定檔可透過 <code>metrics_path</code>、<code>params</code> 與 static 或動態 target 設定完成。</p>
+<p>Prometheus configuration 文件說明，<code>scrape_config</code> 會定義 targets 與 scrape 參數，<code>metrics_path</code> 預設是 <code>/metrics</code>，但可以改成其他 HTTP path（Prometheus Docs，存取日期：2026-08-28）。json_exporter 的常見寫法會把 <code>metrics_path</code> 設成 <code>/probe</code>：</p>
+<pre><code class="hljs language-yaml"><span class="hljs-attr">scrape_configs:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">job_name:</span> <span class="hljs-string">srs-json-exporter</span>
+    <span class="hljs-attr">metrics_path:</span> <span class="hljs-string">/probe</span>
+    <span class="hljs-attr">params:</span>
+      <span class="hljs-attr">module:</span> [<span class="hljs-string">default</span>]
+      <span class="hljs-attr">target:</span> [<span class="hljs-string">http://127.0.0.1:1985/api/v1/streams/</span>]
+    <span class="hljs-attr">static_configs:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">targets:</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-string">json-exporter.stu-srs.svc.cluster.local:7979</span>
+</code></pre>
+<p>若使用 Prometheus Operator，通常會改用 ServiceMonitor 管理 scrape 設定。這時要確認 Service label、ServiceMonitor selector、port name 與 namespaceSelector 都對得上；相關排查可接著看站內文章〈Prometheus 如何查看監控目標的 exporter 資訊〉。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Prometheus json_exporter 和一般 Exporter 差在哪裡？</span></h3>
+<p>Prometheus json_exporter 不直接讀系統狀態，而是把遠端 JSON API 轉成 Prometheus metrics。一般 exporter 多半內建特定系統的採集邏輯，例如 node_exporter 讀主機指標，json_exporter 則需要自己寫 JSONPath 設定。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>json_exporter 一定要和主要服務放同一個 Pod 嗎？</span></h3>
+<p>json_exporter 不一定要和主要服務放同一個 Pod，但在 Kubernetes 裡用 sidecar 部署最容易維持一個 exporter 對應一個 application instance。若 JSON API 是外部設備或無法部署 sidecar 的服務，就要改用 Prometheus target 與 relabeling 管理目標。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>json_exporter 的 target 要寫在 exporter 還是 Prometheus？</span></h3>
+<p>json_exporter 的 target 通常由 Prometheus scrape 設定傳入 <code>/probe</code> query string。這樣做可以讓 Prometheus 保留 target 與 label 資訊，符合 Prometheus 官方把 service discovery 放在 Prometheus 端的設計。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>JSONPath label 應該怎麼選？</span></h3>
+<p>JSONPath label 應該選穩定、可分辨來源、基數不會爆炸的欄位，例如 stream name、service name 或 instance name。不建議把 request id、timestamp 或高變動字串當 label，否則 Prometheus time series 數量會快速膨脹。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>json_exporter 回傳 metrics 但 Grafana 查不到怎麼辦？</span></h3>
+<p>先在 Prometheus Targets 確認 scrape 是否成功，再到 Graph 頁面查 metrics 名稱。若 Prometheus 查得到但 Grafana 查不到，多半是 Grafana data source、dashboard query、label selector 或時間範圍設定問題。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>json_exporter 可以用 HTTP header 呼叫 JSON API 嗎？</span></h3>
+<p>json_exporter 可以在 module 設定 headers。這段範例使用 <code>X-Dummy: my-test-header</code>，實務上也可用於內部 API 需要固定 header 的情境；若涉及 token，建議用 Kubernetes Secret 或安全的設定管理方式處理，不要把敏感值寫進文章或公開 repo。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Prometheus Docs：<a href="https://prometheus.io/docs/instrumenting/writing_exporters/" target="_blank" rel="noopener noreferrer">Writing exporters</a>（存取日期：2026-08-28）</li>
+<li>Prometheus Docs：<a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/" target="_blank" rel="noopener noreferrer">Configuration</a>（存取日期：2026-08-28）</li>
+<li>prometheus-community/json_exporter GitHub repository：<a href="https://github.com/prometheus-community/json_exporter" target="_blank" rel="noopener noreferrer">https://github.com/prometheus-community/json_exporter</a>（存取日期：2026-08-28）</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/prometheus-exporter-metrics">Prometheus Exporter 是什麼：資料格式、Targets 與 PromQL 查詢</a>：同樣聚焦 Prometheus、Exporter，可接著比較不同情境的做法。</li>
+<li><a href="/post/prometheus-exporter-target-info">Prometheus 如何查看監控目標的 exporter 資訊</a>：同樣聚焦 Prometheus、Kubernetes，可接著比較不同情境的做法。</li>
+<li><a href="/post/prometheus-operator">Prometheus Operator 是什麼？Kubernetes 監控的自動化利器</a>：同樣聚焦 Prometheus、Kubernetes，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。這篇筆記最早發布於 2023-04-19，本文保留 SRS JSON API、json_exporter <code>config.yml</code>、Kubernetes sidecar 部署片段與 curl 測試指令，並補上 Prometheus scrape 設定、FAQ 與官方參考資料。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-04-19</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

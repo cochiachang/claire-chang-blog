@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular HTTP API 溝通教學：HttpClient、Observable 與 CRUD 範例｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="以 Angular Tour of Heroes 範例說明 HttpClient 如何取得、新增、修改、刪除 API 資料，並整理 Observable、subscribe、async pipe 與搜尋功能的用法。" />
+<meta name="keywords" content="前端開發, Angular, HttpClient, RxJS, API" />
+<link rel="canonical" href="https://claire-chang.com/post/angular-http-api-communication-tutorial/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Angular HTTP API 溝通教學：HttpClient、Observable 與 CRUD 範例｜Claire Chang" />
+<meta property="og:description" content="以 Angular Tour of Heroes 範例說明 HttpClient 如何取得、新增、修改、刪除 API 資料，並整理 Observable、subscribe、async pipe 與搜尋功能的用法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/angular-http-api-communication-tutorial/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_angular-httpclient-guide-1c7a2909.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_angular-httpclient-guide-1c7a2909.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Angular HTTP API 溝通教學：HttpClient、Observable 與 CRUD 範例｜Claire Chang" />
+<meta name="twitter:description" content="以 Angular Tour of Heroes 範例說明 HttpClient 如何取得、新增、修改、刪除 API 資料，並整理 Observable、subscribe、async pipe 與搜尋功能的用法。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_angular-httpclient-guide-1c7a2909.jpg" />
+<meta property="article:published_time" content="2017-12-26" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Angular" />
+<meta property="article:tag" content="HttpClient" />
+<meta property="article:tag" content="RxJS" />
+<meta property="article:tag" content="API" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"Angular HTTP API 溝通教學：HttpClient、Observable 與 CRUD 範例","item":"https://claire-chang.com/post/angular-http-api-communication-tutorial/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/angular-http-api-communication-tutorial/#article","headline":"Angular HTTP API 溝通教學：HttpClient、Observable 與 CRUD 範例","description":"以 Angular Tour of Heroes 範例說明 HttpClient 如何取得、新增、修改、刪除 API 資料，並整理 Observable、subscribe、async pipe 與搜尋功能的用法。","image":"https://claire-chang.com/images/tech/hero_angular-httpclient-guide.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2017-12-26","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/angular-http-api-communication-tutorial/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"前端開發","keywords":"Angular, HttpClient, RxJS, API","about":[{"@type":"Thing","name":"API"}],"mentions":[{"@type":"Thing","name":"Angular"},{"@type":"Thing","name":"HttpClient"},{"@type":"Thing","name":"RxJS"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/angular-http-api-communication-tutorial/#faq","mainEntity":[{"@type":"Question","name":"Angular HttpClient 為什麼一定要 subscribe？","acceptedAnswer":{"@type":"Answer","text":"Angular `HttpClient` 回傳的 `Observable` 是 lazy 的資料流。沒有 `subscribe()`、`async pipe` 或其他訂閱方式時，HTTP request 不會真正送到伺服器。"}},{"@type":"Question","name":"Angular HttpClient GET 會回傳幾次資料？","acceptedAnswer":{"@type":"Answer","text":"Angular `HttpClient.get()` 通常只會回傳一次 API response，接著就完成。一般 `Observable` 可以持續送出多次資料，但 HTTP request 的生命週期通常是「送出一次、收到一次、結束」。"}},{"@type":"Question","name":"Angular HttpClient 的 generic 會檢查 JSON 格式嗎？","acceptedAnswer":{"@type":"Answer","text":"Angular `http.get\u003cHero[]>()` 的 generic 只提供 TypeScript 編譯期型別提示，不會在 runtime 檢查 API 回傳是否真的符合 `Hero[]`。重要 API 建議在資料進入應用程式邊界時再做驗證或防呆。"}},{"@type":"Question","name":"Angular 搜尋功能為什麼常用 async pipe？","acceptedAnswer":{"@type":"Answer","text":"Angular `async pipe` 可以在 template 自動訂閱 `Observable`，資料更新時刷新畫面，component 銷毀時也會取消訂閱。搜尋結果這種畫面資料流很適合交給 `async pipe` 處理。"}},{"@type":"Question","name":"Angular 搜尋功能為什麼要用 switchMap？","acceptedAnswer":{"@type":"Answer","text":"Angular 搜尋功能會隨著鍵盤輸入送出多次 request，舊 request 可能比新 request 晚回來。`switchMap()` 會只保留最新搜尋字串對應的結果，避免畫面被過期資料覆蓋。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_angular-httpclient-guide.webp" alt="Angular HttpClient 與 API 請求流程示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 前端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2017-12-26">2017-12-26</time></span><span class="post-meta-pill">Angular · HttpClient · RxJS · API</span></div></div><h1 class="insights-hero-title">Angular HTTP API 溝通教學：HttpClient、Observable 與 CRUD 範例</h1><p class="insights-hero-description">以 Angular Tour of Heroes 範例說明 HttpClient 如何取得、新增、修改、刪除 API 資料，並整理 Observable、subscribe、async pipe 與搜尋功能的用法。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Angular 與 API 溝通時，可以把讀取、更新、新增、刪除資料集中放在 service 裡，再透過 <code>HttpClient</code> 回傳 <code>Observable</code> 給 component 使用。<code>HttpClient</code> 的請求不會在建立時立刻送出，而是在 <code>subscribe</code> 或 <code>async pipe</code> 訂閱後才真正執行，這是新手最容易漏掉的一點。</p>
+<p>這篇沿用 Angular Tour of Heroes 的 <code>HeroService</code> 範例，整理 <code>GET</code>、<code>PUT</code>、<code>POST</code>、<code>DELETE</code>、錯誤處理與搜尋功能。閱讀前如果先理解 Reactive Programming 與 RxJS，會更容易看懂 <code>Observable</code>、<code>Subject</code>、<code>pipe</code> 與 <code>switchMap</code> 的角色。</p>
+</div><section aria-labelledby="angular-如何用-httpclient-取得-api-資料"><h2 id="angular-如何用-httpclient-取得-api-資料">Angular 如何用 HttpClient 取得 API 資料？</h2>
+<p>Angular <code>HttpClient.get()</code> 適合放在 service 裡，讓 component 不直接碰 API 位址。<code>HttpClient.get()</code> 會回傳 <code>Observable</code>，訂閱之後才送出 HTTP request。</p>
+<p>先把 <code>src/app/hero.service.ts</code> 從讀取假資料，改成呼叫 API。這裡的 <code>heroesUrl</code> 指向 <code>api/heroes</code>，也就是 Tour of Heroes 範例中的英雄資料端點。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Injectable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Observable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/Observable'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-keyword">of</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/observable/of'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">HttpClient</span>, <span class="hljs-title class_">HttpHeaders</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/common/http'</span>;
+
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Hero</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./hero'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">HEROES</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./mock-heroes'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">MessageService</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./message.service'</span>;
+
+<span class="hljs-meta">@Injectable</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HeroService</span> {
+  <span class="hljs-keyword">private</span> heroesUrl = <span class="hljs-string">'api/heroes'</span>;
+
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">
+    <span class="hljs-keyword">private</span> <span class="hljs-attr">http</span>: <span class="hljs-title class_">HttpClient</span>,
+    <span class="hljs-keyword">private</span> <span class="hljs-attr">messageService</span>: <span class="hljs-title class_">MessageService</span>,
+  </span>) {}
+
+  <span class="hljs-comment">/** 舊寫法：從 mock data 取得資料
+  getHeroes(): Observable&#x3C;Hero[]> {
+    this.messageService.add('HeroService: fetched heroes');
+    return of(HEROES);
+  }
+  */</span>
+
+  <span class="hljs-title function_">getHeroes</span>(): <span class="hljs-title class_">Observable</span>&#x3C;<span class="hljs-title class_">Hero</span>[]> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">http</span>.<span class="hljs-property">get</span>&#x3C;<span class="hljs-title class_">Hero</span>[]>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">heroesUrl</span>);
+  }
+
+  <span class="hljs-title function_">getHero</span>(<span class="hljs-attr">id</span>: <span class="hljs-built_in">number</span>): <span class="hljs-title class_">Observable</span>&#x3C;<span class="hljs-title class_">Hero</span>> {
+    <span class="hljs-keyword">const</span> url = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.heroesUrl}</span>/<span class="hljs-subst">${id}</span>`</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">http</span>.<span class="hljs-property">get</span>&#x3C;<span class="hljs-title class_">Hero</span>>(url);
+  }
+}
+</code></pre>
+<p>所有 <code>HttpClient</code> 方法都會回傳 <code>Observable</code>。一般 <code>Observable</code> 可以持續送出多次資料，但 <code>http.get()</code> 通常只會送出一次 API 回應，收到資料後就完成。<code>http.get()</code> 預設會把回應當成 JSON，並依照 TypeScript generic 提供開發時的型別提示。</p>
+</section><section aria-labelledby="angular-httpclient-發生錯誤時要怎麼處理"><h2 id="angular-httpclient-發生錯誤時要怎麼處理">Angular HttpClient 發生錯誤時要怎麼處理？</h2>
+<p>Angular <code>HttpClient</code> 錯誤處理通常會放在 RxJS <code>pipe()</code> 裡。用 <code>catchError()</code> 回傳預設值，可以避免 API 失敗時整個畫面直接中斷。</p>
+<p>先導入需要的 RxJS operators：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> { catchError, map, tap } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/operators'</span>;
+</code></pre>
+<p>接著用 <code>pipe()</code> 擴展 <code>Observable</code>，並在裡面接上 <code>catchError()</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-title function_">getHeroes</span>(): <span class="hljs-title class_">Observable</span>&#x3C;<span class="hljs-title class_">Hero</span>[]> {
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">http</span>.<span class="hljs-property">get</span>&#x3C;<span class="hljs-title class_">Hero</span>[]>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">heroesUrl</span>).<span class="hljs-title function_">pipe</span>(
+    <span class="hljs-title function_">catchError</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">handleError</span>(<span class="hljs-string">'getHeroes'</span>, [])),
+  );
+}
+</code></pre>
+<p>錯誤處理函式可以寫成通用 helper。<code>operation</code> 用來標記是哪一個操作失敗，<code>result</code> 則是 API 失敗時要回傳的預設資料。</p>
+<pre><code class="hljs language-ts"><span class="hljs-comment">/**
+ * 處理 HTTP 錯誤，讓應用程式可以繼續運作而不直接丟出 exception。
+ * <span class="hljs-doctag">@param</span> <span class="hljs-variable">operation</span> - 失敗的操作，例如 getHeroes
+ * <span class="hljs-doctag">@param</span> <span class="hljs-variable">result</span> - API 失敗時要回傳的 Observable 內容
+ */</span>
+<span class="hljs-keyword">private</span> handleError&#x3C;T>(operation = <span class="hljs-string">'operation'</span>, <span class="hljs-attr">result</span>?: T) {
+  <span class="hljs-keyword">return</span> (<span class="hljs-attr">error</span>: <span class="hljs-built_in">any</span>): <span class="hljs-title class_">Observable</span>&#x3C;T> => {
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">of</span>(result <span class="hljs-keyword">as</span> T);
+  };
+}
+</code></pre>
+<p>在這個例子中，<code>T</code> 代表類型參數。當 <code>getHeroes()</code> 呼叫 <code>handleError('getHeroes', [])</code> 時，<code>T</code> 會對應到 <code>Hero[]</code>，所以 API 失敗仍能回傳 component 預期的資料型態。</p>
+</section><section aria-labelledby="angular-如何用-put-修改伺服器資料"><h2 id="angular-如何用-put-修改伺服器資料">Angular 如何用 PUT 修改伺服器資料？</h2>
+<p>Angular 修改伺服器資料時常用 <code>HttpClient.put()</code>。<code>put()</code> 主要接收三個參數：API 網址、要更新的資料，以及 headers 等 request options。</p>
+<figure class="article-figure"><img src="/images/tech/angular-http-api-communication-tutorial-put-options.png" alt="Angular HttpClient put 方法參數截圖" loading="lazy" class="markdown-img"></figure>
+<p>在 <code>HeroService</code> 裡新增更新英雄資料的方法：</p>
+<pre><code class="hljs language-ts"><span class="hljs-comment">/** 更新伺服器上的資料 */</span>
+<span class="hljs-title function_">updateHero</span>(<span class="hljs-attr">hero</span>: <span class="hljs-title class_">Hero</span>): <span class="hljs-title class_">Observable</span>&#x3C;<span class="hljs-built_in">any</span>> {
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">http</span>.<span class="hljs-title function_">put</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">heroesUrl</span>, hero, httpOptions).<span class="hljs-title function_">pipe</span>(
+    <span class="hljs-title function_">tap</span>(<span class="hljs-function"><span class="hljs-params">_</span> =></span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`updated hero id=<span class="hljs-subst">${hero.id}</span>`</span>)),
+    <span class="hljs-title function_">catchError</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">handleError</span>&#x3C;<span class="hljs-built_in">any</span>>(<span class="hljs-string">'updateHero'</span>)),
+  );
+}
+</code></pre>
+<p><code>httpOptions</code> 常見用途是設定 headers。傳送 JSON 給 API 時，可以明確宣告 <code>Content-Type</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> httpOptions = {
+  <span class="hljs-attr">headers</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">HttpHeaders</span>({ <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span> }),
+};
+</code></pre>
+<p>component 呼叫 <code>updateHero()</code> 時，也要訂閱 <code>Observable</code>。以下範例是在儲存完成後回到上一頁：</p>
+<pre><code class="hljs language-ts"><span class="hljs-title function_">save</span>(): <span class="hljs-built_in">void</span> {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroService</span>.<span class="hljs-title function_">updateHero</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hero</span>)
+    .<span class="hljs-title function_">subscribe</span>(<span class="hljs-function">() =></span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">goBack</span>());
+}
+</code></pre>
+<p>RxJS 裡常見的兩個角色是 <code>Observable</code> 和 <code>Subscription</code>。<code>Observable</code> 負責產生資料，但建立後不會馬上啟動；<code>Subscription</code> 則代表某個訂閱動作，訂閱後才開始執行資料流。</p>
+</section><section aria-labelledby="angular-如何用-post-新增伺服器資料"><h2 id="angular-如何用-post-新增伺服器資料">Angular 如何用 POST 新增伺服器資料？</h2>
+<p>Angular 新增資料時常用 <code>HttpClient.post()</code>。<code>post()</code> 會把新物件送到 API，伺服器通常會回傳新增後的完整資料，例如補上 <code>id</code> 的英雄物件。</p>
+<p>在 <code>HeroService</code> 新增 <code>addHero()</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-title function_">addHero</span>(<span class="hljs-attr">hero</span>: <span class="hljs-title class_">Hero</span>): <span class="hljs-title class_">Observable</span>&#x3C;<span class="hljs-title class_">Hero</span>> {
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">http</span>.<span class="hljs-property">post</span>&#x3C;<span class="hljs-title class_">Hero</span>>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">heroesUrl</span>, hero, httpOptions).<span class="hljs-title function_">pipe</span>(
+    <span class="hljs-title function_">catchError</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">handleError</span>&#x3C;<span class="hljs-title class_">Hero</span>>(<span class="hljs-string">'addHero'</span>)),
+  );
+}
+</code></pre>
+<p>component 使用 <code>addHero()</code> 時，可以先整理輸入值，再把 API 回傳的新英雄塞回列表：</p>
+<pre><code class="hljs language-ts"><span class="hljs-title function_">add</span>(<span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">void</span> {
+  name = name.<span class="hljs-title function_">trim</span>();
+  <span class="hljs-keyword">if</span> (!name) {
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroService</span>.<span class="hljs-title function_">addHero</span>({ name } <span class="hljs-keyword">as</span> <span class="hljs-title class_">Hero</span>)
+    .<span class="hljs-title function_">subscribe</span>(<span class="hljs-function"><span class="hljs-params">hero</span> =></span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroes</span>.<span class="hljs-title function_">push</span>(hero);
+    });
+}
+</code></pre>
+<p><code>{ name } as Hero</code> 代表建立一個只有 <code>name</code> 的 <code>Hero</code> 物件。這個物件送到 API 後，伺服器會負責建立完整資料，回傳後再更新畫面上的 <code>heroes</code> 陣列。</p>
+</section><section aria-labelledby="angular-如何用-delete-刪除伺服器資料"><h2 id="angular-如何用-delete-刪除伺服器資料">Angular 如何用 DELETE 刪除伺服器資料？</h2>
+<p>Angular 刪除資料時常用 <code>HttpClient.delete()</code>。即使刪除成功後不需要處理回傳值，也仍然要訂閱 <code>Observable</code>，否則 HTTP delete request 不會送出。</p>
+<p>在 <code>HeroService</code> 新增 <code>deleteHero()</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-title function_">deleteHero</span>(<span class="hljs-attr">hero</span>: <span class="hljs-title class_">Hero</span> | <span class="hljs-built_in">number</span>): <span class="hljs-title class_">Observable</span>&#x3C;<span class="hljs-title class_">Hero</span>> {
+  <span class="hljs-keyword">const</span> id = <span class="hljs-keyword">typeof</span> hero === <span class="hljs-string">'number'</span> ? hero : hero.<span class="hljs-property">id</span>;
+  <span class="hljs-keyword">const</span> url = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.heroesUrl}</span>/<span class="hljs-subst">${id}</span>`</span>;
+
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">http</span>.<span class="hljs-property">delete</span>&#x3C;<span class="hljs-title class_">Hero</span>>(url, httpOptions);
+}
+</code></pre>
+<p>component 呼叫刪除時，可以先從畫面列表移除，再呼叫 API：</p>
+<pre><code class="hljs language-ts"><span class="hljs-title function_">delete</span>(<span class="hljs-attr">hero</span>: <span class="hljs-title class_">Hero</span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroes</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroes</span>.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">h</span> =></span> h !== hero);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroService</span>.<span class="hljs-title function_">deleteHero</span>(hero).<span class="hljs-title function_">subscribe</span>();
+}
+</code></pre>
+<p>這段程式碼的重點是最後的 <code>subscribe()</code>。<code>HttpClient.delete()</code> 回傳的 <code>Observable</code> 需要被訂閱才會執行，所以不能因為「刪除完成後沒有下一步」就省略訂閱。</p>
+</section><section aria-labelledby="angular-搜尋功能如何搭配-subject-async-pipe-與-switchmap"><h2 id="angular-搜尋功能如何搭配-subject-async-pipe-與-switchmap">Angular 搜尋功能如何搭配 Subject、async pipe 與 switchMap？</h2>
+<p>Angular 搜尋功能可以用 <code>Subject</code> 收集鍵盤輸入，再用 <code>debounceTime()</code>、<code>distinctUntilChanged()</code> 與 <code>switchMap()</code> 控制 API 查詢節奏。<code>async pipe</code> 會自動訂閱畫面上的 <code>Observable</code>。</p>
+<p>先在 <code>src/app/hero.service.ts</code> 增加搜尋方法。若搜尋字串是空白，就直接回傳空陣列，避免送出沒有意義的 API request。</p>
+<pre><code class="hljs language-ts"><span class="hljs-title function_">searchHeroes</span>(<span class="hljs-attr">term</span>: <span class="hljs-built_in">string</span>): <span class="hljs-title class_">Observable</span>&#x3C;<span class="hljs-title class_">Hero</span>[]> {
+  <span class="hljs-keyword">if</span> (!term.<span class="hljs-title function_">trim</span>()) {
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">of</span>([]);
+  }
+
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">http</span>.<span class="hljs-property">get</span>&#x3C;<span class="hljs-title class_">Hero</span>[]>(<span class="hljs-string">`api/heroes/?name=<span class="hljs-subst">${term}</span>`</span>).<span class="hljs-title function_">pipe</span>(
+    <span class="hljs-title function_">tap</span>(<span class="hljs-function"><span class="hljs-params">_</span> =></span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`found heroes matching "<span class="hljs-subst">${term}</span>"`</span>)),
+    <span class="hljs-title function_">catchError</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">handleError</span>&#x3C;<span class="hljs-title class_">Hero</span>[]>(<span class="hljs-string">'searchHeroes'</span>, [])),
+  );
+}
+</code></pre>
+<p>建立 <code>HeroSearchComponent</code>：</p>
+<pre><code class="hljs language-bash">ng generate component hero-search
+</code></pre>
+<p>修改 <code>src/app/hero-search/hero-search.component.html</code>：</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"search-component"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">h4</span>></span>Hero Search<span class="hljs-tag">&#x3C;/<span class="hljs-name">h4</span>></span>
+
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> #<span class="hljs-attr">searchBox</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"search-box"</span> (<span class="hljs-attr">keyup</span>)=<span class="hljs-string">"search(searchBox.value)"</span> /></span>
+
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"search-result"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> *<span class="hljs-attr">ngFor</span>=<span class="hljs-string">"let hero of heroes$ | async"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">routerLink</span>=<span class="hljs-string">"/detail/{{hero.id}}"</span>></span>
+        {{hero.name}}
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p><code>heroes$ | async</code> 這一段很關鍵。<code>heroes$</code> 是 <code>Observable&#x3C;Hero[]></code>，不能直接當一般陣列使用；<code>async pipe</code> 會替 template 自動訂閱資料流，資料更新時也會更新畫面。</p>
+<p>接著修改 <code>src/app/hero-search/hero-search.component.ts</code>：</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Component</span>, <span class="hljs-title class_">OnInit</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Observable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/Observable'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Subject</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/Subject'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-keyword">of</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/observable/of'</span>;
+
+<span class="hljs-keyword">import</span> {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/operators'</span>;
+
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Hero</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'../hero'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">HeroService</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'../hero.service'</span>;
+
+<span class="hljs-meta">@Component</span>({
+  <span class="hljs-attr">selector</span>: <span class="hljs-string">'app-hero-search'</span>,
+  <span class="hljs-attr">templateUrl</span>: <span class="hljs-string">'./hero-search.component.html'</span>,
+  <span class="hljs-attr">styleUrls</span>: [<span class="hljs-string">'./hero-search.component.css'</span>],
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HeroSearchComponent</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OnInit</span> {
+  <span class="hljs-attr">heroes$</span>: <span class="hljs-title class_">Observable</span>&#x3C;<span class="hljs-title class_">Hero</span>[]>;
+  <span class="hljs-keyword">private</span> searchTerms = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Subject</span>&#x3C;<span class="hljs-built_in">string</span>>();
+
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> <span class="hljs-attr">heroService</span>: <span class="hljs-title class_">HeroService</span></span>) {}
+
+  <span class="hljs-title function_">search</span>(<span class="hljs-attr">term</span>: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">void</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">searchTerms</span>.<span class="hljs-title function_">next</span>(term);
+  }
+
+  <span class="hljs-title function_">ngOnInit</span>(): <span class="hljs-built_in">void</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroes$</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">searchTerms</span>.<span class="hljs-title function_">pipe</span>(
+      <span class="hljs-title function_">debounceTime</span>(<span class="hljs-number">300</span>),
+      <span class="hljs-title function_">distinctUntilChanged</span>(),
+      <span class="hljs-title function_">switchMap</span>(<span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">term</span>: <span class="hljs-built_in">string</span></span>) =></span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">heroService</span>.<span class="hljs-title function_">searchHeroes</span>(term)),
+    );
+  }
+}
+</code></pre>
+<p><code>Subject</code> 本身也是一種 <code>Observable</code>，可以用 <code>next(value)</code> 把新值推進資料流。這裡的 <code>search()</code> 與 <code>keyup</code> 事件綁定，所以每次使用者輸入文字時，<code>searchTerms</code> 都會收到新的搜尋字串。</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> #<span class="hljs-attr">searchBox</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"search-box"</span> (<span class="hljs-attr">keyup</span>)=<span class="hljs-string">"search(searchBox.value)"</span> /></span>
+</code></pre>
+<p>搜尋資料流的三個 operator 分工如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>Operator</th><th>作用</th><th>為什麼搜尋功能需要</th></tr></thead><tbody><tr><td><code>debounceTime(300)</code></td><td>每次輸入後等待 300 毫秒</td><td>避免每打一個字就立刻查 API</td></tr><tr><td><code>distinctUntilChanged()</code></td><td>搜尋字串與上次相同就忽略</td><td>避免重複查同一個關鍵字</td></tr><tr><td><code>switchMap()</code></td><td>新查詢進來時只保留最新結果</td><td>避免較晚回來的舊 request 蓋掉新結果</td></tr></tbody></table></div>
+<p><code>switchMap()</code> 可以處理多個 HTTP request 回傳順序不固定的問題。即使前一個 HTTP request 還在進行，<code>switchMap()</code> 也只會把最新搜尋字串對應的結果交給畫面使用；舊結果抵達應用程式前會被丟棄。</p>
+<p>完成後，搜尋元件畫面會像下面這樣：</p>
+<figure class="article-figure"><img src="/images/tech/angular-http-api-communication-tutorial-hero-search.png" alt="Angular Tour of Heroes 搜尋結果範例" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="angular-httpclient-新手最容易漏掉哪些細節"><h2 id="angular-httpclient-新手最容易漏掉哪些細節">Angular HttpClient 新手最容易漏掉哪些細節？</h2>
+<p>Angular HttpClient 新手最容易漏掉三件事：沒有訂閱就不會送出請求、TypeScript generic 不等於 runtime 驗證，以及搜尋時要避免舊結果覆蓋新結果。</p>
+<p>把這篇的重點整理成檢查表：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>檢查項目</th><th>判斷方式</th></tr></thead><tbody><tr><td>是否真的送出 request</td><td>確認有 <code>subscribe()</code>、<code>async pipe</code>，或其他訂閱方式</td></tr><tr><td>回傳型別是否符合畫面需要</td><td><code>http.get&#x3C;Hero[]>()</code> 只能提供編譯期提示，API 邊界仍要小心資料格式</td></tr><tr><td>API 失敗時畫面是否能繼續運作</td><td>用 <code>catchError()</code> 回傳預設值，避免 component 收到非預期資料</td></tr><tr><td>修改資料是否有設定 headers</td><td>傳送 JSON 時設定 <code>Content-Type: application/json</code></td></tr><tr><td>搜尋是否造成過多 request</td><td>用 <code>debounceTime()</code> 與 <code>distinctUntilChanged()</code> 控制查詢頻率</td></tr><tr><td>搜尋結果是否可能被舊 request 覆蓋</td><td>用 <code>switchMap()</code> 只保留最新搜尋結果</td></tr></tbody></table></div>
+<p>實作 CRUD 時，我會先把 API 呼叫都集中在 service，再讓 component 只處理畫面事件與狀態更新。這樣後續要加錯誤訊息、loading 狀態、token header 或測試替身，都不需要到每個 component 裡翻找 API 邏輯。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular HttpClient 為什麼一定要 subscribe？</span></h3>
+<p>Angular <code>HttpClient</code> 回傳的 <code>Observable</code> 是 lazy 的資料流。沒有 <code>subscribe()</code>、<code>async pipe</code> 或其他訂閱方式時，HTTP request 不會真正送到伺服器。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular HttpClient GET 會回傳幾次資料？</span></h3>
+<p>Angular <code>HttpClient.get()</code> 通常只會回傳一次 API response，接著就完成。一般 <code>Observable</code> 可以持續送出多次資料，但 HTTP request 的生命週期通常是「送出一次、收到一次、結束」。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular HttpClient 的 generic 會檢查 JSON 格式嗎？</span></h3>
+<p>Angular <code>http.get&#x3C;Hero[]>()</code> 的 generic 只提供 TypeScript 編譯期型別提示，不會在 runtime 檢查 API 回傳是否真的符合 <code>Hero[]</code>。重要 API 建議在資料進入應用程式邊界時再做驗證或防呆。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular 搜尋功能為什麼常用 async pipe？</span></h3>
+<p>Angular <code>async pipe</code> 可以在 template 自動訂閱 <code>Observable</code>，資料更新時刷新畫面，component 銷毀時也會取消訂閱。搜尋結果這種畫面資料流很適合交給 <code>async pipe</code> 處理。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Angular 搜尋功能為什麼要用 switchMap？</span></h3>
+<p>Angular 搜尋功能會隨著鍵盤輸入送出多次 request，舊 request 可能比新 request 晚回來。<code>switchMap()</code> 會只保留最新搜尋字串對應的結果，避免畫面被過期資料覆蓋。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>TechBridge：<a href="https://blog.techbridge.cc/2016/05/28/reactive-programming-intro-by-rxjs/" target="_blank" rel="noopener noreferrer">Reactive Programming 簡介與教學（以 RxJS 為例）</a></li>
+<li>ReactiveX：<a href="https://reactivex.io/" target="_blank" rel="noopener noreferrer">ReactiveX 官方網站</a></li>
+<li>iT 邦幫忙：<a href="https://ithelp.ithome.com.tw/users/20103367/ironman/1199" target="_blank" rel="noopener noreferrer">30 天精通 RxJS</a></li>
+<li>Angular：<a href="https://angular.io/generated/live-examples/toh-pt6/eplnkr.html" target="_blank" rel="noopener noreferrer">Tour of Heroes Part 6 live example</a></li>
+<li>Angular：<a href="https://angular.io/generated/zips/toh-pt6/toh-pt6.zip" target="_blank" rel="noopener noreferrer">Tour of Heroes Part 6 download example</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/angular-httpclient-guide">Angular HttpClient 教學：GET、POST、Header、Params 與錯誤處理</a>：同樣聚焦 Angular、HttpClient，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-create-service-tutorial">Angular Service 建立教學：用 CLI 產生 HeroService 並回傳 Observable</a>：同樣聚焦 Angular、RxJS，可接著比較不同情境的做法。</li>
+<li><a href="/post/angular-component-communication">Angular 組件間溝通教學：Input、Output、ViewChild 與 Service</a>：同樣聚焦 Angular、RxJS，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>本文最後更新於 2026-08-28。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2017-12-26</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

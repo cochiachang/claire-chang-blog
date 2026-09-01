@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>為 SRS6 編譯支援 HTTP-FLV 的 FFmpeg：H.265 over RTMP 推流實作｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="SRS6 支援 H.265，但官方 FFmpeg 不支援 FLV 封裝 HEVC。本文記錄如何加入 runner365 補丁、編譯 libx264/libx265 與 FFmpeg，實現 H.265 over RTMP 推流。" />
+<meta name="keywords" content="後端開發, SRS, FFmpeg, H.265, RTMP, 串流伺服器" />
+<link rel="canonical" href="https://claire-chang.com/post/srs6-ffmpeg-http-flv-compile/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="為 SRS6 編譯支援 HTTP-FLV 的 FFmpeg：H.265 over RTMP 推流實作｜Claire Chang" />
+<meta property="og:description" content="SRS6 支援 H.265，但官方 FFmpeg 不支援 FLV 封裝 HEVC。本文記錄如何加入 runner365 補丁、編譯 libx264/libx265 與 FFmpeg，實現 H.265 over RTMP 推流。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/srs6-ffmpeg-http-flv-compile/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_srs6-ffmpeg-http-flv-compile-28739536.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_srs6-ffmpeg-http-flv-compile-28739536.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="為 SRS6 編譯支援 HTTP-FLV 的 FFmpeg：H.265 over RTMP 推流實作｜Claire Chang" />
+<meta name="twitter:description" content="SRS6 支援 H.265，但官方 FFmpeg 不支援 FLV 封裝 HEVC。本文記錄如何加入 runner365 補丁、編譯 libx264/libx265 與 FFmpeg，實現 H.265 over RTMP 推流。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_srs6-ffmpeg-http-flv-compile-28739536.jpg" />
+<meta property="article:published_time" content="2023-03-09" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="SRS" />
+<meta property="article:tag" content="FFmpeg" />
+<meta property="article:tag" content="H.265" />
+<meta property="article:tag" content="RTMP" />
+<meta property="article:tag" content="串流伺服器" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"為 SRS6 編譯支援 HTTP-FLV 的 FFmpeg：H.265 over RTMP 推流實作","item":"https://claire-chang.com/post/srs6-ffmpeg-http-flv-compile/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/srs6-ffmpeg-http-flv-compile/#article","headline":"為 SRS6 編譯支援 HTTP-FLV 的 FFmpeg：H.265 over RTMP 推流實作","description":"SRS6 支援 H.265，但官方 FFmpeg 不支援 FLV 封裝 HEVC。本文記錄如何加入 runner365 補丁、編譯 libx264/libx265 與 FFmpeg，實現 H.265 over RTMP 推流。","image":"https://claire-chang.com/images/tech/hero_srs6-ffmpeg-http-flv-compile.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-03-09","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/srs6-ffmpeg-http-flv-compile/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"SRS, FFmpeg, H.265, RTMP, 串流伺服器","about":[{"@type":"Thing","name":"串流伺服器"}],"mentions":[{"@type":"Thing","name":"SRS"},{"@type":"Thing","name":"FFmpeg"},{"@type":"Thing","name":"H.265"},{"@type":"Thing","name":"RTMP"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/srs6-ffmpeg-http-flv-compile/#faq","mainEntity":[{"@type":"Question","name":"為什麼官方 FFmpeg 版本顯示支援 H.265 卻推流失敗？","acceptedAnswer":{"@type":"Answer","text":"因為官方版本不支援用 FLV 封裝 HEVC（HEVC over RTMP 不是官方功能），需要使用 runner365 為 FFmpeg 4.1/5.1/6.0 提供的補丁重新編譯才能推送。"}},{"@type":"Question","name":"可以用 OBS 29 推 H.265 到 SRS6 嗎？","acceptedAnswer":{"@type":"Answer","text":"不行。OBS v29.0.2 實作 HEVC over RTMP 的方式與 SRS 6.0 使用的 FFmpeg 方案不一致，SRS 會無法正確解析串流內容，必須使用補丁版 FFmpeg 推流。"}},{"@type":"Question","name":"推 H.265 流的 FFmpeg 指令重點是什麼？","acceptedAnswer":{"@type":"Answer","text":"把視訊編碼器指定為 `libx265`（`-c:v libx265`），輸出格式為 `-f flv` 推到 RTMP 位址；若要低延遲，可再加上 `-tune zerolatency` 與固定碼率參數。"}},{"@type":"Question","name":"編譯 FFmpeg 前要先裝什麼？","acceptedAnswer":{"@type":"Answer","text":"要先編譯並安裝 libx264 與 libx265，之後以 `PKG_CONFIG_PATH` 指向兩者的 pkgconfig 路徑，configure 時加上 `--enable-libx264 --enable-libx265`。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_srs6-ffmpeg-http-flv-compile.webp" alt="FFmpeg 編譯與 SRS 串流伺服器推流示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-03-09">2023-03-09</time></span><span class="post-meta-pill">SRS · FFmpeg · H.265 · RTMP · 串流伺服器</span></div></div><h1 class="insights-hero-title">為 SRS6 編譯支援 HTTP-FLV 的 FFmpeg：H.265 over RTMP 推流實作</h1><p class="insights-hero-description">SRS6 支援 H.265，但官方 FFmpeg 不支援 FLV 封裝 HEVC。本文記錄如何加入 runner365 補丁、編譯 libx264/libx265 與 FFmpeg，實現 H.265 over RTMP 推流。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>SRS 6.0 已支援 H.265 編碼，但官方版本的 FFmpeg 雖然支援 H.265，卻不支援用 FLV 封裝 HEVC，導致實際推流時會失敗。這篇文章記錄如何透過 runner365 的補丁重新編譯 FFmpeg（含 libx264/libx265），讓 RTMP 能正確推送 H.265 的流到 SRS 伺服器。</p>
+</div><section aria-labelledby="srs-是什麼"><h2 id="srs-是什麼">SRS 是什麼？</h2>
+<p>SRS 是一個簡單高效的實時視頻服務器，支援 RTMP/WebRTC/HLS/HTTP-FLV/SRT/GB28181。</p>
+<ul>
+<li>是一個運營級的互聯網直播服務器，集群併發 7.5k+</li>
+<li>支援多種轉碼：RTMP→HLS、RTMP→FLV 等</li>
+<li>支援 HTTP 回調、RTMP 0.1 秒延遲</li>
+</ul>
+<p>在 HTTP-FLV 的低延遲實踐方案上，可以說是繼 FMS 之後非常有用心地在更新、維護的一個開源專案。主要開發者很熱心地回答問題，相關文件也隨著時間越來越完整，使用人數越來越多，是一個高效能且穩定的開源串流服務器。</p>
+</section><section aria-labelledby="srs-6-0-的-h-265-支援遇到什麼問題"><h2 id="srs-6-0-的-h-265-支援遇到什麼問題">SRS 6.0 的 H.265 支援遇到什麼問題？</h2>
+<p>在 SRS 6.0 之中，終於看到 SRS 支援 H.265 了。這其中很重要的一個工作，就是在推流端讓 RTMP 的 FLV 格式推流能夠支援 H.265。</p>
+<p>但是，若使用從 FFmpeg 官網下載的 .exe 檔案，即便 <code>ffmpeg -version</code> 顯示支援 H.265，在實際推 H.265 的流時仍然會發生錯誤：</p>
+<figure class="article-figure"><img src="/images/articles/srs6-ffmpeg-http-flv-compile-1.webp" alt="使用官方 FFmpeg 推 H.265 流時的指令畫面截圖" loading="lazy" class="markdown-img"></figure>
+<p>錯誤訊息如下圖：</p>
+<figure class="article-figure"><img src="/images/articles/srs6-ffmpeg-http-flv-compile-2.webp" alt="官方 FFmpeg 推 H.265 流失敗的錯誤訊息截圖" loading="lazy" class="markdown-img"></figure>
+<p>這個錯誤代表：官方提供的版本雖然支援 H.265，但<strong>不支援使用 FLV 來封裝 H.265 的編碼格式</strong>。</p>
+</section><section aria-labelledby="為什麼需要-hevc-over-rtmp-的補丁"><h2 id="為什麼需要-hevc-over-rtmp-的補丁">為什麼需要 HEVC over RTMP 的補丁？</h2>
+<p>關於 SRS 6.0 支援 HEVC over RTMP 的詳細說明，請見 <a href="https://github.com/ossrs/srs/issues/465" target="_blank" rel="noopener noreferrer">SRS GitHub issue #465</a>：</p>
+<blockquote>
+<p>支援 HEVC over RTMP 或 FLV 的規範和用法。runner365 為 FFmpeg 提供了 FFmpeg 4.1/5.1/6.0 的補丁，以支援透過 RTMP 或 FLV 的 HEVC。Intel 也有針對此功能的補丁。</p>
+</blockquote>
+<p>也就是說，SRS 6 之所以能支援 H.265 over RTMP，是因為使用了 runner365 自己為 FFmpeg 增加的補丁功能。官方版本並不支援 HEVC over RTMP，若希望用 RTMP 推 H.265，就必須重新編譯包含這份補丁的 FFmpeg 執行檔。</p>
+<p>另外要注意的是：OBS（v29.0.2）採用 HEVC 支援 RTMP 的實作方式與 SRS 6.0 使用的 FFmpeg 方案並不一致，若使用 OBS 推 H.265 的流到 SRS 伺服器，伺服器並沒有辦法正確解析串流內容。因此推流時，一定要使用編譯過的（runner365 補丁版本）、可支援 HEVC over RTMP 的 FFmpeg 來推流，才可以正確把 H.265 的流推送到 SRS。</p>
+<p>官方如何編譯 FFmpeg 的教學在 <a href="https://github.com/ossrs/srs/issues/465#ffmpeg-tools" target="_blank" rel="noopener noreferrer">issue #465 的 ffmpeg-tools 段落</a>。</p>
+<p>使用 FFmpeg 推送 HEVC 格式的影片，重點在於把 vcodec 指定為 <code>libx265</code>：</p>
+<pre><code class="hljs language-bash">ffmpeg -i sample.mp4 -c:v libx265 -b:v 350k -f flv rtmp://127.0.0.1/live/livestream
+</code></pre>
+<p>以下指令可推送極低延遲的 H.265 影片：</p>
+<pre><code class="hljs language-bash">ffmpeg -i sample.mp4 -c:v libx265 -crf 28 -x265-params profile=fast -preset veryfast -tune zerolatency -b:v 300k -minrate 300k -maxrate 300k -f flv rtmp://127.0.0.1/live/livestream
+</code></pre>
+</section><section aria-labelledby="怎麼在-linux-裡編譯支援-h-265-over-rtmp-的-ffmpeg"><h2 id="怎麼在-linux-裡編譯支援-h-265-over-rtmp-的-ffmpeg">怎麼在 Linux 裡編譯支援 H.265 over RTMP 的 FFmpeg？</h2>
+<p>首先取得 <a href="https://github.com/runner365/ffmpeg_rtmp_h265" target="_blank" rel="noopener noreferrer">runner365 的 FFmpeg 4.1/5.1/6.0 HEVC over RTMP 補丁</a>。</p>
+<h3>第一步：編譯 libx264</h3>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">cd</span> ~/git
+git <span class="hljs-built_in">clone</span> https://code.videolan.org/videolan/x264.git
+<span class="hljs-built_in">cd</span> ~/git/x264
+./configure --prefix=$(<span class="hljs-built_in">pwd</span>)/build --disable-asm --disable-cli --disable-shared --enable-static
+make -j10
+make install
+</code></pre>
+<h3>第二步：編譯 libx265</h3>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">cd</span> ~/git
+<span class="hljs-built_in">cd</span> ~/git/x265_git/build/linux
+cmake -DCMAKE_INSTALL_PREFIX=$(<span class="hljs-built_in">pwd</span>)/build -DENABLE_SHARED=OFF ../../source
+make -j10
+make install
+</code></pre>
+<h3>第三步：載入 HEVC over RTMP/FLV 補丁</h3>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">cd</span> ~/git
+git <span class="hljs-built_in">clone</span> -b 5.1 https://github.com/runner365/ffmpeg_rtmp_h265.git
+<span class="hljs-built_in">cp</span> ~/git/ffmpeg_rtmp_h265/flv.h ~/git/FFmpeg/libavformat/
+<span class="hljs-built_in">cp</span> ~/git/ffmpeg_rtmp_h265/flv*.c ~/git/FFmpeg/libavformat
+</code></pre>
+<h3>第四步：編譯 FFmpeg</h3>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">cd</span> ~/git/FFmpeg
+<span class="hljs-built_in">env</span> PKG_CONFIG_PATH=~/git/x264/build/lib/pkgconfig:~/git/x265_git/build/linux/build/lib/pkgconfig \
+./configure \
+  --prefix=$(<span class="hljs-built_in">pwd</span>)/build \
+  --enable-gpl --enable-nonfree --enable-pthreads --extra-libs=-lpthread \
+  --disable-asm --disable-x86asm --disable-inline-asm \
+  --enable-decoder=aac --enable-decoder=aac_fixed --enable-decoder=aac_latm --enable-encoder=aac \
+  --enable-libx264 --enable-libx265 \
+  --pkg-config-flags=<span class="hljs-string">'--static'</span>
+make -j10
+</code></pre>
+<h3>第五步：嘗試推流</h3>
+<pre><code class="hljs language-bash">./ffmpeg -stream_loop -1 -re -i ~/srs/doc/source.flv -acodec copy -vcodec libx265 \
+  -f flv rtmp://localhost/live/livestream
+</code></pre>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>為什麼官方 FFmpeg 版本顯示支援 H.265 卻推流失敗？</span></h3>
+<p>因為官方版本不支援用 FLV 封裝 HEVC（HEVC over RTMP 不是官方功能），需要使用 runner365 為 FFmpeg 4.1/5.1/6.0 提供的補丁重新編譯才能推送。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>可以用 OBS 29 推 H.265 到 SRS6 嗎？</span></h3>
+<p>不行。OBS v29.0.2 實作 HEVC over RTMP 的方式與 SRS 6.0 使用的 FFmpeg 方案不一致，SRS 會無法正確解析串流內容，必須使用補丁版 FFmpeg 推流。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>推 H.265 流的 FFmpeg 指令重點是什麼？</span></h3>
+<p>把視訊編碼器指定為 <code>libx265</code>（<code>-c:v libx265</code>），輸出格式為 <code>-f flv</code> 推到 RTMP 位址；若要低延遲，可再加上 <code>-tune zerolatency</code> 與固定碼率參數。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>編譯 FFmpeg 前要先裝什麼？</span></h3>
+<p>要先編譯並安裝 libx264 與 libx265，之後以 <code>PKG_CONFIG_PATH</code> 指向兩者的 pkgconfig 路徑，configure 時加上 <code>--enable-libx264 --enable-libx265</code>。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://github.com/ossrs/srs/issues/465" target="_blank" rel="noopener noreferrer">SRS issue #465：SRS 支援 HEVC over RTMP 的說明</a></li>
+<li><a href="https://github.com/ossrs/srs/issues/465#ffmpeg-tools" target="_blank" rel="noopener noreferrer">官方 FFmpeg 編譯教學（issue #465#ffmpeg-tools）</a></li>
+<li><a href="https://github.com/runner365/ffmpeg_rtmp_h265" target="_blank" rel="noopener noreferrer">runner365 的 FFmpeg HEVC over RTMP 補丁</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/compile-ffmpeg-http-flv-windows">Windows 編譯支援 HTTP-FLV 的 FFmpeg：OBS 虛擬鏡頭推流到 SRS</a>：同樣聚焦 FFmpeg、RTMP，可接著比較不同情境的做法。</li>
+<li><a href="/post/obs-rtmp-h265-streaming">使用 OBS 推流 H.265：v29 後的 HEVC over RTMP 設定筆記</a>：同樣聚焦 H.265、RTMP，可接著比較不同情境的做法。</li>
+<li><a href="/post/hevc-codec-introduction">HEVC(H.265) 高壓縮比編碼格式介紹：瀏覽器支援與 RTMP 推流全解析</a>：同樣聚焦 H.265、RTMP，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2023-03-09，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-03-09</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

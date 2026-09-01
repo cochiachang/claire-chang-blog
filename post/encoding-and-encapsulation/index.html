@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>影片編碼與封裝入門：從翻頁動畫到 H.264/H.265 與位元速率｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bl4zgMEJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:800px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;gap:7px;padding:16px 18px 20px;top:60px;box-shadow:0 22px 38px #241f1e1a}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:800px){.nl-trigger{justify-content:center;width:100%;margin-left:0}.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}@media (max-width:760px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <meta name="description" content="從影片產生原理談起，說明編碼壓縮的必要性、位元速率與檔案大小的計算公式、H.264 與 H.265 的取捨，以及影像壓縮去除四類冗餘資訊的原理。" />
+<meta name="keywords" content="後端開發, 影片編碼, H.264, H.265, 位元速率, 影音串流" />
+<link rel="canonical" href="https://claire-chang.com/post/encoding-and-encapsulation/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="影片編碼與封裝入門：從翻頁動畫到 H.264/H.265 與位元速率｜Claire Chang" />
+<meta property="og:description" content="從影片產生原理談起，說明編碼壓縮的必要性、位元速率與檔案大小的計算公式、H.264 與 H.265 的取捨，以及影像壓縮去除四類冗餘資訊的原理。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/encoding-and-encapsulation/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_encoding-and-encapsulation-d0af40ec.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_encoding-and-encapsulation-d0af40ec.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="影片編碼與封裝入門：從翻頁動畫到 H.264/H.265 與位元速率｜Claire Chang" />
+<meta name="twitter:description" content="從影片產生原理談起，說明編碼壓縮的必要性、位元速率與檔案大小的計算公式、H.264 與 H.265 的取捨，以及影像壓縮去除四類冗餘資訊的原理。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_encoding-and-encapsulation-d0af40ec.jpg" />
+<meta property="article:published_time" content="2020-10-15" />
+<meta property="article:modified_time" content="2026-08-28" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="影片編碼" />
+<meta property="article:tag" content="H.264" />
+<meta property="article:tag" content="H.265" />
+<meta property="article:tag" content="位元速率" />
+<meta property="article:tag" content="影音串流" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights"},{"@type":"ListItem","position":3,"name":"影片編碼與封裝入門：從翻頁動畫到 H.264/H.265 與位元速率","item":"https://claire-chang.com/post/encoding-and-encapsulation/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/encoding-and-encapsulation/#article","headline":"影片編碼與封裝入門：從翻頁動畫到 H.264/H.265 與位元速率","description":"從影片產生原理談起，說明編碼壓縮的必要性、位元速率與檔案大小的計算公式、H.264 與 H.265 的取捨，以及影像壓縮去除四類冗餘資訊的原理。","image":"https://claire-chang.com/images/tech/hero_encoding-and-encapsulation.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2020-10-15","dateModified":"2026-08-28","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/encoding-and-encapsulation/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"後端開發","keywords":"影片編碼, H.264, H.265, 位元速率, 影音串流","about":[{"@type":"Thing","name":"影片編碼"},{"@type":"Thing","name":"位元速率"},{"@type":"Thing","name":"影音串流"}],"mentions":[{"@type":"Thing","name":"H.264"},{"@type":"Thing","name":"H.265"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/encoding-and-encapsulation/#faq","mainEntity":[{"@type":"Question","name":"影片為什麼一定要經過編碼壓縮？","acceptedAnswer":{"@type":"Answer","text":"未壓縮的 1280×720、25FPS 影片位元率高達 553 Mb/s，無論儲存或網路傳輸都不可行。編碼壓縮透過去除影片中的冗餘資訊，把資料量降到可儲存、可串流的規模。"}},{"@type":"Question","name":"H.264 和 H.265 該怎麼選？","acceptedAnswer":{"@type":"Answer","text":"H.265 在相同位元率下畫質更好、檔案更小，但編碼複雜度約是 H.264 的十倍，且較舊裝置支援度較差。若播放端裝置較舊或即時性要求高，選 H.264；追求壓縮效率且環境支援時，選 H.265。"}},{"@type":"Question","name":"位元速率越高代表影片品質越好嗎？","acceptedAnswer":{"@type":"Answer","text":"一般而言是的：相同解析度下位元率越高，每秒包含的資訊越多、影音品質越佳，但檔案更大、更吃頻寬。位元率過低時，動態畫面容易出現色塊、畫質明顯低落。"}},{"@type":"Question","name":"影片檔案大小怎麼計算？","acceptedAnswer":{"@type":"Answer","text":"檔案大小（MB）=（音訊位元速率 + 視訊位元速率）÷ 8 × 影片長度（秒），其中位元速率以 KBit 為單位。例如視訊 4000 Kbps 加音訊 128 Kbps 的 60 秒影片，約為（4000+128）/8 × 60 ≈ 31 MB。"}},{"@type":"Question","name":"影像壓縮是靠去除哪些冗餘資訊達成的？","acceptedAnswer":{"@type":"Answer","text":"主要有四類：時間冗餘（相鄰影格相似）、空間冗餘（相鄰像素相似）、統計冗餘（符號機率分布不均勻）、感知冗餘（人眼察覺不到的資訊）。壓縮演算法就是針對這四類冗餘設計的。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a class="pill" href="/services/">合作方式</a></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_encoding-and-encapsulation.webp" alt="黑白電影放映機與膠捲盤的特寫照片" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E5%BE%8C%E7%AB%AF%E9%96%8B%E7%99%BC" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 後端開發</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2020-10-15">2020-10-15</time></span><span class="post-meta-pill">影片編碼 · H.264 · H.265 · 位元速率 · 影音串流</span></div></div><h1 class="insights-hero-title">影片編碼與封裝入門：從翻頁動畫到 H.264/H.265 與位元速率</h1><p class="insights-hero-description">從影片產生原理談起，說明編碼壓縮的必要性、位元速率與檔案大小的計算公式、H.264 與 H.265 的取捨，以及影像壓縮去除四類冗餘資訊的原理。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>影片的編碼（Encoding）與封裝（Muxing/Container）是串流影音的基礎知識。這篇文章從「影片是怎麼產生的」開始，說明為什麼影片一定要壓縮、位元速率怎麼計算檔案大小、H.264 和 H.265 該怎麼選，最後整理影像壓縮去除冗餘資訊的四大原理。</p>
+</div><section aria-labelledby="影片是怎麼產生的-為什麼需要編碼壓縮"><h2 id="影片是怎麼產生的-為什麼需要編碼壓縮">影片是怎麼產生的？為什麼需要編碼壓縮？</h2>
+<p>要說到影片的編碼與封裝，就要先聊聊影片是怎麼產生的。相信大家小時候都看過翻頁動畫吧——由很多張圖片組成的書，快速翻書時就能看到一段連續的動畫：</p>
+<figure class="article-figure"><img src="/images/articles/encoding-and-encapsulation-1.webp" alt="翻頁動畫" loading="lazy" class="markdown-img"></figure>
+<p>影片的原理也是如此：一張張的照片，經過快速的連續切換，就成為了動態影片。但這樣的原始影片大小非常可觀——若影像每個畫素的三個顏色 RGB 各需要一個位元組儲存，每個畫素需要 3 位元組，解析度 1280×720 的單張影像就是約 2.76 MB；若每秒 25 張（FPS 25），所需的位元率會達到 553 Mb/s。這種大小不論是儲存或用網路傳輸都有困難，因此編碼壓縮勢在必行。</p>
+</section><section aria-labelledby="資料壓縮的難題-音訊與視訊大不同"><h2 id="資料壓縮的難題-音訊與視訊大不同">資料壓縮的難題：音訊與視訊大不同</h2>
+<p>音檔和視訊有著完全不同的編碼方式和壓縮理論：</p>
+<ul>
+<li><strong>音訊編碼</strong>的難點在於延時敏感、卡頓敏感、噪聲抑制（Denoise）、回聲消除（AEC）、靜音檢測（VAD）、混音演算法等，每個項目都有各自的演算法去深究如何優化音訊的擷取。</li>
+<li><strong>視訊壓縮編碼</strong>的難點則在於編碼效率和編碼複雜度的平衡。例如 H.265 較 H.264 在相同的位元率之下有更好的畫質呈現、更小的檔案大小，但編碼的複雜度約增加了近十倍。</li>
+</ul>
+<p>在實際應用中，大多數狀況的編碼端及解碼端電腦資源不固定，因此在編碼複雜度和編碼效率中取得平衡是很重要的事。以下是目前主流編碼器的簡要比較：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>比較項目</th><th>H.264 (AVC)</th><th>H.265 (HEVC)</th></tr></thead><tbody><tr><td>同位元率畫質</td><td>基準</td><td>更佳</td></tr><tr><td>檔案大小</td><td>基準</td><td>約可再省 30–50%</td></tr><tr><td>編碼複雜度</td><td>基準</td><td>約增加近十倍</td></tr><tr><td>硬體支援</td><td>非常普及</td><td>較新裝置才完整支援</td></tr></tbody></table></div>
+</section><section aria-labelledby="什麼是位元速率-它如何決定影片品質與檔案大小"><h2 id="什麼是位元速率-它如何決定影片品質與檔案大小">什麼是位元速率？它如何決定影片品質與檔案大小？</h2>
+<p>網路影音多媒體（包括音視頻）在單位時間內的資料傳輸率，通常使用<strong>碼流</strong>或<strong>位元速率</strong>來表示，代表每秒傳輸或處理的位元量（資料流量），單位是 Mbps（Mb/s）。也可以說是所需的最低下載速度——下載速度越低，需要越高的壓縮（尤其是破壞性壓縮），故位元速率會直接影響影片品質。</p>
+<ul>
+<li>相同解析度下，位元率越高，每秒包含的資訊越多，檔案越大、壓縮比越小，影音品質越佳，但越吃頻寬及電腦的運算能力，配備不夠好可能會很卡。</li>
+<li>使用較低的位元速率輸出，靜止畫面差異較小，動態畫面容易產生色塊、畫質低落，整體較不清晰。</li>
+</ul>
+<p>我們可以從位元速率推算最終整個串流檔案的大小。完整的影片包括「視頻」及「音頻」兩個軌道，公式如下：</p>
+<blockquote>
+<p>檔案大小（MB） = （音訊位元速率（KBit）/8 + 視訊位元速率（KBit）/8）× 影片總長度（秒）</p>
+</blockquote>
+<p>而音檔的位元速率公式如下：</p>
+<blockquote>
+<p>位元速率（Bit Per Second） = 取樣率（Hz） × 取樣位數 × 聲道數</p>
+</blockquote>
+<p>通常，影片位元速率會受到 <strong>FPS</strong>（每秒幀數）、<strong>解析度</strong>（輸出的影像尺寸）、<strong>編碼方式</strong>（VBR、CBR、ABR 三種）、<strong>壓縮演算法</strong>（如 H.264、H.265 和 VP9）影響；音檔則受到<strong>取樣率</strong>、<strong>取樣位數</strong>（單次取樣儲存時所佔大小，例如電話是 3kHz 取樣的 7 位聲音，CD 是 44.1kHz 取樣的 16 位聲音）以及<strong>聲道數</strong>影響。以上幾項的選擇目標，是達到<strong>位元速率最小化</strong>和<strong>播放畫質最佳化</strong>之間的理想平衡。</p>
+<h3>FPS</h3>
+<p>FPS 是 Frames Per Second 的縮寫，指每秒鐘刷新的圖片幀數，也可以理解為圖形處理器每秒鐘能夠刷新幾次。越高的幀速率可以得到更流暢、更逼真的動畫——每秒鐘幀數（FPS）越多，所顯示的動作就會越流暢。一般串流常見的是 24/30 FPS，遊戲實況或運動賽事則常會拉到 60 FPS。</p>
+<h3>解析度</h3>
+<p>解析度指輸出影像的尺寸（寬×高的像素數），例如 1920×1080（1080p）、3840×2160（4K）。解析度越高、畫面細節越多，但所需的位元率也要等比例提高才有意義——同樣 4 Mbps 的位元率，用 720p 看起來清晰，拿去編 1080p 反而會因資訊量不足而模糊。我的經驗是先固定解析度，再依畫面動態程度調整位元率。</p>
+<h3>編碼方式：CBR、VBR、ABR</h3>
+<p>指的是位元率的控制模式：</p>
+<ul>
+<li><strong>CBR（Constant Bit Rate，固定位元率）</strong>：整支影片用同一個位元率輸出，檔案大小好預估、對頻寬與播放器最友善，適合即時串流；缺點是靜態畫面浪費位元、動態畫面位元不足。</li>
+<li><strong>VBR（Variable Bit Rate，可變位元率）</strong>：由編碼器依畫面複雜度動態分配位元——動態畫面給多、靜態畫面給少，同樣檔案大小下畫質通常最好，適合離線輸出或點播。</li>
+<li><strong>ABR（Average Bit Rate，平均位元率）</strong>：設定一個目標平均值，讓 VBR 的輸出盡量貼近指定的平均位元率，介於兩者之間的折衷。</li>
+</ul>
+<h3>壓縮演算法</h3>
+<p>壓縮演算法（編碼器）決定了「同樣位元率下能榨出多少畫質」。常見的有 H.264（相容性最好）、H.265（壓縮率更高但編碼更重）、Google 的 VP9，以及後繼的 AV1。選擇時除了壓縮效率，也要考慮播放端解碼支援度與即時串流的編碼延遲。</p>
+</section><section aria-labelledby="影像壓縮的原理-去除四類冗餘資訊"><h2 id="影像壓縮的原理-去除四類冗餘資訊">影像壓縮的原理：去除四類冗餘資訊</h2>
+<p>資料壓縮是透過去除資料中的冗餘資訊而達成。就視訊資料而言，冗餘資訊可以分成四類：</p>
+<ol>
+<li><strong>時間上的冗餘資訊（temporal redundancy）</strong>：在視訊資料中，相鄰的影格（frame）與影格之間通常有很強的關連性，這樣的關連性即為時間上的冗餘資訊。</li>
+<li><strong>空間上的冗餘資訊（spatial redundancy）</strong>：在同一張影格之中，相鄰的像素之間通常有很強的關連性，這樣的關連性即為空間上的冗餘資訊。</li>
+<li><strong>統計上的冗餘資訊（statistical redundancy）</strong>：指欲編碼的符號（symbol）的機率分布是不均勻（non-uniform）的。</li>
+<li><strong>感知上的冗餘資訊（perceptual redundancy）</strong>：指人在觀看視訊時，人眼無法察覺的資訊。</li>
+</ol>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>影片為什麼一定要經過編碼壓縮？</span></h3>
+<p>未壓縮的 1280×720、25FPS 影片位元率高達 553 Mb/s，無論儲存或網路傳輸都不可行。編碼壓縮透過去除影片中的冗餘資訊，把資料量降到可儲存、可串流的規模。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>H.264 和 H.265 該怎麼選？</span></h3>
+<p>H.265 在相同位元率下畫質更好、檔案更小，但編碼複雜度約是 H.264 的十倍，且較舊裝置支援度較差。若播放端裝置較舊或即時性要求高，選 H.264；追求壓縮效率且環境支援時，選 H.265。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>位元速率越高代表影片品質越好嗎？</span></h3>
+<p>一般而言是的：相同解析度下位元率越高，每秒包含的資訊越多、影音品質越佳，但檔案更大、更吃頻寬。位元率過低時，動態畫面容易出現色塊、畫質明顯低落。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>影片檔案大小怎麼計算？</span></h3>
+<p>檔案大小（MB）=（音訊位元速率 + 視訊位元速率）÷ 8 × 影片長度（秒），其中位元速率以 KBit 為單位。例如視訊 4000 Kbps 加音訊 128 Kbps 的 60 秒影片，約為（4000+128）/8 × 60 ≈ 31 MB。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>影像壓縮是靠去除哪些冗餘資訊達成的？</span></h3>
+<p>主要有四類：時間冗餘（相鄰影格相似）、空間冗餘（相鄰像素相似）、統計冗餘（符號機率分布不均勻）、感知冗餘（人眼察覺不到的資訊）。壓縮演算法就是針對這四類冗餘設計的。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Video_compression_picture_types" target="_blank" rel="noopener noreferrer">H.264 和 H.265（HEVC）深度解析及對比</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/hevc-codec-introduction">HEVC(H.265) 高壓縮比編碼格式介紹：瀏覽器支援與 RTMP 推流全解析</a>：同樣聚焦 H.265，可接著比較不同情境的做法。</li>
+<li><a href="/post/obs-rtmp-h265-streaming">使用 OBS 推流 H.265：v29 後的 HEVC over RTMP 設定筆記</a>：同樣聚焦 H.265，可接著比較不同情境的做法。</li>
+<li><a href="/post/obs-29-hevc-av1-encoding-support">OBS 29 新增的編碼支援：HEVC（H.265）推流與 AV1 錄影設定筆記</a>：同樣聚焦 H.265，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28（原文發布於 2020-10-15，本文保留原始筆記內容並補上 GEO 結構。）</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2020-10-15</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>
