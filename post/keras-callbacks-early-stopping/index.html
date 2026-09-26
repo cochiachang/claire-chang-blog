@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>如何使用 Keras 回呼(callbacks)觸發訓練週期的結束？ModelCheckpoint 與 EarlyStopping 實戰｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-BkcE5549.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <style>:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:#fff;background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}:root{--black:#181717;--paper:#f7f6f2;--white:#fff;--muted:#696763;--line:#deddd7;--accent:#b8ef66;--sans:Manrope,"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{z-index:5;color:#fff;position:absolute;top:0;left:0;right:0}.brand-mark{width:40px;height:40px;font:500 13px var(--mono);border:1px solid #fff9;border-radius:50%;place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.11em;opacity:.7;margin-top:3px;display:block}.site-header nav{align-items:center;gap:32px;font-size:12px;display:flex}.menu-button{color:#fff;background:0 0;border:0;display:none}footer{background:var(--black);color:#fff;font:10px var(--mono);justify-content:space-between;padding:27px max(42px,50% - 598px);display:flex}@media (max-width:760px){.site-header{position:absolute}.header-inner{height:72px;padding:0 20px}.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--black);flex-direction:column;align-items:flex-start;gap:3px;padding:16px 20px;display:none;position:absolute;top:72px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:23px 20px;line-height:2.3;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#172638;--muted:#687580;--line:#cfd7d7;--paper:#f8f8f5;--blue:#214d6b;--orange:#e36d39;--serif:"Noto Serif TC",serif;--mono:"DM Mono",monospace}.site-header{border-bottom:1px solid var(--line);z-index:5;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:#f8f8f5f0;position:sticky;top:0}.header-inner{justify-content:space-between;align-items:center;max-width:1180px;height:82px;margin:auto;padding:0 30px;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);color:#f8f8f5;width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:3px;display:block}.site-header nav{color:var(--muted);align-items:center;gap:34px;font-size:13px;display:flex}.site-header nav a{border-bottom:2px solid #0000;padding:10px 0}.site-header nav a:hover{color:var(--ink);border-color:var(--orange)}.menu-button{background:0 0;border:0;display:none}footer{max-width:1180px;font:10px var(--mono);color:var(--muted);justify-content:space-between;margin:auto;padding:25px 30px 35px;display:flex}@media (max-width:760px){.header-inner{height:68px;padding:0 18px}.menu-button{color:var(--blue);display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:5px;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{padding:22px 20px;line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}:root{--ink:#17231f;--muted:#64706b;--paper:#f6f2e9;--white:#fffdf8;--coral:#dc6b52;--line:#d8d5cc;--serif:Georgia,"Noto Serif TC",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}.site-header{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:78px;color:var(--ink);border-bottom:1px solid var(--line);background:#f6f2e9f2;position:sticky;top:0}.brand-mark{border-color:var(--ink);color:var(--ink);font-family:var(--serif)}.site-header nav{color:var(--ink);gap:25px}.site-header nav a{border:0;padding:13px 0}.site-header nav a:hover{color:var(--coral);border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px;padding:13px 19px}.site-header nav .pill:hover{background:var(--coral);border-color:var(--coral);color:#fff}.white{background:var(--white);color:var(--ink);padding-top:100px;padding-bottom:100px}footer{background:var(--ink);color:#fff;padding:48px 0}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{background:var(--paper);color:var(--ink)}}.site-header{color:#17231f;background:#f6f2e9f2;border-bottom:1px solid #d8d5cc;height:78px;position:sticky;top:0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.site-header nav{color:#17231f}.site-header nav a{border:1px solid #0000}.site-header nav a:hover,.site-header nav .pill{border-color:#17231f}.menu-button{color:#17231f}.white{color:#17231f;background:#fffdf8;padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}.site-header nav{color:#17231f;background:#f6f2e9}.site-header nav a{border:0}}.site-header{z-index:5;color:#181717;background:0 0;border-bottom:0;position:absolute;top:0;left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{color:#181717;background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;max-width:none;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px));display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:#fff;letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{align-items:center;gap:24px;font-size:13px;display:flex}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:#fff}.site-footer .footer-copyright{color:#ffffffa8;margin:0;font-size:12px}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;padding-left:20px;padding-right:20px}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{flex-wrap:wrap;gap:16px}}:root{--ink:#241f1e;--muted:#6f6967;--paper:#f7f4ef;--white:#fff;--coral:#a66f58;--line:#d8d5d3;--accent:#a66f58;--accent-soft:#e8d8ce}body{color:#241f1e;background:#fff}.site-header{color:#241f1e;background:#fffffff0;border-color:#d8d5d3}.site-header .brand,.site-header nav{color:#241f1e}.site-header .brand-mark{border-color:#241f1e}.site-header nav a:hover{color:#a66f58}.white{color:#241f1e;background:#fff}footer{color:#fff;background:#241f1e}:root{--serif:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;--sans:Manrope,"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:Manrope,Noto Sans TC,PingFang TC,Microsoft JhengHei,Arial,sans-serif}.site-header .brand b{font-size:20px;line-height:1.2}.site-header .brand small{font-size:12px;line-height:1.35}.site-header .brand-mark{width:46px;height:46px;font-size:19px}.site-header nav{gap:31px;font-size:16px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header .brand b{font-size:18px}.site-header .brand small{font-size:10px}.site-header .brand-mark{width:42px;height:42px}.site-header nav,.site-header nav .pill{font-size:15px}}.site-header .brand-mark{color:#0000;background:#fff;border:2px solid #241f1e;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none;padding-left:4vw;padding-right:4vw}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:#a66f58;background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{color:#a66f58;background:#a66f581f;border-color:#a66f58;font-weight:800}.site-header nav .pill{color:#fff;background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:#fff;background:#7a4d3c;border-color:#7a4d3c}@media (max-width:1279px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{color:#241f1e;background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;width:50px;height:50px;display:grid}.site-header nav{background:#fffffffa;border-bottom:1px solid #241f1e24;flex-direction:column;align-items:flex-start;gap:7px;padding:16px 18px 20px;display:none;position:absolute;top:60px;left:0;right:0;box-shadow:0 22px 38px #241f1e1a}.site-header nav.nav-open{display:flex}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}@media (min-width:1280px) and (max-width:1500px){.site-header nav{gap:6px;font-size:12.5px}.site-header nav a{padding:9px 10px}.site-header nav .pill{margin-left:6px;padding:9px 13px}.nl-trigger{gap:4px;padding:9px 10px}.header-social{margin-left:4px;padding-left:12px}}.site-header .brand b,.site-header .brand small,.site-header .brand-en,.site-header nav a,.site-header nav .pill{white-space:nowrap}.nl-trigger{color:#a66f58;font:inherit;white-space:nowrap;background:0 0;border:1px solid #a66f58;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{color:#fff;background:#a66f58}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:#241f1e;background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:#241f1e;margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{color:#241f1e;width:280px;max-width:60vw;font:inherit;background:#fff;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline-offset:1px;outline:2px solid #a66f58}.nl-form button{font:inherit;color:#fff;cursor:pointer;white-space:nowrap;background:#a66f58;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:#241f1e;margin:0;font-size:14px;line-height:1.6}@media (max-width:1279px){.nl-trigger{justify-content:center;width:100%;margin-left:0}}@media (max-width:800px){.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:#fff!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{margin:18px 0}.header-social-wrap{align-items:center;display:flex;position:relative}.social-more{color:#241f1e;cursor:pointer;background:#fff;border:1px solid #241f1e2e;border-radius:50%;place-items:center;width:38px;height:38px;margin-left:4px;transition:background .2s,border-color .2s,color .2s;display:none}.social-more:hover,.header-social-wrap.open .social-more{color:#a66f58;background:#a66f581f;border-color:#a66f58}@media (min-width:1280px) and (max-width:1500px){.social-more{display:grid}.header-social-wrap .header-social{z-index:20;background:#fff;border:1px solid #241f1e1f;border-radius:16px;flex-direction:column;gap:10px;margin:0;padding:12px;display:none;position:absolute;top:calc(100% + 10px);right:0;box-shadow:0 14px 32px #241f1e24}.header-social-wrap.open .header-social{display:flex}}@media (max-width:1279px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}
+</style>
+  <link rel="stylesheet" crossorigin href="/assets/Post-B-oHczHB.css" />
+<link rel="stylesheet" crossorigin href="/assets/insights-redesign-DItCYluS.css" />
+<link rel="modulepreload" crossorigin href="/assets/Post-DMpY8nww.js" />
+<link rel="modulepreload" crossorigin href="/assets/posts-CCjD_G-F.js" />
+<link rel="modulepreload" crossorigin href="/assets/Seo-DbsO7Jb-.js" />
+<link rel="modulepreload" crossorigin href="/assets/lib-g6pLGT0D.js" />
+<meta name="description" content="在 Keras 3 中用 ModelCheckpoint 自動儲存最佳模型、用 EarlyStopping 在驗證損失不再改善時提前停止訓練，附實際訓練 log、restore_best_weights 前後對照與常見設定錯誤。" />
+<meta name="keywords" content="機器學習, Keras, TensorFlow, EarlyStopping, 模型訓練, Callbacks" />
+<link rel="canonical" href="https://claire-chang.com/post/keras-callbacks-early-stopping/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="如何使用 Keras 回呼(callbacks)觸發訓練週期的結束？ModelCheckpoint 與 EarlyStopping 實戰｜Claire Chang" />
+<meta property="og:description" content="在 Keras 3 中用 ModelCheckpoint 自動儲存最佳模型、用 EarlyStopping 在驗證損失不再改善時提前停止訓練，附實際訓練 log、restore_best_weights 前後對照與常見設定錯誤。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/keras-callbacks-early-stopping/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_keras-callbacks-early-stopping-44a30998.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_keras-callbacks-early-stopping-44a30998.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="如何使用 Keras 回呼(callbacks)觸發訓練週期的結束？ModelCheckpoint 與 EarlyStopping 實戰｜Claire Chang" />
+<meta name="twitter:description" content="在 Keras 3 中用 ModelCheckpoint 自動儲存最佳模型、用 EarlyStopping 在驗證損失不再改善時提前停止訓練，附實際訓練 log、restore_best_weights 前後對照與常見設定錯誤。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_keras-callbacks-early-stopping-44a30998.jpg" />
+<meta property="article:published_time" content="2023-01-11" />
+<meta property="article:modified_time" content="2026-09-25" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Keras" />
+<meta property="article:tag" content="TensorFlow" />
+<meta property="article:tag" content="EarlyStopping" />
+<meta property="article:tag" content="模型訓練" />
+<meta property="article:tag" content="Callbacks" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"AI 導入筆記","item":"https://claire-chang.com/insights/"},{"@type":"ListItem","position":3,"name":"如何使用 Keras 回呼(callbacks)觸發訓練週期的結束？ModelCheckpoint 與 EarlyStopping 實戰","item":"https://claire-chang.com/post/keras-callbacks-early-stopping/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about/","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://claire-chang.com/post/keras-callbacks-early-stopping/#article","headline":"如何使用 Keras 回呼(callbacks)觸發訓練週期的結束？ModelCheckpoint 與 EarlyStopping 實戰","description":"在 Keras 3 中用 ModelCheckpoint 自動儲存最佳模型、用 EarlyStopping 在驗證損失不再改善時提前停止訓練，附實際訓練 log、restore_best_weights 前後對照與常見設定錯誤。","image":"https://claire-chang.com/images/tech/hero_keras-callbacks-early-stopping.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2023-01-11","dateModified":"2026-09-25","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/keras-callbacks-early-stopping/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"Keras, TensorFlow, EarlyStopping, 模型訓練, Callbacks","about":[{"@type":"Thing","name":"模型訓練"}],"mentions":[{"@type":"Thing","name":"Keras"},{"@type":"Thing","name":"TensorFlow"},{"@type":"Thing","name":"EarlyStopping"},{"@type":"Thing","name":"Callbacks"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://claire-chang.com/post/keras-callbacks-early-stopping/#faq","mainEntity":[{"@type":"Question","name":"Keras 的 callback 是什麼？","acceptedAnswer":{"@type":"Answer","text":"Keras callback 是一個會在訓練過程特定時間點（epoch 結束、batch 結束等）被 Keras 自動呼叫的物件，用來插入儲存模型、提前停止訓練、調整學習率等操作。"}},{"@type":"Question","name":"EarlyStopping 的 patience 參數是什麼意思？","acceptedAnswer":{"@type":"Answer","text":"patience 是允許被監控指標連續幾個 epoch 沒有改善的次數。本文實測設 `patience=3`，最佳結果出現在第 4 輪，之後連續 3 輪沒有改善，所以在第 7 輪停止。"}},{"@type":"Question","name":"EarlyStopping 停止後，模型是最好的那一版嗎？","acceptedAnswer":{"@type":"Answer","text":"預設不是。`restore_best_weights` 預設為 `False`，模型保留的是最後一輪的權重。本文實測中，沒開時 val_loss 是 0.5361，開啟後是 0.4889。"}},{"@type":"Question","name":"ModelCheckpoint 一定要搭配 EarlyStopping 嗎？","acceptedAnswer":{"@type":"Answer","text":"不需要，兩者可以獨立使用。實務上常一起使用：ModelCheckpoint 負責把最佳模型存到檔案，EarlyStopping 負責在不再進步時結束訓練。"}},{"@type":"Question","name":"Keras 3 還能用 .h5 格式存模型嗎？","acceptedAnswer":{"@type":"Answer","text":"可以，但 Keras 會提示 HDF5 是 legacy 格式，建議改用 `.keras`。只存權重時，檔名必須以 `.weights.h5` 結尾，否則會出現 `ValueError`。"}}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b><span class="brand-en">Claire Chang</span>｜張可佳</b><small>讓企業需求被技術聽懂，讓 AI 真正落地</small></span></a><button class="menu-button" aria-label="開啟導覽" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button><nav aria-label="主要導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tools/">AI 小工具</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><button type="button" class="nl-trigger" aria-expanded="false" aria-controls="newsletter-panel"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg> 訂閱電子報 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nl-trigger-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><a href="/services/" class="pill">合作洽談 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a><div class="social-links header-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/facebook.webp" alt="" width="28" height="28" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/linkedin.webp" alt="" width="28" height="28" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/instagram.webp" alt="" width="28" height="28" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/line.webp" alt="" width="28" height="28" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/youtube.webp" alt="" width="28" height="28" /></a></div></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_keras-callbacks-early-stopping.webp" alt="電路板上的人工智慧晶片，象徵 Keras 回呼機制自動控制模型訓練流程" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2023-01-11">2023-01-11</time></span><span class="post-meta-pill">Keras · TensorFlow · EarlyStopping · 模型訓練 · Callbacks</span></div></div><h1 class="insights-hero-title">如何使用 Keras 回呼(callbacks)觸發訓練週期的結束？ModelCheckpoint 與 EarlyStopping 實戰</h1><p class="insights-hero-description">在 Keras 3 中用 ModelCheckpoint 自動儲存最佳模型、用 EarlyStopping 在驗證損失不再改善時提前停止訓練，附實際訓練 log、restore_best_weights 前後對照與常見設定錯誤。</p></div></div></section><section class="insights-main-section post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>在 Keras 中，要在訓練週期（epoch）結束時自動做事，就把回呼（callbacks）物件傳進 <code>model.fit()</code> 的 <code>callbacks</code> 參數。最常用的兩個是 <code>ModelCheckpoint</code>（自動儲存模型）和 <code>EarlyStopping</code>（驗證損失不再改善就提前停止）。這篇文章附上一次實際訓練的 log，說明兩者搭配時最容易踩到的一個坑：<strong>EarlyStopping 停下來時，模型手上的權重不一定是最好的那一組。</strong></p>
+</div><section aria-labelledby="什麼是-keras-callbacks-為什麼需要它"><h2 id="什麼是-keras-callbacks-為什麼需要它">什麼是 Keras callbacks？為什麼需要它？</h2>
+<p>Keras callbacks 是 Keras 在訓練過程特定時間點自動呼叫的物件，例如每個 epoch 結束、每個 batch 結束、訓練開始或結束時。它讓你不用改寫訓練迴圈，就能插入儲存模型、提前停止、調整學習率、寫 log 等動作。</p>
+<p>常見用途包括：</p>
+<ul>
+<li><strong>ModelCheckpoint</strong>：在訓練過程中儲存模型或權重，訓練中斷也不會前功盡棄。</li>
+<li><strong>EarlyStopping</strong>：被監控的指標（通常是 <code>val_loss</code>）連續幾個 epoch 沒有改善就停止訓練，避免過擬合（overfitting），也節省時間。</li>
+<li><strong>ReduceLROnPlateau</strong>：指標停滯時自動調降學習率。</li>
+<li><strong>TensorBoard</strong>：把訓練過程寫成 log，用 <a href="/post/tensorboard-monitor-model-performance/">TensorBoard 觀察模型效能</a>。</li>
+</ul>
+</section><section aria-labelledby="modelcheckpoint-與-earlystopping-完整程式碼範例"><h2 id="modelcheckpoint-與-earlystopping-完整程式碼範例">ModelCheckpoint 與 EarlyStopping 完整程式碼範例</h2>
+<p>Keras 3 的寫法是把兩個回呼放進同一個 list，傳給 <code>model.fit()</code> 的 <code>callbacks</code> 參數，並且一定要提供驗證資料，否則 <code>val_loss</code> 不存在，兩個回呼都沒有東西可以監控。</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">import</span> keras
+
+callbacks = [
+    keras.callbacks.ModelCheckpoint(
+        <span class="hljs-string">"best.keras"</span>,              <span class="hljs-comment"># Keras 3 建議用 .keras 格式</span>
+        monitor=<span class="hljs-string">"val_loss"</span>,
+        save_best_only=<span class="hljs-literal">True</span>,       <span class="hljs-comment"># 只在 val_loss 創新低時覆寫檔案</span>
+        verbose=<span class="hljs-number">1</span>,
+    ),
+    keras.callbacks.EarlyStopping(
+        monitor=<span class="hljs-string">"val_loss"</span>,
+        patience=<span class="hljs-number">3</span>,                <span class="hljs-comment"># 連續 3 個 epoch 沒改善就停</span>
+        restore_best_weights=<span class="hljs-literal">True</span>, <span class="hljs-comment"># 停下來時把權重還原成最佳那一輪</span>
+        verbose=<span class="hljs-number">1</span>,
+    ),
+]
+
+model.fit(
+    X_train, y_train,
+    epochs=<span class="hljs-number">50</span>,                     <span class="hljs-comment"># 上限可以設大一點，交給 EarlyStopping 決定何時停</span>
+    batch_size=<span class="hljs-number">32</span>,
+    validation_data=(X_val, y_val),
+    callbacks=callbacks,
+)
+</code></pre>
+<p>這份範例和舊版寫法有三個差別：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>項目</th><th>舊寫法（Keras 2 時代）</th><th>Keras 3 建議寫法</th></tr></thead><tbody><tr><td>import</td><td><code>from keras.callbacks import ...</code></td><td><code>keras.callbacks.ModelCheckpoint(...)</code></td></tr><tr><td>儲存格式</td><td><code>model.h5</code></td><td><code>best.keras</code>（<code>.h5</code> 仍可用，但會出現「legacy 格式」警告）</td></tr><tr><td>訓練函式</td><td><code>fit()</code> 或 <code>fit_generator()</code></td><td>只有 <code>fit()</code>，Keras 3 已經移除 <code>fit_generator()</code></td></tr></tbody></table></div>
+</section><section aria-labelledby="實際跑一次-earlystopping-在第幾輪停下來"><h2 id="實際跑一次-earlystopping-在第幾輪停下來">實際跑一次：EarlyStopping 在第幾輪停下來？</h2>
+<p>以下是用 Keras 3.15.1（JAX 後端）實際執行的結果。資料是 600 筆帶雜訊的二元分類假資料（400 筆訓練、200 筆驗證），模型是兩層各 256 個神經元的 Dense 網路，參數量刻意開大，讓它很快過擬合。<code>epochs</code> 設 50，<code>patience=3</code>。</p>
+<p>逐輪的驗證損失如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>Epoch</th><th>訓練準確率</th><th>val_loss</th><th>ModelCheckpoint 動作</th></tr></thead><tbody><tr><td>1</td><td>0.5950</td><td>0.5681</td><td>儲存</td></tr><tr><td>2</td><td>0.7975</td><td>0.4979</td><td>儲存</td></tr><tr><td>3</td><td>0.8275</td><td>0.4893</td><td>儲存</td></tr><tr><td>4</td><td>0.8575</td><td><strong>0.4889</strong></td><td>儲存（最佳）</td></tr><tr><td>5</td><td>0.8750</td><td>0.5027</td><td>沒改善，不儲存</td></tr><tr><td>6</td><td>0.8950</td><td>0.5184</td><td>沒改善，不儲存</td></tr><tr><td>7</td><td>0.9050</td><td>0.5361</td><td>沒改善，觸發 early stopping</td></tr></tbody></table></div>
+<p>最後幾輪的原始 log：</p>
+<pre><code class="hljs language-text">Epoch 4: val_loss improved from 0.48931 to 0.48890, saving model to best.keras
+13/13 - 0s - accuracy: 0.8575 - loss: 0.3521 - val_accuracy: 0.7700 - val_loss: 0.4889
+Epoch 5: val_loss did not improve from 0.48890
+13/13 - 0s - accuracy: 0.8750 - loss: 0.3116 - val_accuracy: 0.7600 - val_loss: 0.5027
+Epoch 6: val_loss did not improve from 0.48890
+13/13 - 0s - accuracy: 0.8950 - loss: 0.2821 - val_accuracy: 0.7550 - val_loss: 0.5184
+Epoch 7: val_loss did not improve from 0.48890
+13/13 - 0s - accuracy: 0.9050 - loss: 0.2570 - val_accuracy: 0.7550 - val_loss: 0.5361
+Epoch 7: early stopping
+</code></pre>
+<p>從表格可以看到典型的過擬合訊號：第 4 輪之後，訓練準確率還在一路往上（0.8575 → 0.9050），驗證損失卻開始變差（0.4889 → 0.5361）。EarlyStopping 在最佳輪之後又多等了 <code>patience=3</code> 輪，確認真的沒有改善，才在第 7 輪停下來。原本設定的 50 輪只跑了 7 輪。</p>
+</section><section aria-labelledby="restore-best-weights-沒開會怎樣"><h2 id="restore-best-weights-沒開會怎樣">restore_best_weights 沒開會怎樣？</h2>
+<p><code>restore_best_weights</code> 預設是 <code>False</code>。沒開的話，EarlyStopping 停下來時，模型保留的是<strong>最後一輪</strong>（第 7 輪）的權重，而不是最佳的第 4 輪。</p>
+<p>同一份資料、同一個亂數種子，只切換這個參數，訓練結束後直接對驗證集呼叫 <code>model.evaluate()</code>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>設定</th><th>停止時的權重來自</th><th>訓練結束後模型的 val_loss</th></tr></thead><tbody><tr><td><code>restore_best_weights=False</code>（預設）</td><td>第 7 輪</td><td>0.5361</td></tr><tr><td><code>restore_best_weights=True</code></td><td>第 4 輪</td><td><strong>0.4889</strong></td></tr></tbody></table></div>
+<p>開啟後，Keras 會印出 <code>Restoring model weights from the end of the best epoch: 4.</code>，手上的模型直接就是最佳版本。</p>
+<p>如果沒開 <code>restore_best_weights</code>，但有搭配 <code>ModelCheckpoint(save_best_only=True)</code>，最佳模型仍然存在 <code>best.keras</code> 裡，只是要記得用 <code>keras.models.load_model("best.keras")</code> 重新載入，而不是直接拿記憶體中的 <code>model</code> 去預測或匯出。這是兩個回呼搭配使用時最常見的誤會。</p>
+</section><section aria-labelledby="patience-和其他參數要怎麼設"><h2 id="patience-和其他參數要怎麼設">patience 和其他參數要怎麼設？</h2>
+<p><code>patience</code> 設太小，模型可能在驗證損失短暫波動時就被誤判停止；設太大，則會多跑很多無效的 epoch。一般可以先從 3 到 10 之間開始，再依照 val_loss 曲線的抖動程度調整。</p>
+<p>EarlyStopping 常用參數（依 Keras 3 的函式簽名整理）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>參數</th><th>預設值</th><th>作用與設定建議</th></tr></thead><tbody><tr><td><code>monitor</code></td><td><code>"val_loss"</code></td><td>要監控的指標。改成 <code>val_accuracy</code> 這類越大越好的指標時，<code>mode</code> 會自動判斷</td></tr><tr><td><code>patience</code></td><td><code>0</code></td><td>允許連續幾個 epoch 沒有改善。資料少、val_loss 抖動大時設大一點</td></tr><tr><td><code>min_delta</code></td><td><code>0</code></td><td>至少要進步多少才算「改善」。設成像 <code>0.001</code> 可以忽略微小雜訊</td></tr><tr><td><code>restore_best_weights</code></td><td><code>False</code></td><td>停止時是否還原成最佳那一輪的權重，多數情況建議開啟</td></tr><tr><td><code>start_from_epoch</code></td><td><code>0</code></td><td>前幾個 epoch 不檢查。模型需要暖身期（例如搭配學習率 warmup）時使用</td></tr><tr><td><code>baseline</code></td><td><code>None</code></td><td>指標必須先達到這個基準值，否則會提前停止</td></tr></tbody></table></div>
+<p>ModelCheckpoint 常用參數：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>參數</th><th>預設值</th><th>作用與設定建議</th></tr></thead><tbody><tr><td><code>filepath</code></td><td>必填</td><td>存完整模型用 <code>.keras</code>；只存權重時必須以 <code>.weights.h5</code> 結尾</td></tr><tr><td><code>save_best_only</code></td><td><code>False</code></td><td>設 <code>True</code> 才會只保留最佳模型，否則每個 epoch 都會覆寫</td></tr><tr><td><code>save_weights_only</code></td><td><code>False</code></td><td>只存權重，檔案較小，但載入時要先建好相同結構的模型</td></tr><tr><td><code>save_freq</code></td><td><code>"epoch"</code></td><td>也可以設成整數，每 N 個 batch 存一次，適合單一 epoch 很長的訓練</td></tr></tbody></table></div>
+</section><section aria-labelledby="常見設定錯誤有哪些"><h2 id="常見設定錯誤有哪些">常見設定錯誤有哪些？</h2>
+<p>下面幾個錯誤都會讓回呼「看起來有設定，其實沒有照預期運作」：</p>
+<ol>
+<li><strong>沒有傳 <code>validation_data</code> 或 <code>validation_split</code>。</strong> 監控 <code>val_loss</code> 卻沒有驗證資料，Keras 只會發出 <code>UserWarning: Early stopping conditioned on metric `val_loss` which is not available</code> 警告，訓練照樣跑完全部 epoch，EarlyStopping 永遠不會觸發。</li>
+<li><strong>只存權重卻沒用 <code>.weights.h5</code> 副檔名。</strong> 在 Keras 3.15.1 實測，<code>ModelCheckpoint("model.weights", save_weights_only=True)</code> 會直接丟出 <code>ValueError</code>，錯誤訊息要求檔名必須以 <code>.weights.h5</code> 結尾。</li>
+<li><strong>沿用舊教學的 <code>model.h5</code>。</strong> 可以執行，但會出現 HDF5 是 legacy 格式的警告，官方建議改成 <code>.keras</code>。</li>
+<li><strong>照舊教學呼叫 <code>fit_generator()</code>。</strong> Keras 3 已經沒有這個方法，generator 或 <code>tf.data.Dataset</code> 直接傳給 <code>fit()</code> 就可以。</li>
+<li><strong>以為 EarlyStopping 停下來就是最佳模型。</strong> 沒開 <code>restore_best_weights=True</code> 時不是，見上一節的對照表。</li>
+<li><strong><code>save_best_only</code> 沒開，最佳模型被後面的 epoch 覆寫。</strong> 檔案最後存的是最後一輪，不是最佳一輪。</li>
+</ol>
+</section><section aria-labelledby="如何自訂-callback-或組合多個回呼"><h2 id="如何自訂-callback-或組合多個回呼">如何自訂 callback 或組合多個回呼？</h2>
+<p>自訂回呼的做法是繼承 <code>keras.callbacks.Callback</code>，覆寫 <code>on_epoch_end()</code>、<code>on_train_begin()</code> 等方法。每個方法都會收到 <code>logs</code> 字典，裡面有當輪的 <code>loss</code>、<code>val_loss</code> 等指標。</p>
+<pre><code class="hljs language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">PrintValLoss</span>(keras.callbacks.Callback):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">on_epoch_end</span>(<span class="hljs-params">self, epoch, logs=<span class="hljs-literal">None</span></span>):
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"epoch <span class="hljs-subst">{epoch + <span class="hljs-number">1</span>}</span>: val_loss=<span class="hljs-subst">{logs[<span class="hljs-string">'val_loss'</span>]:<span class="hljs-number">.4</span>f}</span>"</span>)
+</code></pre>
+<p>多個回呼放進同一個 list 就會一起運作，例如「ModelCheckpoint 儲存最佳模型＋EarlyStopping 提前停止＋ReduceLROnPlateau 調降學習率」。回呼會依照 list 裡的順序被呼叫。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Keras 的 callback 是什麼？</span></h3>
+<p>Keras callback 是一個會在訓練過程特定時間點（epoch 結束、batch 結束等）被 Keras 自動呼叫的物件，用來插入儲存模型、提前停止訓練、調整學習率等操作。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>EarlyStopping 的 patience 參數是什麼意思？</span></h3>
+<p>patience 是允許被監控指標連續幾個 epoch 沒有改善的次數。本文實測設 <code>patience=3</code>，最佳結果出現在第 4 輪，之後連續 3 輪沒有改善，所以在第 7 輪停止。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>EarlyStopping 停止後，模型是最好的那一版嗎？</span></h3>
+<p>預設不是。<code>restore_best_weights</code> 預設為 <code>False</code>，模型保留的是最後一輪的權重。本文實測中，沒開時 val_loss 是 0.5361，開啟後是 0.4889。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>ModelCheckpoint 一定要搭配 EarlyStopping 嗎？</span></h3>
+<p>不需要，兩者可以獨立使用。實務上常一起使用：ModelCheckpoint 負責把最佳模型存到檔案，EarlyStopping 負責在不再進步時結束訓練。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Keras 3 還能用 .h5 格式存模型嗎？</span></h3>
+<p>可以，但 Keras 會提示 HDF5 是 legacy 格式，建議改用 <code>.keras</code>。只存權重時，檔名必須以 <code>.weights.h5</code> 結尾，否則會出現 <code>ValueError</code>。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://keras.io/api/callbacks/" target="_blank" rel="noopener noreferrer">Keras Callbacks API 官方文件</a></li>
+<li><a href="https://keras.io/api/callbacks/early_stopping/" target="_blank" rel="noopener noreferrer">Keras EarlyStopping 官方文件</a></li>
+<li><a href="https://keras.io/api/callbacks/model_checkpoint/" target="_blank" rel="noopener noreferrer">Keras ModelCheckpoint 官方文件</a></li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/keras-model-fit-parameters/">Keras model.fit() 參數設定：batch_size、epochs、validation 與 callbacks 怎麼用？</a>：<code>validation_data</code> 和 <code>epochs</code> 的設定會直接影響 EarlyStopping 的效果。</li>
+<li><a href="/post/how-to-read-training-results/">如何判讀機器學習訓練結果：loss、accuracy、val_loss、val_accuracy 完整解讀</a>：判斷 loss 與 val_loss 曲線是不是過擬合。</li>
+<li><a href="/post/gradient-descent-introduction/">梯度下降法介紹：一階最佳化算法如何找到局部極小值？</a>：每個 epoch 裡權重實際是怎麼被更新的。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-09-25：改用 Keras 3 寫法（<code>.keras</code> 格式、移除 <code>fit_generator()</code>），補上實際訓練 log、<code>restore_best_weights</code> 前後對照、參數設定表與常見設定錯誤。原文發布於 2023-01-11。</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2023-01-11</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang - 張可佳</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights/">AI 導入筆記</a><a href="/tutorials/">AI 應用教學</a><a href="/tools/">AI 小工具</a><a href="/tech/">技術筆記存檔</a><a href="/about/">關於 Claire</a><a href="/services/">合作洽談</a><a href="/privacy/">隱私權政策</a></nav><div class="social-links footer-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/facebook.webp" alt="" width="32" height="32" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/linkedin.webp" alt="" width="32" height="32" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/instagram.webp" alt="" width="32" height="32" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/line.webp" alt="" width="32" height="32" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/youtube.webp" alt="" width="32" height="32" /></a></div><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

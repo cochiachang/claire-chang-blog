@@ -1,0 +1,1 @@
+var e=[{slug:`enterprise-healthcheck`,title:`企業健檢 × AI 成長分析`,description:`填寫企業現況、品牌定位與商業挑戰，AI 結合公開資訊與 SWOT、STP、JTBD 等策略框架，產生專屬企業健檢分析與改善建議。`,category:`企業分析`,image:`/images/site/tool-enterprise-healthcheck.webp`,imageAlt:`筆電螢幕上顯示企業營運數據儀表板與成長趨勢圖表`}],t=t=>e.find(e=>e.slug===t);export{e as n,t};
