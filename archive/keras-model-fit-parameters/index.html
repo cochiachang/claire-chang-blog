@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keras model.fit() 參數設定：batch_size、epochs、validation 與 callbacks 怎麼用？｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-ClUN62WU.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-Dd_uD5pT.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-DznRTPFJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/analytics-D98yUP14.js">
+    <style>:root{--color-ink:#241f1e;--color-paper:#f7f4ef;--color-muted:#6f6863;--color-line:#d4ceca;--color-accent:#a66f58;--color-accent-soft:#e8d8ce;--color-surface:#fff;--color-text-strong:#1c1917;--color-text:#44403c;--color-text-secondary:#57534e;--color-text-muted:#78716c;--color-text-subtle:#a8a29e;--color-border:#e7e5e4;--color-border-strong:#d6d3d1;--color-surface-subtle:#fafaf9;--font-body:Manrope, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;--content-max-width:1320px;--shadow-card:0 10px 30px #00000014;--black:#181717;--paper:var(--color-paper);--white:var(--color-surface);--muted:#6f6967;--line:#d8d5d3;--accent:var(--color-accent);--sans:var(--font-body);--serif:var(--font-body);--mono:"DM Mono",monospace;--ink:var(--color-ink);--blue:#214d6b;--orange:#e36d39;--coral:var(--color-accent);--accent-soft:var(--color-accent-soft)}@keyframes ui-spin{to{transform:rotate(360deg)}}:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:var(--color-surface);background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}.article-list-container,.tool-list-container,.tool-content-container,.account-content-container,.post-main-section{max-width:var(--content-max-width);margin:0 auto;padding:48px 4vw 100px}@media (max-width:820px){.article-list-container,.tool-list-container,.tool-content-container,.account-content-container,.post-main-section{padding:32px 5vw 80px!important}}.tool-card-stack{flex-direction:column;gap:24px;display:flex}.insights-hero{color:var(--color-surface);background:var(--color-ink);flex-direction:column;justify-content:center;min-height:490px;padding:70px 4vw;display:flex;position:relative;overflow:hidden}.insights-hero-inner{z-index:3;max-width:var(--content-max-width);width:100%;margin:0 auto;position:relative}.insights-hero-img{object-fit:cover;object-position:right center;z-index:1;width:100%;height:100%;position:absolute;top:0;bottom:0;left:0;right:0}.about-hero-img{object-position:right 65%}.case-hero-img{object-position:60% center}.insights-hero:after{content:"";z-index:2;background:linear-gradient(90deg,#0a0a0ab3 0%,#0a0a0a66 50%,#0a0a0a14 100%);position:absolute;top:0;bottom:0;left:0;right:0}.insights-hero-header{margin:0;position:relative}.insights-overline{letter-spacing:.18em;color:var(--color-surface);text-shadow:0 1px 8px #0000008c;text-transform:uppercase;align-items:center;gap:8px;margin-bottom:14px;font-size:12px;font-weight:800;display:inline-flex}.insights-overline:before{content:"";background:var(--color-accent);flex-shrink:0;width:16px;height:2px;box-shadow:0 1px 4px #0006}.insights-overline a,.insights-overline-link{color:#ffffffd9;cursor:pointer;text-decoration:none;transition:all .2s}.insights-overline a:hover,.insights-overline-link:hover{color:var(--color-surface);opacity:.95}.insights-hero h1,.insights-hero-title{letter-spacing:-.03em;color:var(--color-surface);text-transform:none;text-wrap:balance;margin:0 0 20px;font-size:max(36px,min(4.6vw,60px));font-weight:800;line-height:1.18}.insights-hero h1 em,.insights-hero-title em{color:var(--color-surface);font-style:normal}.insights-hero-header>p:not(.insights-overline){color:#ffffffd9;margin:0;font-size:max(15px,min(1.6vw,18px));line-height:1.7}.page-hero-link{color:var(--color-surface);text-underline-offset:4px;align-items:center;gap:6px;margin-top:18px;font-size:15px;font-weight:700;text-decoration:underline;display:inline-flex}.page-hero-link svg{transition:transform .2s}.page-hero-link:hover svg{transform:translate(3px)}.insights-hero-header>p:not(.insights-overline) a{color:var(--color-surface);text-underline-offset:3px;font-weight:700;text-decoration:underline}@media (max-width:820px){.insights-hero{min-height:500px;padding:60px 6vw}.insights-hero h1{font-size:36px}.insights-hero-img{object-position:100% center}.about-hero-img{object-position:78% 65%}.case-hero-img{object-position:62% center}}.home2-button,.page-hero-button{background:var(--color-surface);color:#111;border-radius:99px;align-items:center;gap:8px;padding:13px 20px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-flex}.home2-button:hover,.page-hero-button:hover{background:var(--h2-accent,#8c4a35);color:var(--color-surface);transform:translateY(-1px)}.connect-form-container{background:var(--color-surface);color:var(--color-text-strong);border-radius:20px;padding:44px 40px;box-shadow:0 20px 48px #00000040}.connect-form{flex-direction:column;gap:22px;display:flex}.form-group{flex-direction:column;gap:8px;display:flex}.form-group label{color:#292524;align-items:center;gap:8px;font-size:15px;font-weight:700;display:flex}.form-group label span{color:var(--color-text-muted);font-size:13px;font-weight:400}.form-group input,.form-group textarea,.form-group select{border:1.5px solid var(--color-border);width:100%;color:var(--color-text-strong);background:var(--color-surface-subtle);border-radius:10px;outline:none;padding:12px 16px;font-family:inherit;font-size:15px;transition:all .2s}.form-group select{-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-position:right 16px center;background-repeat:no-repeat;background-size:16px 16px;padding-right:42px;line-height:1.5}.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--color-text-strong);background:var(--color-surface);box-shadow:0 0 0 3px #1c191714}.form-group input.invalid,.form-group textarea.invalid,.form-group select.invalid{background-color:#fef2f2;border-color:#ef4444}.connect-submit-btn{background:var(--color-accent);width:100%;color:var(--color-surface);cursor:pointer;border:none;border-radius:99px;margin-top:10px;padding:16px 24px;font-size:16px;font-weight:700;transition:all .2s}.connect-submit-btn:hover{background:#8f5c47;transform:translateY(-1px);box-shadow:0 4px 12px #a66f5847}.privacy-note{color:var(--color-text-subtle);text-align:center;margin:6px 0 0;font-size:12px;line-height:1.5}.connect-success-box{text-align:center;padding:40px 20px}.success-icon{width:56px;height:56px;color:var(--color-surface);background:#10b981;border-radius:50%;justify-content:center;align-items:center;margin:0 auto 20px;font-size:28px;font-weight:700;display:flex}.connect-success-box h3{color:var(--color-text-strong);margin-bottom:12px;font-size:24px;font-weight:700}.connect-success-box p{color:var(--color-text-secondary);margin-bottom:28px;font-size:15px;line-height:1.6}.reset-btn{border:1px solid var(--color-border-strong);background:var(--color-surface);cursor:pointer;color:var(--color-text);border-radius:99px;padding:10px 20px;font-size:14px;font-weight:600;transition:all .2s}.reset-btn:hover{background:#f5f5f4}@media (max-width:900px){.connect-form-container{padding:32px 24px}}.form-group input.invalid,.form-group textarea.invalid{background:#fef2f2;border-color:#dc2626}@media (max-width:480px){.hc-page .form-group input,.hc-page .form-group textarea{font-size:16px}}.choice-field{position:relative}.choice-field.is-open{z-index:60}.choice-field-display{border:1.5px solid var(--color-border);background:var(--color-surface-subtle);width:100%;min-height:48px;color:var(--color-text-strong);font:inherit;text-align:left;cursor:pointer;border-radius:10px;padding:12px 16px;font-size:15px;line-height:1.6}.choice-field-display.empty{color:var(--color-text-subtle)}.choice-field-display:after{content:"▾";float:right;color:var(--color-text-subtle);margin-left:8px}.choice-field-display.invalid{background:#fef2f2;border-color:#dc2626}.choice-field-panel{z-index:100;overscroll-behavior:contain;border:1px solid var(--color-border);background:var(--color-surface);border-radius:12px;flex-direction:column;gap:6px;max-height:380px;margin-top:0;padding:12px;display:flex;position:absolute;top:calc(100% + 6px);left:0;right:0;overflow-y:auto;box-shadow:0 14px 36px #1c191729,0 4px 12px #00000014}.choice-field-hint{color:var(--color-text-muted);margin:0 0 4px;font-size:13px}.form-group .choice-field-option{border:1px solid var(--color-border);color:#292524;cursor:pointer;border-radius:8px;align-items:center;gap:10px;padding:10px 12px;font-size:15px;font-weight:400;display:flex}.form-group .choice-field-option.checked{border-color:var(--color-accent);background:var(--color-paper)}.form-group .choice-field-option input{width:18px;height:18px;accent-color:var(--color-accent);flex:none;margin:0;padding:0}.form-group .choice-field-other{margin-top:2px}.choice-field-done{background:var(--color-accent);color:var(--color-surface);cursor:pointer;border:none;border-radius:99px;align-self:flex-end;margin-top:4px;padding:8px 20px;font-size:14px;font-weight:700}.healthcheck-line-friend p a,.healthcheck-delivery a{color:var(--color-accent);text-underline-offset:3px;font-weight:600;text-decoration:underline;transition:color .15s}.healthcheck-line-friend p a:hover,.healthcheck-delivery a:hover{color:#8f5c47}@media (max-width:640px){.ps-page .form-group input,.ps-page .form-group textarea{font-size:16px}}.brand-mark{border:1px solid #fff9;border-radius:50%}.brand small{opacity:.7}.header-inner{justify-content:space-between;align-items:center;margin:auto;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;margin-top:3px;display:block}.site-header nav{display:flex}.site-header nav a{border-bottom:2px solid #0000}.menu-button{background:0 0;border:0;display:none}footer{font:10px var(--mono);justify-content:space-between;display:flex}@media (max-width:760px){.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}.brand-mark{font-family:var(--serif)}.site-header nav a:hover{border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px}footer{padding:48px 0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.menu-button{color:#17231f}.white{padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}}.site-header{left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{box-sizing:border-box;width:min(calc(var(--content-max-width) - 8vw), 100% - 8vw);flex-direction:column;align-items:flex-start;gap:24px;max-width:none;margin:0 auto;padding-left:0;padding-right:0;display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:var(--color-surface);letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:28px 32px;width:100%;font-size:13px;display:grid}.site-footer .footer-col{flex-direction:column;align-items:flex-start;gap:6px;display:flex}.site-footer .footer-col h2{color:var(--color-surface);margin:0 0 4px;font-size:14px;font-weight:700}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:var(--color-surface)}.site-footer .footer-copyright{color:#ffffffa8;align-self:center;margin:0;font-size:12px}@media (min-width:1100px){.site-footer{padding:40px 0 28px}.site-footer .footer-inner{grid-template-columns:1fr 1fr;grid-template-areas:"brand social""nav nav""copy copy";align-items:center;gap:28px 0;display:grid}.site-footer .footer-brand{grid-area:brand}.site-footer .footer-nav{grid-area:nav}.site-footer .footer-social{grid-area:social;justify-self:end}.site-footer .footer-copyright{grid-area:copy;justify-self:center}.site-footer .footer-nav{gap:24px 48px;font-size:14px}.site-footer .footer-col{gap:4px}.site-footer .footer-col h2{margin-bottom:6px;font-size:15px}}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;width:calc(100% - 40px)}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{grid-template-columns:repeat(2,1fr);gap:24px 16px}}body{background:var(--color-surface);color:var(--color-ink)}.site-header{color:var(--color-ink);border-color:#d8d5d3}.site-header .brand,.site-header nav{color:var(--color-ink)}.site-header .brand-mark{border-color:var(--color-ink)}.white{background:var(--color-surface);color:var(--color-ink)}footer{background:var(--color-ink);color:var(--color-surface)}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:var(--font-body)}.site-header .brand small{line-height:1.35}.site-header .brand-mark{font-size:19px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header nav .pill{font-size:15px}}.site-header .brand-mark{background:var(--color-surface);color:#0000;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:var(--color-accent);background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f;font-weight:800}.site-header nav .pill{color:var(--color-surface);background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:var(--color-surface);background:#7a4d3c;border-color:#7a4d3c}@media (max-width:1279px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{width:50px;height:50px;color:var(--color-ink);background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;display:grid}.site-header nav{-webkit-overflow-scrolling:touch;background:#fffffffa;border-bottom:1px solid #241f1e24;flex-direction:column;align-items:flex-start;gap:7px;max-height:calc(100svh - 60px);padding:16px 18px 20px;display:none;position:absolute;top:60px;left:0;right:0;overflow-y:auto;box-shadow:0 22px 38px #241f1e1a}.site-header nav.nav-open{display:flex}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}@media (min-width:1280px) and (max-width:1500px){.site-header nav{gap:6px;font-size:12.5px}.site-header nav a{padding:9px 10px}.site-header nav .pill{margin-left:6px;padding:9px 13px}}.site-header .brand b,.site-header .brand small,.site-header .brand-en,.site-header nav a,.site-header nav .pill{white-space:nowrap}.nl-trigger{border:1px solid var(--color-accent);color:var(--color-accent);font:inherit;white-space:nowrap;background:0 0;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{background:var(--color-accent);color:var(--color-surface)}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:var(--color-ink);background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:var(--color-ink);margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{background:var(--color-surface);color:var(--color-ink);width:280px;max-width:60vw;font:inherit;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline:2px solid var(--color-accent);outline-offset:1px}.nl-form button{font:inherit;color:var(--color-surface);background:var(--color-accent);cursor:pointer;white-space:nowrap;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:var(--color-ink);margin:0;font-size:14px;line-height:1.6}@media (max-width:1279px){.nl-trigger{justify-content:center;width:100%;margin-left:0}}@media (max-width:800px){.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:var(--color-surface)!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{align-self:center;margin:0}.header-social-wrap{align-items:center;display:flex;position:relative}.social-more{background:var(--color-surface);width:38px;height:38px;color:var(--color-ink);cursor:pointer;border:1px solid #241f1e2e;border-radius:50%;place-items:center;margin-left:4px;transition:background .2s,border-color .2s,color .2s;display:none}.social-more:hover,.header-social-wrap.open .social-more{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f}@media (min-width:1280px) and (max-width:1500px){.social-more{display:grid}.header-social-wrap .header-social{z-index:20;background:var(--color-surface);border:1px solid #241f1e1f;border-radius:16px;flex-direction:column;gap:10px;margin:0;padding:12px;display:none;position:absolute;top:calc(100% + 10px);right:0;box-shadow:0 14px 32px #241f1e24}.header-social-wrap.open .header-social{display:flex}}@media (max-width:1279px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}.nav-group{position:relative}.nav-group-trigger{color:inherit;font:inherit;white-space:nowrap;cursor:pointer;background:0 0;border:1px solid #0000;border-radius:999px;align-items:center;gap:4px;padding:12px 17px;font-weight:800;transition:background .2s,border-color .2s,color .2s;display:inline-flex}.nav-group-trigger:hover,.nav-group.open .nav-group-trigger,.nav-group.desktop-open .nav-group-trigger{color:var(--color-accent);background:#a66f581a;border-color:#a66f5840}.nav-group.active .nav-group-trigger{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f}.nav-group-chevron{transition:transform .2s}.nav-sub{display:none}.site-header nav .nav-sub a{white-space:nowrap;border-radius:12px;flex-direction:column;gap:2px;padding:10px 14px;display:flex}.site-header nav .nav-sub a:hover{transform:none}.nav-sub-label{font-size:15px;font-weight:800}.nav-sub-desc{color:#77716d;font-size:12px;font-weight:600}@media (min-width:1280px){.nav-sub{z-index:30;min-width:260px;padding-top:10px;position:absolute;top:100%;left:50%;transform:translate(-50%)}.nav-sub:before{content:"";z-index:-1;background:#fff;border:1px solid #241f1e1f;border-radius:16px;position:absolute;top:10px;bottom:0;left:0;right:0;box-shadow:0 22px 44px #241f1e24}.nav-sub a:first-child{margin-top:8px}.nav-sub a:last-child{margin-bottom:8px}.site-header nav .nav-sub a{margin-left:8px;margin-right:8px}.nav-group:focus-within .nav-sub,.nav-group.open .nav-sub,.nav-group.desktop-open .nav-sub{display:block}.nav-group.open .nav-group-chevron,.nav-group.desktop-open .nav-group-chevron{transform:rotate(180deg)}}@media (min-width:1280px) and (max-width:1500px){.nav-group-trigger{padding:9px 10px}}@media (max-width:1279px){.nav-group{width:100%}.nav-group-trigger{width:100%;color:inherit;cursor:pointer;background:0 0;border:none;border-radius:12px;justify-content:space-between;align-items:center;padding:13px 15px;font-size:16px;font-weight:800;transition:background .2s,color .2s;display:flex}.nav-group-trigger:hover,.nav-group.open .nav-group-trigger,.nav-group.mobile-open .nav-group-trigger{color:var(--color-accent);background:#a66f5814}.nav-group.active .nav-group-trigger{color:var(--color-accent)}.nav-group-chevron{transition:transform .2s;display:inline-flex}.nav-group.open .nav-group-chevron,.nav-group.mobile-open .nav-group-chevron{transform:rotate(180deg)}.nav-sub{display:none}.nav-group.open .nav-sub,.nav-group.mobile-open .nav-sub{border-left:2px solid #a66f5833;flex-direction:column;gap:2px;margin-left:15px;padding:4px 0 8px 12px;display:flex}.site-header nav .nav-sub a{padding:10px 14px;font-size:15px;font-weight:700}.nav-sub-desc{display:none}}
+</style>
+  
+<meta name="description" content="說明 Keras model.fit() 常用參數設定，包含 x、y、batch_size、epochs、validation_data、callbacks 與權重更新觀念。" />
+<meta name="keywords" content="機器學習, Keras, TensorFlow, model.fit, 模型訓練, 深度學習" />
+<link rel="canonical" href="https://claire-chang.com/archive/keras-model-fit-parameters/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Keras model.fit() 參數設定：batch_size、epochs、validation 與 callbacks 怎麼用？｜Claire Chang" />
+<meta property="og:description" content="說明 Keras model.fit() 常用參數設定，包含 x、y、batch_size、epochs、validation_data、callbacks 與權重更新觀念。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/archive/keras-model-fit-parameters/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_keras-build-model-and-predict-data-1cc25fa1.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_keras-build-model-and-predict-data-1cc25fa1.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Keras model.fit() 參數設定：batch_size、epochs、validation 與 callbacks 怎麼用？｜Claire Chang" />
+<meta name="twitter:description" content="說明 Keras model.fit() 常用參數設定，包含 x、y、batch_size、epochs、validation_data、callbacks 與權重更新觀念。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_keras-build-model-and-predict-data-1cc25fa1.jpg" />
+<meta property="article:published_time" content="2022-12-22" />
+<meta property="article:modified_time" content="2026-10-02" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="Keras" />
+<meta property="article:tag" content="TensorFlow" />
+<meta property="article:tag" content="model.fit" />
+<meta property="article:tag" content="模型訓練" />
+<meta property="article:tag" content="深度學習" />
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"技術筆記存檔","item":"https://claire-chang.com/tech/"},{"@type":"ListItem","position":3,"name":"Keras model.fit() 參數設定：batch_size、epochs、validation 與 callbacks 怎麼用？","item":"https://claire-chang.com/archive/keras-model-fit-parameters/"}]},{"@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about/","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"alumniOf":{"@type":"EducationalOrganization","name":"天主教輔仁大學","alternateName":"輔仁大學","url":"https://www.fju.edu.tw/","department":{"@type":"Organization","name":"資訊管理學系","alternateName":"輔大資管系"}},"award":["2024 年 11 月天瓏書店單月暢銷榜冠軍（著作《AI 職場超神助手》）","2025 Biodesign 北醫創業中心創新提案第二名","2023 人工智慧學校創新專題競賽第一名","2022 Taipei Women in Tech Honorees"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"subjectOf":[{"@type":"Book","@id":"https://claire-chang.com/#book-ai-workplace-helper","name":"AI 職場超神助手：ChatGPT 與生成式 AI 一鍵搞定工作難題"}],"@reverse":{"author":[{"@id":"https://claire-chang.com/#book-ai-workplace-helper"}]},"authorOf":[{"@id":"https://claire-chang.com/#book-ai-workplace-helper"}],"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]},{"@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"founder":{"@id":"https://claire-chang.com/#claire-chang"},"employee":[{"@id":"https://claire-chang.com/#claire-chang"}],"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}},{"@type":"Article","@id":"https://claire-chang.com/archive/keras-model-fit-parameters/#article","headline":"Keras model.fit() 參數設定：batch_size、epochs、validation 與 callbacks 怎麼用？","description":"說明 Keras model.fit() 常用參數設定，包含 x、y、batch_size、epochs、validation_data、callbacks 與權重更新觀念。","image":"https://claire-chang.com/images/tech/hero_keras-build-model-and-predict-data.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2022-12-22","dateModified":"2026-10-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/archive/keras-model-fit-parameters/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"機器學習","keywords":"Keras, TensorFlow, model.fit, 模型訓練, 深度學習","about":[{"@type":"Thing","name":"模型訓練"},{"@type":"Thing","name":"深度學習"}],"mentions":[{"@type":"Thing","name":"Keras"},{"@type":"Thing","name":"TensorFlow"},{"@type":"Thing","name":"model.fit"}]},{"@type":"FAQPage","@id":"https://claire-chang.com/archive/keras-model-fit-parameters/#faq","mainEntity":[{"@type":"Question","name":"model.fit() 的 batch_size 預設是多少？","acceptedAnswer":{"@type":"Answer","text":"Keras 文件說明，未指定 `batch_size` 時通常預設為 32。若 `x` 是 `tf.data.Dataset`、`PyDataset`、`DataLoader` 或 generator，資料來源本身應產生 batch，通常不要再傳 `batch_size`。"}},{"@type":"Question","name":"epochs 越多模型就越準嗎？","acceptedAnswer":{"@type":"Answer","text":"`epochs` 越多不一定越準。訓練輪數太少可能欠擬合，訓練輪數太多可能過擬合；建議搭配 validation loss 與 `EarlyStopping` 判斷何時停止。"}},{"@type":"Question","name":"validation_split 可以取代測試集嗎？","acceptedAnswer":{"@type":"Answer","text":"`validation_split` 不能取代最終測試集。Validation data 用於訓練期間調整判斷，test data 應保留到最後做一次較接近真實泛化能力的評估。"}},{"@type":"Question","name":"使用 tf.data.Dataset 時 y 要另外傳給 model.fit() 嗎？","acceptedAnswer":{"@type":"Answer","text":"使用 `tf.data.Dataset` 且 dataset 已輸出 `(inputs, targets)` 時，`y` 通常不要另外傳入。Keras 會從 dataset 的 tuple 結構中讀出輸入、標籤與可選的 sample weights。"}},{"@type":"Question","name":"callbacks 在 model.fit() 裡通常用來做什麼？","acceptedAnswer":{"@type":"Answer","text":"`callbacks` 常用來做提前停止、儲存最佳模型、調整 learning rate 或寫入 TensorBoard。`EarlyStopping` 和 `ModelCheckpoint` 是訓練實驗裡最常見的兩個 callback。"}},{"@type":"Question","name":"softmax 和 sigmoid 要怎麼選？","acceptedAnswer":{"@type":"Answer","text":"每筆資料只會屬於一個類別時，分類輸出通常用 `softmax`。每筆資料可能同時屬於多個類別時，分類輸出通常用 `sigmoid`，並搭配適合多標籤任務的 loss。"}}]}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b><span class="brand-en">Claire Chang</span>｜張可佳</b><small>讓企業需求被技術聽懂，讓 AI 真正落地</small></span></a><button class="menu-button" aria-label="開啟導覽" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button><nav aria-label="主要導覽"><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">企業服務 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/services/"><span class="nav-sub-label">服務項目</span><small class="nav-sub-desc">企業 AI 內訓、工作坊、專案開發與導入陪跑</small></a><a href="/courses/"><span class="nav-sub-label">邀課主題</span><small class="nav-sub-desc">可以邀請我教授的課程與實作內容</small></a><a href="/cases/"><span class="nav-sub-label">合作案例與成果</span><small class="nav-sub-desc">88+ 合作機構與實際成效數據</small></a><a href="/testimonials/"><span class="nav-sub-label">企業／學員回饋</span><small class="nav-sub-desc">企業內訓與公開課的匿名學員回饋</small></a><a href="/faq/"><span class="nav-sub-label">收費與常見問題</span><small class="nav-sub-desc">報價方式、排課流程與課程客製</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">課程與活動 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/events/"><span class="nav-sub-label">近期活動</span><small class="nav-sub-desc">即將舉辦與進行中的公開課程、講座</small></a><a href="/coaching/"><span class="nav-sub-label">1對1 AI 教練</span><small class="nav-sub-desc">依你的工作任務量身設計的個人 AI 學習</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">AI 顧問室 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/tools/"><span class="nav-sub-label">全部工具</span><small class="nav-sub-desc">瀏覽所有品牌探索、導入評估與趨勢洞察工具</small></a><a href="/tools/?category=品牌探索"><span class="nav-sub-label">品牌探索</span><small class="nav-sub-desc">企業網路特寫 × AI 分析、品牌 AI 能見度健檢</small></a><a href="/tools/?category=導入評估"><span class="nav-sub-label">導入評估</span><small class="nav-sub-desc">AI 專案選題評分表、這份資料能不能交給 AI？</small></a><a href="/tools/?category=趨勢洞察"><span class="nav-sub-label">趨勢洞察</span><small class="nav-sub-desc">AI 科技趨勢探索器、2026 AI 代理五大趨勢</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">部落格 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/insights/"><span class="nav-sub-label">全部文章</span><small class="nav-sub-desc">瀏覽所有 AI 導入、實務應用與策略洞察文章</small></a><a href="/insights/?category=AI%20Agent"><span class="nav-sub-label">AI Agent</span><small class="nav-sub-desc">自主代理應用、Multi-Agent 架構與企業落地實務</small></a><a href="/insights/?category=AI策略"><span class="nav-sub-label">AI策略</span><small class="nav-sub-desc">企業 AI 導入路徑、價值評估與商業競爭力</small></a><a href="/insights/?category=AI治理"><span class="nav-sub-label">AI治理</span><small class="nav-sub-desc">企業資料安全、外部 AI 使用紅線與資安防護</small></a><a href="/insights/?category=智慧製造"><span class="nav-sub-label">智慧製造</span><small class="nav-sub-desc">工廠現場製程優化、良率提升與系統整合經驗</small></a><a href="/insights/?category=智慧營運"><span class="nav-sub-label">智慧營運</span><small class="nav-sub-desc">跨部門流程重塑、日常行政賦能與自動化落地</small></a><a href="/insights/?category=AI搜尋優化"><span class="nav-sub-label">AI搜尋優化</span><small class="nav-sub-desc">GEO 生成式引擎優化、AI 引用率與知識庫結構</small></a><a href="/tech/"><span class="nav-sub-label">技術筆記存檔</span><small class="nav-sub-desc">19 年前端、後端、DevOps 到機器學習的實作記錄</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">關於 Claire <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/about/"><span class="nav-sub-label">認識 Claire</span><small class="nav-sub-desc">19 年工程背景的企業 AI 導入顧問</small></a><a href="/about/engineer-to-ai-translator/"><span class="nav-sub-label">我的轉型故事</span><small class="nav-sub-desc">為什麼從工程師走進企業做 AI</small></a><a href="/about/stories/"><span class="nav-sub-label">經驗分享文章</span><small class="nav-sub-desc">得獎經驗、專訪與職涯觀點</small></a></div></div><button type="button" class="nl-trigger" aria-expanded="false" aria-controls="newsletter-panel"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg> 訂閱電子報 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nl-trigger-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><a href="/contact/" class="pill">預約諮詢 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a><div class="social-links header-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/facebook.webp" alt="" width="28" height="28" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/linkedin.webp" alt="" width="28" height="28" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/instagram.webp" alt="" width="28" height="28" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/line.webp" alt="" width="28" height="28" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/youtube.webp" alt="" width="28" height="28" /></a></div></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/tech/hero_keras-build-model-and-predict-data.webp" alt="Keras 模型訓練流程與 model.fit 參數設定示意圖" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/tech/?category=%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ 機器學習</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2022-12-22">2022-12-22</time></span><span class="post-meta-pill">Keras · TensorFlow · model.fit · 模型訓練 · 深度學習</span></div></div><h1 class="insights-hero-title">Keras model.fit() 參數設定：batch_size、epochs、validation 與 callbacks 怎麼用？</h1><p class="insights-hero-description">說明 Keras model.fit() 常用參數設定，包含 x、y、batch_size、epochs、validation_data、callbacks 與權重更新觀念。</p></div></div></section><section class="post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>Keras <code>model.fit()</code> 是訓練模型的主要方法，負責把輸入資料、標籤、批次大小、訓練輪數、驗證資料與 callback 串成一次訓練流程。實務上先把 <code>x</code>、<code>y</code>、<code>batch_size</code>、<code>epochs</code>、<code>validation_data</code> 與 <code>callbacks</code> 設清楚，再用 <code>model.summary()</code> 檢查模型結構，會比一開始就調很多超參數穩得多。</p>
+</div><section aria-labelledby="model-fit-是做什麼用的"><h2 id="model-fit-是做什麼用的">model.fit() 是做什麼用的？</h2>
+<p>Keras <code>model.fit()</code> 會依指定的 epoch 數訓練模型，並在每個 batch 中計算 loss、反向傳播與更新權重。<code>fit()</code> 回傳的 <code>History</code> 物件可用來查看每輪訓練與驗證指標。</p>
+<p>Keras 官方文件將 <code>fit()</code> 定義為用固定 epoch 數訓練模型的方法；<code>x</code> 可接受 NumPy array、tensor、<code>tf.data.Dataset</code>、<code>PyDataset</code>、PyTorch <code>DataLoader</code> 或 Python generator（Keras，存取日期：2026-08-28）。TensorFlow 的 <code>tf.keras.Model.fit</code> 也維持相同訓練流程概念（TensorFlow，存取日期：2026-08-28）。</p>
+<p>我當時的筆記先從 <code>fit()</code> 參數表開始，這段範例保留了當時 TensorFlow/Keras 常見的 signature。若使用 Keras 3，<code>max_queue_size</code>、<code>workers</code>、<code>use_multiprocessing</code> 已不在新版 Keras 文件的主要 <code>fit()</code> signature 中；維護舊專案時要以專案實際 TensorFlow/Keras 版本文件為準。</p>
+<pre><code class="hljs language-python">fit(
+    x=<span class="hljs-literal">None</span>,
+    y=<span class="hljs-literal">None</span>,
+    batch_size=<span class="hljs-literal">None</span>,
+    epochs=<span class="hljs-number">1</span>,
+    verbose=<span class="hljs-string">'auto'</span>,
+    callbacks=<span class="hljs-literal">None</span>,
+    validation_split=<span class="hljs-number">0.0</span>,
+    validation_data=<span class="hljs-literal">None</span>,
+    shuffle=<span class="hljs-literal">True</span>,
+    class_weight=<span class="hljs-literal">None</span>,
+    sample_weight=<span class="hljs-literal">None</span>,
+    initial_epoch=<span class="hljs-number">0</span>,
+    steps_per_epoch=<span class="hljs-literal">None</span>,
+    validation_steps=<span class="hljs-literal">None</span>,
+    validation_batch_size=<span class="hljs-literal">None</span>,
+    validation_freq=<span class="hljs-number">1</span>,
+    max_queue_size=<span class="hljs-number">10</span>,
+    workers=<span class="hljs-number">1</span>,
+    use_multiprocessing=<span class="hljs-literal">False</span>
+)
+</code></pre>
+<p>在使用 <code>model.fit()</code> 之前，可以先用下列指令查看模型資訊：</p>
+<pre><code class="hljs language-python">model.summary()
+</code></pre>
+</section><section aria-labelledby="model-fit-常用參數怎麼設定"><h2 id="model-fit-常用參數怎麼設定">model.fit() 常用參數怎麼設定？</h2>
+<p>Keras <code>model.fit()</code> 最常調整的是資料輸入、批次大小、訓練輪數與驗證資料。初學時不需要一次記完整份 API，先看懂訓練資料如何被切成 batch，再補 callbacks 與 sample weights。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>參數</th><th>用途</th><th>實務設定方式</th></tr></thead><tbody><tr><td><code>x</code></td><td>訓練輸入資料</td><td>NumPy array、tensor、<code>tf.data.Dataset</code> 或 generator</td></tr><tr><td><code>y</code></td><td>訓練標籤</td><td>若 <code>x</code> 已是 dataset 並產生 <code>(inputs, targets)</code>，通常不另外傳 <code>y</code></td></tr><tr><td><code>batch_size</code></td><td>每次權重更新使用的樣本數</td><td>NumPy/tensor 輸入常設 16、32、64 起試；dataset 已 batch 時不要重複設定</td></tr><tr><td><code>epochs</code></td><td>訓練資料完整看過幾輪</td><td>先用小數值確認流程，再依 validation 指標決定是否增加</td></tr><tr><td><code>validation_split</code></td><td>從訓練資料切出驗證比例</td><td>只支援 NumPy array 或 tensor，且會取訓練資料尾端樣本</td></tr><tr><td><code>validation_data</code></td><td>明確指定驗證資料</td><td>有固定驗證集時優先使用，且會覆蓋 <code>validation_split</code></td></tr><tr><td><code>callbacks</code></td><td>訓練中自動執行的控制邏輯</td><td>常見如 EarlyStopping、ModelCheckpoint、TensorBoard</td></tr><tr><td><code>shuffle</code></td><td>每個 epoch 前是否打亂資料</td><td>分類訓練多半開啟；時間序列資料要特別小心</td></tr></tbody></table></div>
+<p>一個基本訓練範例如下：</p>
+<pre><code class="hljs language-python">history = model.fit(
+    x_train,
+    y_train,
+    batch_size=<span class="hljs-number">32</span>,
+    epochs=<span class="hljs-number">20</span>,
+    validation_split=<span class="hljs-number">0.2</span>,
+    callbacks=[
+        tf.keras.callbacks.EarlyStopping(
+            monitor=<span class="hljs-string">"val_loss"</span>,
+            patience=<span class="hljs-number">3</span>,
+            restore_best_weights=<span class="hljs-literal">True</span>,
+        )
+    ],
+)
+</code></pre>
+</section><section aria-labelledby="batch-size-會影響什麼"><h2 id="batch-size-會影響什麼">batch_size 會影響什麼？</h2>
+<p><code>batch_size</code> 是每次拿來計算梯度並更新權重的訓練樣本數。較大的 batch 通常運算效率較好但更吃記憶體；較小的 batch 記憶體壓力較低，但梯度波動可能變大。</p>
+<p>Batch size 是在訓練神經網路時，一次輸入給模型的訓練樣本數量。批量大小會影響訓練速度和效果，也決定模型在訓練過程中每次更新權重時使用多少樣本。</p>
+<p>在訓練神經網路時，每一次將一個批次的訓練資料輸入模型，並根據輸出調整模型參數的過程，稱為一次 iteration。假設訓練集有 1,000 筆資料，<code>batch_size=100</code>，模型會用 10 次 iteration 跑完一個 epoch。</p>
+<p>批量大小需要平衡硬體與訓練穩定性。批量太小時，梯度可能波動較大；批量太大時，記憶體需求會上升，也可能讓模型更新次數變少。Keras 文件也提醒，如果輸入資料已經是 <code>tf.data.Dataset</code>、<code>PyDataset</code>、<code>DataLoader</code> 或 generator，通常不要再傳 <code>batch_size</code>，因為資料來源本身已經產生 batch（Keras，存取日期：2026-08-28）。</p>
+</section><section aria-labelledby="什麼是更新權重"><h2 id="什麼是更新權重">什麼是更新權重？</h2>
+<p>更新權重是神經網路用訓練資料修正模型參數的過程。模型先計算預測與標籤之間的 loss，再透過反向傳播與 optimizer 調整權重，讓下一次預測更接近目標。</p>
+<p>在神經網路中，權重是用於計算網路輸出的參數。每個神經元都有自己的權重，這些權重決定該神經元對輸出的貢獻。</p>
+<p>訓練神經網路時，模型會根據輸入和預期輸出計算損失，然後使用反向傳播演算法調整權重，使損失逐步降低。嚴格來說，權重是模型透過訓練學到的參數；<code>learning_rate</code>、<code>batch_size</code>、正則化強度與 <code>epochs</code> 才是開發者預先設定的超參數。</p>
+<p>這篇筆記保留「權重更新」這個核心概念，並補上一個實務判斷：如果 loss 完全不下降，先檢查資料 shape、標籤格式、loss function 與 learning rate，再去懷疑模型層數不夠。</p>
+</section><section aria-labelledby="epochs-要設多少"><h2 id="epochs-要設多少">epochs 要設多少？</h2>
+<p><code>epochs</code> 代表模型完整看過訓練資料幾輪。epoch 不是 batch 次數；總更新次數通常接近「樣本數除以 batch_size，再乘上 epoch 數」。</p>
+<p>Epoch 是指訓練過程中對整個訓練資料集進行一次完整的訓練循環。例如，假設有 1,000 個樣本的訓練資料集，批量大小為 100，就需要 10 次 iteration 才能完成一個 epoch。</p>
+<p>在訓練神經網路時，通常會進行多個 epoch，以提高模型精度。在每個 epoch 中，模型會看過所有訓練資料，並根據輸出調整模型參數。許多情況下，經過足夠多的 epoch 後，模型的精度會趨於穩定，繼續訓練不一定有幫助。</p>
+<p>實務上我會先設一個偏高但可接受的 <code>epochs</code>，再搭配 <code>EarlyStopping</code> 讓模型在 validation loss 停止改善時自動停下來。這比手動猜 5、10、50 哪個剛好更可靠。</p>
+</section><section aria-labelledby="validation-split-和-validation-data-怎麼選"><h2 id="validation-split-和-validation-data-怎麼選">validation_split 和 validation_data 怎麼選？</h2>
+<p><code>validation_data</code> 適合已經切好驗證集的專案；<code>validation_split</code> 適合 NumPy array 或 tensor 的快速實驗。兩者同時設定時，Keras 會使用 <code>validation_data</code>。</p>
+<p><code>validation_split</code> 會從傳入的訓練資料切出一部分做驗證，模型不會用這部分資料訓練，只會在每個 epoch 結束時評估 loss 與 metrics。Keras 文件中特別指出，<code>validation_split</code> 取的是 <code>x</code> 與 <code>y</code> 尾端樣本，而且是在 shuffle 前切出；如果資料原本依類別或時間排序，直接使用可能造成驗證集偏掉（Keras，存取日期：2026-08-28）。</p>
+<p>我會這樣選：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>情境</th><th>建議</th></tr></thead><tbody><tr><td>快速確認程式能跑</td><td>用 <code>validation_split=0.2</code></td></tr><tr><td>正式實驗或可重現訓練</td><td>先切好 <code>x_val, y_val</code>，再用 <code>validation_data=(x_val, y_val)</code></td></tr><tr><td>使用 <code>tf.data.Dataset</code></td><td>在 dataset pipeline 內切 train/validation，不用 <code>validation_split</code></td></tr><tr><td>時間序列資料</td><td>依時間切驗證集，避免隨機切分造成資料洩漏</td></tr></tbody></table></div>
+</section><section aria-labelledby="分類模型的-activation-和-loss-要怎麼搭"><h2 id="分類模型的-activation-和-loss-要怎麼搭">分類模型的 activation 和 loss 要怎麼搭？</h2>
+<p>分類模型常見搭配是二元分類用 sigmoid，單標籤多分類用 softmax，多標籤分類用 sigmoid。activation、標籤格式與 loss function 三者要一起檢查。</p>
+<p>我當時的筆記寫到「label 單類別最後使用 softmax，多類別用 sigmoid」。更精確地說，若每筆資料只屬於一個類別，輸出層通常用 <code>softmax</code>；若每筆資料可同時屬於多個類別，輸出層通常用 <code>sigmoid</code>。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>任務</th><th>輸出層</th><th>常見 loss</th></tr></thead><tbody><tr><td>二元分類</td><td><code>Dense(1, activation="sigmoid")</code></td><td><code>binary_crossentropy</code></td></tr><tr><td>單標籤多分類，標籤是整數</td><td><code>Dense(num_classes, activation="softmax")</code></td><td><code>sparse_categorical_crossentropy</code></td></tr><tr><td>單標籤多分類，標籤是 one-hot</td><td><code>Dense(num_classes, activation="softmax")</code></td><td><code>categorical_crossentropy</code></td></tr><tr><td>多標籤分類</td><td><code>Dense(num_labels, activation="sigmoid")</code></td><td><code>binary_crossentropy</code></td></tr></tbody></table></div>
+<p>Keras <code>compile()</code> 文件說明，loss function 會比較 <code>y_true</code> 與 <code>y_pred</code>，而 sparse loss 期待整數標籤格式（Keras，存取日期：2026-08-28）。所以模型無法收斂時，不要只看 <code>fit()</code> 參數，也要回頭檢查 <code>compile()</code>。</p>
+</section><section aria-labelledby="model-fit-參數設定檢查表"><h2 id="model-fit-參數設定檢查表">model.fit() 參數設定檢查表</h2>
+<p>Keras <code>model.fit()</code> 出錯時，通常不是某個參數背不起來，而是資料、標籤、loss、batch 與 validation 沒對齊。訓練前照這份清單掃一次，可以少掉很多重跑。</p>
+<ol>
+<li>用 <code>model.summary()</code> 確認輸入 shape、輸出 shape 與參數量。</li>
+<li>確認 <code>x_train</code> 第一維是樣本數，且與 <code>y_train</code> 第一維一致。</li>
+<li>確認最後一層 activation 與 loss function 對應分類型態。</li>
+<li>使用 NumPy array 或 tensor 時，再設定 <code>batch_size</code>；dataset 已 batch 時不要重複指定。</li>
+<li>優先準備固定 <code>validation_data</code>，快速實驗才用 <code>validation_split</code>。</li>
+<li>需要自動停止、存檔或看 TensorBoard 時，把邏輯放進 <code>callbacks</code>。</li>
+<li>訓練結果怪異時，先看 loss 是否下降，再看 validation loss 是否和 training loss 分開。</li>
+</ol>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>model.fit() 的 batch_size 預設是多少？</span></h3>
+<p>Keras 文件說明，未指定 <code>batch_size</code> 時通常預設為 32。若 <code>x</code> 是 <code>tf.data.Dataset</code>、<code>PyDataset</code>、<code>DataLoader</code> 或 generator，資料來源本身應產生 batch，通常不要再傳 <code>batch_size</code>。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>epochs 越多模型就越準嗎？</span></h3>
+<p><code>epochs</code> 越多不一定越準。訓練輪數太少可能欠擬合，訓練輪數太多可能過擬合；建議搭配 validation loss 與 <code>EarlyStopping</code> 判斷何時停止。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>validation_split 可以取代測試集嗎？</span></h3>
+<p><code>validation_split</code> 不能取代最終測試集。Validation data 用於訓練期間調整判斷，test data 應保留到最後做一次較接近真實泛化能力的評估。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>使用 tf.data.Dataset 時 y 要另外傳給 model.fit() 嗎？</span></h3>
+<p>使用 <code>tf.data.Dataset</code> 且 dataset 已輸出 <code>(inputs, targets)</code> 時，<code>y</code> 通常不要另外傳入。Keras 會從 dataset 的 tuple 結構中讀出輸入、標籤與可選的 sample weights。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>callbacks 在 model.fit() 裡通常用來做什麼？</span></h3>
+<p><code>callbacks</code> 常用來做提前停止、儲存最佳模型、調整 learning rate 或寫入 TensorBoard。<code>EarlyStopping</code> 和 <code>ModelCheckpoint</code> 是訓練實驗裡最常見的兩個 callback。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>softmax 和 sigmoid 要怎麼選？</span></h3>
+<p>每筆資料只會屬於一個類別時，分類輸出通常用 <code>softmax</code>。每筆資料可能同時屬於多個類別時，分類輸出通常用 <code>sigmoid</code>，並搭配適合多標籤任務的 loss。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ul>
+<li>Keras，〈<a href="https://keras.io/api/models/model_training_apis/" target="_blank" rel="noopener noreferrer">Model training APIs</a>〉，存取日期：2026-08-28。</li>
+<li>Keras，〈<a href="https://keras.io/guides/training_with_built_in_methods/" target="_blank" rel="noopener noreferrer">Training &#x26; evaluation with the built-in methods</a>〉，存取日期：2026-08-28。</li>
+<li>TensorFlow，〈<a href="https://www.tensorflow.org/api_docs/python/tf/keras/Model" target="_blank" rel="noopener noreferrer">tf.keras.Model</a>〉，存取日期：2026-08-28。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/archive/keras-introduction/">Keras 介紹：用 Python 快速建立深度學習模型的高階 API</a>：同樣聚焦 Keras、TensorFlow，可接著比較不同情境的做法。</li>
+<li><a href="/archive/keras-callbacks-early-stopping/">如何使用 Keras 回呼(callbacks)觸發訓練週期的結束？ModelCheckpoint 與 EarlyStopping 實戰</a>：同樣聚焦 Keras、TensorFlow，可接著比較不同情境的做法。</li>
+<li><a href="/archive/keras-build-model-and-predict-data/">Keras 建立模型並預測資料：從 Sequential 到 model.predict 的完整流程</a>：同樣聚焦 Keras、TensorFlow，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="最後更新"><h2 id="最後更新">最後更新</h2>
+<p>2026-08-28</p>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2022-12-22</strong></p></section></article></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang - 張可佳</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><div class="footer-col"><h2>企業服務</h2><a href="/services/">服務項目</a><a href="/courses/">邀課主題</a><a href="/cases/">合作案例與成果</a><a href="/testimonials/">企業／學員回饋</a><a href="/faq/">收費與常見問題</a></div><div class="footer-col"><h2>課程與活動</h2><a href="/events/">近期活動</a><a href="/coaching/">1對1 AI 教練</a></div><div class="footer-col"><h2>AI 顧問室</h2><a href="/tools/">全部工具</a><a href="/tools/?category=品牌探索">品牌探索</a><a href="/tools/?category=導入評估">導入評估</a><a href="/tools/?category=趨勢洞察">趨勢洞察</a></div><div class="footer-col"><h2>部落格</h2><a href="/insights/">全部文章</a><a href="/insights/?category=AI%20Agent">AI Agent</a><a href="/insights/?category=AI策略">AI策略</a><a href="/insights/?category=AI治理">AI治理</a><a href="/insights/?category=智慧製造">智慧製造</a><a href="/insights/?category=智慧營運">智慧營運</a><a href="/insights/?category=AI搜尋優化">AI搜尋優化</a><a href="/tech/">技術筆記存檔</a></div><div class="footer-col"><h2>關於 Claire</h2><a href="/about/">認識 Claire</a><a href="/about/engineer-to-ai-translator/">我的轉型故事</a><a href="/about/stories/">經驗分享文章</a></div><div class="footer-col"><h2>聯絡與政策</h2><a href="/contact/">預約諮詢</a><a href="/privacy/">隱私權政策</a><a href="/unsubscribe/">取消電子報</a></div></nav><div class="social-links footer-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/facebook.webp" alt="" width="32" height="32" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/linkedin.webp" alt="" width="32" height="32" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/instagram.webp" alt="" width="32" height="32" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/line.webp" alt="" width="32" height="32" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/youtube.webp" alt="" width="32" height="32" /></a></div><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>
