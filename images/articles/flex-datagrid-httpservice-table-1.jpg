@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claire Chang｜企業 AI 導入與落地</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <!-- 關掉手機瀏覽器把文章內容裡的數字自動轉成可點擊電話連結的行為——內文常出現年份、
+         百分比、統計數字（19 年經驗、88+ 案例…），沒關掉常被 iOS Safari 誤判成電話號碼加底線。 -->
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <!--
+      Critical CSS & Asset Preloading
+
+      這裡要 preload 的是 hero-placeholder.webp，不是 hero-workshop-full.webp。
+      實際的 LCP 元素是 Home.tsx 裡 loading=eager + fetchpriority=high 的
+      .home2-hero-placeholder-img（首屏立刻蓋滿版面的模糊小圖），高畫質的
+      hero-workshop-full.webp 要等 React mount 後才由 JS 觸發下載、且要三張都
+      載完才淡入換掉 placeholder，不是首次繪製看到的那張圖。
+      PageSpeed 的「LCP 要求探索」抓到的正是這個落差：preload 指到的檔案跟真正
+      的 LCP 資源對不上，瀏覽器要等 JS 執行、React 把 <img> 插進 DOM 才會發現
+      hero-placeholder.webp 這個請求，白白晚了一輪。改成 preload placeholder，
+      讓瀏覽器在解析 <head> 時就直接開始抓這張圖。
+    -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <!--
+      display=optional（不是 swap）：這個網站中文內文用 Noto Sans TC，字重跟後備字型
+      （PingFang TC / Microsoft JhengHei）的字高、字寬差異很大，用 swap 會在字型下載完成
+      後讓「幾乎整頁的文字」重新排版一次，越下面的元素被推移的距離越大——PageSpeed 手機版
+      報告量到 footer 一個元素就吃掉 0.34 的 CLS，元凶正是這個 swap 造成的整頁重排。
+      改成 optional：瀏覽器只會在極短時間內（多半是字型已被快取）就緒才使用 Noto Sans TC，
+      沒趕上就整頁改用後備字型顯示到底，不會有「先上後備字型、再晚一步整頁重排成 Noto Sans TC」
+      這個 CLS 來源。代價是沒快取的第一次造訪，中文內文可能顯示後備字型而非 Noto Sans TC，
+      這個取捨對這裡的 CLS 分數是划算的。
+    -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-Bpz9Txln.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbYonmBs.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-DSxH6joZ.css">
+  <meta name="description" content="19 年軟體工程背景，現為企業 AI 導入顧問。協助中小企業找出適合導入 AI 的工作流程，翻譯營運與技術需求，並透過客製化內訓與專案陪跑，讓 AI 真正進入日常工作。" />
+<meta name="keywords" content="企業 AI 導入, AI 顧問, AI 落地, 中小企業 AI, AI 內訓, Claire Chang" />
+<link rel="canonical" href="https://claire-chang.com" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:description" content="19 年軟體工程背景，現為企業 AI 導入顧問。協助中小企業找出適合導入 AI 的工作流程，翻譯營運與技術需求，並透過客製化內訓與專案陪跑，讓 AI 真正進入日常工作。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://claire-chang.com" />
+<meta property="og:image" content="https://claire-chang.com/images/articles/hero-office.webp" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Claire Chang｜企業 AI 導入與落地" />
+<meta name="twitter:description" content="19 年軟體工程背景，現為企業 AI 導入顧問。協助中小企業找出適合導入 AI 的工作流程，翻譯營運與技術需求，並透過客製化內訓與專案陪跑，讓 AI 真正進入日常工作。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/articles/hero-office.webp" />
+<script type="application/ld+json">{"@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"contactPoint":{"@type":"ContactPoint","email":"cochia.chang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","description":"19 年軟體工程背景，現為企業 AI 導入顧問。協助中小企業找出適合導入 AI 的工作流程，翻譯營運與技術需求，並透過客製化內訓與專案陪跑，讓 AI 真正進入日常工作。","publisher":{"@id":"https://claire-chang.com/#organization"},"inLanguage":"zh-Hant"}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b>Claire Chang</b><small>企業 AI 導入顧問</small></span></a><nav aria-label="主要導覽"><a href="/insights">AI 導入筆記</a><a href="/tutorials">AI 應用教學</a><a href="/tech">AI技術專欄</a><a href="/about">關於 Claire</a><a class="pill" href="/services">合作方式</a></nav></div></header><main><article class="hero wrap"><p class="eyebrow">Business x Technology x People</p><h1>讓企業需求被技術聽懂，讓 AI 真正進入工作流程。</h1><p class="lead">我是 Claire，擁有 19 年工程經驗的企業 AI 導入顧問。協助中小企業釐清營運需求、評估 AI 可行性、培育內部團隊，並陪伴第一個 AI 專案真正落地。</p><p><a class="button" href="#featured">查看實際案例</a></p></article><section class="white sub-section"><div class="wrap"><h2>精選文章</h2><article><h2><a href="/post/ai-value-shift-core-competitiveness">AI 時代，企業的核心競爭力會往哪裡移動？從核心價值到流程重構的完整指南</a></h2><p>AI 會改變企業價值來源。本文提供五步法，協助企業重新判斷核心競爭力與 AI 導入方向。</p><p><time datetime="2026-08-24">2026-08-24</time> · AI策略</p></article><article><h2><a href="/post/workflow-start">企業 AI 導入四層評估方法與實用檢查表</a></h2><p>企業導入 AI，應先選擇高頻、耗時、輸入輸出明確、錯誤可人工攔截的低風險流程。第一個專案應先拆解人機分工，再以總工時、錯誤率與使用率驗證成效。</p><p><time datetime="2026-08-24">2026-08-24</time> · 智慧營運</p></article><article><h2><a href="/post/factory-knowledge-transfer">工廠關鍵知識都在老師傅腦中，AI 要怎麼協助傳承？</a></h2><p>AI 知識傳承不只是建立老師傅 GPT。本文從匿名生產排程案出發，說明工廠如何先建立員工信任，再逐步保存工作紀錄、判斷規則與例外知識。</p><p><time datetime="2026-08-24">2026-08-24</time> · 智慧製造</p></article><p><a href="/insights">閱讀所有文章 →</a></p></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><a href="/insights">AI 導入筆記</a><a href="/tutorials">AI 應用教學</a><a href="/tech">AI技術專欄</a><a href="/about">關於 Claire</a><a href="/services">合作方式</a></nav><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

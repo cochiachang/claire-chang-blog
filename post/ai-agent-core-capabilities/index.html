@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>企業導入前必懂的 MCP、Skills、Automation｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-t0uX5OAQ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-Dd_uD5pT.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-DznRTPFJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/analytics-BlZfCD_P.js">
+    <style>:root{--color-ink:#241f1e;--color-paper:#f7f4ef;--color-muted:#6f6863;--color-line:#d4ceca;--color-accent:#a66f58;--color-accent-soft:#e8d8ce;--color-surface:#fff;--color-text-strong:#1c1917;--color-text:#44403c;--color-text-secondary:#57534e;--color-text-muted:#78716c;--color-text-subtle:#a8a29e;--color-border:#e7e5e4;--color-border-strong:#d6d3d1;--color-surface-subtle:#fafaf9;--font-body:Manrope, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;--content-max-width:1320px;--shadow-card:0 10px 30px #00000014;--black:#181717;--paper:var(--color-paper);--white:var(--color-surface);--muted:#6f6967;--line:#d8d5d3;--accent:var(--color-accent);--sans:var(--font-body);--serif:var(--font-body);--mono:"DM Mono",monospace;--ink:var(--color-ink);--blue:#214d6b;--orange:#e36d39;--coral:var(--color-accent);--accent-soft:var(--color-accent-soft)}@keyframes ui-spin{to{transform:rotate(360deg)}}:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:var(--color-surface);background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}.article-list-container,.tool-list-container,.tool-content-container,.account-content-container,.post-main-section{max-width:var(--content-max-width);margin:0 auto;padding:48px 4vw 100px}@media (max-width:820px){.article-list-container,.tool-list-container,.tool-content-container,.account-content-container,.post-main-section{padding:32px 5vw 80px!important}}.tool-card-stack{flex-direction:column;gap:24px;display:flex}.insights-hero{color:var(--color-surface);background:var(--color-ink);flex-direction:column;justify-content:center;min-height:490px;padding:70px 4vw;display:flex;position:relative;overflow:hidden}.insights-hero-inner{z-index:3;max-width:var(--content-max-width);width:100%;margin:0 auto;position:relative}.insights-hero-img{object-fit:cover;object-position:right center;z-index:1;width:100%;height:100%;position:absolute;top:0;bottom:0;left:0;right:0}.about-hero-img{object-position:right 65%}.case-hero-img{object-position:60% center}.insights-hero:after{content:"";z-index:2;background:linear-gradient(90deg,#0a0a0ab3 0%,#0a0a0a66 50%,#0a0a0a14 100%);position:absolute;top:0;bottom:0;left:0;right:0}.insights-hero-header{margin:0;position:relative}.insights-overline{letter-spacing:.18em;color:var(--color-surface);text-shadow:0 1px 8px #0000008c;text-transform:uppercase;align-items:center;gap:8px;margin-bottom:14px;font-size:12px;font-weight:800;display:inline-flex}.insights-overline:before{content:"";background:var(--color-accent);flex-shrink:0;width:16px;height:2px;box-shadow:0 1px 4px #0006}.insights-overline a,.insights-overline-link{color:#ffffffd9;cursor:pointer;text-decoration:none;transition:all .2s}.insights-overline a:hover,.insights-overline-link:hover{color:var(--color-surface);opacity:.95}.insights-hero h1,.insights-hero-title{letter-spacing:-.03em;color:var(--color-surface);text-transform:none;text-wrap:balance;margin:0 0 20px;font-size:max(36px,min(4.6vw,60px));font-weight:800;line-height:1.18}.insights-hero h1 em,.insights-hero-title em{color:var(--color-surface);font-style:normal}.insights-hero-header>p:not(.insights-overline){color:#ffffffd9;margin:0;font-size:max(15px,min(1.6vw,18px));line-height:1.7}.page-hero-link{color:var(--color-surface);text-underline-offset:4px;align-items:center;gap:6px;margin-top:18px;font-size:15px;font-weight:700;text-decoration:underline;display:inline-flex}.page-hero-link svg{transition:transform .2s}.page-hero-link:hover svg{transform:translate(3px)}.insights-hero-header>p:not(.insights-overline) a{color:var(--color-surface);text-underline-offset:3px;font-weight:700;text-decoration:underline}@media (max-width:820px){.insights-hero{min-height:500px;padding:60px 6vw}.insights-hero h1{font-size:36px}.insights-hero-img{object-position:100% center}.about-hero-img{object-position:78% 65%}.case-hero-img{object-position:62% center}}.home2-button,.page-hero-button{background:var(--color-surface);color:#111;border-radius:99px;align-items:center;gap:8px;padding:13px 20px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-flex}.home2-button:hover,.page-hero-button:hover{background:var(--h2-accent,#8c4a35);color:var(--color-surface);transform:translateY(-1px)}.connect-form-container{background:var(--color-surface);color:var(--color-text-strong);border-radius:20px;padding:44px 40px;box-shadow:0 20px 48px #00000040}.connect-form{flex-direction:column;gap:22px;display:flex}.form-group{flex-direction:column;gap:8px;display:flex}.form-group label{color:#292524;align-items:center;gap:8px;font-size:15px;font-weight:700;display:flex}.form-group label span{color:var(--color-text-muted);font-size:13px;font-weight:400}.form-group input,.form-group textarea,.form-group select{border:1.5px solid var(--color-border);width:100%;color:var(--color-text-strong);background:var(--color-surface-subtle);border-radius:10px;outline:none;padding:12px 16px;font-family:inherit;font-size:15px;transition:all .2s}.form-group select{-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-position:right 16px center;background-repeat:no-repeat;background-size:16px 16px;padding-right:42px;line-height:1.5}.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--color-text-strong);background:var(--color-surface);box-shadow:0 0 0 3px #1c191714}.form-group input.invalid,.form-group textarea.invalid,.form-group select.invalid{background-color:#fef2f2;border-color:#ef4444}.connect-submit-btn{background:var(--color-accent);width:100%;color:var(--color-surface);cursor:pointer;border:none;border-radius:99px;margin-top:10px;padding:16px 24px;font-size:16px;font-weight:700;transition:all .2s}.connect-submit-btn:hover{background:#8f5c47;transform:translateY(-1px);box-shadow:0 4px 12px #a66f5847}.privacy-note{color:var(--color-text-subtle);text-align:center;margin:6px 0 0;font-size:12px;line-height:1.5}.connect-success-box{text-align:center;padding:40px 20px}.success-icon{width:56px;height:56px;color:var(--color-surface);background:#10b981;border-radius:50%;justify-content:center;align-items:center;margin:0 auto 20px;font-size:28px;font-weight:700;display:flex}.connect-success-box h3{color:var(--color-text-strong);margin-bottom:12px;font-size:24px;font-weight:700}.connect-success-box p{color:var(--color-text-secondary);margin-bottom:28px;font-size:15px;line-height:1.6}.reset-btn{border:1px solid var(--color-border-strong);background:var(--color-surface);cursor:pointer;color:var(--color-text);border-radius:99px;padding:10px 20px;font-size:14px;font-weight:600;transition:all .2s}.reset-btn:hover{background:#f5f5f4}@media (max-width:900px){.connect-form-container{padding:32px 24px}}.form-group input.invalid,.form-group textarea.invalid{background:#fef2f2;border-color:#dc2626}@media (max-width:480px){.hc-page .form-group input,.hc-page .form-group textarea{font-size:16px}}.choice-field{position:relative}.choice-field.is-open{z-index:60}.choice-field-display{border:1.5px solid var(--color-border);background:var(--color-surface-subtle);width:100%;min-height:48px;color:var(--color-text-strong);font:inherit;text-align:left;cursor:pointer;border-radius:10px;padding:12px 16px;font-size:15px;line-height:1.6}.choice-field-display.empty{color:var(--color-text-subtle)}.choice-field-display:after{content:"▾";float:right;color:var(--color-text-subtle);margin-left:8px}.choice-field-display.invalid{background:#fef2f2;border-color:#dc2626}.choice-field-panel{z-index:100;overscroll-behavior:contain;border:1px solid var(--color-border);background:var(--color-surface);border-radius:12px;flex-direction:column;gap:6px;max-height:380px;margin-top:0;padding:12px;display:flex;position:absolute;top:calc(100% + 6px);left:0;right:0;overflow-y:auto;box-shadow:0 14px 36px #1c191729,0 4px 12px #00000014}.choice-field-hint{color:var(--color-text-muted);margin:0 0 4px;font-size:13px}.form-group .choice-field-option{border:1px solid var(--color-border);color:#292524;cursor:pointer;border-radius:8px;align-items:center;gap:10px;padding:10px 12px;font-size:15px;font-weight:400;display:flex}.form-group .choice-field-option.checked{border-color:var(--color-accent);background:var(--color-paper)}.form-group .choice-field-option input{width:18px;height:18px;accent-color:var(--color-accent);flex:none;margin:0;padding:0}.form-group .choice-field-other{margin-top:2px}.choice-field-done{background:var(--color-accent);color:var(--color-surface);cursor:pointer;border:none;border-radius:99px;align-self:flex-end;margin-top:4px;padding:8px 20px;font-size:14px;font-weight:700}.healthcheck-line-friend p a,.healthcheck-delivery a{color:var(--color-accent);text-underline-offset:3px;font-weight:600;text-decoration:underline;transition:color .15s}.healthcheck-line-friend p a:hover,.healthcheck-delivery a:hover{color:#8f5c47}@media (max-width:640px){.ps-page .form-group input,.ps-page .form-group textarea{font-size:16px}}.brand-mark{border:1px solid #fff9;border-radius:50%}.brand small{opacity:.7}.header-inner{justify-content:space-between;align-items:center;margin:auto;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;margin-top:3px;display:block}.site-header nav{display:flex}.site-header nav a{border-bottom:2px solid #0000}.menu-button{background:0 0;border:0;display:none}footer{font:10px var(--mono);justify-content:space-between;display:flex}@media (max-width:760px){.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}.brand-mark{font-family:var(--serif)}.site-header nav a:hover{border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px}footer{padding:48px 0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.menu-button{color:#17231f}.white{padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}}.site-header{left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{box-sizing:border-box;width:min(calc(var(--content-max-width) - 8vw), 100% - 8vw);flex-direction:column;align-items:flex-start;gap:24px;max-width:none;margin:0 auto;padding-left:0;padding-right:0;display:flex}.site-footer .footer-brand{align-items:center;gap:16px;display:flex}.site-footer .footer-brand b{color:var(--color-surface);letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:28px 32px;width:100%;font-size:13px;display:grid}.site-footer .footer-col{flex-direction:column;align-items:flex-start;gap:6px;display:flex}.site-footer .footer-col h2{color:var(--color-surface);margin:0 0 4px;font-size:14px;font-weight:700}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:var(--color-surface)}.site-footer .footer-copyright{color:#ffffffa8;align-self:center;margin:0;font-size:12px}@media (min-width:1100px){.site-footer{padding:40px 0 28px}.site-footer .footer-inner{grid-template-columns:1fr 1fr;grid-template-areas:"brand social""nav nav""copy copy";align-items:center;gap:28px 0;display:grid}.site-footer .footer-brand{grid-area:brand}.site-footer .footer-nav{grid-area:nav}.site-footer .footer-social{grid-area:social;justify-self:end}.site-footer .footer-copyright{grid-area:copy;justify-self:center}.site-footer .footer-nav{gap:24px 48px;font-size:14px}.site-footer .footer-col{gap:4px}.site-footer .footer-col h2{margin-bottom:6px;font-size:15px}}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;width:calc(100% - 40px)}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{grid-template-columns:repeat(2,1fr);gap:24px 16px}}body{background:var(--color-surface);color:var(--color-ink)}.site-header{color:var(--color-ink);border-color:#d8d5d3}.site-header .brand,.site-header nav{color:var(--color-ink)}.site-header .brand-mark{border-color:var(--color-ink)}.white{background:var(--color-surface);color:var(--color-ink)}footer{background:var(--color-ink);color:var(--color-surface)}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:var(--font-body)}.site-header .brand small{line-height:1.35}.site-header .brand-mark{font-size:19px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header nav .pill{font-size:15px}}.site-header .brand-mark{background:var(--color-surface);color:#0000;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:var(--color-accent);background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f;font-weight:800}.site-header nav .pill{color:var(--color-surface);background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:var(--color-surface);background:#7a4d3c;border-color:#7a4d3c}@media (max-width:1279px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{width:50px;height:50px;color:var(--color-ink);background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;display:grid}.site-header nav{-webkit-overflow-scrolling:touch;background:#fffffffa;border-bottom:1px solid #241f1e24;flex-direction:column;align-items:flex-start;gap:7px;max-height:calc(100svh - 60px);padding:16px 18px 20px;display:none;position:absolute;top:60px;left:0;right:0;overflow-y:auto;box-shadow:0 22px 38px #241f1e1a}.site-header nav.nav-open{display:flex}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}@media (min-width:1280px) and (max-width:1500px){.site-header nav{gap:6px;font-size:12.5px}.site-header nav a{padding:9px 10px}.site-header nav .pill{margin-left:6px;padding:9px 13px}}.site-header .brand b,.site-header .brand small,.site-header .brand-en,.site-header nav a,.site-header nav .pill{white-space:nowrap}.nl-trigger{border:1px solid var(--color-accent);color:var(--color-accent);font:inherit;white-space:nowrap;background:0 0;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{background:var(--color-accent);color:var(--color-surface)}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:var(--color-ink);background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:var(--color-ink);margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{background:var(--color-surface);color:var(--color-ink);width:280px;max-width:60vw;font:inherit;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline:2px solid var(--color-accent);outline-offset:1px}.nl-form button{font:inherit;color:var(--color-surface);background:var(--color-accent);cursor:pointer;white-space:nowrap;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:var(--color-ink);margin:0;font-size:14px;line-height:1.6}@media (max-width:1279px){.nl-trigger{justify-content:center;width:100%;margin-left:0}}@media (max-width:800px){.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:var(--color-surface)!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{align-self:center;margin:0}.header-social-wrap{align-items:center;display:flex;position:relative}.social-more{background:var(--color-surface);width:38px;height:38px;color:var(--color-ink);cursor:pointer;border:1px solid #241f1e2e;border-radius:50%;place-items:center;margin-left:4px;transition:background .2s,border-color .2s,color .2s;display:none}.social-more:hover,.header-social-wrap.open .social-more{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f}@media (min-width:1280px) and (max-width:1500px){.social-more{display:grid}.header-social-wrap .header-social{z-index:20;background:var(--color-surface);border:1px solid #241f1e1f;border-radius:16px;flex-direction:column;gap:10px;margin:0;padding:12px;display:none;position:absolute;top:calc(100% + 10px);right:0;box-shadow:0 14px 32px #241f1e24}.header-social-wrap.open .header-social{display:flex}}@media (max-width:1279px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}.nav-group{position:relative}.nav-group-trigger{color:inherit;font:inherit;white-space:nowrap;cursor:pointer;background:0 0;border:1px solid #0000;border-radius:999px;align-items:center;gap:4px;padding:12px 17px;font-weight:800;transition:background .2s,border-color .2s,color .2s;display:inline-flex}.nav-group-trigger:hover,.nav-group.open .nav-group-trigger,.nav-group.desktop-open .nav-group-trigger{color:var(--color-accent);background:#a66f581a;border-color:#a66f5840}.nav-group.active .nav-group-trigger{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f}.nav-group-chevron{transition:transform .2s}.nav-sub{display:none}.site-header nav .nav-sub a{white-space:nowrap;border-radius:12px;flex-direction:column;gap:2px;padding:10px 14px;display:flex}.site-header nav .nav-sub a:hover{transform:none}.nav-sub-label{font-size:15px;font-weight:800}.nav-sub-desc{color:#77716d;font-size:12px;font-weight:600}@media (min-width:1280px){.nav-sub{z-index:30;min-width:260px;padding-top:10px;position:absolute;top:100%;left:50%;transform:translate(-50%)}.nav-sub:before{content:"";z-index:-1;background:#fff;border:1px solid #241f1e1f;border-radius:16px;position:absolute;top:10px;bottom:0;left:0;right:0;box-shadow:0 22px 44px #241f1e24}.nav-sub a:first-child{margin-top:8px}.nav-sub a:last-child{margin-bottom:8px}.site-header nav .nav-sub a{margin-left:8px;margin-right:8px}.nav-group:focus-within .nav-sub,.nav-group.open .nav-sub,.nav-group.desktop-open .nav-sub{display:block}.nav-group.open .nav-group-chevron,.nav-group.desktop-open .nav-group-chevron{transform:rotate(180deg)}}@media (min-width:1280px) and (max-width:1500px){.nav-group-trigger{padding:9px 10px}}@media (max-width:1279px){.nav-group{width:100%}.nav-group-trigger{width:100%;color:inherit;cursor:pointer;background:0 0;border:none;border-radius:12px;justify-content:space-between;align-items:center;padding:13px 15px;font-size:16px;font-weight:800;transition:background .2s,color .2s;display:flex}.nav-group-trigger:hover,.nav-group.open .nav-group-trigger,.nav-group.mobile-open .nav-group-trigger{color:var(--color-accent);background:#a66f5814}.nav-group.active .nav-group-trigger{color:var(--color-accent)}.nav-group-chevron{transition:transform .2s;display:inline-flex}.nav-group.open .nav-group-chevron,.nav-group.mobile-open .nav-group-chevron{transform:rotate(180deg)}.nav-sub{display:none}.nav-group.open .nav-sub,.nav-group.mobile-open .nav-sub{border-left:2px solid #a66f5833;flex-direction:column;gap:2px;margin-left:15px;padding:4px 0 8px 12px;display:flex}.site-header nav .nav-sub a{padding:10px 14px;font-size:15px;font-weight:700}.nav-sub-desc{display:none}}
+</style>
+  <link rel="stylesheet" crossorigin href="/assets/Post-B-oHczHB.css" />
+<link rel="stylesheet" crossorigin href="/assets/insights-redesign-2gndCVR5.css" />
+<link rel="modulepreload" crossorigin href="/assets/Post-DzeG7tbZ.js" />
+<link rel="modulepreload" crossorigin href="/assets/posts-Du1Vo-q3.js" />
+<link rel="modulepreload" crossorigin href="/assets/check-BbRcsn1Z.js" />
+<link rel="modulepreload" crossorigin href="/assets/search-B_tulb55.js" />
+<link rel="modulepreload" crossorigin href="/assets/Seo-DTIZGomR.js" />
+<link rel="modulepreload" crossorigin href="/assets/lib-C1CBSYOn.js" />
+<link rel="modulepreload" crossorigin href="/assets/tools-BdrpCNIi.js" />
+<link rel="modulepreload" crossorigin href="/assets/internal-href-CzUPzxTt.js" />
+<meta name="description" content="用數位新進員工的比喻，認識 AI Agent 的三個核心能力：Connector／MCP、Skills 與 Scheduled Tasks／Automation，並了解企業導入前應準備的資料、工作方法與權限邊界。" />
+<meta name="keywords" content="AI Agent, AI Agent, MCP, Automation" />
+<link rel="canonical" href="https://claire-chang.com/post/ai-agent-core-capabilities/" />
+<meta property="og:site_name" content="Claire Chang｜企業 AI 導入與落地" />
+<meta property="og:title" content="企業導入前必懂的 MCP、Skills、Automation｜Claire Chang" />
+<meta property="og:description" content="用數位新進員工的比喻，認識 AI Agent 的三個核心能力：Connector／MCP、Skills 與 Scheduled Tasks／Automation，並了解企業導入前應準備的資料、工作方法與權限邊界。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/ai-agent-core-capabilities/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_ai-agent-core-capabilities-828b51d9.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_ai-agent-core-capabilities-828b51d9.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="企業導入前必懂的 MCP、Skills、Automation｜Claire Chang" />
+<meta name="twitter:description" content="用數位新進員工的比喻，認識 AI Agent 的三個核心能力：Connector／MCP、Skills 與 Scheduled Tasks／Automation，並了解企業導入前應準備的資料、工作方法與權限邊界。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_ai-agent-core-capabilities-828b51d9.jpg" />
+<meta property="article:published_time" content="2026-08-24" />
+<meta property="article:modified_time" content="2026-10-06" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="AI Agent" />
+<meta property="article:tag" content="MCP" />
+<meta property="article:tag" content="Automation" />
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"部落格","item":"https://claire-chang.com/insights/"},{"@type":"ListItem","position":3,"name":"企業導入前必懂的 MCP、Skills、Automation","item":"https://claire-chang.com/post/ai-agent-core-capabilities/"}]},{"@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about/","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"alumniOf":{"@type":"EducationalOrganization","name":"天主教輔仁大學","alternateName":"輔仁大學","url":"https://www.fju.edu.tw/","department":{"@type":"Organization","name":"資訊管理學系","alternateName":"輔大資管系"}},"award":["2024 年 11 月天瓏書店單月暢銷榜冠軍（著作《AI 職場超神助手》）","2025 Biodesign 北醫創業中心創新提案第二名","2023 人工智慧學校創新專題競賽第一名","2022 Taipei Women in Tech Honorees"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"subjectOf":[{"@type":"Book","@id":"https://claire-chang.com/#book-ai-workplace-helper","name":"AI 職場超神助手：ChatGPT 與生成式 AI 一鍵搞定工作難題"}],"@reverse":{"author":[{"@id":"https://claire-chang.com/#book-ai-workplace-helper"}]},"authorOf":[{"@id":"https://claire-chang.com/#book-ai-workplace-helper"}],"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]},{"@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技","alternateName":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com","logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"founder":{"@id":"https://claire-chang.com/#claire-chang"},"employee":[{"@id":"https://claire-chang.com/#claire-chang"}],"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}},{"@type":"Article","@id":"https://claire-chang.com/post/ai-agent-core-capabilities/#article","headline":"企業導入前必懂的 MCP、Skills、Automation","description":"用數位新進員工的比喻，認識 AI Agent 的三個核心能力：Connector／MCP、Skills 與 Scheduled Tasks／Automation，並了解企業導入前應準備的資料、工作方法與權限邊界。","image":"https://claire-chang.com/images/articles/hero_ai-agent-core-capabilities.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2026-08-24","dateModified":"2026-10-06","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/ai-agent-core-capabilities/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"AI Agent","keywords":"AI Agent, MCP, Automation","about":[{"@type":"Thing","name":"AI Agent"},{"@type":"Thing","name":"Automation"}],"mentions":[{"@type":"Thing","name":"MCP"}]},{"@type":"FAQPage","@id":"https://claire-chang.com/post/ai-agent-core-capabilities/#faq","mainEntity":[{"@type":"Question","name":"AI Agent 一定要使用 MCP 嗎？","acceptedAnswer":{"@type":"Answer","text":"AI Agent 不一定要使用 MCP，也可以透過 API、內建 Connector 或其他工具整合方式連接系統。MCP 的價值是提供較標準化的連接方式，減少不同 AI 應用與資料工具各自開發整合的負擔。"}},{"@type":"Question","name":"Connector 和 MCP 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"Connector 通常泛指連接特定服務的現成功能；MCP 是 AI 應用連接外部資料、工具與工作流程的開放標準。部分 Connector 底層可能採用 MCP，但兩個名詞不能直接畫上等號。"}},{"@type":"Question","name":"Agent Skill 是否等於 SOP？","acceptedAnswer":{"@type":"Answer","text":"Agent Skill 可以包含標準作業程序（Standard Operating Procedure，SOP），但通常不只是一份文字說明。Agent Skill 還能封裝範例、範本、參考資料與選用腳本，讓 AI Agent 在適當情境載入並遵循完整工作方法。"}},{"@type":"Question","name":"Agent Skill 和提示詞有什麼差別？","acceptedAnswer":{"@type":"Answer","text":"提示詞通常處理單次對話中的指示；Agent Skill 則把可重複使用的指令、資源、範例與腳本整理成模組。Agent Skill 比單一提示詞更適合團隊共用、版本維護與知識傳承。"}},{"@type":"Question","name":"Scheduled Tasks 和傳統自動化有何不同？","acceptedAnswer":{"@type":"Answer","text":"Scheduled Tasks 著重依時間週期啟動工作；傳統自動化也能由事件或條件觸發。兩者若結合 Agent Skills，AI Agent 就能在啟動後依工作方法搜尋、判斷、整理並回報，而不只是執行固定提醒。"}},{"@type":"Question","name":"AI Agent 可以直接操作 ERP 嗎？","acceptedAnswer":{"@type":"Answer","text":"AI Agent 必須透過 ERP 提供的 API、MCP Server、Connector 或受控的電腦操作能力，才可能讀取或寫入 ERP。企業仍須限制帳號權限、保留操作紀錄，並為報價、付款或刪除資料等高風險動作設定人工確認。"}},{"@type":"Question","name":"中小企業也適合導入 AI Agent 嗎？","acceptedAnswer":{"@type":"Answer","text":"中小企業可以先從範圍小、錯誤可攔截、資料權限清楚的工作開始，例如定期蒐集資訊、整理會議紀錄或製作例行報表。導入重點不是追求全自動，而是先證明單一流程能穩定產生價值。"}},{"@type":"Question","name":"AI Agent 做錯事時由誰負責？","acceptedAnswer":{"@type":"Answer","text":"AI Agent 不會自行承擔企業責任。企業必須事先指定流程負責人、可自動執行的範圍、人工核准點、異常處理方式與稽核紀錄，讓每項決策和動作都有清楚的管理責任。"}}]}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b><span class="brand-en">Claire Chang</span>｜張可佳</b><small>讓企業需求被技術聽懂，讓 AI 真正落地</small></span></a><button class="menu-button" aria-label="開啟導覽" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button><nav aria-label="主要導覽"><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">企業服務 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/services/"><span class="nav-sub-label">服務項目</span><small class="nav-sub-desc">企業 AI 內訓、工作坊、專案開發與導入陪跑</small></a><a href="/courses/"><span class="nav-sub-label">邀課主題</span><small class="nav-sub-desc">可以邀請我教授的課程與實作內容</small></a><a href="/cases/"><span class="nav-sub-label">合作案例與成果</span><small class="nav-sub-desc">88+ 合作機構與實際成效數據</small></a><a href="/testimonials/"><span class="nav-sub-label">企業／學員回饋</span><small class="nav-sub-desc">企業內訓與公開課的匿名學員回饋</small></a><a href="/faq/"><span class="nav-sub-label">收費與常見問題</span><small class="nav-sub-desc">報價方式、排課流程與課程客製</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">課程與活動 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/events/"><span class="nav-sub-label">近期活動</span><small class="nav-sub-desc">即將舉辦與進行中的公開課程、講座</small></a><a href="/coaching/"><span class="nav-sub-label">1對1 AI 教練</span><small class="nav-sub-desc">依你的工作任務量身設計的個人 AI 學習</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">AI 顧問室 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/tools/"><span class="nav-sub-label">全部工具</span><small class="nav-sub-desc">瀏覽所有品牌探索、導入評估、趨勢洞察與文件處理工具</small></a><a href="/tools/?category=品牌探索"><span class="nav-sub-label">品牌探索</span><small class="nav-sub-desc">企業網路特寫 × AI 分析、品牌 AI 能見度健檢</small></a><a href="/tools/?category=文件處理"><span class="nav-sub-label">文件處理</span><small class="nav-sub-desc">發票與收據辨識、合約重點標示、文件轉 Markdown、個資遮蔽</small></a><a href="/tools/?category=導入評估"><span class="nav-sub-label">導入評估</span><small class="nav-sub-desc">AI 專案選題評分表、這份資料能不能交給 AI？</small></a><a href="/tools/?category=趨勢洞察"><span class="nav-sub-label">趨勢洞察</span><small class="nav-sub-desc">AI 科技趨勢探索器、2026 AI 代理五大趨勢</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">部落格 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/insights/"><span class="nav-sub-label">全部文章</span><small class="nav-sub-desc">瀏覽所有 AI 導入、實務應用與策略洞察文章</small></a><a href="/insights/?category=AI%20Agent"><span class="nav-sub-label">AI Agent</span><small class="nav-sub-desc">自主代理應用、Multi-Agent 架構與企業落地實務</small></a><a href="/insights/?category=AI策略"><span class="nav-sub-label">AI策略</span><small class="nav-sub-desc">企業 AI 導入路徑、價值評估與商業競爭力</small></a><a href="/insights/?category=AI治理"><span class="nav-sub-label">AI治理</span><small class="nav-sub-desc">企業資料安全、外部 AI 使用紅線與資安防護</small></a><a href="/insights/?category=智慧製造"><span class="nav-sub-label">智慧製造</span><small class="nav-sub-desc">工廠現場製程優化、良率提升與系統整合經驗</small></a><a href="/insights/?category=智慧營運"><span class="nav-sub-label">智慧營運</span><small class="nav-sub-desc">跨部門流程重塑、日常行政賦能與自動化落地</small></a><a href="/insights/?category=AI搜尋優化"><span class="nav-sub-label">AI搜尋優化</span><small class="nav-sub-desc">GEO 生成式引擎優化、AI 引用率與知識庫結構</small></a><a href="/tech/"><span class="nav-sub-label">技術筆記存檔</span><small class="nav-sub-desc">19 年前端、後端、DevOps 到機器學習的實作記錄</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">關於 Claire <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/about/"><span class="nav-sub-label">認識 Claire</span><small class="nav-sub-desc">19 年工程背景的企業 AI 導入顧問</small></a><a href="/about/engineer-to-ai-translator/"><span class="nav-sub-label">我的轉型故事</span><small class="nav-sub-desc">為什麼從工程師走進企業做 AI</small></a><a href="/about/stories/"><span class="nav-sub-label">經驗分享文章</span><small class="nav-sub-desc">得獎經驗、專訪與職涯觀點</small></a></div></div><button type="button" class="nl-trigger" aria-expanded="false" aria-controls="newsletter-panel"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg> 訂閱電子報 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nl-trigger-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><a href="/contact/" class="pill">預約諮詢 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a><div class="social-links header-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/facebook.webp" alt="" width="28" height="28" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/linkedin.webp" alt="" width="28" height="28" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/instagram.webp" alt="" width="28" height="28" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/line.webp" alt="" width="28" height="28" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/youtube.webp" alt="" width="28" height="28" /></a></div></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/articles/hero_ai-agent-core-capabilities.webp" alt="企業 AI 團隊講者正在簡報前向同仁解說 AI Agent 核心能力與流程架構" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/insights/?category=AI%20Agent" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ AI Agent</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2026-08-24">2026-08-24</time></span><span class="post-meta-pill">AI Agent · MCP · Automation</span></div></div><h1 class="insights-hero-title">企業導入前必懂的 MCP、Skills、Automation</h1><p class="insights-hero-description">用數位新進員工的比喻，認識 AI Agent 的三個核心能力：Connector／MCP、Skills 與 Scheduled Tasks／Automation，並了解企業導入前應準備的資料、工作方法與權限邊界。</p></div></div></section><section class="post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>AI Agent（AI 代理）不只回答問題，還能依目標規劃步驟、取得資料、使用工具、執行任務並回報結果。</p>
+<p>企業若想讓 AI Agent 真正進入工作流程，至少要理解三個核心能力：Connector／Model Context Protocol（MCP）負責連接資料與工具，Agent Skills 負責提供工作方法，Scheduled Tasks／Automation 負責定時啟動與主動回報。</p>
+<p>企業可以把 AI Agent 想成一位數位新進員工。新進員工即使頭腦很好，沒有帳號與資料就無法工作；只有系統權限、沒有 SOP 與判斷方法，也不知道怎麼把事情做好；如果沒有人交辦時間與回報規則，更不會主動在正確時間完成任務。</p>
+</div><section aria-labelledby="ai-agent-是什麼-和一般生成式-ai-有何不同"><h2 id="ai-agent-是什麼-和一般生成式-ai-有何不同">AI Agent 是什麼？和一般生成式 AI 有何不同？</h2>
+<blockquote>
+<p><strong>AI Agent 是能依目標規劃步驟、呼叫工具並採取行動的 AI 系統。</strong></p>
+</blockquote>
+<p>一般生成式 AI 主要產生答案，AI Agent 則著重完成任務。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>比較項目</th><th>一般生成式 AI</th><th>AI Agent</th></tr></thead><tbody><tr><td>主要目的</td><td>回答、摘要或產生內容</td><td>完成一項多步驟任務</td></tr><tr><td>互動方式</td><td>通常由人逐次下指令</td><td>可依目標規劃下一步</td></tr><tr><td>外部操作</td><td>可能只使用對話中的資料</td><td>可呼叫工具、查詢系統或執行動作</td></tr><tr><td>企業管理</td><td>管理輸入資料與輸出內容</td><td>還要管理權限、動作、停止條件與稽核紀錄</td></tr></tbody></table></div>
+<p>SAP 將 AI Agent 說明為可在較少人工監督下制定決策並執行工作的 AI 應用，並指出 AI Agent 能使用軟體工具完成計畫（SAP，2025 年 11 月）。企業應注意，「能自主執行」不等於「完全不用人管」；真正的導入工作，是決定 AI Agent 可以自主到哪一步，以及哪一步必須停下來請人確認。</p>
+</section><section aria-labelledby="理解-ai-agent-可以把它想成培訓一位數位新進員工"><h2 id="理解-ai-agent-可以把它想成培訓一位數位新進員工">理解 AI Agent，可以把它想成培訓一位數位新進員工</h2>
+<blockquote>
+<p><strong>AI Agent 如同數位新進員工，需要帳號權限、工作方法與執行節奏。</strong>
+三項能力分別決定 AI Agent 能接觸什麼、應該怎麼做，以及何時執行與回報。</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>AI Agent 核心能力</th><th>新進員工比喻</th><th>企業要回答的問題</th><th>缺少時會發生什麼</th></tr></thead><tbody><tr><td>Connector／MCP</td><td>帳號、權限與工作資料</td><td>Agent 可以去哪裡、取得什麼、執行什麼？</td><td>Agent 無法取得最新資料，也不能完成跨系統工作</td></tr><tr><td>Agent Skills</td><td>SOP、範例與判斷方法</td><td>公司希望 Agent 依照什麼方法工作？</td><td>Agent 即使拿到資料，也可能做出不符合企業需求的結果</td></tr><tr><td>Scheduled Tasks／Automation</td><td>班表、觸發條件與回報規則</td><td>工作何時開始？什麼情況要通知誰？</td><td>Agent 仍要等人交辦，無法持續監控與主動回報</td></tr></tbody></table></div>
+<p>三項能力不是彼此取代的產品選項，而是一套完整工作能力。企業若只買工具、只串資料，卻沒有整理工作方法與管理邊界，就像只替新進員工申請帳號，卻期待員工立刻承接整個部門的工作。</p>
+</section><section aria-labelledby="connector-mcp-讓-ai-agent-連接企業資料與工具"><h2 id="connector-mcp-讓-ai-agent-連接企業資料與工具">Connector／MCP：讓 AI Agent 連接企業資料與工具</h2>
+<blockquote>
+<p><strong>Connector／MCP 讓 AI Agent 取得資料、呼叫工具及執行動作。公司不會在新進員工報到第一天就給他最高管理權限，AI Agent 也是一樣。</strong></p>
+</blockquote>
+<p>Connector 泛指連接特定服務的現成功能；MCP 則是 AI 應用連接外部資料、工具與工作流程的開放標準。MCP Server 可以向 AI Agent 提供資料資源、可呼叫工具與預先定義的互動提示，使不同 AI 應用不必為每項服務重新設計一套連接方式（Model Context Protocol 官方文件，2026 年 7 月）。</p>
+<p>雲端服務已經出現具體應用。Google Cloud 在 2026 年 4 月公布超過 50 個代管 MCP Server，涵蓋基礎設施、維運、資安、資料庫、分析與儲存；官方舉例包含依需求建立或移除雲端資源，以及根據監控事件觸發復原動作（Google Cloud，2026 年 4 月）。AWS MCP Server 也在 2026 年 5 月正式推出，讓 AI Agent 在既有 AWS Identity and Access Management（IAM）權限下存取 AWS 服務，並利用 Amazon CloudWatch 與 AWS CloudTrail 保留監控及稽核紀錄（AWS，2026 年 5 月）。</p>
+<figure class="article-figure"><img src="/images/articles/mcp-connector-illustration.webp" alt="Connector與MCP示意圖：讓 AI 擁有讀取 Gmail、Google 行事曆與本機資料夾的權限" loading="lazy" class="markdown-img"></figure>
+<p>企業應採用最小權限原則，只開放任務真正需要的資料與動作。查詢庫存和修改庫存是兩種不同權限；產生報價建議和正式送出報價，也應設計不同的人工確認門檻。</p>
+</section><section aria-labelledby="agent-skills-把員工經驗整理成可重複執行的方法"><h2 id="agent-skills-把員工經驗整理成可重複執行的方法">Agent Skills：把員工經驗整理成可重複執行的方法</h2>
+<blockquote>
+<p><strong>Agent Skill 是由指令、資源、範例與選用腳本組成的可重複工作方法。Agent Skill 適合把企業作業知識整理成可維護、可分享的模組。</strong></p>
+</blockquote>
+<p>OpenAI 將 Skills 定義為封裝指令、資源與選用腳本的可重複工作流程（OpenAI，存取於 2026 年 8 月）；Anthropic 則把建立 Skill 比喻為替新進員工準備工作指南，讓組織能保存並分享程序知識（Anthropic，2025 年 10 月）。兩項官方說明都顯示，Skill 的重點不是讓提示詞變長，而是讓工作方法能被一致地重複使用。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>比較項目</th><th>單次提示詞</th><th>Agent Skill</th></tr></thead><tbody><tr><td>使用方式</td><td>使用者在對話中臨時輸入</td><td>Agent 在適當情境載入既定方法</td></tr><tr><td>包含內容</td><td>通常以文字指示為主</td><td>可包含指令、範本、參考資料、範例與腳本</td></tr><tr><td>維護方式</td><td>容易散落在個人對話</td><td>可進行版本管理、測試與團隊共用</td></tr><tr><td>企業價值</td><td>提升個人單次任務效率</td><td>保存並複製組織的工作知識</td></tr></tbody></table></div>
+<p><a href="/services/">企業導入</a> Agent Skills 時，實際執行工作的員工應該是共同設計者。技術人員能協助整理格式與測試流程，但只有領域專家知道哪些條件會改變判斷、哪些例外不能照 SOP 處理，以及什麼結果才算真正完成工作。</p>
+<figure class="article-figure"><img src="/images/articles/agent-skills-workflow-illustration.webp" alt="Agent Skills 運作流程四步驟圖：輸入企業基本資料、AI Agent 啟動與意圖設定、自動多向深度資料採集、一鍵生成完整分析報告" loading="lazy" class="markdown-img"></figure>
+</section><section aria-labelledby="scheduled-tasks-automation-讓-ai-agent-定時執行並主動回報"><h2 id="scheduled-tasks-automation-讓-ai-agent-定時執行並主動回報">Scheduled Tasks／Automation：讓 AI Agent 定時執行並主動回報</h2>
+<blockquote>
+<p><strong>Scheduled Tasks 與 Automation 依時間或條件啟動工作。AI Agent 因此能定期執行、監控狀況並主動回報，不必每次等待指令。</strong></p>
+</blockquote>
+<p>以我自己的工作為例，我會讓 AI 定期蒐集企業 AI 導入相關的文章與長篇影片。這項工作不是只寫一句「幫我找資料」，而是先指定主題、來源、發布時間與影片長度等條件，再要求 AI 閱讀、篩選、按固定格式整理，最後主動回報給我判斷哪些內容值得採用。</p>
+<ol>
+<li>**Connector／MCP：**讓 AI Agent 使用網路搜尋、檔案或其他資料來源。</li>
+<li>**Agent Skills：**規定搜尋條件、篩選標準、引用要求與摘要格式。</li>
+<li>**Scheduled Tasks／Automation：**每週啟動流程，完成後主動傳回結果。</li>
+<li>**人工判斷：**由我決定哪些資料納入研究、課程或顧問工作。</li>
+</ol>
+<p>OpenAI 的 Scheduled Tasks 文件說明，週期性工作可以在背景執行，也能與 Skills 結合處理較複雜的工作流程（OpenAI，存取於 2026 年 8 月）。這項組合讓 Automation 不再只是固定提醒，而能啟動一套具有工作規則的 AI 任務。</p>
+</section><section aria-labelledby="三項能力都有-ai-agent-就能放心自動工作嗎"><h2 id="三項能力都有-ai-agent-就能放心自動工作嗎">三項能力都有，AI Agent 就能放心自動工作嗎？</h2>
+<blockquote>
+<p><strong>三項核心能力只提供 AI Agent 工作的基本條件，不能取代企業治理。企業仍須設定資料權限、人工確認點、停止條件、異常處理及責任歸屬。</strong></p>
+</blockquote>
+<p>例如，AI Agent 即使已經連接企業資源規劃系統（Enterprise Resource Planning，ERP），也不代表 AI Agent 自然知道哪些訂單能接、交期如何承諾、價格可以折讓多少，以及哪些客戶必須由業務主管親自確認。ERP 提供資料與操作入口，真正的工作判斷仍要由企業整理成規則、範例和升級處理機制。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>常見誤解</th><th>實際需要補上的管理設計</th></tr></thead><tbody><tr><td>接上系統後，Agent 自然知道怎麼做</td><td>整理正常流程、判斷條件、例外狀況與完成標準</td></tr><tr><td>自動執行就是完全不用人管</td><td>依風險設定建議、草稿、核准後執行或全自動等不同層級</td></tr><tr><td>沿用員工帳號最快</td><td>為 Agent 建立獨立身分、最小權限與完整稽核紀錄</td></tr><tr><td>成功一次就可以全面推行</td><td>使用代表性案例與例外情境測試，並設定停止條件</td></tr></tbody></table></div>
+<p>AI Agent 的自主程度應隨任務風險調整。資訊蒐集與報表草稿可以給予較高自主性；付款、刪除資料、正式報價或對外承諾等高風險動作，則應保留人工核准。</p>
+</section><section aria-labelledby="企業導入-ai-agent-前-可以先回答哪三個問題"><h2 id="企業導入-ai-agent-前-可以先回答哪三個問題">企業導入 AI Agent 前，可以先回答哪三個問題？</h2>
+<blockquote>
+<p><strong>企業應先確認 AI Agent 要連接哪些資料、依照誰的工作方法執行，以及何時啟動與回報。任何一題答不清楚，都代表工作流程仍需盤點。</strong></p>
+</blockquote>
+<ol>
+<li><strong>AI Agent 需要哪些資料與系統權限？</strong><br>列出必要資料來源、可讀取與可修改的範圍，以及禁止接觸的敏感資料。</li>
+<li><strong>哪位員工最了解工作規則與例外狀況？</strong><br>邀請實際工作者整理步驟、判斷依據、正反例、完成標準與需要升級處理的情境。</li>
+<li><strong>哪些步驟可自動執行，哪些步驟必須由人確認？</strong><br>依錯誤影響決定自主程度，並指定異常通知對象、停止條件與最終負責人。</li>
+</ol>
+<p>企業不必一開始就打造能承接整個部門的 AI Agent。先選擇範圍清楚、資料可取得、錯誤可由人攔截的工作，才能逐步驗證 Connector／MCP、Agent Skills 與 Automation 是否真的形成可用的工作流程。</p>
+</section><section aria-labelledby="企業導入-ai-agent-的實際落地順序是什麼"><h2 id="企業導入-ai-agent-的實際落地順序是什麼">企業導入 AI Agent 的實際落地順序是什麼？</h2>
+<blockquote>
+<p><strong>企業應先選低風險任務，再整理工作方法，最後才串接系統與啟用自動執行。縮小範圍並保留人工確認，能降低錯誤成本並找出流程缺口。</strong></p>
+</blockquote>
+<ol>
+<li>**選一項低風險、可驗證的任務：**優先選擇輸入與輸出清楚、結果能由人快速檢查的工作，例如整理每週產業資訊、彙整客戶問題或製作報表草稿。</li>
+<li>**由實際工作者拆解方法：**記錄資料從哪裡來、正常步驟、判斷條件、例外狀況、完成標準，以及哪些情況一定要詢問主管。</li>
+<li>**準備資料連接與最小權限：**確認要使用 API、Connector、MCP 或受控的電腦操作，並只開放完成任務必要的查詢與動作權限。</li>
+<li>**把工作方法做成 Agent Skill：**將步驟、範例、輸出格式與檢查規則封裝後，使用正常案例、缺漏資料及例外案例反覆測試。</li>
+<li>**最後加入 Automation：**先讓 AI Agent 產生建議或草稿，確認穩定後再逐步增加定時執行、主動通知及低風險動作。</li>
+</ol>
+<p>例如企業想把 Email 訂單輸入 ERP，第一階段不應直接讓 AI Agent 自動建立正式訂單。企業可以先讓 AI Agent 辨識訂單信件、擷取客戶、品項、數量與交期，產生待確認草稿；等欄位辨識與例外處理穩定後，再開放經人工核准的寫入動作。最後才評估哪些固定客戶或標準品訂單，可以在完整稽核下提高自動化程度。</p>
+</section><section aria-labelledby="哪些任務適合-ai-agent-哪些任務不適合"><h2 id="哪些任務適合-ai-agent-哪些任務不適合">哪些任務適合 AI Agent，哪些任務不適合？</h2>
+<blockquote>
+<p><strong>需要查找資料、動態判斷及處理例外的低至中風險任務，較適合 AI Agent。規則固定的工作適合傳統自動化；高風險決策則應由人負責。</strong></p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>任務特徵</th><th>較適合的方式</th><th>企業案例</th><th>原因</th></tr></thead><tbody><tr><td>步驟固定、規則明確、例外很少</td><td>傳統自動化或 RPA</td><td>固定格式檔案搬移、排程備份、欄位完全一致的資料轉寫</td><td>固定流程較便宜、穩定，也容易預測結果</td></tr><tr><td>需要閱讀非結構化資料並產生草稿</td><td>AI Agent＋人工確認</td><td>整理會議紀錄、辨識 Email 訂單、彙整客訴主題</td><td>AI Agent 能處理文字差異，人員可攔截錯誤</td></tr><tr><td>需要跨來源查找、比較並依條件調整</td><td>AI Agent</td><td>每週產業情報、供應商初步比較、異常原因初查</td><td>執行路徑會隨資料與查找結果改變</td></tr><tr><td>需要執行動作，但錯誤可以復原</td><td>受限權限的 AI Agent</td><td>建立待辦事項、更新低風險狀態、產生待核准工單</td><td>可設定最小權限、操作紀錄與復原方法</td></tr><tr><td>涉及付款、正式承諾、安全或人事決策</td><td>AI 輔助，人員決策</td><td>付款放行、正式報價、解雇決策、安全控制變更</td><td>錯誤影響高，必須保留具名負責人與人工核准</td></tr><tr><td>成功標準說不清楚，專家也無法一致判斷</td><td>暫不自動化</td><td>尚未定義標準的品質判斷、責任歸屬不明的跨部門決策</td><td>企業應先釐清流程與責任，否則無法有效測試 Agent</td></tr></tbody></table></div>
+<p>判斷重點不是「AI Agent 做不做得到」，而是「企業能不能安全驗證結果」。任務若能先產生草稿、讓人快速檢查、在出錯時停止或復原，就適合從人機協作開始；任務若會直接造成重大損失，則應限制 AI Agent 只提供分析與建議。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI Agent 一定要使用 MCP 嗎？</span></h3>
+<p>AI Agent 不一定要使用 MCP，也可以透過 API、內建 Connector 或其他工具整合方式連接系統。MCP 的價值是提供較標準化的連接方式，減少不同 AI 應用與資料工具各自開發整合的負擔。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Connector 和 MCP 有什麼不同？</span></h3>
+<p>Connector 通常泛指連接特定服務的現成功能；MCP 是 AI 應用連接外部資料、工具與工作流程的開放標準。部分 Connector 底層可能採用 MCP，但兩個名詞不能直接畫上等號。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Agent Skill 是否等於 SOP？</span></h3>
+<p>Agent Skill 可以包含標準作業程序（Standard Operating Procedure，SOP），但通常不只是一份文字說明。Agent Skill 還能封裝範例、範本、參考資料與選用腳本，讓 AI Agent 在適當情境載入並遵循完整工作方法。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Agent Skill 和提示詞有什麼差別？</span></h3>
+<p>提示詞通常處理單次對話中的指示；Agent Skill 則把可重複使用的指令、資源、範例與腳本整理成模組。Agent Skill 比單一提示詞更適合團隊共用、版本維護與知識傳承。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>Scheduled Tasks 和傳統自動化有何不同？</span></h3>
+<p>Scheduled Tasks 著重依時間週期啟動工作；傳統自動化也能由事件或條件觸發。兩者若結合 Agent Skills，AI Agent 就能在啟動後依工作方法搜尋、判斷、整理並回報，而不只是執行固定提醒。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI Agent 可以直接操作 ERP 嗎？</span></h3>
+<p>AI Agent 必須透過 ERP 提供的 API、MCP Server、Connector 或受控的電腦操作能力，才可能讀取或寫入 ERP。企業仍須限制帳號權限、保留操作紀錄，並為報價、付款或刪除資料等高風險動作設定人工確認。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>中小企業也適合導入 AI Agent 嗎？</span></h3>
+<p>中小企業可以先從範圍小、錯誤可攔截、資料權限清楚的工作開始，例如定期蒐集資訊、整理會議紀錄或製作例行報表。導入重點不是追求全自動，而是先證明單一流程能穩定產生價值。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI Agent 做錯事時由誰負責？</span></h3>
+<p>AI Agent 不會自行承擔企業責任。企業必須事先指定流程負責人、可自動執行的範圍、人工核准點、異常處理方式與稽核紀錄，讓每項決策和動作都有清楚的管理責任。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ol>
+<li>SAP，〈<a href="https://www.sap.com/taiwan/resources/what-are-ai-agents" target="_blank" rel="noopener noreferrer">什麼是 AI Agent：效益和企業應用</a>〉，發布於 2025-11-21，存取於 2026-08-24。</li>
+<li>Model Context Protocol，〈<a href="https://docs.anthropic.com/en/docs/mcp" target="_blank" rel="noopener noreferrer">What is the Model Context Protocol (MCP)?</a>〉，更新於 2026-07-28，存取於 2026-08-24。</li>
+<li>Google Cloud，〈<a href="https://cloud.google.com/blog/products/ai-machine-learning/google-managed-mcp-servers-are-available-for-everyone" target="_blank" rel="noopener noreferrer">Google-managed MCP servers are available for everyone</a>〉，發布於 2026-04-28，存取於 2026-08-24。</li>
+<li>AWS，〈<a href="https://aws.amazon.com/blogs/aws/the-aws-mcp-server-is-now-generally-available/" target="_blank" rel="noopener noreferrer">The AWS MCP Server is now generally available</a>〉，發布於 2026-05-06，存取於 2026-08-24。</li>
+<li>OpenAI，〈<a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">Build skills</a>〉，發布日期不明，存取於 2026-08-24。</li>
+<li>Anthropic，〈<a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer">Equipping agents for the real world with Agent Skills</a>〉，發布於 2025-10-16，存取於 2026-08-24。</li>
+<li>OpenAI，〈<a href="https://learn.chatgpt.com/docs/automations" target="_blank" rel="noopener noreferrer">Scheduled tasks</a>〉，發布日期不明，存取於 2026-08-24。</li>
+</ol>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/ai-agent-adoption/">AI Agent 落地五層診斷</a>：同樣聚焦 AI Agent，可接著比較不同情境的做法。</li>
+<li><a href="/archive/claude-code-mcp-scopes/">Claude Code MCP scope 如何選擇 Local、Project 與 User</a>：同樣聚焦 MCP、AI Agent，可接著比較不同情境的做法。</li>
+<li><a href="/archive/simple-mcp-server-implementation/">自己撰寫一個簡單的 MCP：Model Context Protocol 入門實作</a>：同樣聚焦 MCP、AI Agent，可接著比較不同情境的做法。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2026-08-24</strong></p></section></article><aside class="post-consult-anchor" aria-labelledby="post-consult-heading"><h2 id="post-consult-heading">把這篇文章的觀點，放進你公司的實際流程</h2><p>正在評估 AI Agent 要先放進哪個流程、權限與驗收怎麼設計？可以帶著現場的工作流程，和我討論從哪裡開始最穩。</p><p class="post-consult-actions"><a class="post-consult-btn" href="/contact/">預約諮詢 →</a><a class="post-consult-link" href="/services/">看合作方案</a></p></aside></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang - 張可佳</b><span>允愛數位科技 Love, Allowed. Our Belief, Our Promise.</span></div><nav class="footer-nav" aria-label="頁尾導覽"><div class="footer-col"><h2>企業服務</h2><a href="/services/">服務項目</a><a href="/courses/">邀課主題</a><a href="/cases/">合作案例與成果</a><a href="/testimonials/">企業／學員回饋</a><a href="/faq/">收費與常見問題</a></div><div class="footer-col"><h2>課程與活動</h2><a href="/events/">近期活動</a><a href="/coaching/">1對1 AI 教練</a></div><div class="footer-col"><h2>AI 顧問室</h2><a href="/tools/">全部工具</a><a href="/tools/?category=品牌探索">品牌探索</a><a href="/tools/?category=文件處理">文件處理</a><a href="/tools/?category=導入評估">導入評估</a><a href="/tools/?category=趨勢洞察">趨勢洞察</a></div><div class="footer-col"><h2>部落格</h2><a href="/insights/">全部文章</a><a href="/insights/?category=AI%20Agent">AI Agent</a><a href="/insights/?category=AI策略">AI策略</a><a href="/insights/?category=AI治理">AI治理</a><a href="/insights/?category=智慧製造">智慧製造</a><a href="/insights/?category=智慧營運">智慧營運</a><a href="/insights/?category=AI搜尋優化">AI搜尋優化</a><a href="/tech/">技術筆記存檔</a></div><div class="footer-col"><h2>關於 Claire</h2><a href="/about/">認識 Claire</a><a href="/about/engineer-to-ai-translator/">我的轉型故事</a><a href="/about/stories/">經驗分享文章</a></div><div class="footer-col"><h2>聯絡與政策</h2><a href="/contact/">預約諮詢</a><a href="/privacy/">隱私權政策</a><a href="/unsubscribe/">取消電子報</a></div></nav><div class="social-links footer-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/facebook.webp" alt="" width="32" height="32" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/linkedin.webp" alt="" width="32" height="32" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/instagram.webp" alt="" width="32" height="32" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/line.webp" alt="" width="32" height="32" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/youtube.webp" alt="" width="32" height="32" /></a></div><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>
