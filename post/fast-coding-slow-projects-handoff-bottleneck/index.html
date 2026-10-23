@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>程式寫得更快，專案為什麼仍然很慢？從等待、交接與審查找瓶頸｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-CpQ7yQLQ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-COiEfhsA.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-zSn6fQB5.js">
+    <link rel="modulepreload" crossorigin href="/assets/analytics-BlZfCD_P.js">
+    <style>:root{--color-ink:#241f1e;--color-paper:#f7f4ef;--color-muted:#6f6863;--color-line:#d4ceca;--color-accent:#a66f58;--color-accent-soft:#e8d8ce;--color-surface:#fff;--color-text-strong:#1c1917;--color-text:#44403c;--color-text-secondary:#57534e;--color-text-muted:#78716c;--color-text-subtle:#a8a29e;--color-border:#e7e5e4;--color-border-strong:#d6d3d1;--color-surface-subtle:#fafaf9;--font-body:Manrope, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;--content-max-width:1320px;--shadow-card:0 10px 30px #00000014;--black:#181717;--paper:var(--color-paper);--white:var(--color-surface);--muted:#6f6967;--line:#d8d5d3;--accent:var(--color-accent);--sans:var(--font-body);--serif:var(--font-body);--mono:"DM Mono",monospace;--ink:var(--color-ink);--blue:#214d6b;--orange:#e36d39;--coral:var(--color-accent);--accent-soft:var(--color-accent-soft)}@keyframes ui-spin{to{transform:rotate(360deg)}}:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:var(--color-surface);background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}.article-list-container,.tool-list-container,.tool-content-container,.account-content-container,.post-main-section{max-width:var(--content-max-width);margin:0 auto;padding:48px 4vw 100px}@media (max-width:820px){.article-list-container,.tool-list-container,.tool-content-container,.account-content-container,.post-main-section{padding:32px 5vw 80px!important}}.tool-card-stack{flex-direction:column;gap:24px;display:flex}.insights-hero{color:var(--color-surface);background:var(--color-ink);flex-direction:column;justify-content:center;min-height:490px;padding:70px 4vw;display:flex;position:relative;overflow:hidden}.insights-hero-inner{z-index:3;max-width:var(--content-max-width);width:100%;margin:0 auto;position:relative}.insights-hero-img{object-fit:cover;object-position:right center;z-index:1;width:100%;height:100%;position:absolute;top:0;bottom:0;left:0;right:0}.about-hero-img{object-position:right 65%}.case-hero-img{object-position:60% center}.insights-hero:after{content:"";z-index:2;background:linear-gradient(90deg,#0a0a0ab3 0%,#0a0a0a66 50%,#0a0a0a14 100%);position:absolute;top:0;bottom:0;left:0;right:0}.insights-hero-header{margin:0;position:relative}.insights-overline{letter-spacing:.18em;color:var(--color-surface);text-shadow:0 1px 8px #0000008c;text-transform:uppercase;align-items:center;gap:8px;margin-bottom:14px;font-size:12px;font-weight:800;display:inline-flex}.insights-overline:before{content:"";background:var(--color-accent);flex-shrink:0;width:16px;height:2px;box-shadow:0 1px 4px #0006}.insights-overline a,.insights-overline-link{color:#ffffffd9;cursor:pointer;text-decoration:none;transition:all .2s}.insights-overline a:hover,.insights-overline-link:hover{color:var(--color-surface);opacity:.95}.insights-hero h1,.insights-hero-title{letter-spacing:-.03em;color:var(--color-surface);text-transform:none;text-wrap:balance;margin:0 0 20px;font-size:max(36px,min(4.6vw,60px));font-weight:800;line-height:1.18}.insights-hero h1 em,.insights-hero-title em{color:var(--color-surface);font-style:normal}.insights-hero-header>p:not(.insights-overline){color:#ffffffd9;margin:0;font-size:max(15px,min(1.6vw,18px));line-height:1.7}.page-hero-link{color:var(--color-surface);text-underline-offset:4px;align-items:center;gap:6px;margin-top:18px;font-size:15px;font-weight:700;text-decoration:underline;display:inline-flex}.page-hero-link svg{transition:transform .2s}.page-hero-link:hover svg{transform:translate(3px)}.insights-hero-header>p:not(.insights-overline) a{color:var(--color-surface);text-underline-offset:3px;font-weight:700;text-decoration:underline}@media (max-width:820px){.insights-hero{min-height:500px;padding:60px 6vw}.insights-hero h1{font-size:36px}.insights-hero-img{object-position:100% center}.about-hero-img{object-position:78% 65%}.case-hero-img{object-position:62% center}}.home2-button,.page-hero-button{background:var(--color-surface);color:#111;border-radius:99px;align-items:center;gap:8px;padding:13px 20px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-flex}.home2-button:hover,.page-hero-button:hover{background:var(--h2-accent,#8c4a35);color:var(--color-surface);transform:translateY(-1px)}.connect-form-container{background:var(--color-surface);color:var(--color-text-strong);border-radius:20px;padding:44px 40px;box-shadow:0 20px 48px #00000040}.connect-form{flex-direction:column;gap:22px;display:flex}.form-group{flex-direction:column;gap:8px;display:flex}.form-group label{color:#292524;align-items:center;gap:8px;font-size:15px;font-weight:700;display:flex}.form-group label span{color:var(--color-text-muted);font-size:13px;font-weight:400}.form-group input,.form-group textarea,.form-group select{border:1.5px solid var(--color-border);width:100%;color:var(--color-text-strong);background:var(--color-surface-subtle);border-radius:10px;outline:none;padding:12px 16px;font-family:inherit;font-size:15px;transition:all .2s}.form-group select{-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-position:right 16px center;background-repeat:no-repeat;background-size:16px 16px;padding-right:42px;line-height:1.5}.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--color-text-strong);background:var(--color-surface);box-shadow:0 0 0 3px #1c191714}.form-group input.invalid,.form-group textarea.invalid,.form-group select.invalid{background-color:#fef2f2;border-color:#ef4444}.connect-submit-btn{background:var(--color-accent);width:100%;color:var(--color-surface);cursor:pointer;border:none;border-radius:99px;margin-top:10px;padding:16px 24px;font-size:16px;font-weight:700;transition:all .2s}.connect-submit-btn:hover{background:#8f5c47;transform:translateY(-1px);box-shadow:0 4px 12px #a66f5847}.privacy-note{color:var(--color-text-subtle);text-align:center;margin:6px 0 0;font-size:12px;line-height:1.5}.connect-success-box{text-align:center;padding:40px 20px}.success-icon{width:56px;height:56px;color:var(--color-surface);background:#10b981;border-radius:50%;justify-content:center;align-items:center;margin:0 auto 20px;font-size:28px;font-weight:700;display:flex}.connect-success-box h3{color:var(--color-text-strong);margin-bottom:12px;font-size:24px;font-weight:700}.connect-success-box p{color:var(--color-text-secondary);margin-bottom:28px;font-size:15px;line-height:1.6}.reset-btn{border:1px solid var(--color-border-strong);background:var(--color-surface);cursor:pointer;color:var(--color-text);border-radius:99px;padding:10px 20px;font-size:14px;font-weight:600;transition:all .2s}.reset-btn:hover{background:#f5f5f4}@media (max-width:900px){.connect-form-container{padding:32px 24px}}.form-group input.invalid,.form-group textarea.invalid{background:#fef2f2;border-color:#dc2626}@media (max-width:480px){.hc-page .form-group input,.hc-page .form-group textarea{font-size:16px}}.choice-field{position:relative}.choice-field.is-open{z-index:60}.choice-field-display{border:1.5px solid var(--color-border);background:var(--color-surface-subtle);width:100%;min-height:48px;color:var(--color-text-strong);font:inherit;text-align:left;cursor:pointer;border-radius:10px;padding:12px 16px;font-size:15px;line-height:1.6}.choice-field-display.empty{color:var(--color-text-subtle)}.choice-field-display:after{content:"▾";float:right;color:var(--color-text-subtle);margin-left:8px}.choice-field-display.invalid{background:#fef2f2;border-color:#dc2626}.choice-field-panel{z-index:100;overscroll-behavior:contain;border:1px solid var(--color-border);background:var(--color-surface);border-radius:12px;flex-direction:column;gap:6px;max-height:380px;margin-top:0;padding:12px;display:flex;position:absolute;top:calc(100% + 6px);left:0;right:0;overflow-y:auto;box-shadow:0 14px 36px #1c191729,0 4px 12px #00000014}.choice-field-hint{color:var(--color-text-muted);margin:0 0 4px;font-size:13px}.form-group .choice-field-option{border:1px solid var(--color-border);color:#292524;cursor:pointer;border-radius:8px;align-items:center;gap:10px;padding:10px 12px;font-size:15px;font-weight:400;display:flex}.form-group .choice-field-option.checked{border-color:var(--color-accent);background:var(--color-paper)}.form-group .choice-field-option input{width:18px;height:18px;accent-color:var(--color-accent);flex:none;margin:0;padding:0}.form-group .choice-field-other{margin-top:2px}.choice-field-done{background:var(--color-accent);color:var(--color-surface);cursor:pointer;border:none;border-radius:99px;align-self:flex-end;margin-top:4px;padding:8px 20px;font-size:14px;font-weight:700}.healthcheck-line-friend p a,.healthcheck-delivery a{color:var(--color-accent);text-underline-offset:3px;font-weight:600;text-decoration:underline;transition:color .15s}.healthcheck-line-friend p a:hover,.healthcheck-delivery a:hover{color:#8f5c47}@media (max-width:640px){.ps-page .form-group input,.ps-page .form-group textarea{font-size:16px}}.brand-mark{border:1px solid #fff9;border-radius:50%}.brand small{opacity:.7}.header-inner{justify-content:space-between;align-items:center;margin:auto;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;margin-top:3px;display:block}.site-header nav{display:flex}.site-header nav a{border-bottom:2px solid #0000}.menu-button{background:0 0;border:0;display:none}footer{font:10px var(--mono);justify-content:space-between;display:flex}@media (max-width:760px){.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}.brand-mark{font-family:var(--serif)}.site-header nav a:hover{border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px}footer{padding:48px 0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.menu-button{color:#17231f}.white{padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}}.site-header{left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{box-sizing:border-box;width:min(calc(var(--content-max-width) - 8vw), 100% - 8vw);flex-direction:column;align-items:flex-start;gap:24px;max-width:none;margin:0 auto;padding-left:0;padding-right:0;display:flex}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px;display:flex}.site-footer .footer-brand b{color:var(--color-surface);letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span a{color:inherit;text-decoration:none}.site-footer .footer-brand span a[href^="https://love-allowed.com"]:hover{text-decoration:underline}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:28px 32px;width:100%;font-size:13px;display:grid}.site-footer .footer-col{flex-direction:column;align-items:flex-start;gap:6px;display:flex}.site-footer .footer-col h2{color:var(--color-surface);margin:0 0 4px;font-size:14px;font-weight:700}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:var(--color-surface)}.site-footer .footer-copyright{color:#ffffffa8;align-self:center;margin:0;font-size:12px}@media (min-width:1100px){.site-footer{padding:40px 0 28px}.site-footer .footer-inner{grid-template-columns:1fr 1fr;grid-template-areas:"brand social""nav nav""copy copy";align-items:center;gap:28px 0;display:grid}.site-footer .footer-brand{grid-area:brand}.site-footer .footer-nav{grid-area:nav}.site-footer .footer-social{grid-area:social;justify-self:end}.site-footer .footer-copyright{grid-area:copy;justify-self:center}.site-footer .footer-nav{gap:24px 48px;font-size:14px}.site-footer .footer-col{gap:4px}.site-footer .footer-col h2{margin-bottom:6px;font-size:15px}}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;width:calc(100% - 40px)}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{grid-template-columns:repeat(2,1fr);gap:24px 16px}}body{background:var(--color-surface);color:var(--color-ink)}.site-header{color:var(--color-ink);border-color:#d8d5d3}.site-header .brand,.site-header nav{color:var(--color-ink)}.site-header .brand-mark{border-color:var(--color-ink)}.white{background:var(--color-surface);color:var(--color-ink)}footer{background:var(--color-ink);color:var(--color-surface)}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:var(--font-body)}.site-header .brand small{line-height:1.35}.site-header .brand-mark{font-size:19px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header nav .pill{font-size:15px}}.site-header .brand-mark{background:var(--color-surface);color:#0000;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:var(--color-accent);background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f;font-weight:800}.site-header nav .pill{color:var(--color-surface);background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:var(--color-surface);background:#7a4d3c;border-color:#7a4d3c}@media (max-width:1279px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{width:50px;height:50px;color:var(--color-ink);background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;display:grid}.site-header nav{-webkit-overflow-scrolling:touch;background:#fffffffa;border-bottom:1px solid #241f1e24;flex-direction:column;align-items:flex-start;gap:7px;max-height:calc(100svh - 60px);padding:16px 18px 20px;display:none;position:absolute;top:60px;left:0;right:0;overflow-y:auto;box-shadow:0 22px 38px #241f1e1a}.site-header nav.nav-open{display:flex}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}@media (min-width:1280px) and (max-width:1500px){.site-header nav{gap:6px;font-size:12.5px}.site-header nav a{padding:9px 10px}.site-header nav .pill{margin-left:6px;padding:9px 13px}}.site-header .brand b,.site-header .brand small,.site-header .brand-en,.site-header nav a,.site-header nav .pill{white-space:nowrap}.nl-trigger{border:1px solid var(--color-accent);color:var(--color-accent);font:inherit;white-space:nowrap;background:0 0;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{background:var(--color-accent);color:var(--color-surface)}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:var(--color-ink);background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:var(--color-ink);margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{background:var(--color-surface);color:var(--color-ink);width:280px;max-width:60vw;font:inherit;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline:2px solid var(--color-accent);outline-offset:1px}.nl-form button{font:inherit;color:var(--color-surface);background:var(--color-accent);cursor:pointer;white-space:nowrap;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:var(--color-ink);margin:0;font-size:14px;line-height:1.6}@media (max-width:1279px){.nl-trigger{justify-content:center;width:100%;margin-left:0}}@media (max-width:800px){.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:var(--color-surface)!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{align-self:center;margin:0}.header-social-wrap{align-items:center;display:flex;position:relative}.social-more{background:var(--color-surface);width:38px;height:38px;color:var(--color-ink);cursor:pointer;border:1px solid #241f1e2e;border-radius:50%;place-items:center;margin-left:4px;transition:background .2s,border-color .2s,color .2s;display:none}.social-more:hover,.header-social-wrap.open .social-more{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f}@media (min-width:1280px) and (max-width:1500px){.social-more{display:grid}.header-social-wrap .header-social{z-index:20;background:var(--color-surface);border:1px solid #241f1e1f;border-radius:16px;flex-direction:column;gap:10px;margin:0;padding:12px;display:none;position:absolute;top:calc(100% + 10px);right:0;box-shadow:0 14px 32px #241f1e24}.header-social-wrap.open .header-social{display:flex}}@media (max-width:1279px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}.nav-group{position:relative}.nav-group-trigger{color:inherit;font:inherit;white-space:nowrap;cursor:pointer;background:0 0;border:1px solid #0000;border-radius:999px;align-items:center;gap:4px;padding:12px 17px;font-weight:800;transition:background .2s,border-color .2s,color .2s;display:inline-flex}.nav-group-trigger:hover,.nav-group.open .nav-group-trigger,.nav-group.desktop-open .nav-group-trigger{color:var(--color-accent);background:#a66f581a;border-color:#a66f5840}.nav-group.active .nav-group-trigger{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f}.nav-group-chevron{transition:transform .2s}.nav-sub{display:none}.site-header nav .nav-sub a{white-space:nowrap;border-radius:12px;flex-direction:column;gap:2px;padding:10px 14px;display:flex}.site-header nav .nav-sub a:hover{transform:none}.nav-sub-label{font-size:15px;font-weight:800}.nav-sub-desc{color:#77716d;font-size:12px;font-weight:600}@media (min-width:1280px){.nav-sub{z-index:30;min-width:260px;padding-top:10px;position:absolute;top:100%;left:50%;transform:translate(-50%)}.nav-sub:before{content:"";z-index:-1;background:#fff;border:1px solid #241f1e1f;border-radius:16px;position:absolute;top:10px;bottom:0;left:0;right:0;box-shadow:0 22px 44px #241f1e24}.nav-sub a:first-child{margin-top:8px}.nav-sub a:last-child{margin-bottom:8px}.site-header nav .nav-sub a{margin-left:8px;margin-right:8px}.nav-group:focus-within .nav-sub,.nav-group.open .nav-sub,.nav-group.desktop-open .nav-sub{display:block}.nav-group.open .nav-group-chevron,.nav-group.desktop-open .nav-group-chevron{transform:rotate(180deg)}}@media (min-width:1280px) and (max-width:1500px){.nav-group-trigger{padding:9px 10px}}@media (max-width:1279px){.nav-group{width:100%}.nav-group-trigger{width:100%;color:inherit;cursor:pointer;background:0 0;border:none;border-radius:12px;justify-content:space-between;align-items:center;padding:13px 15px;font-size:16px;font-weight:800;transition:background .2s,color .2s;display:flex}.nav-group-trigger:hover,.nav-group.open .nav-group-trigger,.nav-group.mobile-open .nav-group-trigger{color:var(--color-accent);background:#a66f5814}.nav-group.active .nav-group-trigger{color:var(--color-accent)}.nav-group-chevron{transition:transform .2s;display:inline-flex}.nav-group.open .nav-group-chevron,.nav-group.mobile-open .nav-group-chevron{transform:rotate(180deg)}.nav-sub{display:none}.nav-group.open .nav-sub,.nav-group.mobile-open .nav-sub{border-left:2px solid #a66f5833;flex-direction:column;gap:2px;margin-left:15px;padding:4px 0 8px 12px;display:flex}.site-header nav .nav-sub a{padding:10px 14px;font-size:15px;font-weight:700}.nav-sub-desc{display:none}}
+</style>
+  <link rel="stylesheet" crossorigin href="/assets/Post-B-oHczHB.css" />
+<link rel="stylesheet" crossorigin href="/assets/insights-redesign-2gndCVR5.css" />
+<link rel="modulepreload" crossorigin href="/assets/Post-Lsm6s9LW.js" />
+<link rel="modulepreload" crossorigin href="/assets/posts-D7dLbXTD.js" />
+<link rel="modulepreload" crossorigin href="/assets/check-hykHtqod.js" />
+<link rel="modulepreload" crossorigin href="/assets/search-CzFUMG08.js" />
+<link rel="modulepreload" crossorigin href="/assets/Seo-C_oP1f7V.js" />
+<link rel="modulepreload" crossorigin href="/assets/lib-C65gPTYN.js" />
+<link rel="modulepreload" crossorigin href="/assets/lib-B54n9dHa.js" />
+<link rel="modulepreload" crossorigin href="/assets/tools-BdrpCNIi.js" />
+<link rel="modulepreload" crossorigin href="/assets/internal-href-CzUPzxTt.js" />
+<meta name="description" content="AI 讓寫程式變快，但專案的時間多花在需求確認、交接、審查與等待。本文用溝通線路公式、METR、Faros 與 DORA 的資料，說明瓶頸如何移動，並提供找出自己專案瓶頸的方法。" />
+<meta name="keywords" content="Vibe Coding, 專案管理, 人月神話, 軟體工程, AI程式開發, 工作流程, METR, DORA" />
+<link rel="canonical" href="https://claire-chang.com/post/fast-coding-slow-projects-handoff-bottleneck/" />
+<meta property="og:site_name" content="Claire Chang 張可佳｜企業 AI 導入與落地" />
+<meta property="og:title" content="程式寫得更快，專案為什麼仍然很慢？從等待、交接與審查找瓶頸｜Claire Chang" />
+<meta property="og:description" content="AI 讓寫程式變快，但專案的時間多花在需求確認、交接、審查與等待。本文用溝通線路公式、METR、Faros 與 DORA 的資料，說明瓶頸如何移動，並提供找出自己專案瓶頸的方法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/fast-coding-slow-projects-handoff-bottleneck/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_fast-coding-slow-projects-handoff-bottleneck-46474aaa.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_fast-coding-slow-projects-handoff-bottleneck-46474aaa.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="程式寫得更快，專案為什麼仍然很慢？從等待、交接與審查找瓶頸｜Claire Chang" />
+<meta name="twitter:description" content="AI 讓寫程式變快，但專案的時間多花在需求確認、交接、審查與等待。本文用溝通線路公式、METR、Faros 與 DORA 的資料，說明瓶頸如何移動，並提供找出自己專案瓶頸的方法。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_fast-coding-slow-projects-handoff-bottleneck-46474aaa.jpg" />
+<meta property="article:published_time" content="2026-10-19" />
+<meta property="article:modified_time" content="2026-10-21" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="專案管理" />
+<meta property="article:tag" content="人月神話" />
+<meta property="article:tag" content="軟體工程" />
+<meta property="article:tag" content="AI程式開發" />
+<meta property="article:tag" content="工作流程" />
+<meta property="article:tag" content="METR" />
+<meta property="article:tag" content="DORA" />
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang 張可佳｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"部落格","item":"https://claire-chang.com/insights/"},{"@type":"ListItem","position":3,"name":"程式寫得更快，專案為什麼仍然很慢？從等待、交接與審查找瓶頸","item":"https://claire-chang.com/post/fast-coding-slow-projects-handoff-bottleneck/"}]},{"@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about/","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"alumniOf":{"@type":"EducationalOrganization","name":"天主教輔仁大學","alternateName":"輔仁大學","url":"https://www.fju.edu.tw/","department":{"@type":"Organization","name":"資訊管理學系","alternateName":"輔大資管系"}},"award":["2024 年 11 月天瓏書店單月暢銷榜冠軍（著作《AI 職場超神助手》）","2025 Biodesign 北醫創業中心創新提案第二名","2023 人工智慧學校創新專題競賽第一名","2022 Taipei Women in Tech Honorees"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"subjectOf":[{"@type":"Book","@id":"https://claire-chang.com/#book-ai-workplace-helper","name":"AI 職場超神助手：ChatGPT 與生成式 AI 一鍵搞定工作難題"}],"@reverse":{"author":[{"@id":"https://claire-chang.com/#book-ai-workplace-helper"}]},"authorOf":[{"@id":"https://claire-chang.com/#book-ai-workplace-helper"}],"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]},{"@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技有限公司","alternateName":["Claire Chang 張可佳｜企業 AI 導入與落地","Love, Allowed"],"url":"https://claire-chang.com","taxID":"62027193","identifier":{"@type":"PropertyValue","propertyID":"統一編號","value":"62027193"},"foundingDate":"2026-10-20","address":{"@type":"PostalAddress","streetAddress":"信義路四段 415 號 7 樓之 3","addressLocality":"信義區","addressRegion":"臺北市","postalCode":"110","addressCountry":"TW"},"sameAs":["https://love-allowed.com/"],"location":{"@type":"Place","name":"允愛數位科技有限公司","address":{"@type":"PostalAddress","streetAddress":"信義路四段 415 號 7 樓之 3","addressLocality":"信義區","addressRegion":"臺北市","postalCode":"110","addressCountry":"TW"},"geo":{"@type":"GeoCoordinates","latitude":25.03337,"longitude":121.55938},"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"17:00"}},"logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"founder":{"@id":"https://claire-chang.com/#claire-chang"},"employee":[{"@id":"https://claire-chang.com/#claire-chang"}],"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}},{"@type":"Article","@id":"https://claire-chang.com/post/fast-coding-slow-projects-handoff-bottleneck/#article","headline":"程式寫得更快，專案為什麼仍然很慢？從等待、交接與審查找瓶頸","description":"AI 讓寫程式變快，但專案的時間多花在需求確認、交接、審查與等待。本文用溝通線路公式、METR、Faros 與 DORA 的資料，說明瓶頸如何移動，並提供找出自己專案瓶頸的方法。","image":"https://claire-chang.com/images/articles/hero_fast-coding-slow-projects-handoff-bottleneck.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2026-10-19","dateModified":"2026-10-21","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/fast-coding-slow-projects-handoff-bottleneck/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang 張可佳｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"Vibe Coding","keywords":"專案管理, 人月神話, 軟體工程, AI程式開發, 工作流程, METR, DORA","about":[{"@type":"Thing","name":"專案管理"},{"@type":"Thing","name":"人月神話"},{"@type":"Thing","name":"軟體工程"},{"@type":"Thing","name":"AI程式開發"},{"@type":"Thing","name":"工作流程"}],"mentions":[{"@type":"Organization","name":"METR"},{"@type":"Thing","name":"DORA"}]},{"@type":"FAQPage","@id":"https://claire-chang.com/post/fast-coding-slow-projects-handoff-bottleneck/#faq","mainEntity":[{"@type":"Question","name":"AI 寫程式很快，為什麼專案進度還是很慢？","acceptedAnswer":{"@type":"Answer","text":"因為專案時間包含需求確認、審查、測試與交接的等待。AI 加快寫程式後，瓶頸常移到審查與驗證。Faros 2025 年的資料顯示，高度採用 AI 的團隊 PR 審查時間增加 91%。"}},{"@type":"Question","name":"團隊人數增加，溝通成本是指數成長嗎？","acceptedAnswer":{"@type":"Answer","text":"不是，嚴格來說是平方成長。兩兩溝通線路數是 n(n−1)/2，20 人有 190 條，但這個公式假設每個人都要和所有人溝通，實際團隊會用分組與文件縮減。"}},{"@type":"Question","name":"布魯克斯法則是什麼意思？","acceptedAnswer":{"@type":"Answer","text":"Fred Brooks 在 1975 年的《人月神話》中指出，往已經延遲的軟體專案增加人力，只會讓它更延遲。原因包括新人上手的成本、教學占用既有成員時間，以及溝通線路增加。"}},{"@type":"Question","name":"METR 的研究證明 AI 讓開發者變慢嗎？","acceptedAnswer":{"@type":"Answer","text":"不能這樣解讀。2025 年的實驗在特定情境下測到慢 19%，但樣本只有 16 人。2026 年的後續研究估計變快，卻因選擇偏誤被 METR 自己評為不可靠。"}},{"@type":"Question","name":"要怎麼知道自己專案的瓶頸在哪？","acceptedAnswer":{"@type":"Answer","text":"挑一項最近完成的需求，記錄每一段的動手時間與等待時間、交接次數與退回次數。等待時間最長的那一段，通常就是優先處理的瓶頸。"}}]}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b><span class="brand-en">Claire Chang</span>｜張可佳</b><small>讓企業需求被技術聽懂，讓 AI 真正落地</small></span></a><button class="menu-button" aria-label="開啟導覽" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button><nav aria-label="主要導覽"><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">企業服務 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/services/"><span class="nav-sub-label">服務項目</span><small class="nav-sub-desc">企業 AI 內訓、工作坊、專案開發與導入陪跑</small></a><a href="/courses/"><span class="nav-sub-label">邀課主題</span><small class="nav-sub-desc">可以邀請我教授的課程與實作內容</small></a><a href="/cases/"><span class="nav-sub-label">合作案例與成果</span><small class="nav-sub-desc">88+ 合作機構與實際成效數據</small></a><a href="/testimonials/"><span class="nav-sub-label">企業／學員回饋</span><small class="nav-sub-desc">企業內訓與公開課的匿名學員回饋</small></a><a href="/faq/"><span class="nav-sub-label">收費與常見問題</span><small class="nav-sub-desc">報價方式、排課流程與課程客製</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">課程與活動 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/events/"><span class="nav-sub-label">近期活動</span><small class="nav-sub-desc">即將舉辦與進行中的公開課程、講座</small></a><a href="/coaching/"><span class="nav-sub-label">1對1 AI 教練</span><small class="nav-sub-desc">依你的工作任務量身設計的個人 AI 學習</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">AI 顧問室 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/tools/"><span class="nav-sub-label">全部工具</span><small class="nav-sub-desc">瀏覽所有品牌探索、導入評估、趨勢洞察與文件處理工具</small></a><a href="/tools/?category=品牌探索"><span class="nav-sub-label">品牌探索</span><small class="nav-sub-desc">企業網路特寫 × AI 分析、品牌 AI 能見度健檢</small></a><a href="/tools/?category=文件處理"><span class="nav-sub-label">文件處理</span><small class="nav-sub-desc">發票與收據辨識、合約重點標示、文件轉 Markdown、個資遮蔽</small></a><a href="/tools/?category=導入評估"><span class="nav-sub-label">導入評估</span><small class="nav-sub-desc">AI 專案選題評分表、這份資料能不能交給 AI？</small></a><a href="/tools/?category=趨勢洞察"><span class="nav-sub-label">趨勢洞察</span><small class="nav-sub-desc">AI 科技趨勢探索器、2026 AI 代理五大趨勢</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">部落格 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/insights/"><span class="nav-sub-label">全部文章</span><small class="nav-sub-desc">瀏覽所有 AI 導入、實務應用與策略洞察文章</small></a><a href="/insights/?category=AI%20Agent"><span class="nav-sub-label">AI Agent</span><small class="nav-sub-desc">自主代理應用、Multi-Agent 架構與企業落地實務</small></a><a href="/insights/?category=AI策略"><span class="nav-sub-label">AI策略</span><small class="nav-sub-desc">企業 AI 導入路徑、價值評估與商業競爭力</small></a><a href="/insights/?category=AI治理"><span class="nav-sub-label">AI治理</span><small class="nav-sub-desc">企業資料安全、外部 AI 使用紅線與資安防護</small></a><a href="/insights/?category=智慧製造"><span class="nav-sub-label">智慧製造</span><small class="nav-sub-desc">工廠現場製程優化、良率提升與系統整合經驗</small></a><a href="/insights/?category=智慧營運"><span class="nav-sub-label">智慧營運</span><small class="nav-sub-desc">跨部門流程重塑、日常行政賦能與自動化落地</small></a><a href="/insights/?category=Vibe%20Coding"><span class="nav-sub-label">Vibe Coding</span><small class="nav-sub-desc">用 AI 做出可上線的工具：真實案例、卡關處理、團隊分工與維運交接</small></a><a href="/insights/?category=AI搜尋優化"><span class="nav-sub-label">AI搜尋優化</span><small class="nav-sub-desc">GEO 生成式引擎優化、AI 引用率與知識庫結構</small></a><a href="/tech/"><span class="nav-sub-label">技術筆記存檔</span><small class="nav-sub-desc">19 年前端、後端、DevOps 到機器學習的實作記錄</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">關於 Claire <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/about/"><span class="nav-sub-label">認識 Claire</span><small class="nav-sub-desc">19 年工程背景的企業 AI 導入顧問</small></a><a href="/about/engineer-to-ai-translator/"><span class="nav-sub-label">我的轉型故事</span><small class="nav-sub-desc">為什麼從工程師走進企業做 AI</small></a><a href="/about/stories/"><span class="nav-sub-label">經驗分享文章</span><small class="nav-sub-desc">得獎經驗、專訪與職涯觀點</small></a></div></div><button type="button" class="nl-trigger" aria-expanded="false" aria-controls="newsletter-panel"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg> 訂閱電子報 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nl-trigger-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><a href="/contact/" class="pill">預約諮詢 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a><div class="social-links header-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/facebook.webp" alt="" width="28" height="28" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/linkedin.webp" alt="" width="28" height="28" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/instagram.webp" alt="" width="28" height="28" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/line.webp" alt="" width="28" height="28" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/youtube.webp" alt="" width="28" height="28" /></a></div></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/articles/hero_fast-coding-slow-projects-handoff-bottleneck.webp" alt="大型開放辦公室裡成排的工作者在桌前工作，象徵多人分工與交接" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/insights/?category=Vibe%20Coding" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ Vibe Coding</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2026-10-19">2026-10-19</time></span><span class="post-meta-pill">專案管理 · 人月神話 · 軟體工程 · AI程式開發 · 工作流程 · METR · DORA</span></div></div><h1 class="insights-hero-title">程式寫得更快，專案為什麼仍然很慢？從等待、交接與審查找瓶頸</h1><p class="insights-hero-description">AI 讓寫程式變快，但專案的時間多花在需求確認、交接、審查與等待。本文用溝通線路公式、METR、Faros 與 DORA 的資料，說明瓶頸如何移動，並提供找出自己專案瓶頸的方法。</p></div></div></section><section class="post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card"><p>軟體專案有很大一部分的時間，不是花在寫程式，而是花在需求確認、設計、審查、測試與交接的等待上。AI 縮短了寫程式的時間，瓶頸就會移到其他環節：審查要讀更多程式碼，需求不清楚的地方更早被暴露，交接的次數並沒有因此變少。公開的研究資料也顯示，個人寫得更快，不等於組織交付得更快。這篇文章先說明傳統流程慢在哪裡、人多為什麼更慢，再對照研究資料，最後提供找出自己專案瓶頸的方法。</p>
+</div><section aria-labelledby="為什麼程式寫得更快-專案不一定更快"><h2 id="為什麼程式寫得更快-專案不一定更快">為什麼程式寫得更快，專案不一定更快？</h2>
+<blockquote>
+<p><strong>軟體專案的總時間包含需求確認、設計、審查、測試與交接的等待；AI 加快寫程式後，瓶頸常移到審查與驗證，整體交付不一定變快。</strong></p>
+</blockquote>
+<p>DORA（DevOps Research and Assessment）2025 年的報告說明：「AI 的主要角色是放大器，放大組織既有的強項與弱點」（DORA，2025 年）。流程順暢的組織，AI 會讓它更快；交接與審查本來就卡的組織，AI 會讓卡點更明顯。</p>
+<p>這也是我長期看到的情形：真正拖慢速度的，往往不是工作本身，而是流程中的瓶頸。</p>
+</section><section aria-labelledby="傳統開發流程慢在哪裡"><h2 id="傳統開發流程慢在哪裡">傳統開發流程慢在哪裡？</h2>
+<blockquote>
+<p><strong>傳統開發把需求、設計、開發、測試與維運交給不同角色，每次交接都有等待與轉譯；各段都準時完成，整體仍可能延誤。</strong></p>
+</blockquote>
+<figure class="article-figure"><img src="/images/articles/vibe-3-2-roles-by-stage.webp" alt="軟體開發三階段與關鍵守護者：需求探索與設計由 PM 與 UX 設計師把關，工程開發與測試由架構師與 QA 把關，佈署維運與成長由 DevOps 與資料科學家把關，並列出各階段的核心目標" loading="lazy" class="markdown-img"></figure>
+<p>傳統團隊通常分成三個階段：需求探索與設計（PM、商業分析、UI／UX 設計師）、工程開發與測試（系統架構師、後端、前端、資料庫、QA），以及維運與成長（維運人員、資料科學家）。依我的經驗，會這樣分工，主要是因為技術太多、太專：前端和後端用的語言與框架不同，資料庫、測試、維運又各有各的技術，一個人很難全部精通，開發速度也會被拖慢，所以自然由不同的人負責。這是我的看法，不是特定研究的結論。</p>
+<p>代價是每個角色只看到自己的一段。一個典型情境是：業務發現客戶需要新的報表功能，需求先寫成簡報交給企劃整理，排入需求會議，再交設計畫流程與草圖，工程評估可行性與時程，開發完成後送 QA，發現邏輯與原需求理解不同而退回，修改後還要送資安或維運審核。全部走完，常是數週甚至數月，而這時客戶可能又有新的需求，流程要重新排隊。</p>
+<figure class="article-figure"><img src="/images/articles/vibe-3-4-handoff-waiting.webp" alt="傳統開發流程示意圖：業務提案與排會議，設計評估可行性與討論開發時程，開發之後進入測試反覆確認產品與需求一致，測試結果會退回開發，最後由維運安排正式上線時間" loading="lazy" class="markdown-img"></figure>
+<p>上圖是示意圖，圖中的時間（例如提案與排會議耗時一週）是說明用的舉例。重點是測試退回開發的那條回頭箭頭：需求在轉譯過程中走樣，到最後階段才被發現，只能回頭重做。</p>
+<figure class="article-figure"><img src="/images/articles/vibe-3-5-local-optimum.webp" alt="每個部門都準時交付，但局部最佳化不等於整體效率，最終專案進度仍然延誤、無法達成預期目標" loading="lazy" class="markdown-img"></figure>
+<p>上圖說明局部最佳化不等於整體效率：業務、設計、開發、測試四個部門都準時交付，最終專案仍可能延誤。這個現象與《鳳凰專案》（The Phoenix Project）的主題相呼應：這本書用小說講 IT 的工作如何從開發流向維運，並以限制理論為基礎，指出整體速度由流程中的限制點決定，而不是單一部門的努力程度（Gene Kim，IT Revolution，2013 年 2 月）。</p>
+</section><section aria-labelledby="人越多為什麼越慢-溝通線路是平方成長-不是指數成長"><h2 id="人越多為什麼越慢-溝通線路是平方成長-不是指數成長">人越多為什麼越慢？溝通線路是平方成長，不是指數成長</h2>
+<blockquote>
+<p><strong>團隊溝通線路數是 n(n−1)/2，隨人數平方成長；3 人有 3 條、10 人有 45 條、20 人有 190 條，所以新增人力常讓延誤的專案更慢。</strong></p>
+</blockquote>
+<p>布魯克斯法則（Brooks's Law）出自 Fred Brooks 1975 年的《人月神話》：「往已經延遲的軟體專案增加人力，只會讓它更延遲。」（Martin Fowler 文章引述：Adding manpower to a late software project makes it later）新加入的人要花時間上手，既有成員要分心教，而且複雜的工作無法完全切開，成員之間仍然要溝通。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>團隊人數 n</th><th>兩兩溝通線路 n(n−1)/2</th></tr></thead><tbody><tr><td>3</td><td>3</td></tr><tr><td>10</td><td>45</td></tr><tr><td>20</td><td>190</td></tr><tr><td>50</td><td>1,225</td></tr></tbody></table></div>
+<p>人數從 10 增加到 20，增加一倍，溝通線路從 45 條增加到 190 條，是四倍多。口語常說這是「指數成長」，Fowler 的文章也這樣寫，嚴格來說是平方量級，成長沒有指數那麼快，但已足以讓協調成本超過新增人力的產出。</p>
+<figure class="article-figure"><img src="/images/articles/vibe-3-3-communication-lines.webp" alt="全互連溝通網路示意圖：節點由少到多，節點之間的連線快速增加，用來說明團隊人數增加時溝通線路的增長" loading="lazy" class="markdown-img"></figure>
+<p>要注意這個公式假設團隊裡每個人都要和所有人溝通。實際團隊常用分組、文件與流程縮減需要直接溝通的對象，所以它描述的是人數增加時溝通量的上限，實際人數與運作方式依各公司而定。</p>
+</section><section aria-labelledby="ai-能縮短哪些等待"><h2 id="ai-能縮短哪些等待">AI 能縮短哪些等待？</h2>
+<blockquote>
+<p><strong>AI 讓任何角色都能在數小時內做出可操作的原型，把文件與會議的轉譯改成看得到、摸得到的成品，縮短需求確認的來回。</strong></p>
+</blockquote>
+<p>我的觀察是，過去只有少數同時具備產品思維、技術能力與決策視野的全才，才能在小團隊裡讓決策與執行同步；生成式 AI 讓更多人能做到一部分。例如業務與客戶談完後，過去要寫需求文件、排入開發會議、等工程師實作，現在可以在數小時內用 AI 做出簡單原型，直接給客戶確認方向。這種「先驗證、再投入」的做法，能降低做錯方向的成本。</p>
+<p>不過，這縮短的是「需求確認」這一段，原型要變成正式系統，仍然要經過審查、測試與上線。後面的資料說明為什麼這一段反而可能變成新的瓶頸。</p>
+</section><section aria-labelledby="研究資料怎麼說-ai-真的讓開發變快了嗎"><h2 id="研究資料怎麼說-ai-真的讓開發變快了嗎">研究資料怎麼說？AI 真的讓開發變快了嗎？</h2>
+<blockquote>
+<p><strong>現有資料顯示，AI 的效果因情境而異：METR 的實驗未能證實一致的加速，Faros 與 DORA 的資料則顯示個人產出增加，但審查等下游環節吸收了大部分效益。</strong></p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>資料來源</th><th>研究設計</th><th>主要發現</th><th>限制</th></tr></thead><tbody><tr><td>METR（Model Evaluation and Threat Research，AI 模型評測研究機構），2025 年 7 月</td><td>16 位資深開源開發者，在自己熟悉的專案完成 246 個任務，隨機決定可否使用 AI</td><td>使用 AI 的任務多花 19% 時間；開發者事前預期快 24%，事後仍認為快了 20%</td><td>樣本小，限於早期 2025 年的工具與熟悉的專案，不代表其他情境</td></tr><tr><td>METR，2026 年 2 月</td><td>後續研究：原研究的 10 位開發者加上 47 位新招募者</td><td>原開發者估計時間減少 18%（信賴區間 −38% 到 +9%）；新招募者減少 4%（−15% 到 +9%）；兩者區間都包含零</td><td>METR 自己說資料不可靠：愈來愈多開發者不願在沒有 AI 時工作，造成選擇偏誤，正在重新設計研究</td></tr><tr><td>Faros AI，2025 年 7 月</td><td>超過 10,000 位開發者、1,255 個團隊的工作紀錄</td><td>高度採用 AI 的團隊多完成 21% 任務、多合併 98% 的 PR（Pull Request，程式碼合併請求）；PR 審查時間增加 91%、PR 平均大小增加 154%、每位開發者的 bug 增加 9%；公司層級沒有顯著的改善</td><td>為軟體工程分析廠商自家資料；是相關性，不是因果</td></tr><tr><td>DORA，2025 年</td><td>年度軟體交付研究</td><td>AI 是放大器，放大組織既有的強項與弱點</td><td>本文只引用官方頁面的「放大器」一句</td></tr></tbody></table></div>
+<p>兩個 METR 結果需要一起看。2025 年的實驗發現變慢，2026 年的後續研究估計變快，但 METR 明確表示後者因選擇偏誤，只能算非常弱的證據，也說開發者現在可能比 2025 年初更能受惠於 AI。因此兩個數字都不應被當成「AI 讓開發變快（或變慢）」的結論。</p>
+<p>Faros 的資料則指出一個具體的移動方式：寫的人多產出了，PR 變多、變大，審查的人要花更多時間，最後在公司層級看不到改善。這與本文開頭的判斷一致，也說明「AI 讓交接成本下降」這類樂觀說法需要平衡：交接的形式可能改變，但等待並不會自動消失。</p>
+</section><section aria-labelledby="怎麼找出自己專案的瓶頸"><h2 id="怎麼找出自己專案的瓶頸">怎麼找出自己專案的瓶頸？</h2>
+<blockquote>
+<p><strong>把一項需求從提出到上線的每一段，分開記錄實際動手時間與等待時間，再數交接次數與審查排隊，通常能找到真正卡住的環節。</strong></p>
+</blockquote>
+<p>下面是我的整理建議。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>要記錄的項目</th><th>怎麼記</th><th>看出什麼</th></tr></thead><tbody><tr><td>每一段的動手時間</td><td>實際有人在做這件事的時數</td><td>工作本身多久</td></tr><tr><td>每一段的等待時間</td><td>完成後到下一個人開始的間隔</td><td>最大的排隊在哪</td></tr><tr><td>交接次數</td><td>一項需求經過幾個人或部門</td><td>需求被轉譯的次數</td></tr><tr><td>退回次數</td><td>被測試、審查或客戶退回幾次</td><td>需求是否在上游沒講清楚</td></tr><tr><td>審查等待</td><td>程式碼或文件在審查者手上多久</td><td>AI 增加產出後是否塞在審查</td></tr></tbody></table></div>
+<p>先挑一項最近完成的需求，回頭填這張表，不需要工具。若發現等待時間遠大於動手時間，加人或加快寫程式的速度都不會有明顯效果，應該先處理最長的那一段等待。導入 AI 工具之後，用同一張表重新記錄，才能知道瓶頸有沒有移動。</p>
+<p>找出瓶頸之後，需要從候選流程中挑第一個值得改善的，可以用<a href="/tools/ai-project-scorecard/">AI 專案選題評分表</a>比較。想在實際專案中縮短等待與交接，可以參考<a href="/services/">AI 導入陪跑</a>；個人想練習用 AI 自己完成一段需求，則有<a href="/coaching/">1 對 1 AI 教練</a>。有具體專案想討論，歡迎<a href="/contact/">預約諮詢</a>。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI 寫程式很快，為什麼專案進度還是很慢？</span></h3>
+<p>因為專案時間包含需求確認、審查、測試與交接的等待。AI 加快寫程式後，瓶頸常移到審查與驗證。Faros 2025 年的資料顯示，高度採用 AI 的團隊 PR 審查時間增加 91%。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>團隊人數增加，溝通成本是指數成長嗎？</span></h3>
+<p>不是，嚴格來說是平方成長。兩兩溝通線路數是 n(n−1)/2，20 人有 190 條，但這個公式假設每個人都要和所有人溝通，實際團隊會用分組與文件縮減。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>布魯克斯法則是什麼意思？</span></h3>
+<p>Fred Brooks 在 1975 年的《人月神話》中指出，往已經延遲的軟體專案增加人力，只會讓它更延遲。原因包括新人上手的成本、教學占用既有成員時間，以及溝通線路增加。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>METR 的研究證明 AI 讓開發者變慢嗎？</span></h3>
+<p>不能這樣解讀。2025 年的實驗在特定情境下測到慢 19%，但樣本只有 16 人。2026 年的後續研究估計變快，卻因選擇偏誤被 METR 自己評為不可靠。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>要怎麼知道自己專案的瓶頸在哪？</span></h3>
+<p>挑一項最近完成的需求，記錄每一段的動手時間與等待時間、交接次數與退回次數。等待時間最長的那一段，通常就是優先處理的瓶頸。</p>
+</section><section aria-labelledby="資料來源與說明"><h2 id="資料來源與說明">資料來源與說明</h2>
+<p>研究資料引自下列來源，數字與限制以原文為準；Faros 為廠商自家資料。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<ol>
+<li>METR，〈<a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener noreferrer">Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</a>〉，2025 年 7 月 10 日，存取日期：2026 年 10 月 19 日。</li>
+<li>METR，〈<a href="https://metr.org/blog/2026-02-24-uplift-update/" target="_blank" rel="noopener noreferrer">We are Changing our Developer Productivity Experiment Design</a>〉，2026 年 2 月 24 日，存取日期：2026 年 10 月 19 日。</li>
+<li>Faros AI，〈<a href="https://www.faros.ai/blog/ai-software-engineering" target="_blank" rel="noopener noreferrer">The AI Productivity Paradox Report 2025</a>〉，2025 年 7 月 23 日，存取日期：2026 年 10 月 19 日。</li>
+<li>DORA，〈<a href="https://dora.dev/research/2025/dora-report/" target="_blank" rel="noopener noreferrer">State of AI-assisted Software Development 2025</a>〉，發布日期不明，存取日期：2026 年 10 月 19 日。</li>
+<li>Martin Fowler，〈<a href="https://martinfowler.com/bliki/MythicalManMonth.html" target="_blank" rel="noopener noreferrer">Mythical Man-Month</a>〉，頁面標示 2026 年 5 月 5 日，存取日期：2026 年 10 月 19 日。</li>
+<li>Wikipedia，〈<a href="https://en.wikipedia.org/wiki/Brooks%27s_law" target="_blank" rel="noopener noreferrer">Brooks's law</a>〉，現行頁面，存取日期：2026 年 10 月 19 日；原書：Frederick P. Brooks Jr.，《The Mythical Man-Month》，Addison-Wesley，1975 年。</li>
+<li>Gene Kim，〈<a href="https://itrevolution.com/learn-more-about-concepts-in-phoenix-project/" target="_blank" rel="noopener noreferrer">Learn more about concepts in The Phoenix Project</a>〉，IT Revolution，2013 年 2 月 1 日，存取日期：2026 年 10 月 19 日；原書：Gene Kim、Kevin Behr、George Spafford，《The Phoenix Project》，2013 年。</li>
+</ol>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/what-is-vibe-coding/">Vibe Coding 是什麼？三種定義、適用範圍，與企業及個人案例的閱讀路徑</a>：先釐清定義與適用範圍，再依情況挑選本分類的文章。</li>
+<li><a href="/post/domain-experts-ai-software-development/">AI 時代，為什麼懂工作流程的人也能參與系統開發？</a>：流程需要有人定義與驗收，哪些人適合承擔。</li>
+<li><a href="/post/social-worker-prototype-it-integration/">社工先做出原型，再交工程師整合：AI 如何改善需求溝通？</a>：用原型取代文件轉譯的實際做法。</li>
+<li><a href="/post/ai-tool-one-day-build-deployment-month/">AI 一天寫完工具，為什麼上線卻卡了近一個月？</a>：程式寫完之後，上線環節的等待。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2026-10-19</strong></p></section></article><aside class="post-consult-anchor" aria-labelledby="post-consult-heading"><h2 id="post-consult-heading">把這篇文章的觀點，放進你公司的實際流程</h2><p>公司內部想用 AI 開發或改善系統，卻擔心後續維運與交接？可以帶著現有的工具或需求來討論，一起看哪些能自己接、哪些需要工程支援。</p><p class="post-consult-actions"><a class="post-consult-btn" href="/contact/">預約諮詢 →</a><a class="post-consult-link" href="/services/">看合作方案</a></p></aside></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang - 張可佳</b><span><a href="https://love-allowed.com/" target="_blank" rel="noopener">允愛數位科技</a> Love, Allowed. Our Belief, Our Promise.</span><span>統一編號 62027193</span><span>110 臺北市信義區信義路四段 415 號 7 樓之 3</span><span>電話 <a href="tel:+886930402240">0930-402-240</a></span><span>服務時間 週一至週五 09:00–17:00</span></div><nav class="footer-nav" aria-label="頁尾導覽"><div class="footer-col"><h2>企業服務</h2><a href="/services/">服務項目</a><a href="/courses/">邀課主題</a><a href="/cases/">合作案例與成果</a><a href="/testimonials/">企業／學員回饋</a><a href="/faq/">收費與常見問題</a></div><div class="footer-col"><h2>課程與活動</h2><a href="/events/">近期活動</a><a href="/coaching/">1對1 AI 教練</a></div><div class="footer-col"><h2>AI 顧問室</h2><a href="/tools/">全部工具</a><a href="/tools/?category=品牌探索">品牌探索</a><a href="/tools/?category=文件處理">文件處理</a><a href="/tools/?category=導入評估">導入評估</a><a href="/tools/?category=趨勢洞察">趨勢洞察</a></div><div class="footer-col"><h2>部落格</h2><a href="/insights/">全部文章</a><a href="/insights/?category=AI%20Agent">AI Agent</a><a href="/insights/?category=AI策略">AI策略</a><a href="/insights/?category=AI治理">AI治理</a><a href="/insights/?category=智慧製造">智慧製造</a><a href="/insights/?category=智慧營運">智慧營運</a><a href="/insights/?category=Vibe%20Coding">Vibe Coding</a><a href="/insights/?category=AI搜尋優化">AI搜尋優化</a><a href="/tech/">技術筆記存檔</a></div><div class="footer-col"><h2>關於 Claire</h2><a href="/about/">認識 Claire</a><a href="/about/engineer-to-ai-translator/">我的轉型故事</a><a href="/about/stories/">經驗分享文章</a></div><div class="footer-col"><h2>聯絡與政策</h2><a href="/contact/">預約諮詢</a><a href="/privacy/">隱私權政策</a><a href="/unsubscribe/">取消電子報</a></div></nav><div class="social-links footer-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/facebook.webp" alt="" width="32" height="32" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/linkedin.webp" alt="" width="32" height="32" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/instagram.webp" alt="" width="32" height="32" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/line.webp" alt="" width="32" height="32" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/youtube.webp" alt="" width="32" height="32" /></a></div><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>
