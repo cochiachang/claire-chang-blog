@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0PQX10CKF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H0PQX10CKF');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 開發陪跑結束後，如何把系統運營能力留在企業｜Claire Chang</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Claire Chang" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="alternate" type="application/rss+xml" title="Claire Chang｜企業 AI 導入與落地" href="/rss.xml" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/site/hero-placeholder.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+    />
+    <script>
+      (function () {
+        var hasLocalCJK = false;
+        try {
+          hasLocalCJK =
+            document.fonts.check('16px "Microsoft JhengHei"') ||
+            document.fonts.check('16px "PingFang TC"');
+        } catch (e) {}
+        var family = hasLocalCJK
+          ? 'Manrope:wght@500;700;800'
+          : 'Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700';
+        var href =
+          'https://fonts.googleapis.com/css2?family=' + family + '&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function () {
+          link.onload = null;
+          link.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;700&display=optional"
+      />
+    </noscript>
+    <script type="module" crossorigin src="/assets/index-CxXrPBXn.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-COiEfhsA.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-zSn6fQB5.js">
+    <link rel="modulepreload" crossorigin href="/assets/analytics-BlZfCD_P.js">
+    <style>:root{--color-ink:#241f1e;--color-paper:#f7f4ef;--color-muted:#6f6863;--color-line:#d4ceca;--color-accent:#a66f58;--color-accent-soft:#e8d8ce;--color-surface:#fff;--color-text-strong:#1c1917;--color-text:#44403c;--color-text-secondary:#57534e;--color-text-muted:#78716c;--color-text-subtle:#a8a29e;--color-border:#e7e5e4;--color-border-strong:#d6d3d1;--color-surface-subtle:#fafaf9;--font-body:Manrope, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;--content-max-width:1320px;--shadow-card:0 10px 30px #00000014;--black:#181717;--paper:var(--color-paper);--white:var(--color-surface);--muted:#6f6967;--line:#d8d5d3;--accent:var(--color-accent);--sans:var(--font-body);--serif:var(--font-body);--mono:"DM Mono",monospace;--ink:var(--color-ink);--blue:#214d6b;--orange:#e36d39;--coral:var(--color-accent);--accent-soft:var(--color-accent-soft)}@keyframes ui-spin{to{transform:rotate(360deg)}}:root{color:#172638;font-synthesis:none;text-rendering:optimizelegibility;background:#f8f8f5;font-family:Manrope,Noto Sans TC,sans-serif}*{box-sizing:border-box}body{min-width:320px;margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{color:var(--color-surface);background:#e36d39}.sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}.article-list-container,.tool-list-container,.tool-content-container,.account-content-container,.post-main-section{max-width:var(--content-max-width);margin:0 auto;padding:48px 4vw 100px}@media (max-width:820px){.article-list-container,.tool-list-container,.tool-content-container,.account-content-container,.post-main-section{padding:32px 5vw 80px!important}}.tool-card-stack{flex-direction:column;gap:24px;display:flex}.insights-hero{color:var(--color-surface);background:var(--color-ink);flex-direction:column;justify-content:center;min-height:490px;padding:70px 4vw;display:flex;position:relative;overflow:hidden}.insights-hero-inner{z-index:3;max-width:var(--content-max-width);width:100%;margin:0 auto;position:relative}.insights-hero-img{object-fit:cover;object-position:right center;z-index:1;width:100%;height:100%;position:absolute;top:0;bottom:0;left:0;right:0}.about-hero-img{object-position:right 65%}.case-hero-img{object-position:60% center}.insights-hero:after{content:"";z-index:2;background:linear-gradient(90deg,#0a0a0ab3 0%,#0a0a0a66 50%,#0a0a0a14 100%);position:absolute;top:0;bottom:0;left:0;right:0}.insights-hero-header{margin:0;position:relative}.insights-overline{letter-spacing:.18em;color:var(--color-surface);text-shadow:0 1px 8px #0000008c;text-transform:uppercase;align-items:center;gap:8px;margin-bottom:14px;font-size:12px;font-weight:800;display:inline-flex}.insights-overline:before{content:"";background:var(--color-accent);flex-shrink:0;width:16px;height:2px;box-shadow:0 1px 4px #0006}.insights-overline a,.insights-overline-link{color:#ffffffd9;cursor:pointer;text-decoration:none;transition:all .2s}.insights-overline a:hover,.insights-overline-link:hover{color:var(--color-surface);opacity:.95}.insights-hero h1,.insights-hero-title{letter-spacing:-.03em;color:var(--color-surface);text-transform:none;text-wrap:balance;margin:0 0 20px;font-size:max(36px,min(4.6vw,60px));font-weight:800;line-height:1.18}.insights-hero h1 em,.insights-hero-title em{color:var(--color-surface);font-style:normal}.insights-hero-header>p:not(.insights-overline){color:#ffffffd9;margin:0;font-size:max(15px,min(1.6vw,18px));line-height:1.7}.page-hero-link{color:var(--color-surface);text-underline-offset:4px;align-items:center;gap:6px;margin-top:18px;font-size:15px;font-weight:700;text-decoration:underline;display:inline-flex}.page-hero-link svg{transition:transform .2s}.page-hero-link:hover svg{transform:translate(3px)}.insights-hero-header>p:not(.insights-overline) a{color:var(--color-surface);text-underline-offset:3px;font-weight:700;text-decoration:underline}@media (max-width:820px){.insights-hero{min-height:500px;padding:60px 6vw}.insights-hero h1{font-size:36px}.insights-hero-img{object-position:100% center}.about-hero-img{object-position:78% 65%}.case-hero-img{object-position:62% center}}.home2-button,.page-hero-button{background:var(--color-surface);color:#111;border-radius:99px;align-items:center;gap:8px;padding:13px 20px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-flex}.home2-button:hover,.page-hero-button:hover{background:var(--h2-accent,#8c4a35);color:var(--color-surface);transform:translateY(-1px)}.connect-form-container{background:var(--color-surface);color:var(--color-text-strong);border-radius:20px;padding:44px 40px;box-shadow:0 20px 48px #00000040}.connect-form{flex-direction:column;gap:22px;display:flex}.form-group{flex-direction:column;gap:8px;display:flex}.form-group label{color:#292524;align-items:center;gap:8px;font-size:15px;font-weight:700;display:flex}.form-group label span{color:var(--color-text-muted);font-size:13px;font-weight:400}.form-group input,.form-group textarea,.form-group select{border:1.5px solid var(--color-border);width:100%;color:var(--color-text-strong);background:var(--color-surface-subtle);border-radius:10px;outline:none;padding:12px 16px;font-family:inherit;font-size:15px;transition:all .2s}.form-group select{-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-position:right 16px center;background-repeat:no-repeat;background-size:16px 16px;padding-right:42px;line-height:1.5}.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--color-text-strong);background:var(--color-surface);box-shadow:0 0 0 3px #1c191714}.form-group input.invalid,.form-group textarea.invalid,.form-group select.invalid{background-color:#fef2f2;border-color:#ef4444}.connect-submit-btn{background:var(--color-accent);width:100%;color:var(--color-surface);cursor:pointer;border:none;border-radius:99px;margin-top:10px;padding:16px 24px;font-size:16px;font-weight:700;transition:all .2s}.connect-submit-btn:hover{background:#8f5c47;transform:translateY(-1px);box-shadow:0 4px 12px #a66f5847}.privacy-note{color:var(--color-text-subtle);text-align:center;margin:6px 0 0;font-size:12px;line-height:1.5}.connect-success-box{text-align:center;padding:40px 20px}.success-icon{width:56px;height:56px;color:var(--color-surface);background:#10b981;border-radius:50%;justify-content:center;align-items:center;margin:0 auto 20px;font-size:28px;font-weight:700;display:flex}.connect-success-box h3{color:var(--color-text-strong);margin-bottom:12px;font-size:24px;font-weight:700}.connect-success-box p{color:var(--color-text-secondary);margin-bottom:28px;font-size:15px;line-height:1.6}.reset-btn{border:1px solid var(--color-border-strong);background:var(--color-surface);cursor:pointer;color:var(--color-text);border-radius:99px;padding:10px 20px;font-size:14px;font-weight:600;transition:all .2s}.reset-btn:hover{background:#f5f5f4}@media (max-width:900px){.connect-form-container{padding:32px 24px}}.form-group input.invalid,.form-group textarea.invalid{background:#fef2f2;border-color:#dc2626}@media (max-width:480px){.hc-page .form-group input,.hc-page .form-group textarea{font-size:16px}}.choice-field{position:relative}.choice-field.is-open{z-index:60}.choice-field-display{border:1.5px solid var(--color-border);background:var(--color-surface-subtle);width:100%;min-height:48px;color:var(--color-text-strong);font:inherit;text-align:left;cursor:pointer;border-radius:10px;padding:12px 16px;font-size:15px;line-height:1.6}.choice-field-display.empty{color:var(--color-text-subtle)}.choice-field-display:after{content:"▾";float:right;color:var(--color-text-subtle);margin-left:8px}.choice-field-display.invalid{background:#fef2f2;border-color:#dc2626}.choice-field-panel{z-index:100;overscroll-behavior:contain;border:1px solid var(--color-border);background:var(--color-surface);border-radius:12px;flex-direction:column;gap:6px;max-height:380px;margin-top:0;padding:12px;display:flex;position:absolute;top:calc(100% + 6px);left:0;right:0;overflow-y:auto;box-shadow:0 14px 36px #1c191729,0 4px 12px #00000014}.choice-field-hint{color:var(--color-text-muted);margin:0 0 4px;font-size:13px}.form-group .choice-field-option{border:1px solid var(--color-border);color:#292524;cursor:pointer;border-radius:8px;align-items:center;gap:10px;padding:10px 12px;font-size:15px;font-weight:400;display:flex}.form-group .choice-field-option.checked{border-color:var(--color-accent);background:var(--color-paper)}.form-group .choice-field-option input{width:18px;height:18px;accent-color:var(--color-accent);flex:none;margin:0;padding:0}.form-group .choice-field-other{margin-top:2px}.choice-field-done{background:var(--color-accent);color:var(--color-surface);cursor:pointer;border:none;border-radius:99px;align-self:flex-end;margin-top:4px;padding:8px 20px;font-size:14px;font-weight:700}.healthcheck-line-friend p a,.healthcheck-delivery a{color:var(--color-accent);text-underline-offset:3px;font-weight:600;text-decoration:underline;transition:color .15s}.healthcheck-line-friend p a:hover,.healthcheck-delivery a:hover{color:#8f5c47}@media (max-width:640px){.ps-page .form-group input,.ps-page .form-group textarea{font-size:16px}}.brand-mark{border:1px solid #fff9;border-radius:50%}.brand small{opacity:.7}.header-inner{justify-content:space-between;align-items:center;margin:auto;display:flex}.brand{letter-spacing:-.02em;align-items:center;gap:12px;font-weight:800;display:flex}.brand-mark{background:var(--blue);width:39px;height:39px;font:500 14px var(--mono);place-items:center;display:grid}.brand small{font:400 8px var(--mono);letter-spacing:.12em;margin-top:3px;display:block}.site-header nav{display:flex}.site-header nav a{border-bottom:2px solid #0000}.menu-button{background:0 0;border:0;display:none}footer{font:10px var(--mono);justify-content:space-between;display:flex}@media (max-width:760px){.menu-button{display:block}.menu-button svg{width:22px}.site-header nav{background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;padding:15px 18px;display:none;position:absolute;top:68px;left:0;right:0}.site-header nav.nav-open{display:flex}footer{line-height:2.2;display:block}}@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}.brand-mark{font-family:var(--serif)}.site-header nav a:hover{border:0}.site-header nav .pill{border:1px solid var(--ink);border-radius:99px}footer{padding:48px 0}.header-inner{max-width:1220px;height:78px;padding:0 28px}.brand-mark{color:#17231f;border-color:#17231f}.brand small{color:#64706b}.menu-button{color:#17231f}.white{padding-top:100px;padding-bottom:100px}@media (max-width:800px){.header-inner{padding:0 20px}}.site-header{left:0;right:0}.site-header .brand-mark,.site-header nav .pill{border-color:#181717}@media (max-width:800px){.site-header nav{background:#f6f2e9}}.site-footer{color:#ffffffa6;background:#171514;border-top:1px solid #ffffff14;padding:24px 0;font-size:13px}.site-footer .footer-inner{box-sizing:border-box;width:min(calc(var(--content-max-width) - 8vw), 100% - 8vw);flex-direction:column;align-items:flex-start;gap:24px;max-width:none;margin:0 auto;padding-left:0;padding-right:0;display:flex}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px;display:flex}.site-footer .footer-brand b{color:var(--color-surface);letter-spacing:-.01em;font-size:15px;font-weight:700}.site-footer .footer-brand span a{color:inherit;text-decoration:none}.site-footer .footer-brand span a[href^="https://love-allowed.com"]:hover{text-decoration:underline}.site-footer .footer-brand span{color:#ffffff80;letter-spacing:.02em;font-size:12px}.site-footer .footer-nav{grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:28px 32px;width:100%;font-size:13px;display:grid}.site-footer .footer-col{flex-direction:column;align-items:flex-start;gap:6px;display:flex}.site-footer .footer-col h2{color:var(--color-surface);margin:0 0 4px;font-size:14px;font-weight:700}.site-footer .footer-nav a{color:#ffffffb3;cursor:pointer;text-decoration:none;transition:color .2s}.site-footer .footer-nav a:hover{color:var(--color-surface)}.site-footer .footer-copyright{color:#ffffffa8;align-self:center;margin:0;font-size:12px}@media (min-width:1100px){.site-footer{padding:40px 0 28px}.site-footer .footer-inner{grid-template-columns:1fr 1fr;grid-template-areas:"brand social""nav nav""copy copy";align-items:center;gap:28px 0;display:grid}.site-footer .footer-brand{grid-area:brand}.site-footer .footer-nav{grid-area:nav}.site-footer .footer-social{grid-area:social;justify-self:end}.site-footer .footer-copyright{grid-area:copy;justify-self:center}.site-footer .footer-nav{gap:24px 48px;font-size:14px}.site-footer .footer-col{gap:4px}.site-footer .footer-col h2{margin-bottom:6px;font-size:15px}}@media (max-width:800px){.site-footer{padding:24px 0}.site-footer .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;width:calc(100% - 40px)}.site-footer .footer-brand{flex-direction:column;align-items:flex-start;gap:4px}.site-footer .footer-nav{grid-template-columns:repeat(2,1fr);gap:24px 16px}}body{background:var(--color-surface);color:var(--color-ink)}.site-header{color:var(--color-ink);border-color:#d8d5d3}.site-header .brand,.site-header nav{color:var(--color-ink)}.site-header .brand-mark{border-color:var(--color-ink)}.white{background:var(--color-surface);color:var(--color-ink)}footer{background:var(--color-ink);color:var(--color-surface)}body,button,input,textarea,select,h1,h2,h3,h4,h5,h6,p,li,span,a,small,strong,time,blockquote,th,td,label{font-family:var(--font-body)}.site-header .brand small{line-height:1.35}.site-header .brand-mark{font-size:19px}.site-header nav .pill{padding:15px 22px;font-size:16px}.site-header nav .pill svg{width:17px;height:17px}@media (max-width:800px){.site-header nav .pill{font-size:15px}}.site-header .brand-mark{background:var(--color-surface);color:#0000;border-radius:50%;overflow:hidden}.site-header .brand-mark img{object-fit:cover;width:100%;height:100%;display:block}.site-header .header-inner{max-width:none}footer{max-width:none;margin:0}html{scroll-behavior:smooth}html,body,#root{width:100%;overflow-x:hidden}.site-header{z-index:20;-webkit-backdrop-filter:blur(18px)saturate(1.08);backdrop-filter:blur(18px)saturate(1.08);background:linear-gradient(#fffffff5,#faf9f6e6),#ffffffeb;border-bottom:1px solid #241f1e1f;height:72px;position:sticky;top:0;box-shadow:0 18px 42px #241f1e14}.site-header .header-inner{height:72px;padding-left:max(22px,min(4vw,72px));padding-right:max(22px,min(4vw,72px))}.site-header .brand{letter-spacing:0;gap:10px}.site-header .brand-mark{border:1px solid #241f1e47;width:58px;height:58px;box-shadow:0 10px 26px #241f1e1f}.site-header .brand b{letter-spacing:-.02em;font-size:21px;line-height:1.05;display:block}.site-header .brand-en{letter-spacing:-.01em;font-size:.82em}.site-header .brand small{color:#77716d;letter-spacing:.02em;margin-top:6px;font-size:11px;font-weight:600}.site-header nav{color:#241f1ec2;align-items:center;gap:10px;font-size:15px;font-weight:800}.site-header a,.site-header button,.site-header .brand,.site-header nav a,.site-header nav .pill,.site-header .menu-button{cursor:pointer!important}.site-header nav a{border:1px solid #0000;border-radius:999px;padding:12px 17px;transition:background .2s,border-color .2s,color .2s,transform .2s}.site-header nav a:hover{color:var(--color-accent);background:#a66f581a;border-color:#a66f5840;transform:translateY(-1px)}.site-header nav a.active{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f;font-weight:800}.site-header nav .pill{color:var(--color-surface);background:#8f5c47;border-color:#8f5c47;margin-left:12px;box-shadow:0 12px 28px #8f5c4747}.site-header nav .pill:hover{color:var(--color-surface);background:#7a4d3c;border-color:#7a4d3c}@media (max-width:1279px){.site-header,.site-header .header-inner{height:60px}.site-header .header-inner{padding-left:18px;padding-right:18px}.site-header .brand-mark{width:46px;height:46px}.site-header .brand b{font-size:17px}.site-header .brand small{letter-spacing:.02em;font-size:9px}.site-header .menu-button{width:50px;height:50px;color:var(--color-ink);background:#ffffffa6;border:1px solid #d8d3cf;border-radius:50%;place-items:center;display:grid}.site-header nav{-webkit-overflow-scrolling:touch;background:#fffffffa;border-bottom:1px solid #241f1e24;flex-direction:column;align-items:flex-start;gap:7px;max-height:calc(100svh - 60px);padding:16px 18px 20px;display:none;position:absolute;top:60px;left:0;right:0;overflow-y:auto;box-shadow:0 22px 38px #241f1e1a}.site-header nav.nav-open{display:flex}.site-header nav a,.site-header nav .pill{width:100%;margin-left:0;padding:13px 15px}}@media (min-width:1280px) and (max-width:1500px){.site-header nav{gap:6px;font-size:12.5px}.site-header nav a{padding:9px 10px}.site-header nav .pill{margin-left:6px;padding:9px 13px}}.site-header .brand b,.site-header .brand small,.site-header .brand-en,.site-header nav a,.site-header nav .pill{white-space:nowrap}.nl-trigger{border:1px solid var(--color-accent);color:var(--color-accent);font:inherit;white-space:nowrap;background:0 0;border-radius:999px;align-items:center;gap:5px;margin-left:6px;padding:12px 17px;font-weight:800;transition:background .2s,color .2s,transform .2s;display:inline-flex}.nl-trigger:hover{background:#a66f581a;transform:translateY(-1px)}.nl-trigger.open{background:var(--color-accent);color:var(--color-surface)}.nl-trigger-chevron{transition:transform .2s}.nl-trigger.open .nl-trigger-chevron{transform:rotate(180deg)}.nl-panel{z-index:21;background:#fffffffa;border-bottom:1px solid #241f1e1f;position:relative;box-shadow:0 18px 34px #241f1e14}.nl-panel-inner{text-align:center;max-width:640px;margin:0 auto;padding:26px max(22px,min(4vw,72px)) 30px;position:relative}.nl-panel-close{color:#77716d;cursor:pointer;background:0 0;border:none;border-radius:50%;place-items:center;width:32px;height:32px;transition:background .15s,color .15s;display:grid;position:absolute;top:14px;right:max(14px,min(3vw,24px))}.nl-panel-close:hover{color:var(--color-ink);background:#241f1e14}.nl-panel-inner h2{letter-spacing:-.01em;color:var(--color-ink);margin:0 0 6px;padding:0 36px;font-size:18px}.nl-panel-inner p{color:#6f6967;margin:0 0 18px;font-size:13.5px;line-height:1.6}.nl-panel-fine{font:500 11px var(--mono,"DM Mono", monospace);color:#a49e99;margin-top:12px!important}.nl-form{flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;display:flex}.nl-form input{background:var(--color-surface);color:var(--color-ink);width:280px;max-width:60vw;font:inherit;border:1px solid #d8d5d3;border-radius:10px;padding:12px 14px;font-size:14px}.nl-form input::placeholder{color:#a49e99}.nl-form input:focus{outline:2px solid var(--color-accent);outline-offset:1px}.nl-form button{font:inherit;color:var(--color-surface);background:var(--color-accent);cursor:pointer;white-space:nowrap;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:800}.nl-form button:hover{background:#8f5c47}.nl-form button:disabled{opacity:.6;cursor:not-allowed}.nl-form .nl-error{color:#b3423a;flex-basis:100%;margin:4px 0 0;font-size:12.5px}.nl-success{color:var(--color-ink);margin:0;font-size:14px;line-height:1.6}@media (max-width:1279px){.nl-trigger{justify-content:center;width:100%;margin-left:0}}@media (max-width:800px){.nl-panel-inner{padding:22px 20px 26px}.nl-form input{width:100%;max-width:100%}.nl-form button{width:100%}}.social-links{align-items:center;gap:14px;display:flex}a.social-link{font-weight:700;font-family:var(--sans,inherit);flex-shrink:0;line-height:1;text-decoration:none;transition:opacity .2s,background .2s,color .2s,border-color .2s,transform .2s;overflow:hidden;box-sizing:border-box!important;color:inherit!important;border-radius:50%!important;justify-content:center!important;align-items:center!important;margin:0!important;padding:0!important;display:inline-flex!important}a.social-link img{object-fit:contain;border-radius:50%;width:100%;height:100%;display:block}a.social-link--icon{opacity:.9!important;border:none!important}a.social-link--icon:hover{transform:translateY(-1px)scale(1.06);opacity:1!important}a.social-link--label{opacity:.85!important;border:1px solid!important}a.social-link--label:hover{transform:translateY(-1px);background:var(--coral,#dc6b52)!important;border-color:var(--coral,#dc6b52)!important;color:var(--color-surface)!important;opacity:1!important}.header-social{border-left:1px solid #0000001f;margin-left:6px;padding-left:18px}.footer-social{align-self:center;margin:0}.header-social-wrap{align-items:center;display:flex;position:relative}.social-more{background:var(--color-surface);width:38px;height:38px;color:var(--color-ink);cursor:pointer;border:1px solid #241f1e2e;border-radius:50%;place-items:center;margin-left:4px;transition:background .2s,border-color .2s,color .2s;display:none}.social-more:hover,.header-social-wrap.open .social-more{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f}@media (min-width:1280px) and (max-width:1500px){.social-more{display:grid}.header-social-wrap .header-social{z-index:20;background:var(--color-surface);border:1px solid #241f1e1f;border-radius:16px;flex-direction:column;gap:10px;margin:0;padding:12px;display:none;position:absolute;top:calc(100% + 10px);right:0;box-shadow:0 14px 32px #241f1e24}.header-social-wrap.open .header-social{display:flex}}@media (max-width:1279px){.header-social{border-left:none;margin:12px 0 4px;padding-left:0}}.route-loading{min-height:100svh}.nav-group{position:relative}.nav-group-trigger{color:inherit;font:inherit;white-space:nowrap;cursor:pointer;background:0 0;border:1px solid #0000;border-radius:999px;align-items:center;gap:4px;padding:12px 17px;font-weight:800;transition:background .2s,border-color .2s,color .2s;display:inline-flex}.nav-group-trigger:hover,.nav-group.open .nav-group-trigger,.nav-group.desktop-open .nav-group-trigger{color:var(--color-accent);background:#a66f581a;border-color:#a66f5840}.nav-group.active .nav-group-trigger{border-color:var(--color-accent);color:var(--color-accent);background:#a66f581f}.nav-group-chevron{transition:transform .2s}.nav-sub{display:none}.site-header nav .nav-sub a{white-space:nowrap;border-radius:12px;flex-direction:column;gap:2px;padding:10px 14px;display:flex}.site-header nav .nav-sub a:hover{transform:none}.nav-sub-label{font-size:15px;font-weight:800}.nav-sub-desc{color:#77716d;font-size:12px;font-weight:600}@media (min-width:1280px){.nav-sub{z-index:30;min-width:260px;padding-top:10px;position:absolute;top:100%;left:50%;transform:translate(-50%)}.nav-sub:before{content:"";z-index:-1;background:#fff;border:1px solid #241f1e1f;border-radius:16px;position:absolute;top:10px;bottom:0;left:0;right:0;box-shadow:0 22px 44px #241f1e24}.nav-sub a:first-child{margin-top:8px}.nav-sub a:last-child{margin-bottom:8px}.site-header nav .nav-sub a{margin-left:8px;margin-right:8px}.nav-group:focus-within .nav-sub,.nav-group.open .nav-sub,.nav-group.desktop-open .nav-sub{display:block}.nav-group.open .nav-group-chevron,.nav-group.desktop-open .nav-group-chevron{transform:rotate(180deg)}}@media (min-width:1280px) and (max-width:1500px){.nav-group-trigger{padding:9px 10px}}@media (max-width:1279px){.nav-group{width:100%}.nav-group-trigger{width:100%;color:inherit;cursor:pointer;background:0 0;border:none;border-radius:12px;justify-content:space-between;align-items:center;padding:13px 15px;font-size:16px;font-weight:800;transition:background .2s,color .2s;display:flex}.nav-group-trigger:hover,.nav-group.open .nav-group-trigger,.nav-group.mobile-open .nav-group-trigger{color:var(--color-accent);background:#a66f5814}.nav-group.active .nav-group-trigger{color:var(--color-accent)}.nav-group-chevron{transition:transform .2s;display:inline-flex}.nav-group.open .nav-group-chevron,.nav-group.mobile-open .nav-group-chevron{transform:rotate(180deg)}.nav-sub{display:none}.nav-group.open .nav-sub,.nav-group.mobile-open .nav-sub{border-left:2px solid #a66f5833;flex-direction:column;gap:2px;margin-left:15px;padding:4px 0 8px 12px;display:flex}.site-header nav .nav-sub a{padding:10px 14px;font-size:15px;font-weight:700}.nav-sub-desc{display:none}}
+</style>
+  <link rel="stylesheet" crossorigin href="/assets/Post-B-oHczHB.css" />
+<link rel="stylesheet" crossorigin href="/assets/insights-redesign-2gndCVR5.css" />
+<link rel="modulepreload" crossorigin href="/assets/Post-DmZXLyhJ.js" />
+<link rel="modulepreload" crossorigin href="/assets/posts-DM_dOGpL.js" />
+<link rel="modulepreload" crossorigin href="/assets/check-BfxESYQh.js" />
+<link rel="modulepreload" crossorigin href="/assets/search-RN5OjvXo.js" />
+<link rel="modulepreload" crossorigin href="/assets/Seo-C_oP1f7V.js" />
+<link rel="modulepreload" crossorigin href="/assets/lib-C65gPTYN.js" />
+<link rel="modulepreload" crossorigin href="/assets/lib-B54n9dHa.js" />
+<link rel="modulepreload" crossorigin href="/assets/tools-BdrpCNIi.js" />
+<link rel="modulepreload" crossorigin href="/assets/internal-href-CzUPzxTt.js" />
+<meta name="description" content="談 AI 開發陪跑如何把能力留在企業：核心工程師分工、文件隨程式更新、共同開發的能力移轉，以及交接時怎麼驗收。" />
+<meta name="keywords" content="Vibe Coding, AI 輔助開發, AI 陪跑, 系統維運, 敏捷開發" />
+<link rel="canonical" href="https://claire-chang.com/post/ai-development-handover-after-coaching/" />
+<meta property="og:site_name" content="Claire Chang 張可佳｜企業 AI 導入與落地" />
+<meta property="og:title" content="AI 開發陪跑結束後，如何把系統運營能力留在企業｜Claire Chang" />
+<meta property="og:description" content="談 AI 開發陪跑如何把能力留在企業：核心工程師分工、文件隨程式更新、共同開發的能力移轉，以及交接時怎麼驗收。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://claire-chang.com/post/ai-development-handover-after-coaching/" />
+<meta property="og:image" content="https://claire-chang.com/images/og/hero_ai-development-handover-after-coaching-19a4676c.jpg" />
+<meta property="og:image:secure_url" content="https://claire-chang.com/images/og/hero_ai-development-handover-after-coaching-19a4676c.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AI 開發陪跑結束後，如何把系統運營能力留在企業｜Claire Chang" />
+<meta name="twitter:description" content="談 AI 開發陪跑如何把能力留在企業：核心工程師分工、文件隨程式更新、共同開發的能力移轉，以及交接時怎麼驗收。" />
+<meta name="twitter:image" content="https://claire-chang.com/images/og/hero_ai-development-handover-after-coaching-19a4676c.jpg" />
+<meta property="article:published_time" content="2026-10-19" />
+<meta property="article:modified_time" content="2026-10-21" />
+<meta property="article:author" content="Claire Chang" />
+<meta property="article:tag" content="AI 輔助開發" />
+<meta property="article:tag" content="AI 陪跑" />
+<meta property="article:tag" content="系統維運" />
+<meta property="article:tag" content="敏捷開發" />
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Claire Chang 張可佳｜企業 AI 導入與落地","item":"https://claire-chang.com"},{"@type":"ListItem","position":2,"name":"部落格","item":"https://claire-chang.com/insights/"},{"@type":"ListItem","position":3,"name":"AI 開發陪跑結束後，如何把系統運營能力留在企業","item":"https://claire-chang.com/post/ai-development-handover-after-coaching/"}]},{"@type":"Person","@id":"https://claire-chang.com/#claire-chang","name":"Claire Chang","alternateName":"張可佳","url":"https://claire-chang.com/about/","jobTitle":"企業 AI 導入與流程轉型顧問","description":"張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。","image":"https://claire-chang.com/images/site/about-claire-hero.webp","sameAs":["https://www.facebook.com/ClaireTechVision","https://www.linkedin.com/in/claire-chang-taiwan/","https://www.instagram.com/clairetechvision/","https://www.youtube.com/@cochiachang"],"alumniOf":{"@type":"EducationalOrganization","name":"天主教輔仁大學","alternateName":"輔仁大學","url":"https://www.fju.edu.tw/","department":{"@type":"Organization","name":"資訊管理學系","alternateName":"輔大資管系"}},"award":["2024 年 11 月天瓏書店單月暢銷榜冠軍（著作《AI 職場超神助手》）","2025 Biodesign 北醫創業中心創新提案第二名","2023 人工智慧學校創新專題競賽第一名","2022 Taipei Women in Tech Honorees"],"worksFor":{"@id":"https://claire-chang.com/#organization"},"subjectOf":[{"@type":"Book","@id":"https://claire-chang.com/#book-ai-workplace-helper","name":"AI 職場超神助手：ChatGPT 與生成式 AI 一鍵搞定工作難題"}],"@reverse":{"author":[{"@id":"https://claire-chang.com/#book-ai-workplace-helper"}]},"authorOf":[{"@id":"https://claire-chang.com/#book-ai-workplace-helper"}],"knowsAbout":["企業 AI 導入","生成式 AI","AI Agent","企業 AI 治理","AI 流程自動化","智慧製造","ERP 系統整合","AI 生產排程"]},{"@type":"Organization","@id":"https://claire-chang.com/#organization","name":"允愛數位科技","legalName":"允愛數位科技有限公司","alternateName":["Claire Chang 張可佳｜企業 AI 導入與落地","Love, Allowed"],"url":"https://claire-chang.com","taxID":"62027193","identifier":{"@type":"PropertyValue","propertyID":"統一編號","value":"62027193"},"foundingDate":"2026-10-20","address":{"@type":"PostalAddress","streetAddress":"信義路四段 415 號 7 樓之 3","addressLocality":"信義區","addressRegion":"臺北市","postalCode":"110","addressCountry":"TW"},"sameAs":["https://love-allowed.com/"],"location":{"@type":"Place","name":"允愛數位科技有限公司","address":{"@type":"PostalAddress","streetAddress":"信義路四段 415 號 7 樓之 3","addressLocality":"信義區","addressRegion":"臺北市","postalCode":"110","addressCountry":"TW"},"geo":{"@type":"GeoCoordinates","latitude":25.03337,"longitude":121.55938},"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"17:00"}},"logo":{"@type":"ImageObject","url":"https://claire-chang.com/icon.webp"},"founder":{"@id":"https://claire-chang.com/#claire-chang"},"employee":[{"@id":"https://claire-chang.com/#claire-chang"}],"contactPoint":{"@type":"ContactPoint","email":"cochiachang@gmail.com","contactType":"customer service","areaServed":"TW"},"areaServed":{"@type":"Country","name":"TW"}},{"@type":"Article","@id":"https://claire-chang.com/post/ai-development-handover-after-coaching/#article","headline":"AI 開發陪跑結束後，如何把系統運營能力留在企業","description":"談 AI 開發陪跑如何把能力留在企業：核心工程師分工、文件隨程式更新、共同開發的能力移轉，以及交接時怎麼驗收。","image":"https://claire-chang.com/images/articles/hero_ai-development-handover-after-coaching.webp","author":{"@id":"https://claire-chang.com/#claire-chang"},"publisher":{"@id":"https://claire-chang.com/#organization"},"datePublished":"2026-10-19","dateModified":"2026-10-21","mainEntityOfPage":{"@type":"WebPage","@id":"https://claire-chang.com/post/ai-development-handover-after-coaching/"},"isPartOf":{"@type":"WebSite","name":"Claire Chang 張可佳｜企業 AI 導入與落地","url":"https://claire-chang.com"},"inLanguage":"zh-Hant","articleSection":"Vibe Coding","keywords":"AI 輔助開發, AI 陪跑, 系統維運, 敏捷開發","about":[{"@type":"Thing","name":"AI 輔助開發"},{"@type":"Thing","name":"企業內部系統"},{"@type":"Thing","name":"系統維運"},{"@type":"Thing","name":"技術文件"},{"@type":"Thing","name":"能力移轉"},{"@type":"Thing","name":"AI 陪跑"},{"@type":"Thing","name":"敏捷開發"}]},{"@type":"FAQPage","@id":"https://claire-chang.com/post/ai-development-handover-after-coaching/#faq","mainEntity":[{"@type":"Question","name":"AI 開發陪跑結束後，可以不需要工程師嗎？","acceptedAnswer":{"@type":"Answer","text":"是否需要工程師，取決於系統複雜度、團隊能力與營運要求。本文主張以更精簡的團隊配合員工與 AI 承擔更多工作，同時保留必要的核心工程能力；這份能力可以來自內部或穩定的外部合作。"}},{"@type":"Question","name":"工程師數量可以減少多少？","acceptedAnswer":{"@type":"Answer","text":"目前沒有適用所有企業的比例。應在相同交付與品質條件下，觀察實作、審查、維護與協調的總投入，再決定是否能精簡配置，並把程式生成速度之外的審查與協調一併計入。"}},{"@type":"Question","name":"參與陪跑的員工都要學寫程式嗎？","acceptedAnswer":{"@type":"Answer","text":"員工可以依角色參與需求、流程規則、驗收或 AI 修改，各自具備所需的能力即可。如果企業希望自行修改程式，就需要指定承接人員，安排必要的系統理解、版本管理及測試練習。"}},{"@type":"Question","name":"AI 產生詳細文件，就能保證順利交接嗎？","acceptedAnswer":{"@type":"Answer","text":"文件可以降低理解與整理的負擔。要讓交接順利，接手者還需核對內容、確認帳號與環境，並實際完成啟動、修改、測試及必要的部署演練。"}},{"@type":"Question","name":"陪跑可以固定報價嗎？什麼時候算結束？","acceptedAnswer":{"@type":"Answer","text":"可以依明確階段約定固定報價，也可以設定工時或預算上限。結束條件應包含交付範圍、功能驗收與能力移轉項目，並另外說明保固、後續維護及新增需求的處理方式。"}}]}]}</script>
+</head>
+  <body>
+    <div id="root"><header class="site-header"><div class="header-inner"><a class="brand" href="/"><span class="brand-mark"><img src="/icon.webp" alt="Claire Chang" /></span><span><b><span class="brand-en">Claire Chang</span>｜張可佳</b><small>讓企業需求被技術聽懂，讓 AI 真正落地</small></span></a><button class="menu-button" aria-label="開啟導覽" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button><nav aria-label="主要導覽"><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">企業服務 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/services/"><span class="nav-sub-label">服務項目</span><small class="nav-sub-desc">企業 AI 內訓、工作坊、專案開發與導入陪跑</small></a><a href="/courses/"><span class="nav-sub-label">邀課主題</span><small class="nav-sub-desc">可以邀請我教授的課程與實作內容</small></a><a href="/cases/"><span class="nav-sub-label">合作案例與成果</span><small class="nav-sub-desc">88+ 合作機構與實際成效數據</small></a><a href="/testimonials/"><span class="nav-sub-label">企業／學員回饋</span><small class="nav-sub-desc">企業內訓與公開課的匿名學員回饋</small></a><a href="/faq/"><span class="nav-sub-label">收費與常見問題</span><small class="nav-sub-desc">報價方式、排課流程與課程客製</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">課程與活動 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/events/"><span class="nav-sub-label">近期活動</span><small class="nav-sub-desc">即將舉辦與進行中的公開課程、講座</small></a><a href="/coaching/"><span class="nav-sub-label">1對1 AI 教練</span><small class="nav-sub-desc">依你的工作任務量身設計的個人 AI 學習</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">AI 顧問室 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/tools/"><span class="nav-sub-label">全部工具</span><small class="nav-sub-desc">瀏覽所有品牌探索、導入評估、趨勢洞察與文件處理工具</small></a><a href="/tools/?category=品牌探索"><span class="nav-sub-label">品牌探索</span><small class="nav-sub-desc">企業網路特寫 × AI 分析、品牌 AI 能見度健檢</small></a><a href="/tools/?category=文件處理"><span class="nav-sub-label">文件處理</span><small class="nav-sub-desc">發票與收據辨識、合約重點標示、文件轉 Markdown、個資遮蔽</small></a><a href="/tools/?category=導入評估"><span class="nav-sub-label">導入評估</span><small class="nav-sub-desc">AI 專案選題評分表、這份資料能不能交給 AI？</small></a><a href="/tools/?category=趨勢洞察"><span class="nav-sub-label">趨勢洞察</span><small class="nav-sub-desc">AI 科技趨勢探索器、2026 AI 代理五大趨勢</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">部落格 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/insights/"><span class="nav-sub-label">全部文章</span><small class="nav-sub-desc">瀏覽所有 AI 導入、實務應用與策略洞察文章</small></a><a href="/insights/?category=AI%20Agent"><span class="nav-sub-label">AI Agent</span><small class="nav-sub-desc">自主代理應用、Multi-Agent 架構與企業落地實務</small></a><a href="/insights/?category=AI策略"><span class="nav-sub-label">AI策略</span><small class="nav-sub-desc">企業 AI 導入路徑、價值評估與商業競爭力</small></a><a href="/insights/?category=AI治理"><span class="nav-sub-label">AI治理</span><small class="nav-sub-desc">企業資料安全、外部 AI 使用紅線與資安防護</small></a><a href="/insights/?category=智慧製造"><span class="nav-sub-label">智慧製造</span><small class="nav-sub-desc">工廠現場製程優化、良率提升與系統整合經驗</small></a><a href="/insights/?category=智慧營運"><span class="nav-sub-label">智慧營運</span><small class="nav-sub-desc">跨部門流程重塑、日常行政賦能與自動化落地</small></a><a href="/insights/?category=Vibe%20Coding"><span class="nav-sub-label">Vibe Coding</span><small class="nav-sub-desc">用 AI 做出可上線的工具：真實案例、卡關處理、團隊分工與維運交接</small></a><a href="/insights/?category=AI搜尋優化"><span class="nav-sub-label">AI搜尋優化</span><small class="nav-sub-desc">GEO 生成式引擎優化、AI 引用率與知識庫結構</small></a><a href="/tech/"><span class="nav-sub-label">技術筆記存檔</span><small class="nav-sub-desc">19 年前端、後端、DevOps 到機器學習的實作記錄</small></a></div></div><div class="nav-group"><button type="button" class="nav-group-trigger" aria-expanded="false">關於 Claire <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nav-group-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="nav-sub"><a href="/about/"><span class="nav-sub-label">認識 Claire</span><small class="nav-sub-desc">19 年工程背景的企業 AI 導入顧問</small></a><a href="/about/engineer-to-ai-translator/"><span class="nav-sub-label">我的轉型故事</span><small class="nav-sub-desc">為什麼從工程師走進企業做 AI</small></a><a href="/about/stories/"><span class="nav-sub-label">經驗分享文章</span><small class="nav-sub-desc">得獎經驗、專訪與職涯觀點</small></a></div></div><button type="button" class="nl-trigger" aria-expanded="false" aria-controls="newsletter-panel"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg> 訂閱電子報 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down nl-trigger-chevron" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><a href="/contact/" class="pill">預約諮詢 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a><div class="social-links header-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/facebook.webp" alt="" width="28" height="28" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/linkedin.webp" alt="" width="28" height="28" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/instagram.webp" alt="" width="28" height="28" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/line.webp" alt="" width="28" height="28" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:28px;height:28px;font-size:10px"><img src="/images/site/youtube.webp" alt="" width="28" height="28" /></a></div></nav></div></header><main class="insights-post-page"><section class="insights-hero post-hero-compact"><img class="insights-hero-img" src="/images/articles/hero_ai-development-handover-after-coaching.webp" alt="團隊成員圍著桌子，用筆電共同討論與修改系統" /><div class="insights-hero-inner"><div class="insights-hero-header"><div class="post-top-bar"><p class="insights-overline"><a href="/insights/?category=Vibe%20Coding" class="insights-overline-link">← INSIGHTS &amp; PERSPECTIVES ｜ Vibe Coding</a></p><form action="/insights/" method="get" class="post-top-right-search"><input type="text" name="q" placeholder="搜尋全站文章..." aria-label="搜尋文章" /></form></div><div class="post-meta-pills-row"><div class="post-meta-pills"><span class="post-meta-pill">Claire Chang</span><span class="post-meta-pill"><time datetime="2026-10-19">2026-10-19</time></span><span class="post-meta-pill">AI 輔助開發 · AI 陪跑 · 系統維運 · 敏捷開發</span></div></div><h1 class="insights-hero-title">AI 開發陪跑結束後，如何把系統運營能力留在企業</h1><p class="insights-hero-description">談 AI 開發陪跑如何把能力留在企業：核心工程師分工、文件隨程式更新、共同開發的能力移轉，以及交接時怎麼驗收。</p></div></div></section><section class="post-main-section post-main-compact"><div class="post-content-card"><article class="markdown"><div class="article-lead-card">
+<p>AI 開發陪跑結束後，企業要接得住系統，得在開發過程中就把能力留下來：核心工程師負責架構與重要決策，文件隨程式一起更新，內部人員參與每一次修改，最後由接手者實際操作來驗收，而不只是檢查功能。</p>
+<p>這篇接續<a href="/post/ai-development-capability-transfer/">上一篇</a>。客戶希望我用 AI 把開發成本壓低，我提出陪跑計畫，想談的是另一件事：系統做完之後，企業自己能不能接著改、接著維護。以下是我對陪跑該怎麼設計的整理。</p>
+</div><section aria-labelledby="工程團隊可以更精簡-核心工程師負責什麼"><h2 id="工程團隊可以更精簡-核心工程師負責什麼">工程團隊可以更精簡，核心工程師負責什麼？</h2>
+<div class="answer"><p>AI 可以承擔更多實作工作，讓部分範圍明確的專案有機會以更精簡的工程團隊推進。企業仍需保留核心工程能力，負責架構、資料、整合與重要修改的品質；實際人力配置須依系統複雜度與維運要求決定。</p></div>
+<p>我認為，AI 對企業系統開發的影響，會包含工程人力配置的改變。部分過去需要多人投入的實作工作，有機會由更少的工程師配合 AI 完成。</p>
+<p>企業可以重新安排：哪些交給 AI，哪些由懂業務的員工參與，哪些需要核心工程師掌握。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>角色</th><th>可以承擔的工作</th><th>需要留下的成果</th></tr></thead><tbody><tr><td>業務與營運員工</td><td>定義問題、說明規則、參與 AI 修改與實際試用</td><td>需求情境、正確結果範例、操作回饋</td></tr><tr><td>AI</td><td>協助產生與修改程式、撰寫測試、解釋系統與整理文件</td><td>可供檢查的程式、測試與文件草稿</td></tr><tr><td>核心工程師</td><td>掌握架構、資料與權限設計、系統整合、重要變更審查及疑難處理</td><td>技術決策、驗證方式、部署與維護機制</td></tr><tr><td>企業主管或需求負責人</td><td>決定優先順序、資源與正式使用範圍</td><td>明確決策、維護責任與預算安排</td></tr></tbody></table></div>
+<h3>員工、AI 與核心工程師的協作方式</h3>
+<figure>
+<svg viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="員工、AI 與核心工程師協作流程圖：員工提出需求，AI 協助實作，核心工程師審查，員工試用驗收，通過後部署並更新文件，需要調整或進入下一次改善則回到需求" style="width:100%;height:auto;max-width:900px">
+<defs><marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1f6f78"></path></marker></defs>
+<g font-family="sans-serif" font-size="14" text-anchor="middle">
+<rect x="20" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="95.0" y="60" font-weight="700" fill="#14304f">員工</text>
+<text x="95.0" y="86" fill="#33506b">提出需求與規則</text>
+<line x1="173" y1="72.0" x2="197" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="200" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="275.0" y="60" font-weight="700" fill="#14304f">AI</text>
+<text x="275.0" y="86" fill="#33506b">協助實作與測試</text>
+<line x1="353" y1="72.0" x2="377" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="380" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="455.0" y="60" font-weight="700" fill="#14304f">核心工程師</text>
+<text x="455.0" y="86" fill="#33506b">依風險審查整合</text>
+<line x1="533" y1="72.0" x2="557" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="560" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="635.0" y="60" font-weight="700" fill="#14304f">員工</text>
+<text x="635.0" y="86" fill="#33506b">真實情境試用</text>
+<line x1="713" y1="72.0" x2="737" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="740" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="815.0" y="60" font-weight="700" fill="#14304f">部署</text>
+<text x="815.0" y="86" fill="#33506b">依約上線並更新文件</text>
+<path d="M635.0 117 V154 H95.0 V119" fill="none" stroke="#1f6f78" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#m)"></path>
+<text x="365.0" y="148" fill="#14304f">需要調整，回到需求</text>
+<path d="M815.0 117 V194 H95.0 V119" fill="none" stroke="#1f6f78" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#m)"></path>
+<text x="455.0" y="188" fill="#14304f">下一次改善，回到需求</text>
+</g></svg>
+</figure>
+<p><strong>圖解重點：</strong>員工持續提供業務判斷，AI 協助產出，核心工程師掌握技術品質。圖中為建議協作方式，實際審查與部署安排依系統風險決定。</p>
+<p>這些角色可以依規模兼任，但責任仍要清楚。核心工程能力也可以透過內部人員或穩定的外部合作取得，是否建立完整工程部門，依公司規模決定。</p>
+<p>工程主管 <a href="https://ryanmccue.ca/blog/ai-didnt-kill-the-engineering-team.-it-shrunk-the-implementation-cell./" target="_blank" rel="noopener noreferrer">Ryan McCue 在一篇實務觀點文章</a>提出，AI 可以縮小範圍明確的實作團隊，但周邊的產品判斷、架構、驗證與營運責任仍然存在。這與我的方向接近，實際人力配置依企業狀況而定。</p>
+<p><a href="https://vercel.com/i/what-is-a-citizen-developer" target="_blank" rel="noopener noreferrer">Vercel 對業務人員參與開發的說明</a>也呈現類似分工：員工提供流程知識，專業開發者協助評估技術與營運要求，並且共同確認後續誰維護。</p>
+</section><section aria-labelledby="ai-文件化-如何降低對原開發者的依賴"><h2 id="ai-文件化-如何降低對原開發者的依賴">AI 文件化，如何降低對原開發者的依賴？</h2>
+<div class="answer"><p>AI 可以協助把需求、架構、程式修改、測試與維運方式整理成文件，並隨開發持續更新。這有機會降低系統知識只留在原開發者腦中的情況；文件仍需與實際系統核對，並由接手者使用驗證。</p></div>
+<p>企業擔心的問題之一，是系統雖然在自己手上，實際上卻只有原開發者知道怎麼改。</p>
+<p>過去維持詳細文件，需要額外的人力與時間。有些專案因此一路趕功能，最後才補文件；等到交接時，又得重新回想當初為什麼這樣設計。</p>
+<p>AI 讓這件事有機會改變。開發時就可以協助記錄需求、整理決策、說明程式邏輯，以及更新操作與維運步驟。企業要留下的內容可以包含：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="markdown-table-wrap"><table><thead><tr><th>文件</th><th>幫助接手者理解什麼</th></tr></thead><tbody><tr><td>業務規則與驗收案例</td><td>系統要解決什麼問題，怎樣才算正確</td></tr><tr><td>架構、資料與權限說明</td><td>功能彼此如何連動，資料與操作有哪些限制</td></tr><tr><td>修改與決策紀錄</td><td>改了什麼、為什麼改、有哪些影響</td></tr><tr><td>開發與測試說明</td><td>如何啟動、如何修改、如何檢查結果</td></tr><tr><td>部署與維運手冊</td><td>如何上線、查看問題、備份與還原</td></tr><tr><td>已知問題與待辦</td><td>哪些尚未完成，下一位承接者要注意什麼</td></tr></tbody></table></div>
+<p>實務上已經有團隊把文件更新接進開發流程。<a href="https://github.blog/ai-and-ml/github-copilot/automating-cross-repo-documentation-with-github-agentic-workflows/" target="_blank" rel="noopener noreferrer">GitHub 在 2026 年 7 月分享 Aspire 團隊的案例</a>：功能變更合併後，由 AI 草擬對應文件，再由負責工程師審查。團隊公布的 2026 年 5 月 3 日至 6 月 2 日紀錄，共有 82 筆文件變更完成合併，文件合併時間的中位數為功能合併後 44.8 小時，沒有增加人力。</p>
+<p>這是特定團隊自行公布的紀錄，內容是文件變更的合併數量與時間。它具體示範：文件可以跟著開發持續產生與審查，減少事後補寫的負擔。</p>
+<h3>讓程式與文件一起更新</h3>
+<figure>
+<svg viewBox="0 0 1100 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="程式與文件一起更新流程圖：確認需求與驗收條件，AI 修改程式並草擬文件，測試與文件核對，審查部署並保存版本，接手者依文件操作，成功後保留系統知識" style="width:100%;height:auto;max-width:1100px">
+<defs><marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1f6f78"></path></marker></defs>
+<g font-family="sans-serif" font-size="14" text-anchor="middle">
+<rect x="20" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="95.0" y="60" font-weight="700" fill="#14304f">確認需求</text>
+<text x="95.0" y="86" fill="#33506b">與驗收條件</text>
+<line x1="173" y1="72.0" x2="197" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="200" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="275.0" y="60" font-weight="700" fill="#14304f">AI 協助</text>
+<text x="275.0" y="86" fill="#33506b">修改程式與文件</text>
+<line x1="353" y1="72.0" x2="377" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="380" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="455.0" y="60" font-weight="700" fill="#14304f">核對</text>
+<text x="455.0" y="86" fill="#33506b">測試結果與文件</text>
+<line x1="533" y1="72.0" x2="557" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="560" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="635.0" y="60" font-weight="700" fill="#14304f">審查部署</text>
+<text x="635.0" y="86" fill="#33506b">並保存版本</text>
+<line x1="713" y1="72.0" x2="737" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="740" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="815.0" y="60" font-weight="700" fill="#14304f">接手者</text>
+<text x="815.0" y="86" fill="#33506b">依文件操作</text>
+<line x1="893" y1="72.0" x2="917" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="920" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="995.0" y="60" font-weight="700" fill="#14304f">留存知識</text>
+<text x="995.0" y="86" fill="#33506b">系統知識可延續</text>
+<path d="M455.0 117 V154 H275.0 V119" fill="none" stroke="#1f6f78" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#m)"></path>
+<text x="365.0" y="148" fill="#14304f">未通過，回頭修改</text>
+<path d="M815.0 117 V194 H455.0 V119" fill="none" stroke="#1f6f78" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#m)"></path>
+<text x="635.0" y="188" fill="#14304f">發現缺漏，補文件並重新驗證</text>
+</g></svg>
+</figure>
+<p><strong>圖解重點：</strong>文件隨修改一起更新，並由接手者實際使用。此圖是本文自行繪製的流程建議。</p>
+<p>有了正確且持續更新的文件，接手者也能讓 AI 根據這些脈絡協助理解與修改系統。這是我認為交接有機會變得更容易的原因。</p>
+<p>當然，AI 不一定會自動記下所有重要理由。有些業務判斷、口頭決定與系統外的操作，仍需人員補充。帳號、程式碼、資料與部署環境的管理，也必須一併交接。</p>
+</section><section aria-labelledby="如何在共同開發過程中-把能力留在企業"><h2 id="如何在共同開發過程中-把能力留在企業">如何在共同開發過程中，把能力留在企業？</h2>
+<div class="answer"><p>能力移轉需要安排在開發過程中：由企業人員提供真實規則，與開發端共同修改、測試及更新文件，再逐步增加內部承接範圍。持續回饋能讓系統與團隊能力一起成長，也保留開發端應負的技術責任。</p></div>
+<p>這也是我在談案時提到敏捷開發的原因。</p>
+<p><a href="https://agilemanifesto.org/principles.html" target="_blank" rel="noopener noreferrer">敏捷原則</a>重視持續交付有價值的軟體，以及業務人員與開發者密切合作。當需求端在每一段開發中都參與試用與決策，開發端就更容易及早確認方向。</p>
+<p>我期待的陪跑，還可以在這個過程中逐步移轉能力：</p>
+<ol>
+<li><strong>共同釐清第一個工作目標。</strong> 企業說明現況與規則，我協助拆解範圍、技術選擇及驗收條件。</li>
+<li><strong>完成可以實際試用的版本。</strong> 讓真實使用者操作，確認功能與資料是否符合日常工作。</li>
+<li><strong>帶著內部人員處理一次修改。</strong> 從說明需求、運用 AI、檢查程式到測試結果，一起走完。</li>
+<li><strong>同步留下可重複使用的方法。</strong> 更新規格、測試、部署與維運文件，讓下次修改有依據。</li>
+<li><strong>依能力調整分工。</strong> 已能承接的工作逐步交回內部，需要專業判斷的部分由核心工程師持續支援。</li>
+</ol>
+<figure>
+<svg viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="能力移轉五步驟流程圖：釐清第一個工作目標、完成可試用版本、帶內部人員處理一次修改、留下可重複使用的方法、依能力調整分工，之後回到下一次修改" style="width:100%;height:auto;max-width:900px">
+<defs><marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1f6f78"></path></marker></defs>
+<g font-family="sans-serif" font-size="14" text-anchor="middle">
+<rect x="20" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="95.0" y="60" font-weight="700" fill="#14304f">1 釐清目標</text>
+<text x="95.0" y="86" fill="#33506b">拆範圍與驗收條件</text>
+<line x1="173" y1="72.0" x2="197" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="200" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="275.0" y="60" font-weight="700" fill="#14304f">2 試用版本</text>
+<text x="275.0" y="86" fill="#33506b">真實使用者操作</text>
+<line x1="353" y1="72.0" x2="377" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="380" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="455.0" y="60" font-weight="700" fill="#14304f">3 共同修改</text>
+<text x="455.0" y="86" fill="#33506b">內部人員走完一次</text>
+<line x1="533" y1="72.0" x2="557" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="560" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="635.0" y="60" font-weight="700" fill="#14304f">4 留下方法</text>
+<text x="635.0" y="86" fill="#33506b">更新規格與文件</text>
+<line x1="713" y1="72.0" x2="737" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="740" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="815.0" y="60" font-weight="700" fill="#14304f">5 調整分工</text>
+<text x="815.0" y="86" fill="#33506b">能承接的交回內部</text>
+<path d="M815.0 117 V154 H455.0 V119" fill="none" stroke="#1f6f78" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#m)"></path>
+<text x="635.0" y="148" fill="#14304f">下一次修改，回到共同修改</text>
+</g></svg>
+</figure>
+<p><strong>圖解重點：</strong>能力移轉安排在每一次修改裡，做完一輪就回到下一次修改。</p>
+<p>這是我提出的合作設計，實際內容依專案與人員狀況約定，每位員工依角色學習需要的部分。</p>
+<p><a href="https://www.microsoft.com/insidetrack/blog/engineering-the-frontier-firm-sharing-our-ai-native-approach-to-software-development/" target="_blank" rel="noopener noreferrer">Microsoft Digital 在 2026 年 9 月分享的經驗</a>也提醒，個別工程師變快，未必會自動提升團隊效率。他們改以持續更新的規格，保存業務意圖與驗收條件，讓不同角色及 AI 共用同一份依據。這是一項組織實務經驗，也說明共同工作方法的重要性。</p>
+<p>需求端需要投入時間，開發端則要把協作過程設計得可以參與，協助整理規則與文件，讓每次討論有明確產出。共同負責的同時，開發者仍承擔約定範圍、技術品質及缺失修正的責任。</p>
+<p>固定報價也可以搭配這種合作。是否採敏捷、如何計費，以及誰承擔哪些交付責任，應分別談清楚。</p>
+</section><section aria-labelledby="陪跑結束時-如何確認企業接得下去"><h2 id="陪跑結束時-如何確認企業接得下去">陪跑結束時，如何確認企業接得下去？</h2>
+<div class="answer"><p>AI 開發陪跑可以同時驗收系統功能與內部承接能力。除了功能通過測試，也應讓接手者實際完成約定範圍的修改、驗證與部署，並確認公司掌握必要的程式碼、帳號、文件及後續支援管道。</p></div>
+<p>如果目標包含自行掌握，交付時就需要檢查企業能否延續這套系統。</p>
+<p>以下是可以納入合作討論的驗收項目，實際採用哪幾項依專案約定：</p>
+<ul>
+<li>**系統可用：**約定的核心流程與例外案例通過驗收。</li>
+<li>**修改可承接：**內部指定人員在約定支援程度下，完成一次功能調整與測試。</li>
+<li>**文件可使用：**接手者能依文件找到設定、啟動環境並理解修改位置。</li>
+<li>**維運可延續：**負責人能查看問題、執行約定的部署與還原流程。</li>
+<li>**資產可掌握：**公司掌握程式碼、必要帳號與存取權，文件沒有留下敏感憑證。</li>
+<li>**責任有延續：**清楚約定後續誰處理日常問題、誰負責重要技術修改，以及如何取得支援。</li>
+</ul>
+<figure>
+<svg viewBox="0 0 1100 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="陪跑驗收流程圖：依序確認系統可用、修改可承接、文件可使用、維運可延續、資產可掌握與責任有延續" style="width:100%;height:auto;max-width:1100px">
+<defs><marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1f6f78"></path></marker></defs>
+<g font-family="sans-serif" font-size="14" text-anchor="middle">
+<rect x="20" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="95.0" y="60" font-weight="700" fill="#14304f">系統可用</text>
+<text x="95.0" y="86" fill="#33506b">核心流程通過</text>
+<line x1="173" y1="72.0" x2="197" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="200" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="275.0" y="60" font-weight="700" fill="#14304f">修改可承接</text>
+<text x="275.0" y="86" fill="#33506b">完成一次調整</text>
+<line x1="353" y1="72.0" x2="377" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="380" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="455.0" y="60" font-weight="700" fill="#14304f">文件可使用</text>
+<text x="455.0" y="86" fill="#33506b">依文件找到位置</text>
+<line x1="533" y1="72.0" x2="557" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="560" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="635.0" y="60" font-weight="700" fill="#14304f">維運可延續</text>
+<text x="635.0" y="86" fill="#33506b">部署與還原演練</text>
+<line x1="713" y1="72.0" x2="737" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="740" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="815.0" y="60" font-weight="700" fill="#14304f">資產可掌握</text>
+<text x="815.0" y="86" fill="#33506b">程式碼與帳號</text>
+<line x1="893" y1="72.0" x2="917" y2="72.0" stroke="#1f6f78" stroke-width="2" marker-end="url(#m)"></line>
+<rect x="920" y="30" width="150" height="84" rx="10" fill="#eef7f6" stroke="#1f6f78" stroke-width="1.5"></rect>
+<text x="995.0" y="60" font-weight="700" fill="#14304f">責任有延續</text>
+<text x="995.0" y="86" fill="#33506b">支援管道明確</text>
+</g></svg>
+</figure>
+<p><strong>圖解重點：</strong>六項依序確認，每一項都以接手者實際操作為準；此為建議的驗收順序，實際依專案約定。</p>
+<p><a href="https://anodizelabs.com/insights/hand-ai-generated-codebase-to-developer" target="_blank" rel="noopener noreferrer">Anodize Labs 的 AI 系統交接指南</a>也建議，由接手者實際執行部署，並演練可能的故障。這種做法能協助確認文件與交接是否真的可用，而非只確認檔案已經交出。</p>
+<p>我也想邀請企業多看一步：這次合作之後，是否能用更精簡的核心工程團隊，讓內部需求持續被實現？下一次要修改時，是否有員工、文件與方法可以接續？</p>
+<p>這是我期待 AI 開發陪跑帶給企業的價值。把系統完成，同時逐步建立企業可以延續的開發與維運能力。合作方式可參考<a href="/services/">AI 導入陪跑</a>：從需求訪談、PoC 原型、系統整合到上線驗證，並在共同開發中把文件與修改能力留給企業。想評估手上的系統適不適合這樣接手，歡迎<a href="/contact/">預約諮詢</a>。</p>
+</section><section aria-labelledby="常見問題"><h2 id="常見問題">常見問題</h2>
+<div class="answer"><p>企業選擇 AI 開發陪跑前，應確認承接人員、核心工程支援、系統範圍與能力移轉目標。人力與成本效益須依實際成果評估；文件、程式碼及帳號交付，也需要搭配操作演練。</p></div>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI 開發陪跑結束後，可以不需要工程師嗎？</span></h3>
+<p>是否需要工程師，取決於系統複雜度、團隊能力與營運要求。本文主張以更精簡的團隊配合員工與 AI 承擔更多工作，同時保留必要的核心工程能力；這份能力可以來自內部或穩定的外部合作。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>工程師數量可以減少多少？</span></h3>
+<p>目前沒有適用所有企業的比例。應在相同交付與品質條件下，觀察實作、審查、維護與協調的總投入，再決定是否能精簡配置，並把程式生成速度之外的審查與協調一併計入。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>參與陪跑的員工都要學寫程式嗎？</span></h3>
+<p>員工可以依角色參與需求、流程規則、驗收或 AI 修改，各自具備所需的能力即可。如果企業希望自行修改程式，就需要指定承接人員，安排必要的系統理解、版本管理及測試練習。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>AI 產生詳細文件，就能保證順利交接嗎？</span></h3>
+<p>文件可以降低理解與整理的負擔。要讓交接順利，接手者還需核對內容、確認帳號與環境，並實際完成啟動、修改、測試及必要的部署演練。</p>
+<h3 class="faq-question"><span class="faq-icon faq-icon-q">Q</span><span>陪跑可以固定報價嗎？什麼時候算結束？</span></h3>
+<p>可以依明確階段約定固定報價，也可以設定工時或預算上限。結束條件應包含交付範圍、功能驗收與能力移轉項目，並另外說明保固、後續維護及新增需求的處理方式。</p>
+</section><section aria-labelledby="參考資料"><h2 id="參考資料">參考資料</h2>
+<div class="answer"><p>本文以作者提供的合作理念為主，引用供應商案例、交接指南與工程實務觀點作為補充。不同來源的適用條件各異，實際減員幅度與維運成效依個別企業而定。</p></div>
+<ul>
+<li><a href="https://github.blog/ai-and-ml/github-copilot/automating-cross-repo-documentation-with-github-agentic-workflows/" target="_blank" rel="noopener noreferrer">GitHub：Automating cross-repo documentation with GitHub Agentic Workflows</a>，2026-07-08。AI 文件草擬、人工審查與團隊紀錄。</li>
+<li><a href="https://www.microsoft.com/insidetrack/blog/engineering-the-frontier-firm-sharing-our-ai-native-approach-to-software-development/" target="_blank" rel="noopener noreferrer">Microsoft Digital：Engineering the Frontier Firm</a>，2026-09-03。團隊協作及持續更新規格的實務經驗。</li>
+<li><a href="https://vercel.com/i/what-is-a-citizen-developer" target="_blank" rel="noopener noreferrer">Vercel：What is a citizen developer?</a>，2026-10-13。業務人員與專業開發者的參與及維護分工。</li>
+<li><a href="https://ryanmccue.ca/blog/ai-didnt-kill-the-engineering-team.-it-shrunk-the-implementation-cell./" target="_blank" rel="noopener noreferrer">Ryan McCue：AI Didn't Kill the Engineering Team. It Shrunk the Implementation Cell.</a>，2026-05-05。精簡實作團隊的工程管理觀點。</li>
+<li><a href="https://anodizelabs.com/insights/hand-ai-generated-codebase-to-developer" target="_blank" rel="noopener noreferrer">Anodize Labs：How to Hand an AI-Generated Codebase to a Developer</a>，2026-07-14。AI 系統交接與演練指南。</li>
+<li><a href="https://agilemanifesto.org/principles.html" target="_blank" rel="noopener noreferrer">Principles behind the Agile Manifesto</a>，頁面未標示發布日期。持續交付、客戶滿意與業務開發協作原則。</li>
+</ul>
+</section><section aria-labelledby="延伸閱讀"><h2 id="延伸閱讀">延伸閱讀</h2>
+<ul>
+<li><a href="/post/ai-training-workshop-coaching-difference/">企業 AI 內訓、工作坊與 AI 導入陪跑有什麼不同？依團隊現況怎麼選</a>：三種服務各自解決的問題、產出與選擇順序。</li>
+<li><a href="/post/ai-development-capability-transfer/">AI 讓寫程式變便宜，系統開發的成本為什麼沒有跟著降？</a>：上一篇，談需求、分工與審查如何影響開發成本。</li>
+<li><a href="/post/what-is-vibe-coding/">Vibe Coding 是什麼？三種定義、適用範圍，與企業及個人案例的閱讀路徑</a>：先釐清定義與適用範圍，再依情況挑選本分類的文章。</li>
+</ul>
+</section><section aria-labelledby="關於作者"><h2 id="關於作者">關於作者</h2>
+<p><strong>Claire Chang</strong> ｜ 企業 AI 導入與流程轉型顧問。專注於 AI Agent 架構設計、ERP 系統整合與企業 AI 治理。</p>
+<p><strong>首次發布：2026-10-19</strong></p></section></article><aside class="post-consult-anchor" aria-labelledby="post-consult-heading"><h2 id="post-consult-heading">把這篇文章的觀點，放進你公司的實際流程</h2><p>公司內部想用 AI 開發或改善系統，卻擔心後續維運與交接？可以帶著現有的工具或需求來討論，一起看哪些能自己接、哪些需要工程支援。</p><p class="post-consult-actions"><a class="post-consult-btn" href="/contact/">預約諮詢 →</a><a class="post-consult-link" href="/services/">看合作方案</a></p></aside></div></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><b>Claire Chang - 張可佳</b><span><a href="https://love-allowed.com/" target="_blank" rel="noopener">允愛數位科技</a> Love, Allowed. Our Belief, Our Promise.</span><span>統一編號 62027193</span><span>110 臺北市信義區信義路四段 415 號 7 樓之 3</span><span>電話 <a href="tel:+886930402240">0930-402-240</a></span><span>服務時間 週一至週五 09:00–17:00</span></div><nav class="footer-nav" aria-label="頁尾導覽"><div class="footer-col"><h2>企業服務</h2><a href="/services/">服務項目</a><a href="/courses/">邀課主題</a><a href="/cases/">合作案例與成果</a><a href="/testimonials/">企業／學員回饋</a><a href="/faq/">收費與常見問題</a></div><div class="footer-col"><h2>課程與活動</h2><a href="/events/">近期活動</a><a href="/coaching/">1對1 AI 教練</a></div><div class="footer-col"><h2>AI 顧問室</h2><a href="/tools/">全部工具</a><a href="/tools/?category=品牌探索">品牌探索</a><a href="/tools/?category=文件處理">文件處理</a><a href="/tools/?category=導入評估">導入評估</a><a href="/tools/?category=趨勢洞察">趨勢洞察</a></div><div class="footer-col"><h2>部落格</h2><a href="/insights/">全部文章</a><a href="/insights/?category=AI%20Agent">AI Agent</a><a href="/insights/?category=AI策略">AI策略</a><a href="/insights/?category=AI治理">AI治理</a><a href="/insights/?category=智慧製造">智慧製造</a><a href="/insights/?category=智慧營運">智慧營運</a><a href="/insights/?category=Vibe%20Coding">Vibe Coding</a><a href="/insights/?category=AI搜尋優化">AI搜尋優化</a><a href="/tech/">技術筆記存檔</a></div><div class="footer-col"><h2>關於 Claire</h2><a href="/about/">認識 Claire</a><a href="/about/engineer-to-ai-translator/">我的轉型故事</a><a href="/about/stories/">經驗分享文章</a></div><div class="footer-col"><h2>聯絡與政策</h2><a href="/contact/">預約諮詢</a><a href="/privacy/">隱私權政策</a><a href="/unsubscribe/">取消電子報</a></div></nav><div class="social-links footer-social"><a href="https://www.facebook.com/ClaireTechVision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/facebook.webp" alt="" width="32" height="32" /></a><a href="https://www.linkedin.com/in/claire-chang-taiwan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/linkedin.webp" alt="" width="32" height="32" /></a><a href="https://www.instagram.com/clairetechvision/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/instagram.webp" alt="" width="32" height="32" /></a><a href="https://line.me/R/ti/p/@maz3267h" target="_blank" rel="noopener noreferrer" aria-label="LINE" title="LINE" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/line.webp" alt="" width="32" height="32" /></a><a href="https://www.youtube.com/@cochiachang" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="social-link social-link--icon" style="width:32px;height:32px;font-size:12px"><img src="/images/site/youtube.webp" alt="" width="32" height="32" /></a></div><p class="footer-copyright">© 2026 Claire Chang. All rights reserved.</p></div></footer></div>
+  </body>
+</html>

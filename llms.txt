@@ -1,0 +1,88 @@
+# Claire Chang 張可佳｜企業 AI 導入與落地
+
+> 讓企業需求被技術聽懂，讓 AI 真正落地。張可佳（Claire Chang）擁有 19 年軟體工程背景，現為企業 AI 導入顧問，協助中小企業找出適合導入 AI 的工作流程，並透過客製化內訓與專案陪跑，把第一個 AI 專案帶進日常工作。
+
+主實體：企業 AI 導入顧問（Claire Chang／允愛數位科技），核心服務為企業 AI 顧問、AI 內訓、AI 專案開發、AI 導入陪跑、智慧製造 AI。下列 Pillar／Cluster 是目前主力內容，每個 cluster 只列代表文章；完整文章清單請見 [sitemap.xml](https://claire-chang.com/sitemap.xml) 與各分類頁。
+
+## Core pages
+
+- [首頁](https://claire-chang.com/): Claire Chang 的企業 AI 導入顧問服務入口。
+- [完整版 llms-full.txt](https://claire-chang.com/llms-full.txt): 品牌定位、服務細節、授課主題、合作案例、常見問題與全部商務文章摘要的單一文件。
+- [合作洽談](https://claire-chang.com/services/): 企業 AI 顧問、AI 導入工作坊、AI 專案開發、AI 內訓、AI 導入陪跑等服務方案與合作入口。
+- [合作案例與成果](https://claire-chang.com/cases/): 企業內訓與專案案例（背景、問題、介入、結果、限制）、實績數字與完整合作機構名單。
+- [收費與常見問題](https://claire-chang.com/faq/): 企業 AI 內訓的報價方式、課程形式與時長、洽詢流程與常見問題。
+- [1對1 AI 教練](https://claire-chang.com/coaching/): 依個人職務與工作任務量身設計的 1對1 AI 學習計畫，用真實任務演練並建立個人 AI 工作流。
+- [邀課主題](https://claire-chang.com/courses/): 六大授課主題與各門課的一日、兩日完整課綱。
+- [近期活動](https://claire-chang.com/events/): 即將開課的公開課程與過去受邀的演講、研討會、工作坊清單。
+- [關於 Claire](https://claire-chang.com/about/): 作者背景、19 年軟體工程經驗與 AI 導入顧問工作方式。
+- [部落格](https://claire-chang.com/insights/): 企業 AI 導入方法論、框架與 AI 搜尋優化（GEO）文章清單。
+- [AI 顧問室](https://claire-chang.com/tools/): 免費的企業 AI 顧問室清單，以 Google 或 LINE 帳號登入即可使用。
+
+## 作者
+
+- 姓名：Claire Chang（張可佳）
+- 職稱：企業 AI 導入與流程轉型顧問，任職於允愛數位科技
+- 公司：允愛數位科技有限公司，統一編號 62027193，登記於臺北市信義區，官網 https://love-allowed.com/
+- 簡介：張可佳是一位企業 AI 導入／轉型顧問，擁有 19 年軟體工程經驗，協助企業把 AI 應用真正導入日常營運流程。
+- 專長：企業 AI 導入、生成式 AI、AI Agent、企業 AI 治理、AI 流程自動化、智慧製造、ERP 系統整合、AI 生產排程
+- 個人頁：[關於 Claire](https://claire-chang.com/about/)
+- 社群：https://www.facebook.com/ClaireTechVision、https://www.linkedin.com/in/claire-chang-taiwan/、https://www.instagram.com/clairetechvision/、https://www.youtube.com/@cochiachang
+
+## AI 顧問室
+
+以下工具皆免費，以 Google 或 LINE 帳號登入即可使用；各工具頁有登入後可得到的內容、使用步驟與常見問題。
+
+- [企業網路特寫 × AI 分析建議](https://claire-chang.com/tools/enterprise-healthcheck/): 輸入公司基本資訊，AI 搜尋網路上的公開資料，描繪外界眼中的你的公司，再結合 SWOT、STP、JTBD 等策略框架整理成可行動的建議。
+- [品牌 AI 能見度健檢](https://claire-chang.com/tools/geo-evaluation/): 看看 ChatGPT、Google AI 與 Perplexity 找不找得到、推不推薦你的品牌。免費檢測，約 10 分鐘到 1 小時收到報告，告訴你客戶問 AI 時為什麼看不到你，以及接下來 30/60/90 天該怎麼改。
+- [AI 專案選題評分表](https://claire-chang.com/tools/ai-project-scorecard/): 花幾分鐘幫 2～3 個候選流程做八項評分，找出最適合當第一個 AI 專案的流程，再由 AI 建議人機分工、KPI 與試行範圍。
+- [AI 導入階段與準備度評估](https://claire-chang.com/tools/ai-adoption-stages/): 回答 9 個日常使用題目，快速了解團隊目前處於 AI 導入哪一個階段、適合用線上雲端還是內部電腦，並取得專屬的 90 天改善建議。
+- [這份資料能不能交給 AI？](https://claire-chang.com/tools/ai-data-check/): 回答五條硬紅線與幾個判斷題，馬上知道一份資料能不能交給外部 AI、要走哪條處理路徑，再由 AI 建議資料拆分與治理措施。
+- [企業 AI 該用雲端還是自己架？](https://claire-chang.com/tools/ai-readiness-check/): 評估公司的機房設備、網路安全、團隊經驗與法規限制，花 3 分鐘快速診斷你們適合直接用雲端 AI、雲地混合還是自己架伺服器，並提供清楚的建議與採購指引。
+- [AI 科技趨勢探索器](https://claire-chang.com/tools/ai-trends-explorer/): 整合八場科技大會主題演講，用一張張卡片看懂 AI 趨勢，邊看邊猜哪些是企業宣傳、哪些有證據。
+- [2026 AI 代理五大趨勢](https://claire-chang.com/tools/ai-agent-trends-2026/): 整理 Google Cloud《2026 年 AI 代理趨勢》報告，用一張張題目卡片快速掌握五大趨勢：員工、工作流程、顧客、資安與人才。
+- [發票辨識](https://claire-chang.com/tools/doc-invoice/): 上傳發票的 PDF 或照片，辨識出賣方、買方、發票號碼、日期、品項與金額，每個欄位都附信心度，低信心的會標出來請你對照原件。
+- [收據辨識](https://claire-chang.com/tools/doc-receipt/): 上傳收據或發票的照片，辨識出店家、交易日期、品項、小計、稅額與總額，報帳前不用再手動打字。
+- [合約重點標示](https://claire-chang.com/tools/doc-contract/): 上傳合約的 PDF 或照片，標出簽約雙方、合約編號、簽署日期、管轄法院等重點，並在原文裡標示位置，方便你快速對照。
+- [文件轉 Markdown](https://claire-chang.com/tools/doc-to-markdown/): 上傳 PDF、圖片或 Office 文件，保留標題、段落與表格結構，轉成可複製或下載的 Markdown，方便交給 AI 閱讀或整理成筆記。
+- [個資偵測與遮蔽](https://claire-chang.com/tools/pii-redact/): 貼上一段文字，用雲端 AI 個資偵測加上台灣格式規則，找出姓名、電話、身分證、Email、統編、健保編號等個資，並取代成遮蔽標記，再交給 AI 就安全多了。
+
+## Pillar／Cluster：核心服務內容
+
+### Cluster：企業 AI 顧問
+
+- [AI 時代，企業的核心競爭力會往哪裡移動？從核心價值到流程重構的完整指南](https://claire-chang.com/post/ai-value-shift-core-competitiveness/): AI 會改變企業價值來源。本文提供五步法，協助企業重新判斷核心競爭力與 AI 導入方向。
+- [企業 AI 內訓、工作坊與 AI 導入陪跑有什麼不同？依團隊現況怎麼選](https://claire-chang.com/post/ai-training-workshop-coaching-difference/): 說明企業 AI 內訓、AI 導入工作坊與導入陪跑各自解決的問題、產出與驗收方式，並提供依團隊現況選擇與組合三種服務的判斷方法。
+- [企業內訓，讓我看見同一問題的不同語言](https://claire-chang.com/post/enterprise-ai-hr-it-perspectives/): 從企業內訓現場，看見 HR 與資訊部門對 AI 導入的不同關切，說明企業為何需要同時投資技術系統、一般員工的 AI 素養與工作應用能力。
+- [企業 AI 內訓怎麼規劃？員工 AI 程度落差大怎麼培訓，才能用進工作？](https://claire-chang.com/post/enterprise-ai-training-literacy-gap/): 從企業會議與 LINE 客服機器人教學經驗，分析員工跟著操作卻無法活用的原因，提供 HR 與資訊主管規劃 AI 內訓、分層練習及成果驗收的方法。
+- [企業建 AI Agent 怎麼選模型？先設計可替換的架構](https://claire-chang.com/post/ai-agent-model-switching-architecture/): 模型能力和價格變得很快。從我在不同月份改變推薦的經驗，以及 530 多篇文章的批次實作，說明企業如何固定流程、權限與驗收標準，再比較及更換 AI 模型。
+- [n8n AI Builder 實測：我一邊陪孩子玩沙，一邊把企業健檢改成網頁工具](https://claire-chang.com/post/n8n-ai-builder-health-check/): 從 AI Workflow Builder 到 n8n Assistant，介紹用自然語言建立、修改與測試流程的功能，再分享我用 n8n 串接程式、多模型與容器內 CLI，改造企業健檢服務的實際經驗。
+- [GEO 文章從寫作到上線需要哪些 SKILLS？我實際使用的 3 套流程](https://claire-chang.com/post/geo-skills-writing-schema-audit/): 我把 GEO 文章拆成研究寫作、網站結構化資料落地、上線後稽核三套 SKILLS，說明各自負責什麼、怎麼銜接，以及怎麼索取。
+- [E-E-A-T 怎麼強化？讓 AI 與搜尋引擎看懂作者專業度](https://claire-chang.com/post/eeat-author-trust/): 我從第一手經驗、作者資訊、專業證據、實體一致性與來源透明度，說明個人品牌網站如何建立可驗證的 E-E-A-T。
+- [免費 GEO 檢測工具推薦：用 AI、Search Console、Bing 與 PageSpeed 檢查網站](https://claire-chang.com/post/free-geo-audit-tools/): 我分享如何把網址交給 ChatGPT、Gemini、Claude、Perplexity 與 Manus 快速檢查 GEO，再用 Google Search Console、Bing Webmaster Tools 與 PageSpeed Insights 驗證結果。
+- [如何讓文章更容易被 AI 搜尋引擎理解與引用？GEO 內容優化教學](https://claire-chang.com/post/geo-content-optimization/): 我用主查詢、Answer Block、實體一致性、資訊增益與行內來源，示範如何把一般文章改成容易被 AI 搜尋引擎理解的 GEO 內容。
+
+其餘 10 篇見 [部落格](https://claire-chang.com/insights/)。
+
+### Cluster：AI 導入陪跑與專案開發
+
+- [ERP 太複雜、改一次要花大錢？AI 時代中小企業自建系統，關鍵是需求釐清](https://claire-chang.com/post/erp-ai-custom-system-requirements/): ERP 難用、重複 key-in、客製化費用高，中小企業能用 AI 自建貼近流程的系統嗎？說明 AI 省下與多出的成本、需求釐清與內部人員參與，並附六題檢查清單。
+- [做公司工具該選整合式 AI 平台，還是自己搭開發環境？預算、技術理解與風險怎麼取捨](https://claire-chang.com/post/ai-builder-platform-vs-local-tools/): 依官方文件比較 Lovable、Replit、Google AI Studio 的 Build 模式與 Claude Code 的差異，整理誰負責部署、怎麼計費、有哪些限制，並提供選擇前要先問的五個問題。
+- [AI 讓寫程式變便宜，系統開發的成本為什麼沒有跟著降？](https://claire-chang.com/post/ai-development-capability-transfer/): 從員工用 AI 做出 Dashboard 的談案經驗，談寫程式變便宜後，系統開發成本為什麼不一定下降，以及需求、分工與審查怎麼調整。
+- [AI 開發陪跑結束後，如何把系統運營能力留在企業](https://claire-chang.com/post/ai-development-handover-after-coaching/): 談 AI 開發陪跑如何把能力留在企業：核心工程師分工、文件隨程式更新、共同開發的能力移轉，以及交接時怎麼驗收。
+- [用 AI 做產品要過哪五關？給非工程師的上線前檢查表](https://claire-chang.com/post/ai-product-five-gates-checklist/): AI 能幫你寫程式，但產品從構想到營運要過五關：需求、設計、開發、驗收上線、維運成長。本文對照 AWS 與 NIST 的軟體開發流程，整理每一關 AI 能做什麼、人必須決定什麼。
+- [AI 一天寫完工具，為什麼上線卻卡了近一個月？一位資安分析師的部署卡關紀錄](https://claire-chang.com/post/ai-tool-one-day-build-deployment-month/): 資安分析師用 Claude 網頁版一天做完新聞彙整工具，卻花近一個月才讓同事開得起來。本文拆解卡關環節，補上 Vercel 與 GitHub Pages 的官方條款，並提供開工前的上線檢查表。
+- [跨職能小隊加平台團隊是什麼？小團隊為什麼溝通成本比較低，什麼情況不適用](https://claire-chang.com/post/cross-functional-squad-platform-team/): 跨職能小隊把產品、設計與工程放在同一組，平台團隊負責部署、資安與監控等共用能力。本文對照 Team Topologies、康威定律與亞馬遜兩個披薩團隊，說明這種分工為什麼能降低溝通成本，以及哪些情況不適用。
+- [AI 時代，為什麼懂工作流程的人也能參與系統開發？](https://claire-chang.com/post/domain-experts-ai-software-development/): AI 讓寫程式變便宜，但定義需求、拆任務與驗收仍需要人。本文整理三種 AI 開發方式的差異、PM 與需求分析為何較快上手，以及沒有工程背景時哪些事不能省。
+- [程式寫得更快，專案為什麼仍然很慢？從等待、交接與審查找瓶頸](https://claire-chang.com/post/fast-coding-slow-projects-handoff-bottleneck/): AI 讓寫程式變快，但專案的時間多花在需求確認、交接、審查與等待。本文用溝通線路公式、METR、Faros 與 DORA 的資料，說明瓶頸如何移動，並提供找出自己專案瓶頸的方法。
+- [老闆先用 AI 驗證想法，核心工程師再整合：蒲公英創意商業研究所（MAXO）的開發分工轉型](https://claire-chang.com/post/founder-prototype-engineer-integration-startup/): AI 新創蒲公英創意商業研究所，把三位工程師精簡為一位，改由老闆先用 AI 做原型、工程師負責整合上線，團隊從二十多人縮到六人。本文整理分工前後差異、適用條件，以及功能變容易之後如何避免產品變亂。
+
+其餘 11 篇見 [部落格](https://claire-chang.com/insights/)。
+
+### Cluster：智慧製造 AI
+
+- [AI 生產排程怎麼做？從需求拆解到小規模試行的完整指南](https://claire-chang.com/post/ai-production-scheduling/): AI 生產排程怎麼做？本文以匿名企業案例說明如何拆開需求預測、庫存政策、生產最佳化與人工例外處理，並整理小型企業可落地的試行方法。
+- [工廠關鍵知識都在老師傅腦中，AI 要怎麼協助傳承？](https://claire-chang.com/post/factory-knowledge-transfer/): AI 知識傳承不只是建立老師傅 GPT。本文從匿名生產排程案出發，說明工廠如何先建立員工信任，再逐步保存工作紀錄、判斷規則與例外知識。
+
+## Archive：技術筆記存檔（非目前主力服務）
+
+- [技術筆記存檔](https://claire-chang.com/tech/): 作者軟體工程師時期留下的 431 篇技術筆記（前端、後端、DevOps、機器學習），僅供技術背景參考，不代表目前主力服務。
